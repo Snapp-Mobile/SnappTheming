@@ -11,7 +11,7 @@ public struct SAThemingSegmentControlStyleConfiguration {
     public let fallbackSurfaceColor: SAThemingInteractiveColor
     public let fallbackBorderColor: SAThemingInteractiveColor
     public let fallbackBorderWidth: Double
-    public let fallbackShape: SAThemingButtonStyleShape
+    public let fallbackShape: SAThemingButtonStyleType
     public let fallbackSelectedSegment: SAThemingButtonStyleResolver
     public let fallbackNormalSegment: SAThemingButtonStyleResolver
 

@@ -12,10 +12,10 @@ public struct SAThemingButtonStyleResolver: Sendable {
     public let textColor: SAThemingInteractiveColor
     public let borderColor: SAThemingInteractiveColor
     public let borderWidth: Double
-    public let shape: SAThemingButtonStyleShape
+    public let shape: SAThemingButtonStyleType
     public let typography: SAThemingTypographyResolver
 
-    init(surfaceColor: SAThemingInteractiveColor, textColor: SAThemingInteractiveColor, borderColor: SAThemingInteractiveColor, borderWidth: Double, shape: SAThemingButtonStyleShape, typography: SAThemingTypographyResolver) {
+    init(surfaceColor: SAThemingInteractiveColor, textColor: SAThemingInteractiveColor, borderColor: SAThemingInteractiveColor, borderWidth: Double, shape: SAThemingButtonStyleType, typography: SAThemingTypographyResolver) {
         self.surfaceColor = surfaceColor
         self.textColor = textColor
         self.borderColor = borderColor
@@ -30,7 +30,7 @@ public struct SAThemingButtonStyleResolver: Sendable {
             textColor: .clear,
             borderColor: .clear,
             borderWidth: 0.0,
-            shape: .init(),
+            shape: .rectangle,
             typography: .init(SAThemingFontResolver(fontName: "SFProText"), fontSize: 102.0)
         )
     }

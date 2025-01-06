@@ -52,7 +52,7 @@ extension SAThemingDeclarations where DeclaredValue == SAThemingButtonStyleRepre
                 .interactiveColors.resolver.resolve(representation.textColor)?
                 .resolver(colorFormat: configuration.colorFormat, colors: configuration.colors).interactiveColor,
             let borderColor = configuration.interactiveColors.resolver.resolve(representation.borderColor)?.resolver(colorFormat: configuration.colorFormat, colors: configuration.colors).interactiveColor,
-            let shape = configuration.shapes.resolver.resolve(representation.shape)?.resolver(metric: configuration.metrics).shape,
+            let shape = configuration.shapes.resolver.resolve(representation.shape)?.resolver().buttonStyleType,
             let typography = configuration.typographies.resolver.resolve(representation.typography),
             let font = configuration.fonts.resolver.resolve(typography.font),
             let fontSize = configuration.metrics.resolver.resolve(typography.fontSize)

@@ -6,10 +6,16 @@
 //
 
 import Foundation
+import SwiftUI
 
 public struct SAThemingButtonStyleShapeConfiguration {
-    public let fallbackWidth: Double
-    public let fallbackHeight: Double
-    public let fallbackCornerRadius: Double
+    public let fallbackShape: SAThemingButtonStyleType
     let themeConfiguration: SAThemingParserConfiguration
 }
+
+public extension SAThemingButtonStyleShapeRepresentation {
+    func resolver() -> SAThemingButtonStyleShapeResolver {
+        SAThemingButtonStyleShapeResolver(buttonStyleType: buttonStyleShape)
+    }
+}
+

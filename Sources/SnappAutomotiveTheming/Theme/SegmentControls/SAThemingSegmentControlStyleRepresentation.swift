@@ -15,7 +15,7 @@ public struct SAThemingSegmentControlStyleRepresentation: Codable {
     public let borderColor: SAThemingToken<SAThemingInteractiveColorInformation>
     public let borderWidth: SAThemingToken<Double>
     public let padding: SAThemingToken<Double>
-    public let shape: SAThemingToken<SAThemingButtonStyleShapeInformation>
+    public let shape: SAThemingToken<SAThemingButtonStyleShapeRepresentation>
 
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -23,7 +23,7 @@ public struct SAThemingSegmentControlStyleRepresentation: Codable {
         self.normalButtonStyle = try container.decode(SAThemingToken<SAThemingButtonStyleRepresentation>.self, forKey: .normalButtonStyle)
         self.borderWidth = try container.decode(SAThemingToken<Double>.self, forKey: .borderWidth)
         self.padding = try container.decode(SAThemingToken<Double>.self, forKey: .padding)
-        self.shape = try container.decode(SAThemingToken<SAThemingButtonStyleShapeInformation>.self, forKey: .shape)
+        self.shape = try container.decode(SAThemingToken<SAThemingButtonStyleShapeRepresentation>.self, forKey: .shape)
 
         if let singleSurfaceColor = try? container.decode(SAThemingToken<SAThemingColorRepresentation>.self, forKey: .surfaceColor) {
             self.surfaceColor = .init(from: singleSurfaceColor)

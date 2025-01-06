@@ -12,7 +12,7 @@ public struct SAThemingButtonStyleRepresentation: Codable {
     public let textColor: SAThemingToken<SAThemingInteractiveColorInformation>
     public let borderColor: SAThemingToken<SAThemingInteractiveColorInformation>
     public let borderWidth: SAThemingToken<Double>
-    public let shape: SAThemingToken<SAThemingButtonStyleShapeInformation>
+    public let shape: SAThemingToken<SAThemingButtonStyleShapeRepresentation>
     public let typography: SAThemingToken<SAThemingTypographyRepresentation>
     
     public init(from decoder: any Decoder) throws {
@@ -37,7 +37,7 @@ public struct SAThemingButtonStyleRepresentation: Codable {
         }
 
         self.borderWidth = try container.decode(SAThemingToken<Double>.self, forKey: .borderWidth)
-        self.shape = try container.decode(SAThemingToken<SAThemingButtonStyleShapeInformation>.self, forKey: .shape)
+        self.shape = try container.decode(SAThemingToken<SAThemingButtonStyleShapeRepresentation>.self, forKey: .shape)
         self.typography = try container.decode(SAThemingToken<SAThemingTypographyRepresentation>.self, forKey: .typography)
     }
 }
@@ -60,8 +60,8 @@ public extension SAThemingButtonStyleRepresentation {
             let resolvedBorderWidth = configuration.metrics.resolver.resolve(borderWidth),
             let resolvedShape = configuration.shapes.resolver
                 .resolve(shape)?
-                .resolver(metric: configuration.metrics)
-                .shape,
+                .resolver()
+                .buttonStyleType,
             let resolvedTypography = configuration.typographies.resolver.resolve(typography),
             let resolvedFont = configuration.fonts.resolver.resolve(resolvedTypography.font),
             let resolvedFontSize = configuration.metrics.resolver.resolve(resolvedTypography.fontSize)

@@ -59,7 +59,7 @@ extension SAThemingDeclarations where DeclaredValue == SAThemingSegmentControlSt
                 .resolve(representation.borderColor)?
                 .resolver(colorFormat: configuration.colorFormat, colors: configuration.colors)
                 .interactiveColor,
-            let shape = configuration.shapes.resolver.resolve(representation.shape)?.resolver(metric: configuration.metrics).shape,
+            let shape = configuration.shapes.resolver.resolve(representation.shape)?.resolver().buttonStyleType,
             let selectedButtonStyle = configuration.buttonStyles.resolver
                 .resolve(representation.selectedButtonStyle)?
                 .resolver(using: configuration),

@@ -12,7 +12,7 @@ public struct SAThemingButtonStyleConfiguration {
     public let fallbackTextColor: SAThemingInteractiveColor
     public let fallbackBorderColor: SAThemingInteractiveColor
     public let fallbackBorderWidth: Double
-    public let fallbackShape: SAThemingButtonStyleShape
+    public let fallbackShape: SAThemingButtonStyleType
     public let fallBackTypography: SAThemingTypographyResolver
 
     let metrics: SAThemingMetricDeclarations

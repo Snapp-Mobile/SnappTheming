@@ -5,9 +5,9 @@
 //  Created by Oleksii Kolomiiets on 02.12.2024.
 //
 
-public typealias SAThemingButtonStyleShapeDeclarations = SAThemingDeclarations<SAThemingButtonStyleShapeInformation, SAThemingButtonStyleShapeConfiguration>
+public typealias SAThemingButtonStyleShapeDeclarations = SAThemingDeclarations<SAThemingButtonStyleShapeRepresentation, SAThemingButtonStyleShapeConfiguration>
 
-extension SAThemingDeclarations where DeclaredValue == SAThemingButtonStyleShapeInformation,
+extension SAThemingDeclarations where DeclaredValue == SAThemingButtonStyleShapeRepresentation,
                              Configuration == SAThemingButtonStyleShapeConfiguration
 {
     public init(cache: [String: SAThemingToken<DeclaredValue>]?, configuration: SAThemingParserConfiguration = .default) {
@@ -15,9 +15,7 @@ extension SAThemingDeclarations where DeclaredValue == SAThemingButtonStyleShape
             cache: cache,
             rootKey: .shapes,
             configuration: .init(
-                fallbackWidth: configuration.fallbackButtonStyle.shape.width ?? 0.0,
-                fallbackHeight: configuration.fallbackButtonStyle.shape.height ?? 0.0,
-                fallbackCornerRadius: configuration.fallbackButtonStyle.shape.cornerRadius,
+                fallbackShape: configuration.fallbackButtonStyle.shape,
                 themeConfiguration: configuration
             )
         )

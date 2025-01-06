@@ -14,5 +14,5 @@ public struct SAThemingSegmentControlStyleResolver {
     public let borderColor: SAThemingInteractiveColor
     public let borderWidth: Double
     public let innerPadding: Double
-    public let shape: SAThemingButtonStyleShape
+    public let shape: SAThemingButtonStyleType
 }

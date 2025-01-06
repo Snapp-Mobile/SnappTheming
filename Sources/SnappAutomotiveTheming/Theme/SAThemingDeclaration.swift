@@ -42,7 +42,7 @@ public struct SAThemingDeclaration: Codable, SAThemingOutput {
             let typographyCache = try container.decodeIfPresent([String: SAThemingToken<SAThemingTypographyRepresentation>].self, forKey: .typography)
             let interactiveColorsCache = try container.decodeIfPresent([String: SAThemingToken<SAThemingInteractiveColorInformation>].self, forKey: .interactiveColors)
             let buttonConfigurations = try container.decodeIfPresent([String: SAThemingToken<SAThemingButtonStyleRepresentation>].self, forKey: .buttonDeclarations)
-            let shapeInformation = try container.decodeIfPresent([String: SAThemingToken<SAThemingButtonStyleShapeInformation>].self, forKey: .shapes)
+            let shapeInformation = try container.decodeIfPresent([String: SAThemingToken<SAThemingButtonStyleShapeRepresentation>].self, forKey: .shapes)
             let shapeStyleCache = try container.decodeIfPresent([String: SAThemingToken<SAThemingShapeStyleRepresentation>].self, forKey: .shapeStyle)
             let segmentControlStyleCache = try container.decodeIfPresent([String: SAThemingToken<SAThemingSegmentControlStyleRepresentation>].self, forKey: .segmentControlStyle)
             let sliderStyleCache = try container.decodeIfPresent([String: SAThemingToken<SAThemingSliderStyleRepresentation>].self, forKey: .sliderStyle)
