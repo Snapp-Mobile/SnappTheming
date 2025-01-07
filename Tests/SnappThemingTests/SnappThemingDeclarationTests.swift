@@ -31,6 +31,7 @@ final class SnappThemingDeclarationTests {
     }
     
     @Test func overrideDeclaration() async throws {
+        let configuration = SnappThemingParserConfiguration.default
         let baseJSON = """
         {
             "colors": {
@@ -46,10 +47,10 @@ final class SnappThemingDeclarationTests {
             }
         }
         """
-        let baseDeclaration = try SnappThemingParser.parse(from: baseJSON)
-        let overrideDeclaration = try SnappThemingParser.parse(from: overrideJSON)
+        let baseDeclaration = try SnappThemingParser.parse(from: baseJSON, using: configuration)
+        let overrideDeclaration = try SnappThemingParser.parse(from: overrideJSON, using: configuration)
         
-        let declaration = baseDeclaration.override(with: overrideDeclaration)
+        let declaration = baseDeclaration.override(with: overrideDeclaration, using: configuration)
         
         let baseWhite: UIColor = declaration.colors.baseWhite
         let baseBlack: UIColor = declaration.colors.baseBlack
