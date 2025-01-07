@@ -31,6 +31,45 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
         return CodingUserInfoKey(rawValue: "themeParserConfiguration")!
     }
 
+    public init(
+        imageCache: [String: SnappThemingToken<SnappThemingDataURI>]? = nil,
+        colorCache: [String: SnappThemingToken<SnappThemingColorRepresentation>]? = nil,
+        metricsCache: [String: SnappThemingToken<Double>]? = nil,
+        fontsCache: [String: SnappThemingToken<SnappThemingFontInformation>]? = nil,
+        typographyCache: [String: SnappThemingToken<SnappThemingTypographyRepresentation>]? = nil,
+        interactiveColorsCache: [String: SnappThemingToken<SnappThemingInteractiveColorInformation>]? = nil,
+        buttonConfigurations: [String: SnappThemingToken<SnappThemingButtonStyleRepresentation>]? = nil,
+        shapeInformation: [String: SnappThemingToken<SnappThemingButtonStyleShapeRepresentation>]? = nil,
+        shapeStyleCache: [String: SnappThemingToken<SnappThemingShapeStyleRepresentation>]? = nil,
+        segmentControlStyleCache: [String: SnappThemingToken<SnappThemingSegmentControlStyleRepresentation>]? = nil,
+        sliderStyleCache: [String: SnappThemingToken<SnappThemingSliderStyleRepresentation>]? = nil,
+        toggleStyleCache: [String: SnappThemingToken<SnappThemingToggleStyleRepresentation>]? = nil,
+        using parserConfiguration: SnappThemingParserConfiguration = .default
+    ) {
+        self.images = .init(cache: imageCache, configuration: parserConfiguration)
+        self.colors = .init(cache: colorCache, configuration: parserConfiguration)
+        self.shapeStyle = .init(cache: shapeStyleCache, configuration: parserConfiguration)
+        self.metrics = .init(cache: metricsCache, configuration: parserConfiguration)
+        self.fonts = .init(cache: fontsCache, configuration: parserConfiguration)
+        self.typography = .init(cache: typographyCache, configuration: parserConfiguration, fonts: fonts, metrics: metrics)
+
+        // TODO: Think about the proper way of collecting fonts...
+        let baseFonts = fontsCache.map(\.values).map(Array.init) ?? []
+        let typographyFonts = typographyCache.map(\.values)?.compactMap(typography.resolver.resolve(_:)).map(\.font) ?? []
+        self.fontInformations = (baseFonts + typographyFonts).compactMap(\.value)
+
+        let interactiveColors: SnappThemingInteractiveColorDeclarations = .init(cache: interactiveColorsCache, configuration: parserConfiguration)
+        let shapes: SnappThemingButtonStyleShapeDeclarations = .init(cache: shapeInformation, configuration: parserConfiguration)
+
+        self.buttonStyles = .init(cache: buttonConfigurations, configuration: parserConfiguration, metrics: metrics, fonts: fonts, colors: colors, shapes: shapes, typographies: typography, interactiveColors: interactiveColors)
+
+        self.segmentControlStyle = .init(cache: segmentControlStyleCache, configuration: parserConfiguration, metrics: metrics, colors: colors, shapes: shapes, buttonStyles: buttonStyles, fonts: fonts, typographies: typography, interactiveColors: interactiveColors)
+
+        self.sliderStyle = .init(cache: sliderStyleCache, configuration: parserConfiguration, metrics: metrics, colors: colors, fonts: fonts, typographies: typography)
+
+        self.toggleStyle = .init(cache: toggleStyleCache, configuration: parserConfiguration, colors: colors)
+    }
+
     public init(from decoder: any Decoder) throws {
         do {
             let parserConfiguration = decoder.userInfo[Self.themeParserConfigurationUserInfoKey] as? SnappThemingParserConfiguration ?? .default
@@ -48,30 +87,21 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
             let sliderStyleCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingSliderStyleRepresentation>].self, forKey: .sliderStyle)
             let toggleStyleCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingToggleStyleRepresentation>].self, forKey: .toggleStyle)
 
-            self.images = .init(cache: imageCache, configuration: parserConfiguration)
-            self.colors = .init(cache: colorCache, configuration: parserConfiguration)
-            self.shapeStyle = .init(cache: shapeStyleCache, configuration: parserConfiguration)
-            self.metrics = .init(cache: metricsCache, configuration: parserConfiguration)
-            self.fonts = .init(cache: fontsCache, configuration: parserConfiguration)
-            self.typography = .init(cache: typographyCache, configuration: parserConfiguration, fonts: fonts, metrics: metrics)
-
-            // TODO: Think about the proper way of collecting fonts...
-            let baseFonts = fontsCache.map(\.values).map(Array.init) ?? []
-            let typographyFonts = typographyCache.map(\.values)?.compactMap(typography.resolver.resolve(_:)).map(\.font) ?? []
-            self.fontInformations = (baseFonts + typographyFonts).compactMap(\.value)
-
-            let interactiveColors: SnappThemingInteractiveColorDeclarations = .init(cache: interactiveColorsCache, configuration: parserConfiguration)
-            let shapes: SnappThemingButtonStyleShapeDeclarations = .init(cache: shapeInformation, configuration: parserConfiguration)
-
-            self.buttonStyles = .init(cache: buttonConfigurations, configuration: parserConfiguration, metrics: metrics, fonts: fonts, colors: colors, shapes: shapes, typographies: typography, interactiveColors: interactiveColors)
-
-            self.segmentControlStyle = .init(cache: segmentControlStyleCache, configuration: parserConfiguration, metrics: metrics, colors: colors, shapes: shapes, buttonStyles: buttonStyles, fonts: fonts, typographies: typography, interactiveColors: interactiveColors)
-
-            self.sliderStyle = .init(cache: sliderStyleCache, configuration: parserConfiguration, metrics: metrics, colors: colors, fonts: fonts, typographies: typography)
-
-            self.toggleStyle = .init(cache: toggleStyleCache, configuration: parserConfiguration, colors: colors)
-
             os_log("✅ Successfully decoded all declarations.")
+
+            self.init(imageCache: imageCache,
+                      colorCache: colorCache,
+                      metricsCache: metricsCache,
+                      fontsCache: fontsCache,
+                      typographyCache: typographyCache,
+                      interactiveColorsCache: interactiveColorsCache,
+                      buttonConfigurations: buttonConfigurations,
+                      shapeInformation: shapeInformation,
+                      shapeStyleCache: shapeStyleCache,
+                      segmentControlStyleCache: segmentControlStyleCache,
+                      sliderStyleCache: sliderStyleCache,
+                      toggleStyleCache: toggleStyleCache,
+                      using: parserConfiguration)
         } catch {
             error.log()
             throw error
@@ -85,7 +115,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
         if parserConfiguration.encodeImages {
             try container.encode(images.cache, forKey: .images)
         }
-        try container.encode(colors.resolver.baseValues[CodingKeys.colors.rawValue], forKey: .colors)
+        try container.encode(colors.cache, forKey: .colors)
         try container.encode(metrics.cache, forKey: .metrics)
         if parserConfiguration.encodeFonts {
             try container.encode(fonts.cache, forKey: .fonts)

@@ -17,3 +17,14 @@ import UIKit
     #expect(baseWhite == UIColor(hex: "FFFFFF", format: .rgba))
     #expect(baseBlack == UIColor(hex: "000000", format: .rgba))
 }
+
+@Test func manualDeclarationCreation() async throws {
+    let declaration = SAThemingDeclaration(
+        colorCache: [
+            "baseWhite": .value(.hex("FFFFFF")),
+            "baseBlack": .value(.hex("000000"))])
+    let baseWhite: UIColor = declaration.colors.baseWhite
+    let baseBlack: UIColor = declaration.colors.baseBlack
+    #expect(baseWhite == UIColor(hex: "FFFFFF", format: .rgba))
+    #expect(baseBlack == UIColor(hex: "000000", format: .rgba))
+}
