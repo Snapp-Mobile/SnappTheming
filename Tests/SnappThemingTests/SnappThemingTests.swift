@@ -19,7 +19,7 @@ import UIKit
 }
 
 @Test func manualDeclarationCreation() async throws {
-    let declaration = SAThemingDeclaration(
+    let declaration = SnappThemingDeclaration(
         colorCache: [
             "baseWhite": .value(.hex("FFFFFF")),
             "baseBlack": .value(.hex("000000"))])
@@ -45,8 +45,8 @@ import UIKit
         }
     }
     """
-    let baseDeclaration = try SAThemingParser.parse(from: baseJSON)
-    let overrideDeclaration = try SAThemingParser.parse(from: overrideJSON)
+    let baseDeclaration = try SnappThemingParser.parse(from: baseJSON)
+    let overrideDeclaration = try SnappThemingParser.parse(from: overrideJSON)
 
     let declaration = baseDeclaration.override(with: overrideDeclaration)
 
