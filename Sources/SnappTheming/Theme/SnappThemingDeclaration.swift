@@ -23,7 +23,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
 
     public let fontInformations: [SnappThemingFontInformation]
 
-    enum CodingKeys: String, CodingKey {
+    public enum CodingKeys: String, CodingKey {
         case images, colors, metrics, fonts, typography, shapeStyle
         case buttonDeclarations, interactiveColors, shapes
         case segmentControlStyle, sliderStyle, toggleStyle
@@ -110,7 +110,6 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
     }
 
     public func encode(to encoder: any Encoder) throws {
-        // TODO: Get rid of `resolver.baseValues`
         let parserConfiguration = encoder.userInfo[Self.themeParserConfigurationUserInfoKey] as? SnappThemingParserConfiguration ?? .default
         var container = encoder.container(keyedBy: CodingKeys.self)
         if parserConfiguration.encodeImages {

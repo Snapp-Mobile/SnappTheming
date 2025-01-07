@@ -42,7 +42,7 @@ public struct SnappThemingButtonStyleShapeRepresentation: Codable {
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         let tokenType = ButtonStyleShapeType(buttonStyleShape)
-        try container.encode(ButtonStyleShapeType(buttonStyleShape).rawValue, forKey: .type)
+        try container.encode(tokenType.rawValue, forKey: .type)
         switch buttonStyleShape {
         case .circle, .rectangle, .ellipse: break
         case let .capsule(style):
