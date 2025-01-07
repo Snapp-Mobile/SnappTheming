@@ -1,6 +1,19 @@
 import Testing
 @testable import SnappTheming
+import UIKit
 
-@Test func example() async throws {
-    // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+@Test func parseDeclaration() async throws {
+    let json = """
+    {
+        "colors": {
+            "baseWhite": "#FFFFFF",
+            "baseBlack": "#000000"
+        }
+    }
+    """
+    let declaration = try SnappThemingParser.parse(from: json)
+    let baseWhite: UIColor = declaration.colors.baseWhite
+    let baseBlack: UIColor = declaration.colors.baseBlack
+    #expect(baseWhite == UIColor(hex: "FFFFFF", format: .rgba))
+    #expect(baseBlack == UIColor(hex: "000000", format: .rgba))
 }
