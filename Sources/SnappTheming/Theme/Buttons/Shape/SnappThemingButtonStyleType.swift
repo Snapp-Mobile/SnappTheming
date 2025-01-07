@@ -17,6 +17,20 @@ public enum SnappThemingButtonStyleType: Sendable {
     public var value: AnyShape {
         AnyShape(styleShape)
     }
+
+    public var cornerRadius: CGFloat {
+        switch self {
+        case .circle, .ellipse, .capsule: return 1000
+        case .rectangle: return 0
+        case let .roundedRectangleWithRadius(radius, _):
+            return radius
+        case let .roundedRectangleWithSize(size, _):
+            return size.width
+        case let .unevenRoundedRectangle(radii, _):
+            return radii.topLeading
+        }
+    }
+
     var styleShape: any Shape {
         switch self {
         case .circle: return Circle()
