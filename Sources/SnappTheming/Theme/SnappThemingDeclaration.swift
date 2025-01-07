@@ -10,11 +10,13 @@ import OSLog
 public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
     public let images: SnappThemingImageDeclarations
     public let colors: SnappThemingColorDeclarations
+    public let interactiveColors: SnappThemingInteractiveColorDeclarations
     public let metrics: SnappThemingMetricDeclarations
     public let fonts: SnappThemingFontDeclarations
     public let typography: SnappThemingTypographyDeclarations
     public let buttonStyles: SnappThemingButtonStyleDeclarations
     public let shapeStyle: SnappThemingShapeStyleDeclarations
+    public let shapes: SnappThemingButtonStyleShapeDeclarations
     public let segmentControlStyle: SnappThemingSegmentControlStyleDeclarations
     public let sliderStyle: SnappThemingSliderStyleDeclarations
     public let toggleStyle: SnappThemingToggleStyleDeclarations
@@ -48,7 +50,9 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
     ) {
         self.images = .init(cache: imageCache, configuration: parserConfiguration)
         self.colors = .init(cache: colorCache, configuration: parserConfiguration)
+        self.interactiveColors = .init(cache: interactiveColorsCache, configuration: parserConfiguration)
         self.shapeStyle = .init(cache: shapeStyleCache, configuration: parserConfiguration)
+        self.shapes = .init(cache: shapeInformation, configuration: parserConfiguration)
         self.metrics = .init(cache: metricsCache, configuration: parserConfiguration)
         self.fonts = .init(cache: fontsCache, configuration: parserConfiguration)
         self.typography = .init(cache: typographyCache, configuration: parserConfiguration, fonts: fonts, metrics: metrics)
@@ -57,9 +61,6 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
         let baseFonts = fontsCache.map(\.values).map(Array.init) ?? []
         let typographyFonts = typographyCache.map(\.values)?.compactMap(typography.resolver.resolve(_:)).map(\.font) ?? []
         self.fontInformations = (baseFonts + typographyFonts).compactMap(\.value)
-
-        let interactiveColors: SnappThemingInteractiveColorDeclarations = .init(cache: interactiveColorsCache, configuration: parserConfiguration)
-        let shapes: SnappThemingButtonStyleShapeDeclarations = .init(cache: shapeInformation, configuration: parserConfiguration)
 
         self.buttonStyles = .init(cache: buttonConfigurations, configuration: parserConfiguration, metrics: metrics, fonts: fonts, colors: colors, shapes: shapes, typographies: typography, interactiveColors: interactiveColors)
 
@@ -120,5 +121,32 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
         if parserConfiguration.encodeFonts {
             try container.encode(fonts.cache, forKey: .fonts)
         }
+    }
+}
+
+extension SnappThemingDeclaration {
+    public func override(
+        with other: SnappThemingDeclaration,
+        using configuration: SnappThemingParserConfiguration = .default
+    ) -> SnappThemingDeclaration {
+        SnappThemingDeclaration(imageCache: images.cache.override(other.images.cache),
+                             colorCache: colors.cache.override(other.colors.cache),
+                             metricsCache: metrics.cache.override(other.metrics.cache),
+                             fontsCache: fonts.cache.override(other.fonts.cache),
+                             typographyCache: typography.cache.override(other.typography.cache),
+                             interactiveColorsCache: interactiveColors.cache.override(other.interactiveColors.cache),
+                             buttonConfigurations: buttonStyles.cache.override(other.buttonStyles.cache),
+                             shapeInformation: shapes.cache.override(other.shapes.cache),
+                             shapeStyleCache: shapeStyle.cache.override(other.shapeStyle.cache),
+                             segmentControlStyleCache: segmentControlStyle.cache.override(other.segmentControlStyle.cache),
+                             sliderStyleCache: sliderStyle.cache.override(other.sliderStyle.cache),
+                             toggleStyleCache: toggleStyle.cache.override(other.toggleStyle.cache),
+                             using: configuration)
+    }
+}
+
+fileprivate extension Dictionary {
+    func override(_ other: Self) -> Self {
+        merging(other, uniquingKeysWith: { _, overridden in overridden })
     }
 }

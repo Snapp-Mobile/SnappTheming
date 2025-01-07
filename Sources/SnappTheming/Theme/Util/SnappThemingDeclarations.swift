@@ -14,7 +14,7 @@ public struct SnappThemingDeclarations<DeclaredValue, Configuration> where Decla
     let configuration: Configuration
 
     public let keys: [String]
-    public var cache: [String: SAThemingToken<DeclaredValue>] { resolver.baseValues[rootKey.rawValue] ?? [:] }
+    public var cache: [String: SnappThemingToken<DeclaredValue>] { resolver.baseValues[rootKey.rawValue] ?? [:] }
 
     init(cache: [String: SnappThemingToken<DeclaredValue>]?, rootKey: SnappThemingDeclaration.CodingKeys, configuration: Configuration) {
         self.rootKey = rootKey

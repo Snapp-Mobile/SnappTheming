@@ -28,3 +28,30 @@ import UIKit
     #expect(baseWhite == UIColor(hex: "FFFFFF", format: .rgba))
     #expect(baseBlack == UIColor(hex: "000000", format: .rgba))
 }
+
+@Test func overrideDeclaration() async throws {
+    let baseJSON = """
+    {
+        "colors": {
+            "baseWhite": "#FFFFFF",
+            "baseBlack": "#000000"
+        }
+    }
+    """
+    let overrideJSON = """
+    {
+        "colors": {
+            "baseBlack": "#111111"
+        }
+    }
+    """
+    let baseDeclaration = try SAThemingParser.parse(from: baseJSON)
+    let overrideDeclaration = try SAThemingParser.parse(from: overrideJSON)
+
+    let declaration = baseDeclaration.override(with: overrideDeclaration)
+
+    let baseWhite: UIColor = declaration.colors.baseWhite
+    let baseBlack: UIColor = declaration.colors.baseBlack
+    #expect(baseWhite == UIColor(hex: "FFFFFF", format: .rgba))
+    #expect(baseBlack == UIColor(hex: "111111", format: .rgba))
+}
