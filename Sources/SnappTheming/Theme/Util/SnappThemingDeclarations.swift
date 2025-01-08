@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 
 /// Generic structure for accessing theming declarations parsed from JSON files.
 ///
@@ -74,7 +75,7 @@ public struct SnappThemingDeclarations<DeclaredValue, Configuration> where Decla
     public subscript(dynamicMember keyPath: String) -> DeclaredValue? {
         // Validate the input key path
         guard !keyPath.isEmpty else {
-            print("Invalid access to keyPath '\(keyPath)': Key path is empty")
+            os_log(.debug, "Invalid access to keyPath '%@': Key path is empty", keyPath)
             return nil
         }
 
@@ -83,7 +84,7 @@ public struct SnappThemingDeclarations<DeclaredValue, Configuration> where Decla
 
         // Resolve the value using the resolver
         guard let resolvedValue = resolver.resolve(.alias(path)) else {
-            print("Invalid access to keyPath '\(keyPath)': Failed to resolve the value")
+            os_log(.debug, "Invalid access to keyPath '%@': Failed to resolve the value", keyPath)
             return nil
         }
 
