@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+/// Responsible for managing and resolving color tokens. This includes static colors and dynamic system colors, supporting light/dark mode.
 public typealias SnappThemingColorDeclarations = SnappThemingDeclarations<SnappThemingColorRepresentation, SnappThemingColorConfiguration>
 
 public struct SnappThemingColorConfiguration {

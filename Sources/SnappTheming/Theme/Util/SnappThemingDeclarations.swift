@@ -14,15 +14,43 @@ import OSLog
 /// By using `@dynamicMemberLookup`, it allows seamless access to declared values while providing robust fallback mechanisms.
 ///
 /// ### Declaring Specific Theming Types
-/// The following type aliases extend the base `SnappThemingDeclarations` for various UI components:
-/// - ``SnappThemingColorDeclarations``: Manages color tokens.
-/// - ``SnappThemingFontDeclarations``: Manages font tokens.
-/// - ``SnappThemingMetricDeclarations``: Manages numeric tokens.
-/// - ``SnappThemingImageDeclarations``: Manages image tokens.
-/// - ``SnappThemingTypographyDeclarations``: Manages typography tokens.
-/// - ``SnappThemingButtonStyleDeclarations``: Manages button style tokens.
-/// - ``SnappThemingInteractiveColorDeclarations``: Manages a set of colors representing various interaction states, such as `normal, selected, pressed, and disabled`.
-/// - ``SnappThemingButtonStyleShapeDeclarations``: Manages shape tokens.
+/// The following type aliases extend the base `SnappThemingDeclarations` for various UI components, making it easier to manage and resolve specific design tokens in a consistent and scalable way:
+///
+/// - ``SnappThemingColorDeclarations``:
+///   Responsible for managing and resolving color tokens. This includes static colors and dynamic system colors, supporting light/dark mode.
+///
+/// - ``SnappThemingFontDeclarations``:
+///   Manages font tokens, such as font families and sizes. Enables consistent typography across the app by centralizing font definitions.
+///
+/// - ``SnappThemingMetricDeclarations``:
+///   Handles numeric tokens, such as spacing, corner radius, border widths. Useful for creating a consistent design language with reusable measurements.
+///
+/// - ``SnappThemingImageDeclarations``:
+///   Manages image tokens. Supports bitmap assets for different scenarios.
+///
+/// - ``SnappThemingTypographyDeclarations``:
+///   Manages typography tokens, combining font and size. Provides full control over how text styles are applied in the app.
+///
+/// - ``SnappThemingInteractiveColorDeclarations``:
+///   Handles a set of colors representing interaction states, such as `normal`, `selected`, `pressed`, and `disabled`. Useful for managing button states, toggle switches, and other interactive elements.
+///
+/// - ``SnappThemingButtonStyleDeclarations``:
+///   Manages button style tokens, including properties like surface and text colors, border widths and color, shape and typography for various button states.
+///
+/// - ``SnappThemingButtonStyleShapeDeclarations``:
+///   Manages button shape tokens, defining the appearance of button outlines, such as circular, rounded rectangle, or custom shapes.
+///
+/// - ``SnappThemingShapeStyleDeclarations``:
+///   Manages shape style tokens, including support for gradients such as linear, radial, and angular, enabling the creation of dynamic and visually appealing shape backgrounds.
+///
+/// - ``SnappThemingSegmentControlStyleDeclarations``:
+///   Manages segment control style tokens, enabling the customization of segment control appearance, including selected/unselected states, borders, shapes, and paddings.
+///
+/// - ``SnappThemingSliderStyleDeclarations``:
+///   Handles slider style tokens, managing properties like track colors, tick mark styles for sliders used in the UI.
+///
+/// - ``SnappThemingToggleStyleDeclarations``:
+///   Manages toggle style tokens, allowing control over the appearance of toggles, such as colors for enabled/disabled states.
 @dynamicMemberLookup
 public struct SnappThemingDeclarations<DeclaredValue, Configuration> where DeclaredValue: Codable {
     private let rootKey: SnappThemingDeclaration.CodingKeys

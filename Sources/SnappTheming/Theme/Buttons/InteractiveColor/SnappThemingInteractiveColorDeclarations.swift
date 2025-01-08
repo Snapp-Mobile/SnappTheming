@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Handles a set of colors representing interaction states, such as `normal`, `selected`, `pressed`, and `disabled`. Useful for managing button states, toggle switches, and other interactive elements.
 public typealias SnappThemingInteractiveColorDeclarations = SnappThemingDeclarations<SnappThemingInteractiveColorInformation, SnappThemingInteractiveColorConfiguration>
 
 extension SnappThemingDeclarations where DeclaredValue == SnappThemingInteractiveColorInformation,

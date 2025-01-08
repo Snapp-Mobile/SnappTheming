@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Manages shape style tokens, including support for gradients such as linear, radial, and angular, enabling the creation of dynamic and visually appealing shape backgrounds.
 public typealias SnappThemingShapeStyleDeclarations = SnappThemingDeclarations<SnappThemingShapeStyleRepresentation, SnappThemingShapeStyleConfiguration>
 
 public struct SnappThemingShapeStyleConfiguration {
