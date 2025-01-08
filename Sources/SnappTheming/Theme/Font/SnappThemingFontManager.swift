@@ -9,7 +9,7 @@ import Foundation
 import CoreText
 import OSLog
 
-/// A manager for dynamically registering and unregistering fonts in theming systems, with a focus on security and flexibility.
+/// A manager for dynamically registering and unregistering fonts in theming systems.
 ///
 /// The `SnappThemingFontManager` provides an API for runtime font management, enabling dynamic registration and unregistration of custom fonts.
 public final class SnappThemingFontManager {
