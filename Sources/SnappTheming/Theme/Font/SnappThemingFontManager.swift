@@ -12,6 +12,9 @@ import OSLog
 /// A manager for dynamically registering and unregistering fonts in theming systems.
 ///
 /// The `SnappThemingFontManager` provides an API for runtime font management, enabling dynamic registration and unregistration of custom fonts.
+/// 
+/// ### Note
+/// All file operations are confined to a dedicated directory to ensure security and prevent unauthorized file access.
 public final class SnappThemingFontManager {
     /// An enumeration of possible errors in `SnappThemingFontManager`.
     enum Error: Swift.Error {

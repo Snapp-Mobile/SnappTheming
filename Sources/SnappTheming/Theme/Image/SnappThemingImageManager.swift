@@ -9,9 +9,19 @@ import Foundation
 import OSLog
 import UIKit
 
+/// A manager for handling themed image caching and persistent storage.
+///
+/// This class is designed to work with `SnappThemingDataURI` objects for handling image data along with their MIME types.
+///
+/// ### Note
+/// All file operations are confined to a dedicated directory to ensure security and prevent unauthorized file access.
 public final class SnappThemingImageManager {
-    enum ImagesManagerError: Error {
+    /// An enumeration of possible errors in `SnappThemingImageManager`.
+    public enum ImagesManagerError: Error {
+        /// Indicates that the images directory URL is unknown or inaccessible.
         case unknownImagesDirectoryURL
+
+        /// Indicates that the MIME type for the image is unknown or unsupported.
         case unknownMIMEType
     }
 
@@ -20,19 +30,39 @@ public final class SnappThemingImageManager {
     private var imageCacheRootURL: URL?
     private let imagesFolderName = "images"
 
-    init(_ fileManager: FileManager = .default, themeCacheRootURL: URL? = nil, themeName: String = "default") {
+    /// Initializes the image manager with optional custom parameters.
+    ///
+    /// - Parameters:
+    ///   - fileManager: The file manager to use for file operations. Defaults to `.default`.
+    ///   - themeCacheRootURL: The root URL for theme caching. Defaults to the app's documents directory if `nil`.
+    ///   - themeName: The name of the theme for organizing cached images. Defaults to `"default"`.
+    public init(
+        _ fileManager: FileManager = .default,
+        themeCacheRootURL: URL? = nil,
+        themeName: String = "default"
+    ) {
         self.fileManager = fileManager
         var isDirectory: ObjCBool = true
         if let rootURL = themeCacheRootURL ?? fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
             let imageCacheRootURL = rootURL.appendingPathComponent(themeName).appendingPathComponent(imagesFolderName)
             self.imageCacheRootURL = imageCacheRootURL
             if !fileManager.fileExists(atPath: imageCacheRootURL.absoluteString, isDirectory: &isDirectory) {
-                try? fileManager.createDirectory(at: imageCacheRootURL, withIntermediateDirectories: true)
+                do {
+                    try fileManager.createDirectory(at: imageCacheRootURL, withIntermediateDirectories: true)
+                } catch {
+                    os_log(.error, "Failed to create image cache directory: %@", imageCacheRootURL.absoluteString)
+                }
             }
         }
     }
 
-    func object(for key: String, of dataURI: SnappThemingDataURI) -> UIImage? {
+    /// Retrieves an image from the cache or storage.
+    ///
+    /// - Parameters:
+    ///   - key: The unique key identifying the image.
+    ///   - dataURI: A `SnappThemingDataURI` object containing the image data and MIME type.
+    /// - Returns: The retrieved `UIImage` or `nil` if not found.
+    public func object(for key: String, of dataURI: SnappThemingDataURI) -> UIImage? {
         do {
             if let cachedImage = cache.object(forKey: key as NSString) {
                 return cachedImage
@@ -47,11 +77,21 @@ public final class SnappThemingImageManager {
         }
     }
 
-    func setObject(_ object: UIImage, for key: String) {
+    /// Caches an image in memory.
+    ///
+    /// - Parameters:
+    ///   - object: The `UIImage` to cache.
+    ///   - key: The unique key associated with the image.
+    public func setObject(_ object: UIImage, for key: String) {
         cache.setObject(object, forKey: key as NSString)
     }
 
-    func store(_ dataURI: SnappThemingDataURI, for key: String) {
+    /// Stores an image persistently on disk.
+    ///
+    /// - Parameters:
+    ///   - dataURI: A `SnappThemingDataURI` object containing the image data and MIME type.
+    ///   - key: The unique key associated with the image.
+    public func store(_ dataURI: SnappThemingDataURI, for key: String) {
         guard let imageURL = imageCacheURL(for: key, of: dataURI) else { return }
         do {
             try dataURI.data.write(to: imageURL, options: .atomic)
