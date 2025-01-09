@@ -75,32 +75,10 @@ public struct SnappThemingButtonStyle: ButtonStyle {
         let shape = shape.value
         configuration.label
             .font(font)
-            .foregroundStyle(
-                textColor.value(
-                    for: configuration,
-                    isEnabled: isEnabled,
-                    isSelected: isSelected))
+            .foregroundStyle(textColor)
             .padding()
-            .background(
-                shape.fill(
-                    surfaceColor.value(
-                        for: configuration,
-                        isEnabled: isEnabled,
-                        isSelected: isSelected)))
-            .overlay(
-                shape.stroke(
-                    borderColor.value(
-                        for: configuration,
-                        isEnabled: isEnabled,
-                        isSelected: isSelected),
-                    lineWidth: borderWidth))
-    }
-}
-
-private extension SnappThemingInteractiveColor {
-    func value(for configuration: ButtonStyle.Configuration, isEnabled: Bool, isSelected: Bool) -> Color {
-        guard isEnabled else { return disabled }
-        guard !isSelected else { return selected }
-        return configuration.isPressed ? pressed : normal
+            .background(shape.fill(surfaceColor))
+            .overlay(shape.stroke(borderColor))
+            .pressed(configuration.isPressed)
     }
 }

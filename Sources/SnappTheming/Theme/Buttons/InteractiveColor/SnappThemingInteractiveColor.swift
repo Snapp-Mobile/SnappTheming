@@ -43,3 +43,22 @@ public struct SnappThemingInteractiveColor: Sendable {
         self.disabled = disabled
     }
 }
+
+extension EnvironmentValues {
+    @Entry var isPressed = false
+}
+
+extension View {
+    func pressed(_ isPressed: Bool) -> some View {
+        environment(\.isPressed, isPressed)
+    }
+}
+
+extension SnappThemingInteractiveColor: ShapeStyle {
+    @available(iOS 17.0, *)
+    public func resolve(in environment: EnvironmentValues) -> Color {
+        guard environment.isEnabled else { return disabled }
+        guard !environment.isSelected else { return selected }
+        return environment.isPressed ? pressed : normal
+    }
+}
