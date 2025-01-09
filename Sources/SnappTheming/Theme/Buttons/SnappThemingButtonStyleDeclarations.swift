@@ -24,7 +24,7 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingButtonStyl
     ) {
         self.init(
             cache: cache,
-            rootKey: .buttonDeclarations,
+            rootKey: .buttonStyles,
             configuration: SnappThemingButtonStyleConfiguration(
                 fallbackSurfaceColor: configuration.fallbackButtonStyle.surfaceColor,
                 fallbackTextColor: configuration.fallbackButtonStyle.textColor,
