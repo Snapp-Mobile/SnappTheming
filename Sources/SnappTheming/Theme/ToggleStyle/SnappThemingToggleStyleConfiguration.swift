@@ -8,8 +8,12 @@
 import Foundation
 import SwiftUI
 
+/// A configuration structure for defining toggle styles in the SnappTheming framework.
 public struct SnappThemingToggleStyleConfiguration {
+    /// The fallback tint color for the toggle.
     public let fallbackTintColor: Color
+
+    /// The fallback tint color for the toggle when it is disabled.
     public let fallbackDisabledTintColor: Color
 
     let colors: SnappThemingColorDeclarations

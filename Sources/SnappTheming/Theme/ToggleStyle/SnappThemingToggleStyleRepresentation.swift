@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// A representation of toggle style in the SnappTheming framework.
 public struct SnappThemingToggleStyleRepresentation: Codable {
     public let tintColor: SnappThemingToken<SnappThemingColorRepresentation>
     public let disabledTintColor: SnappThemingToken<SnappThemingColorRepresentation>
