@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 /// Manages button style tokens, including properties like surface and text colors, border widths and color, shape and typography for various button states.
 public typealias SnappThemingButtonStyleDeclarations = SnappThemingDeclarations<SnappThemingButtonStyleRepresentation, SnappThemingButtonStyleConfiguration>
@@ -43,6 +44,7 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingButtonStyl
         )
     }
 
+    @available(*, deprecated, message: "Should be replaced with SnappThemeingButtonStyle result subscript")
     public subscript(dynamicMember keyPath: String) -> SnappThemingButtonStyleResolver {
         guard
             let representation: SnappThemingButtonStyleRepresentation = self[dynamicMember: keyPath],
@@ -75,5 +77,39 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingButtonStyl
             shape: shape,
             typography: .init(font.resolver, fontSize: fontSize.cgFloat)
         )
+    }
+
+    @MainActor
+    public subscript(dynamicMember keyPath: String) -> some ButtonStyle {
+        guard
+            let representation: SnappThemingButtonStyleRepresentation = self[dynamicMember: keyPath],
+            let borderWidth = configuration.metrics.resolver.resolve(representation.borderWidth),
+            let surfaceColor = configuration.interactiveColors.resolver
+                .resolve(representation.surfaceColor)?.resolver(colorFormat: configuration.colorFormat, colors: configuration.colors).interactiveColor,
+            let textColor = configuration
+                .interactiveColors.resolver.resolve(representation.textColor)?
+                .resolver(colorFormat: configuration.colorFormat, colors: configuration.colors).interactiveColor,
+            let borderColor = configuration.interactiveColors.resolver.resolve(representation.borderColor)?.resolver(colorFormat: configuration.colorFormat, colors: configuration.colors).interactiveColor,
+            let shape = configuration.shapes.resolver.resolve(representation.shape)?.resolver().buttonStyleType,
+            let typography = configuration.typographies.resolver.resolve(representation.typography),
+            let font = configuration.fonts.resolver.resolve(typography.font),
+            let fontSize = configuration.metrics.resolver.resolve(typography.fontSize)
+        else {
+            return SnappThemingButtonStyle(
+                surfaceColor: configuration.fallbackSurfaceColor,
+                textColor: configuration.fallbackTextColor,
+                borderColor: configuration.fallbackBorderColor,
+                borderWidth: configuration.fallbackBorderWidth,
+                shape: configuration.fallbackShape,
+                font: configuration.fallBackTypography.font)
+        }
+
+        return SnappThemingButtonStyle(
+            surfaceColor: surfaceColor,
+            textColor: textColor,
+            borderColor: borderColor,
+            borderWidth: borderWidth,
+            shape: shape,
+            font: font.resolver.font(size: fontSize))
     }
 }

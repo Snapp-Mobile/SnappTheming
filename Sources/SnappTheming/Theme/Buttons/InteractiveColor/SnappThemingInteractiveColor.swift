@@ -15,7 +15,6 @@ public struct SnappThemingInteractiveColor: Sendable {
 
     /// The color used when the element is pressed (tapped or clicked).
     public let pressed: Color
-
     /// The color used when the element is selected (e.g., highlighted or active).
     public let selected: Color
 
