@@ -7,13 +7,22 @@
 
 import SwiftUI
 
+/// A representation of a button's style shape in the SnappTheming framework.
+///
+/// This struct defines various button shape types and supports encoding and decoding
+/// from JSON for theming purposes.
 public struct SnappThemingButtonStyleShapeRepresentation: Codable {
-    let buttonStyleShape: SnappThemingButtonStyleType
+    /// The button style shape type (e.g., circle, rectangle, capsule).
+    public let buttonStyleShape: SnappThemingButtonStyleType
 
     enum CodingKeys: String, CodingKey {
         case type, value
     }
 
+    /// Decodes a `SnappThemingButtonStyleShapeRepresentation` from a decoder.
+    ///
+    /// - Parameter decoder: The decoder used to decode the data.
+    /// - Throws: A decoding error if the data is invalid or not formatted as expected.
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let tokenType = try container.decode(ButtonStyleShapeType.self, forKey: .type)
@@ -39,10 +48,15 @@ public struct SnappThemingButtonStyleShapeRepresentation: Codable {
         }
     }
 
+    /// Encodes a `SnappThemingButtonStyleShapeRepresentation` into an encoder.
+    ///
+    /// - Parameter encoder: The encoder used to encode the data.
+    /// - Throws: An encoding error if the data cannot be encoded.
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         let tokenType = ButtonStyleShapeType(buttonStyleShape)
         try container.encode(tokenType.rawValue, forKey: .type)
+
         switch buttonStyleShape {
         case .circle, .rectangle, .ellipse: break
         case let .capsule(style):
