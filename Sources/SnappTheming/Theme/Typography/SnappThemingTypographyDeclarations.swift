@@ -9,19 +9,31 @@ import Foundation
 import UIKit
 import SwiftUI
 
+/// Manages typography tokens, combining font and size. Provides full control over how text styles are applied in the app.
 public typealias SnappThemingTypographyDeclarations = SnappThemingDeclarations<SnappThemingTypographyRepresentation, SnappThemingTypographyConfiguration>
 
+/// Configuration for resolving typography in the SnappTheming framework.
 public struct SnappThemingTypographyConfiguration {
+    /// Fallback font size to use when a specific typography size cannot be resolved.
     let fallbackFontSize: CGFloat
+    /// A declaration of font-related theming configurations.
     let fonts: SnappThemingFontDeclarations
+    /// A declaration of metric-related theming configurations.
     let metrics: SnappThemingMetricDeclarations
 }
 
+/// Resolver for typography in the SnappTheming framework.
 public struct SnappThemingTypographyResolver: Sendable {
+    /// Resolved `UIFont` for UIKit usage.
     public let uiFont: UIFont
+    /// Resolved `Font` for SwiftUI usage.
     public let font: Font
 
-    init(_ resolver: SnappThemingFontResolver, fontSize: CGFloat) {
+    /// Initializes a typography resolver with a given font resolver and font size.
+    /// - Parameters:
+    ///   - resolver: The font resolver containing the font information.
+    ///   - fontSize: The size of the font to resolve.
+    public init(_ resolver: SnappThemingFontResolver, fontSize: CGFloat) {
         self.uiFont = resolver.uiFont(size: fontSize)
         self.font = resolver.font(size: fontSize)
     }

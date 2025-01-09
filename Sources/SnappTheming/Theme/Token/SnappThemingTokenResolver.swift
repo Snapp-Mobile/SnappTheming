@@ -16,7 +16,7 @@
 ///
 /// - Generic Parameter:
 ///   - Value: The type of value being resolved.
-struct SnappThemingTokenResolver<Value> where Value: Codable {
+public struct SnappThemingTokenResolver<Value> where Value: Codable {
     /// A dictionary holding the base tokens, organized by component and name.
     let baseValues: [String: [String: SnappThemingToken<Value>]]
 

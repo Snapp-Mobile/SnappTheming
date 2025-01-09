@@ -7,9 +7,16 @@
 
 import Foundation
 
+/// A representation of color in the SnappTheming framework.
 public enum SnappThemingColorRepresentation: Codable {
-    case hex(String), dynamic(SnappThemingDynamicColor)
+    /// A color represented by a hexadecimal string (e.g., "#FF5733").
+    case hex(String)
 
+    /// A dynamic color that can change depending on system settings (e.g., light/dark mode).
+    case dynamic(SnappThemingDynamicColor)
+
+    /// Decodes a `SnappThemingColorRepresentation` from the provided decoder.
+    /// It checks if the decoded value is a string (for hex) or a dynamic color.
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let stringValue = try? container.decode(String.self) {
@@ -19,6 +26,8 @@ public enum SnappThemingColorRepresentation: Codable {
         }
     }
 
+    /// Encodes the `SnappThemingColorRepresentation` to the provided encoder.
+    /// Depending on the case, it encodes either a hex string or a dynamic color.
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {

@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Manages segment control style tokens, enabling the customization of segment control appearance, including selected/unselected states, borders, shapes, and paddings.
 public typealias SnappThemingSegmentControlStyleDeclarations = SnappThemingDeclarations<SnappThemingSegmentControlStyleRepresentation, SnappThemingSegmentControlStyleConfiguration>
 
 extension SnappThemingDeclarations where DeclaredValue == SnappThemingSegmentControlStyleRepresentation, Configuration == SnappThemingSegmentControlStyleConfiguration {

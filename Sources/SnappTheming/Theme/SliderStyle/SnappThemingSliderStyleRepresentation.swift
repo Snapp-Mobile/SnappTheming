@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// A representation of slider style in the SnappTheming framework.
 public struct SnappThemingSliderStyleRepresentation: Codable {
     public let minimumTrackTintColor: SnappThemingToken<SnappThemingColorRepresentation>
     public let minimumTrackTintColorSecondary: SnappThemingToken<SnappThemingColorRepresentation>

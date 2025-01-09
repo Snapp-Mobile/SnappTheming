@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// A representation of segment control style in the SnappTheming framework.
 public struct SnappThemingSegmentControlStyleRepresentation: Codable {
     public let selectedButtonStyle: SnappThemingToken<SnappThemingButtonStyleRepresentation>
     public let normalButtonStyle: SnappThemingToken<SnappThemingButtonStyleRepresentation>

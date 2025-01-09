@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Handles slider style tokens, managing properties like track colors, tick mark styles for sliders used in the UI.
 public typealias SnappThemingSliderStyleDeclarations = SnappThemingDeclarations<SnappThemingSliderStyleRepresentation, SnappThemingSliderStyleConfiguration>
 
 extension SnappThemingDeclarations where DeclaredValue == SnappThemingSliderStyleRepresentation, Configuration == SnappThemingSliderStyleConfiguration {
