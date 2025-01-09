@@ -8,7 +8,7 @@
 import Foundation
 import OSLog
 
-/// A representation of a shape style configuration, which can include various gradient types.
+/// A representation of a shape style configuration in SnappTheming framework, which can include various gradient types.
 ///
 /// `SnappThemingShapeStyleRepresentation` encodes and decodes a shape style configuration based on a provided theme. It supports different gradient types (linear, radial, and angular), and defaults to a clear shape style if the gradient type is unsupported.
 ///

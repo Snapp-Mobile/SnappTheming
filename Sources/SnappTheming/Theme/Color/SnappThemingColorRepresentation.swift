@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Enum representing a color in theming system.
+/// A representation of color in the SnappTheming framework.
 public enum SnappThemingColorRepresentation: Codable {
     /// A color represented by a hexadecimal string (e.g., "#FF5733").
     case hex(String)

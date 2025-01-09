@@ -12,7 +12,7 @@ import OSLog
 /// Manages image tokens. Supports bitmap assets for different scenarios.
 public typealias SnappThemingImageDeclarations = SnappThemingDeclarations<SnappThemingDataURI, SnappThemingImageConfiguration>
 
-/// Configuration for handling themed images in a SnappTheming system.
+/// Configuration for handling themed images in a SnappTheming framework.
 public struct SnappThemingImageConfiguration {
     /// Fallback image to use when a specific image cannot be resolved.
     public let fallbackImage: Image
