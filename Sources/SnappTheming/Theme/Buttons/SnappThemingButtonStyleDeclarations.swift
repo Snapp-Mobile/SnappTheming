@@ -30,14 +30,14 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingButtonStyl
                 fallbackBorderColor: configuration.fallbackButtonStyle.borderColor,
                 fallbackBorderWidth: configuration.fallbackButtonStyle.borderWidth,
                 fallbackShape: configuration.fallbackButtonStyle.shape,
-                fallBackTypography: configuration.fallbackButtonStyle.typography,
+                fallbackTypography: configuration.fallbackButtonStyle.typography,
+                colorFormat: configuration.colorFormat,
                 metrics: metrics,
                 fonts: fonts,
                 colors: colors,
                 shapes: shapes,
                 typographies: typographies,
                 interactiveColors: interactiveColors,
-                colorFormat: configuration.colorFormat,
                 themeConfiguration: configuration
             )
         )
@@ -64,7 +64,7 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingButtonStyl
                 borderColor: configuration.fallbackBorderColor,
                 borderWidth: configuration.fallbackBorderWidth,
                 shape: configuration.fallbackShape,
-                typography: configuration.fallBackTypography
+                typography: configuration.fallbackTypography
             )
         }
         return SnappThemingButtonStyleResolver(
