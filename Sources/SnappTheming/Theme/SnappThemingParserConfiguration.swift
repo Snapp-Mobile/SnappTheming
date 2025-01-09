@@ -8,8 +8,13 @@
 import Foundation
 import SwiftUI
 
+/// Enum representing the supported color formats for Snapp theming.
 public enum SnappThemingColorFormat: Sendable {
-    case argb, rgba
+    /// ARGB format (Alpha, Red, Green, Blue). Used in systems where alpha (opacity) comes first.
+    case argb
+
+    /// RGBA format (Red, Green, Blue, Alpha). Common in most modern color systems, where alpha (opacity) comes last.
+    case rgba
 }
 
 public struct SnappThemingParserConfiguration: Sendable {
