@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 /// Manages button style tokens, including properties like surface and text colors, border widths and color, shape and typography for various button states.
 public typealias SnappThemingButtonStyleDeclarations = SnappThemingDeclarations<SnappThemingButtonStyleRepresentation, SnappThemingButtonStyleConfiguration>
@@ -43,7 +44,8 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingButtonStyl
         )
     }
 
-    public subscript(dynamicMember keyPath: String) -> SnappThemingButtonStyleResolver {
+    @MainActor
+    public subscript(dynamicMember keyPath: String) -> some ButtonStyle {
         guard
             let representation: SnappThemingButtonStyleRepresentation = self[dynamicMember: keyPath],
             let borderWidth = configuration.metrics.resolver.resolve(representation.borderWidth),
@@ -58,22 +60,20 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingButtonStyl
             let font = configuration.fonts.resolver.resolve(typography.font),
             let fontSize = configuration.metrics.resolver.resolve(typography.fontSize)
         else {
-            return SnappThemingButtonStyleResolver(
+            return SnappThemingButtonStyle(
                 surfaceColor: configuration.fallbackSurfaceColor,
                 textColor: configuration.fallbackTextColor,
                 borderColor: configuration.fallbackBorderColor,
                 borderWidth: configuration.fallbackBorderWidth,
                 shape: configuration.fallbackShape,
-                typography: configuration.fallbackTypography
-            )
+                font: configuration.fallbackTypography.font)
         }
-        return SnappThemingButtonStyleResolver(
+        return SnappThemingButtonStyle(
             surfaceColor: surfaceColor,
             textColor: textColor,
             borderColor: borderColor,
             borderWidth: borderWidth,
             shape: shape,
-            typography: .init(font.resolver, fontSize: fontSize.cgFloat)
-        )
+            font: font.resolver.font(size: fontSize))
     }
 }
