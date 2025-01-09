@@ -13,6 +13,11 @@ public typealias SnappThemingInteractiveColorDeclarations = SnappThemingDeclarat
 extension SnappThemingDeclarations where DeclaredValue == SnappThemingInteractiveColorInformation,
                              Configuration == SnappThemingInteractiveColorConfiguration
 {
+    /// Initializes the `SnappThemingDeclarations` with a cache of tokens and a configuration.
+    ///
+    /// - Parameters:
+    ///   - cache: A dictionary of cached tokens, where the key is a string and the value is a `SnappThemingToken` containing a `SnappThemingInteractiveColorInformation`.
+    ///   - configuration: The configuration used to set up the theming declarations, with a default configuration provided if not specified.
     public init(cache: [String: SnappThemingToken<DeclaredValue>]?, configuration: SnappThemingParserConfiguration = .default) {
         self.init(
             cache: cache,
