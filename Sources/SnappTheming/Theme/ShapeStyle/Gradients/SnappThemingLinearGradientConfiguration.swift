@@ -7,10 +7,20 @@
 
 import SwiftUI
 
+/// A configuration for creating a linear gradient shape style.
+///
+/// This configuration provides the properties required to define a linear gradient,
+/// including its colors, start point, and end point.
 public struct SnappThemingLinearGradientConfiguration: Sendable {
+    /// The colors used in the linear gradient.
     public let colors: [Color]
+
+    /// The starting point of the linear gradient.
     public let startPoint: UnitPoint
+
+    /// The ending point of the linear gradient.
     public let endPoint: UnitPoint
+
     private let colorDescriptions: [String]
 
     enum CodingKeys: CodingKey {
@@ -19,6 +29,7 @@ public struct SnappThemingLinearGradientConfiguration: Sendable {
 }
 
 extension SnappThemingLinearGradientConfiguration: SnappThemingShapeStyleProviding {
+    /// Creates a Linear Gradient shape style using the configuration properties.
     public var shapeStyle: some ShapeStyle {
         LinearGradient(
             colors: colors,
@@ -31,7 +42,7 @@ extension SnappThemingLinearGradientConfiguration: SnappThemingShapeStyleProvidi
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let colorsDescription = try container.decode([String].self, forKey: .colors)
         self.colorDescriptions = colorsDescription
-        self.colors = colorsDescription.compactMap { Color(hex: $0) }
+        self.colors = colorsDescription.map { Color(hex: $0) }
         self.startPoint = try container.decode(SnappThemingUnitPointWrapper.self, forKey: .startPoint).value
         self.endPoint = try container.decode(SnappThemingUnitPointWrapper.self, forKey: .endPoint).value
     }

@@ -7,10 +7,21 @@
 
 import SwiftUI
 
+/// A configuration for creating a radial gradient shape style.
+///
+/// This configuration defines the properties required to construct a radial gradient,
+/// including its colors, center point, and radius values.
 public struct SnappThemingRadialGradientConfiguration: Sendable {
+    /// The center point of the radial gradient.
     public let center: UnitPoint
+
+    /// The radius at which the radial gradient starts.
     public let startRadius: Double
+
+    /// The radius at which the radial gradient ends.
     public let endRadius: Double
+
+    /// The colors used in the gradient.
     public let colors: [Color]
     private let colorDescriptions: [String]
 
@@ -20,6 +31,7 @@ public struct SnappThemingRadialGradientConfiguration: Sendable {
 }
 
 extension SnappThemingRadialGradientConfiguration: SnappThemingShapeStyleProviding {
+    /// Creates a radial gradient shape style using the configuration properties.
     public var shapeStyle: some ShapeStyle {
         RadialGradient(
             colors: colors,
@@ -33,7 +45,7 @@ extension SnappThemingRadialGradientConfiguration: SnappThemingShapeStyleProvidi
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let colorDescriptions = try container.decode([String].self, forKey: .colors)
         self.colorDescriptions = colorDescriptions
-        self.colors = colorDescriptions.compactMap { Color(hex: $0) }
+        self.colors = colorDescriptions.map { Color(hex: $0) }
         self.center = try container.decode(SnappThemingUnitPointWrapper.self, forKey: .center).value
         self.startRadius = try container.decode(Double.self, forKey: .startRadius)
         self.endRadius = try container.decode(Double.self, forKey: .endRadius)

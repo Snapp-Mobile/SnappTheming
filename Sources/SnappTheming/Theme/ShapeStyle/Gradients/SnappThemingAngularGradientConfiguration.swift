@@ -7,19 +7,32 @@
 
 import SwiftUI
 
+/// A configuration for creating an Angular Gradient shape style.
+///
+/// This configuration provides the necessary parameters to define an angular gradient,
+/// including its colors, center point, and angle ranges.
 public struct SnappThemingAngularGradientConfiguration: Sendable {
+    /// The colors used in the gradient.
     public let colors: [Color]
+
+    /// The center point of the angular gradient.
     public let center: UnitPoint
+
+    /// The starting angle of the angular gradient.
     public let startAngle: Angle
+
+    /// The ending angle of the angular gradient.
     public let endAngle: Angle
+
     private var colorDescriptions: [String]
 
-    enum CodingKeys: CodingKey {
+    public enum CodingKeys: CodingKey {
         case colors, center, startAngle, endAngle
     }
 }
 
 extension SnappThemingAngularGradientConfiguration: SnappThemingShapeStyleProviding {
+    /// Creates an Angular Gradient shape style using the configuration properties.
     public var shapeStyle: some ShapeStyle {
         AngularGradient(
             colors: colors,
@@ -33,7 +46,7 @@ extension SnappThemingAngularGradientConfiguration: SnappThemingShapeStyleProvid
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let colorDescriptions = try container.decode([String].self, forKey: .colors)
         self.colorDescriptions = colorDescriptions
-        self.colors = colorDescriptions.compactMap { Color(hex: $0) }
+        self.colors = colorDescriptions.map { Color(hex: $0) }
         self.center = try container.decode(SnappThemingUnitPointWrapper.self, forKey: .center).value
         let startAngle = try container.decode(Double.self, forKey: .startAngle)
         let endAngle = try container.decode(Double.self, forKey: .endAngle)
