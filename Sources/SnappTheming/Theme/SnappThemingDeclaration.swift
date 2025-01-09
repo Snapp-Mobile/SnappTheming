@@ -7,20 +7,35 @@
 import Foundation
 import OSLog
 
+/// A model representing a comprehensive set of theming declarations for an application.
 public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
-    public let images: SnappThemingImageDeclarations
-    public let colors: SnappThemingColorDeclarations
-    public let interactiveColors: SnappThemingInteractiveColorDeclarations
-    public let metrics: SnappThemingMetricDeclarations
-    public let fonts: SnappThemingFontDeclarations
-    public let typography: SnappThemingTypographyDeclarations
-    public let buttonStyles: SnappThemingButtonStyleDeclarations
-    public let shapeStyle: SnappThemingShapeStyleDeclarations
-    public let shapes: SnappThemingButtonStyleShapeDeclarations
-    public let segmentControlStyle: SnappThemingSegmentControlStyleDeclarations
-    public let sliderStyle: SnappThemingSliderStyleDeclarations
-    public let toggleStyle: SnappThemingToggleStyleDeclarations
+    // MARK: - Public Properties
 
+    /// Image declarations.
+    public let images: SnappThemingImageDeclarations
+    /// Color declarations.
+    public let colors: SnappThemingColorDeclarations
+    /// Interactive color declarations.
+    public let interactiveColors: SnappThemingInteractiveColorDeclarations
+    /// Metric declarations.
+    public let metrics: SnappThemingMetricDeclarations
+    /// Font declarations.
+    public let fonts: SnappThemingFontDeclarations
+    /// Typography declarations.
+    public let typography: SnappThemingTypographyDeclarations
+    /// Button style declarations.
+    public let buttonStyles: SnappThemingButtonStyleDeclarations
+    /// Shape style declarations.
+    public let shapeStyle: SnappThemingShapeStyleDeclarations
+    /// Shape declarations.
+    public let shapes: SnappThemingButtonStyleShapeDeclarations
+    /// Segment control style declarations.
+    public let segmentControlStyle: SnappThemingSegmentControlStyleDeclarations
+    /// Slider style declarations.
+    public let sliderStyle: SnappThemingSliderStyleDeclarations
+    /// Toggle style declarations.
+    public let toggleStyle: SnappThemingToggleStyleDeclarations
+    /// Information about fonts used in the theme.
     public let fontInformations: [SnappThemingFontInformation]
 
     public enum CodingKeys: String, CodingKey {
@@ -29,10 +44,14 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
         case segmentControlStyle, sliderStyle, toggleStyle
     }
 
+    /// Key used to pass parser configuration through `JSONDecoder` or `JSONEncoder` user info.
     public static var themeParserConfigurationUserInfoKey: CodingUserInfoKey {
         return CodingUserInfoKey(rawValue: "themeParserConfiguration")!
     }
 
+    // MARK: - Initializers
+
+    /// Initializes a new instance of `SnappThemingDeclaration` with optional caches and a parser configuration.
     public init(
         imageCache: [String: SnappThemingToken<SnappThemingDataURI>]? = nil,
         colorCache: [String: SnappThemingToken<SnappThemingColorRepresentation>]? = nil,
