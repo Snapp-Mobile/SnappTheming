@@ -24,7 +24,7 @@ struct ThemedView: View {
     
     var body: some View {
         VStack {
-            ChargingProgress(declaration: declaration, progress: 58, distance: 312, limit: 75)
+            ChargingProgress(declaration: declaration, progress: 58, limit: 75)
 
             RoundedRectangle(cornerRadius: regular)
                 .fill(declaration.colors.primary)

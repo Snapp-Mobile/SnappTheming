@@ -11,7 +11,6 @@ import SwiftUI
 struct ChargingProgress: View {
     var declaration: SnappThemingDeclaration
     @State var progress: Int
-    @State var distance: Int
     @State var limit: Int
 
     var body: some View {
@@ -51,14 +50,6 @@ struct ChargingProgress: View {
                     .foregroundStyle(declaration.colors.surfaceTertiary)
 
                     Spacer()
-
-                    HStack(alignment: .lastTextBaseline, spacing: 4) {
-                        Text("\(distance)")
-                            .font(declaration.fonts.bold.font(size: 24))
-                        Text("km")
-                            .font(declaration.typography.textSmall.font)
-                    }
-                    .foregroundStyle(declaration.colors.textPrimary)
                 }
                 .frame(height: geometry.size.height)
                 .padding(.horizontal, 12)
