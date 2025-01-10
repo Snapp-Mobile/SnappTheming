@@ -52,8 +52,8 @@ public struct SnappThemingInteractiveColorInformation: Codable {
         } else {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.normal = try container.decode(SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .normal)
-            self.pressed = try container.decode(SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .pressed)
-            self.disabled = try container.decode(SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .disabled)
+            self.pressed = try container.decodeIfPresent(SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .pressed) ?? self.normal
+            self.disabled = try container.decodeIfPresent(SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .disabled)  ?? self.normal
         }
     }
 }
