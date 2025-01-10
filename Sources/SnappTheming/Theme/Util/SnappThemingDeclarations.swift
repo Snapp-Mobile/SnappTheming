@@ -32,7 +32,7 @@ import OSLog
 ///   Manages typography tokens, combining font and size. Provides full control over how text styles are applied in the app.
 ///
 /// - ``SnappThemingInteractiveColorDeclarations``:
-///   Handles a set of colors representing interaction states, such as `normal`, `selected`, `pressed`, and `disabled`. Useful for managing button states, toggle switches, and other interactive elements.
+///   Handles a set of colors representing interaction states, such as `normal`, `pressed`, and `disabled`. Useful for managing button states, toggle switches, and other interactive elements.
 ///
 /// - ``SnappThemingButtonStyleDeclarations``:
 ///   Manages button style tokens, including properties like surface and text colors, border widths and color, shape and typography for various button states.
