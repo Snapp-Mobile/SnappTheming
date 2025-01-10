@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Represents the color information for interactive states (normal, pressed, selected, and disabled).
+/// Represents the color information for interactive states (normal, pressed, and disabled).
 /// This struct can either hold the individual color representations for each state or a single color applied to all states.
 public struct SnappThemingInteractiveColorInformation: Codable {
     /// The color token for the normal state.
@@ -15,9 +15,6 @@ public struct SnappThemingInteractiveColorInformation: Codable {
 
     /// The color token for the pressed state.
     public let pressed: SnappThemingToken<SnappThemingColorRepresentation>
-
-    /// The color token for the selected state.
-    public let selected: SnappThemingToken<SnappThemingColorRepresentation>
 
     /// The color token for the disabled state.
     public let disabled: SnappThemingToken<SnappThemingColorRepresentation>
@@ -27,22 +24,19 @@ public struct SnappThemingInteractiveColorInformation: Codable {
     /// - Parameters:
     ///   - normal: The color token for the normal state.
     ///   - pressed: The color token for the pressed state.
-    ///   - selected: The color token for the selected state.
     ///   - disabled: The color token for the disabled state.
-    public init(normal: SnappThemingToken<SnappThemingColorRepresentation>, pressed: SnappThemingToken<SnappThemingColorRepresentation>, selected: SnappThemingToken<SnappThemingColorRepresentation>, disabled: SnappThemingToken<SnappThemingColorRepresentation>) {
+    public init(normal: SnappThemingToken<SnappThemingColorRepresentation>, pressed: SnappThemingToken<SnappThemingColorRepresentation>, disabled: SnappThemingToken<SnappThemingColorRepresentation>) {
         self.normal = normal
         self.pressed = pressed
-        self.selected = selected
         self.disabled = disabled
     }
 
     /// Initializes the interactive color information with a single color token applied to all states.
     ///
-    /// - Parameter singleColor: The color token to be applied to normal, pressed, selected, and disabled states.
+    /// - Parameter singleColor: The color token to be applied to normal, pressed, and disabled states.
     public init(_ singleColor: SnappThemingToken<SnappThemingColorRepresentation>) {
         self.normal = singleColor
         self.pressed = singleColor
-        self.selected = singleColor
         self.disabled = singleColor
     }
 
@@ -54,14 +48,12 @@ public struct SnappThemingInteractiveColorInformation: Codable {
             // Init with all states equal to this single color
             self.normal = singleColor
             self.pressed = singleColor
-            self.selected = singleColor
             self.disabled = singleColor
         } else {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.normal = try container.decode(SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .normal)
-            self.pressed = try container.decode(SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .pressed)
-            self.selected = try container.decode(SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .selected)
-            self.disabled = try container.decode(SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .disabled)
+            self.pressed = try container.decodeIfPresent(SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .pressed) ?? self.normal
+            self.disabled = try container.decodeIfPresent(SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .disabled)  ?? self.normal
         }
     }
 }
@@ -74,6 +66,6 @@ public extension SnappThemingInteractiveColorInformation {
     ///   - colors: The color declarations used to resolve the color tokens.
     /// - Returns: A `SnappThemingInteractiveColorResolver` that provides the resolved interactive colors.
     func resolver(colorFormat: SnappThemingColorFormat, colors: SnappThemingColorDeclarations) -> SnappThemingInteractiveColorResolver {
-        SnappThemingInteractiveColorResolver(normal: normal, pressed: pressed, selected: selected, disabled: disabled, colorFormat: colorFormat, colors: colors)
+        SnappThemingInteractiveColorResolver(normal: normal, pressed: pressed, disabled: disabled, colorFormat: colorFormat, colors: colors)
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 /// Manages button style tokens, including properties like surface and text colors, border widths and color, shape and typography for various button states.
 public typealias SnappThemingButtonStyleDeclarations = SnappThemingDeclarations<SnappThemingButtonStyleRepresentation, SnappThemingButtonStyleConfiguration>
@@ -23,7 +24,7 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingButtonStyl
     ) {
         self.init(
             cache: cache,
-            rootKey: .buttonDeclarations,
+            rootKey: .buttonStyles,
             configuration: SnappThemingButtonStyleConfiguration(
                 fallbackSurfaceColor: configuration.fallbackButtonStyle.surfaceColor,
                 fallbackTextColor: configuration.fallbackButtonStyle.textColor,
@@ -75,5 +76,17 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingButtonStyl
             shape: shape,
             typography: .init(font.resolver, fontSize: fontSize.cgFloat)
         )
+    }
+
+    @MainActor
+    public subscript(dynamicMember keyPath: String) -> some ButtonStyle {
+        let styleResolver: SnappThemingButtonStyleResolver = self[dynamicMember: keyPath]
+        return SnappThemingButtonStyle(
+            surfaceColor: styleResolver.surfaceColor,
+            textColor: styleResolver.textColor,
+            borderColor: styleResolver.borderColor,
+            borderWidth: styleResolver.borderWidth,
+            shape: styleResolver.shape,
+            font: styleResolver.typography.font)
     }
 }
