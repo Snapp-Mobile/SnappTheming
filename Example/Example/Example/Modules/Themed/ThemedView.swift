@@ -6,7 +6,7 @@
 //
 
 import SnappTheming
-import SwiftUIUtil
+import SnappThemingSwiftUIHelpers
 import SwiftUI
 import OSLog
 
