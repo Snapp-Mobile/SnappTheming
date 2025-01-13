@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// A struct that holds the configuration for interactive colors, including a fallback color, color format, and theme configuration.
-/// This is used for theming interactive elements such as buttons, with specific colors for different states (normal, pressed, selected, disabled).
+/// This is used for theming interactive elements such as buttons, with specific colors for different states (normal, pressed, disabled).
 public struct SnappThemingInteractiveColorConfiguration {
     /// The fallback color to use if no specific interactive color is defined.
     public let fallbackColor: SnappThemingInteractiveColor

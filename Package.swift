@@ -14,6 +14,9 @@ let package = Package(
         .library(
             name: "SnappTheming",
             targets: ["SnappTheming"]),
+        .library(
+            name: "SnappThemingSwiftUIHelpers",
+            targets: ["SnappThemingSwiftUIHelpers"]),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -24,5 +27,7 @@ let package = Package(
             name: "SnappThemingTests",
             dependencies: ["SnappTheming"]
         ),
+        .target(
+            name: "SnappThemingSwiftUIHelpers"),
     ]
 )
