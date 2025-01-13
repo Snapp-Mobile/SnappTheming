@@ -7,52 +7,53 @@
 
 import SwiftUI
 
-/// A custom button style that switches between two styles based on an `isSelected` environment value.
-/// - This struct enables creating buttons that change their appearance when selected.
-private struct SelectableButtonStyle<NormalStyle, SelectedStyle>: ButtonStyle
-where NormalStyle: ButtonStyle, SelectedStyle: ButtonStyle {
-    /// The button style to apply when the button is not selected.
-    let normalStyle: NormalStyle
-    
-    /// The button style to apply when the button is selected.
-    let selectedStyle: SelectedStyle
-
-    /// Reads the `isSelected` value from the environment to determine the button's state.
-    /// - Note: The `isSelected` environment variable is set using the `selected(_:)` view modifier.
+/// A private structure that dynamically renders a view based on the `isSelected` value in the environment.
+private struct Selected<Body: View>: View {
+    /// The `isSelected` value from the environment, indicating the current state of selection.
+    ///
+    /// - Note: The `isSelected` environment variable must be set using the `selected(_:)` view modifier.
     @Environment(\.isSelected) var isSelected
 
-    /// Creates a view representing the body of the button with the appropriate style.
+    /// A closure that takes the `isSelected` state and returns a view to display.
+    var makeBody: (Bool) -> Body
+
+    /// Initializes a `Selected` view.
     ///
-    /// - Parameter configuration: The properties of the button being styled.
-    /// - Returns: A view representing the button's styled appearance.
-    func makeBody(configuration: Configuration) -> some View {
-        if isSelected {
-            selectedStyle.makeBody(configuration: configuration)
-        } else {
-            normalStyle.makeBody(configuration: configuration)
-        }
+    /// - Parameter makeBody: A closure that takes a Boolean value indicating the selection state and returns the corresponding view.
+    init(@ViewBuilder makeBody: @escaping (Bool) -> Body) {
+        self.makeBody = makeBody
+    }
+
+    /// The content and behavior of the view.
+    var body: some View {
+        makeBody(isSelected)
     }
 }
 
-/// An extension on `View` to simplify the application of the `SelectableButtonStyle`.
+/// An extension on `View` that provides a modifier for applying a selectable button style.
 extension View {
-    /// Applies a selectable button style to a button, switching between two styles based on the `isSelected` environment value.
+    /// Applies a dynamic button style based on the selection state.
     ///
-    /// This function enables a button to dynamically adjust its appearance by using the provided
-    /// `normalStyle` and `selectedStyle`. The button's selected state is determined by the `isSelected`
-    /// environment variable, which can be set using the `selected(_:)` view modifier.
+    /// This modifier allows a button to switch between two styles—`normalStyle` and `selectedStyle`—depending on the `isSelected`
+    /// environment value. The selection state is controlled using the `selected(_:)` view modifier.
     ///
     /// - Parameters:
     ///   - normalStyle: The button style to apply when the button is not selected.
     ///   - selectedStyle: The button style to apply when the button is selected.
-    /// - Returns: A view with the selectable button style applied.
+    /// - Returns: A view with the dynamic button style applied.
     ///
-    /// - Note: Use the `selected(_:)` modifier to set the `isSelected` environment variable for
-    /// a view hierarchy. This determines whether the button should render as selected.
+    /// - Note: The `selected(_:)` modifier must be used to set the `isSelected` environment variable in the view hierarchy.
+    /// This variable determines the selection state of the button.
     public func buttonStyle<NormalStyle, SelectedStyle>(
         _ normalStyle: NormalStyle,
         selected selectedStyle: SelectedStyle
     ) -> some View where NormalStyle: ButtonStyle, SelectedStyle: ButtonStyle {
-        buttonStyle(SelectableButtonStyle(normalStyle: normalStyle, selectedStyle: selectedStyle))
+        Selected { isSelected in
+            if isSelected {
+                buttonStyle(selectedStyle)
+            } else {
+                buttonStyle(normalStyle)
+            }
+        }
     }
 }
