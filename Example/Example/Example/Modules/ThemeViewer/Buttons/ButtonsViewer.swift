@@ -6,11 +6,11 @@
 //
 
 import SnappTheming
+import SwiftUIUtil
 import SwiftUI
 
 struct ButtonsViewer: View {
     let declarations: SnappThemingButtonStyleDeclarations
-    @State var states: [String: Bool] = [:]
 
     var body: some View {
         List {
@@ -18,12 +18,11 @@ struct ButtonsViewer: View {
                 ForEach(declarations.keys, id: \.self) { key in
                     LabeledContent(key) {
                         Button {
-                            let value = states[key] ?? false
-                            states[key] = !value
                         } label: {
                             Image(systemName: "gearshape")
                         }
-                        .buttonStyle(AppButtonStyle(selected: states[key] ?? false, style: declarations[dynamicMember: key], width: (key == "primaryCritical" || key == "primaryBrand") ? 128 : 64))
+                        .buttonStyle(declarations[dynamicMember: key])
+                        .frame(minWidth: (key == "primaryCritical" || key == "primaryBrand") ? 128 : 64, minHeight: 64)
                     }
                 }
             } footer: {
