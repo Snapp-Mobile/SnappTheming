@@ -233,13 +233,11 @@
         "primary": {
             "surfaceColor": {
                 "normal": "#FFFFFF0F",
-                "selected": "#C22973",
                 "pressed": "#3D3D3D",
                 "disabled": "#FFFFFF0F"
             },
             "borderColor": {
                 "normal": "#FFFFFF0F",
-                "selected": "#FFFFFF0F",
                 "pressed": "#FFFFFF1F",
                 "disabled": "#FFFFFF00"
             },
@@ -266,29 +264,50 @@
             "shape": "$shapes/roundedRectangle"
         }
     },
-    "buttonDeclarations": {
+    "buttonStyles": {
         "primary": {
             "surfaceColor": {
                 "normal": "#FFFFFF0F",
-                "selected": "#C22973",
                 "pressed": "#3D3D3D",
                 "disabled": "#FFFFFF0F"
             },
             "borderColor": {
                 "normal": "#FFFFFF0F",
-                "selected": "#FFFFFF0F",
                 "pressed": "#FFFFFF1F",
                 "disabled": "#FFFFFF00"
             },
             "textColor": {
                 "normal": "#FFFFFF",
-                "selected": "#FFFFFF",
                 "pressed": "#FFFFFF",
                 "disabled": "#888888"
             },
             "iconColor": {
                 "normal": "#FFFFFF",
-                "selected": "#FFFFFF",
+                "pressed": "#FFFFFF",
+                "disabled": "#888888"
+            },
+            "borderWidth": 1,
+            "typography": "$typography/textSmall",
+            "shape": "$shapes/roundedRectangle"
+        },
+        "primarySelected": {
+            "surfaceColor": {
+                "normal": "#C22973",
+                "pressed": "#3D3D3D",
+                "disabled": "#FFFFFF0F"
+            },
+            "borderColor": {
+                "normal": "#FFFFFF0F",
+                "pressed": "#FFFFFF1F",
+                "disabled": "#FFFFFF00"
+            },
+            "textColor": {
+                "normal": "#FFFFFF",
+                "pressed": "#FFFFFF",
+                "disabled": "#888888"
+            },
+            "iconColor": {
+                "normal": "#FFFFFF",
                 "pressed": "#FFFFFF",
                 "disabled": "#888888"
             },
@@ -299,25 +318,46 @@
         "primaryBrand": {
             "surfaceColor": {
                 "normal": "#1A1A1A",
-                "selected": "#C22973",
                 "pressed": "#3D3D3D",
                 "disabled": "#FFFFFF0F"
             },
             "borderColor": {
                 "normal": "#FFFFFF0F",
-                "selected": "#FFFFFF0F",
                 "pressed": "#FFFFFF1F",
                 "disabled": "#FFFFFF00"
             },
             "textColor": {
                 "normal": "#FFFFFF",
-                "selected": "#FFFFFF",
                 "pressed": "#FFFFFF",
                 "disabled": "#888888"
             },
             "iconColor": {
                 "normal": "#FFFFFF",
-                "selected": "#FFFFFF",
+                "pressed": "#FFFFFF",
+                "disabled": "#888888"
+            },
+            "borderWidth": 1,
+            "typography": "$typography/textSmall",
+            "shape": "$shapes/roundedRectangle"
+        },
+        "primaryBrandSelected": {
+            "surfaceColor": {
+                "normal": "#C22973",
+                "pressed": "#3D3D3D",
+                "disabled": "#FFFFFF0F"
+            },
+            "borderColor": {
+                "normal": "#FFFFFF0F",
+                "pressed": "#FFFFFF1F",
+                "disabled": "#FFFFFF00"
+            },
+            "textColor": {
+                "normal": "#FFFFFF",
+                "pressed": "#FFFFFF",
+                "disabled": "#888888"
+            },
+            "iconColor": {
+                "normal": "#FFFFFF",
                 "pressed": "#FFFFFF",
                 "disabled": "#888888"
             },
@@ -328,25 +368,46 @@
         "primaryAlt": {
             "surfaceColor": {
                 "normal": "#FFFFFF0F",
-                "selected": "#FFFFFF1F",
                 "pressed": "#FFFFFF4D",
                 "disabled": "#FFFFFF0F"
             },
             "borderColor": {
                 "normal": "#FFFFFF0F",
-                "selected": "#FFFFFF0F",
                 "pressed": "#FFFFFF1F",
                 "disabled": "#FFFFFF00"
             },
             "textColor": {
                 "normal": "#FFFFFF",
-                "selected": "#FFFFFF",
                 "pressed": "#FFFFFF",
                 "disabled": "#888888"
             },
             "iconColor": {
                 "normal": "#FFFFFF",
-                "selected": "#FFFFFF",
+                "pressed": "#FFFFFF",
+                "disabled": "#888888"
+            },
+            "borderWidth": 1,
+            "typography": "$typography/textLarge",
+            "shape": "$shapes/roundedRectangle"
+        },
+        "primaryAltSelected": {
+            "surfaceColor": {
+                "normal": "#FFFFFF1F",
+                "pressed": "#FFFFFF4D",
+                "disabled": "#FFFFFF0F"
+            },
+            "borderColor": {
+                "normal": "#FFFFFF0F",
+                "pressed": "#FFFFFF1F",
+                "disabled": "#FFFFFF00"
+            },
+            "textColor": {
+                "normal": "#FFFFFF",
+                "pressed": "#FFFFFF",
+                "disabled": "#888888"
+            },
+            "iconColor": {
+                "normal": "#FFFFFF",
                 "pressed": "#FFFFFF",
                 "disabled": "#888888"
             },
@@ -357,25 +418,46 @@
         "primaryAltBrand": {
             "surfaceColor": {
                 "normal": "#FFFFFF0F",
-                "selected": "#C22973",
                 "pressed": "#FFFFFF4D",
                 "disabled": "#FFFFFF0F"
             },
             "borderColor": {
                 "normal": "#FFFFFF0F",
-                "selected": "#FFFFFF0F",
                 "pressed": "#FFFFFF1F",
                 "disabled": "#FFFFFF00"
             },
             "textColor": {
                 "normal": "#FFFFFF",
-                "selected": "#FFFFFF",
                 "pressed": "#FFFFFF",
                 "disabled": "#888888"
             },
             "iconColor": {
                 "normal": "#FFFFFF",
-                "selected": "#FFFFFF",
+                "pressed": "#FFFFFF",
+                "disabled": "#888888"
+            },
+            "borderWidth": 1,
+            "typography": "$typography/textSmall",
+            "shape": "$shapes/roundedRectangle"
+        },
+        "primaryAltBrandSelected": {
+            "surfaceColor": {
+                "normal": "#C22973",
+                "pressed": "#FFFFFF4D",
+                "disabled": "#FFFFFF0F"
+            },
+            "borderColor": {
+                "normal": "#FFFFFF0F",
+                "pressed": "#FFFFFF1F",
+                "disabled": "#FFFFFF00"
+            },
+            "textColor": {
+                "normal": "#FFFFFF",
+                "pressed": "#FFFFFF",
+                "disabled": "#888888"
+            },
+            "iconColor": {
+                "normal": "#FFFFFF",
                 "pressed": "#FFFFFF",
                 "disabled": "#888888"
             },
@@ -386,25 +468,46 @@
         "primaryCritical": {
             "surfaceColor": {
                 "normal": "#1A1A1A",
-                "selected": "#292929",
                 "pressed": "#3D3D3D",
                 "disabled": "#FFFFFF0F"
             },
             "borderColor": {
                 "normal": "#FFFFFF00",
-                "selected": "#E94E4A",
                 "pressed": "#E94E4A",
                 "disabled": "#A22522"
             },
             "textColor": {
                 "normal": "#F37976",
-                "selected": "#F37976",
                 "pressed": "#F37976",
                 "disabled": "#888888"
             },
             "iconColor": {
                 "normal": "#FFFFFF",
-                "selected": "#FFFFFF",
+                "pressed": "#FFFFFF",
+                "disabled": "#888888"
+            },
+            "borderWidth": 1,
+            "typography": "$typography/textSmall",
+            "shape": "$shapes/roundedRectangle"
+        },
+        "primaryCriticalSelected": {
+            "surfaceColor": {
+                "normal": "#292929",
+                "pressed": "#3D3D3D",
+                "disabled": "#FFFFFF0F"
+            },
+            "borderColor": {
+                "normal": "#E94E4A",
+                "pressed": "#E94E4A",
+                "disabled": "#A22522"
+            },
+            "textColor": {
+                "normal": "#F37976",
+                "pressed": "#F37976",
+                "disabled": "#888888"
+            },
+            "iconColor": {
+                "normal": "#FFFFFF",
                 "pressed": "#FFFFFF",
                 "disabled": "#888888"
             },
@@ -415,25 +518,46 @@
         "featuredSensor": {
             "surfaceColor": {
                 "normal": "#FFFFFF0F",
-                "selected": "#C22973",
                 "pressed": "#FFFFFF4D",
                 "disabled": "#FFFFFF0F"
             },
             "borderColor": {
                 "normal": "#FFFFFF0F",
-                "selected": "#FFFFFF0F",
                 "pressed": "#FFFFFF1F",
                 "disabled": "#FFFFFF00"
             },
             "textColor": {
                 "normal": "#FFFFFF",
-                "selected": "#FFFFFF",
                 "pressed": "#FFFFFF",
                 "disabled": "#888888"
             },
             "iconColor": {
                 "normal": "#FFFFFF",
-                "selected": "#FFFFFF",
+                "pressed": "#FFFFFF",
+                "disabled": "#888888"
+            },
+            "borderWidth": 1,
+            "typography": "$typography/textSmall",
+            "shape": "$shapes/roundedRectangle"
+        },
+        "featuredSensorSelected": {
+            "surfaceColor": {
+                "normal": "#C22973",
+                "pressed": "#FFFFFF4D",
+                "disabled": "#FFFFFF0F"
+            },
+            "borderColor": {
+                "normal": "#FFFFFF0F",
+                "pressed": "#FFFFFF1F",
+                "disabled": "#FFFFFF00"
+            },
+            "textColor": {
+                "normal": "#FFFFFF",
+                "pressed": "#FFFFFF",
+                "disabled": "#888888"
+            },
+            "iconColor": {
+                "normal": "#FFFFFF",
                 "pressed": "#FFFFFF",
                 "disabled": "#888888"
             },
@@ -444,25 +568,46 @@
         "featuredSensorBackground": {
             "surfaceColor": {
                 "normal": "#FFFFFF0F",
-                "selected": "#FFFFFF1F",
                 "pressed": "#FFFFFF4D",
                 "disabled": "#FFFFFF0F"
             },
             "borderColor": {
                 "normal": "#FFFFFF0F",
-                "selected": "#FFFFFF0F",
                 "pressed": "#FFFFFF1F",
                 "disabled": "#FFFFFF00"
             },
             "textColor": {
                 "normal": "#FFFFFF",
-                "selected": "#FFFFFF",
                 "pressed": "#FFFFFF",
                 "disabled": "#888888"
             },
             "iconColor": {
                 "normal": "#FFFFFF",
-                "selected": "#FFFFFF",
+                "pressed": "#FFFFFF",
+                "disabled": "#888888"
+            },
+            "borderWidth": 1,
+            "typography": "$typography/textLarge",
+            "shape": "$shapes/roundedRectangle"
+        },
+        "featuredSensorBackgroundSelected": {
+            "surfaceColor": {
+                "normal": "#FFFFFF1F",
+                "pressed": "#FFFFFF4D",
+                "disabled": "#FFFFFF0F"
+            },
+            "borderColor": {
+                "normal": "#FFFFFF0F",
+                "pressed": "#FFFFFF1F",
+                "disabled": "#FFFFFF00"
+            },
+            "textColor": {
+                "normal": "#FFFFFF",
+                "pressed": "#FFFFFF",
+                "disabled": "#888888"
+            },
+            "iconColor": {
+                "normal": "#FFFFFF",
                 "pressed": "#FFFFFF",
                 "disabled": "#888888"
             },
@@ -473,25 +618,46 @@
         "sensor": {
             "surfaceColor": {
                 "normal": "#FFFFFF0F",
-                "selected": "#C22973",
                 "pressed": "#FFFFFF4D",
                 "disabled": "#FFFFFF0F"
             },
             "borderColor": {
                 "normal": "#FFFFFF0F",
-                "selected": "#FFFFFF0F",
                 "pressed": "#FFFFFF1F",
                 "disabled": "#FFFFFF00"
             },
             "textColor": {
                 "normal": "#FFFFFF",
-                "selected": "#FFFFFF",
                 "pressed": "#FFFFFF",
                 "disabled": "#888888"
             },
             "iconColor": {
                 "normal": "#FFFFFF",
-                "selected": "#FFFFFF",
+                "pressed": "#FFFFFF",
+                "disabled": "#888888"
+            },
+            "borderWidth": 1,
+            "typography": "$typography/textSmall",
+            "shape": "$shapes/roundedRectangle"
+        },
+        "sensorSelected": {
+            "surfaceColor": {
+                "normal": "#C22973",
+                "pressed": "#FFFFFF4D",
+                "disabled": "#FFFFFF0F"
+            },
+            "borderColor": {
+                "normal": "#FFFFFF0F",
+                "pressed": "#FFFFFF1F",
+                "disabled": "#FFFFFF00"
+            },
+            "textColor": {
+                "normal": "#FFFFFF",
+                "pressed": "#FFFFFF",
+                "disabled": "#888888"
+            },
+            "iconColor": {
+                "normal": "#FFFFFF",
                 "pressed": "#FFFFFF",
                 "disabled": "#888888"
             },
@@ -502,25 +668,46 @@
         "secondary": {
             "surfaceColor": {
                 "normal": "#FFFFFF00",
-                "selected": "#292929",
                 "pressed": "#FFFFFF0F",
                 "disabled": "#FFFFFF00"
             },
             "borderColor": {
                 "normal": "#FFFFFF1F",
-                "selected": "#C22973",
                 "pressed": "#FFFFFF1F",
                 "disabled": "#FFFFFF0F"
             },
             "textColor": {
                 "normal": "#FFFFFF",
-                "selected": "#FFFFFF",
                 "pressed": "#FFFFFF",
                 "disabled": "#888888"
             },
             "iconColor": {
                 "normal": "#FFFFFF",
-                "selected": "#FFFFFF",
+                "pressed": "#FFFFFF",
+                "disabled": "#888888"
+            },
+            "borderWidth": 1,
+            "typography": "$typography/textSmall",
+            "shape": "$shapes/roundedRectangle"
+        },
+        "secondarySelected": {
+            "surfaceColor": {
+                "normal": "#292929",
+                "pressed": "#FFFFFF0F",
+                "disabled": "#FFFFFF00"
+            },
+            "borderColor": {
+                "normal": "#C22973",
+                "pressed": "#FFFFFF1F",
+                "disabled": "#FFFFFF0F"
+            },
+            "textColor": {
+                "normal": "#FFFFFF",
+                "pressed": "#FFFFFF",
+                "disabled": "#888888"
+            },
+            "iconColor": {
+                "normal": "#FFFFFF",
                 "pressed": "#FFFFFF",
                 "disabled": "#888888"
             },
