@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		53F233192D31518F00264B36 /* SnappTheming in Frameworks */ = {isa = PBXBuildFile; productRef = 53F233182D31518F00264B36 /* SnappTheming */; };
+		2DCC022F2D3515A600D8C07A /* SnappTheming in Frameworks */ = {isa = PBXBuildFile; productRef = 2DCC022E2D3515A600D8C07A /* SnappTheming */; };
+		2DCC02312D3515A600D8C07A /* SwiftUIUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 2DCC02302D3515A600D8C07A /* SwiftUIUtil */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +28,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				53F233192D31518F00264B36 /* SnappTheming in Frameworks */,
+				2DCC02312D3515A600D8C07A /* SwiftUIUtil in Frameworks */,
+				2DCC022F2D3515A600D8C07A /* SnappTheming in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,7 +72,8 @@
 			);
 			name = Example;
 			packageProductDependencies = (
-				53F233182D31518F00264B36 /* SnappTheming */,
+				2DCC022E2D3515A600D8C07A /* SnappTheming */,
+				2DCC02302D3515A600D8C07A /* SwiftUIUtil */,
 			);
 			productName = Example;
 			productReference = 53F233062D31511E00264B36 /* Example.app */;
@@ -101,7 +104,7 @@
 			mainGroup = 53F232FD2D31511E00264B36;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				53F233172D31518F00264B36 /* XCLocalSwiftPackageReference "../../../SnappTheming" */,
+				2DCC022D2D3515A600D8C07A /* XCLocalSwiftPackageReference "../../../SnappTheming" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 53F233072D31511E00264B36 /* Products */;
@@ -335,16 +338,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		53F233172D31518F00264B36 /* XCLocalSwiftPackageReference "../../../SnappTheming" */ = {
+		2DCC022D2D3515A600D8C07A /* XCLocalSwiftPackageReference "../../../SnappTheming" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../../../SnappTheming;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		53F233182D31518F00264B36 /* SnappTheming */ = {
+		2DCC022E2D3515A600D8C07A /* SnappTheming */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SnappTheming;
+		};
+		2DCC02302D3515A600D8C07A /* SwiftUIUtil */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftUIUtil;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
