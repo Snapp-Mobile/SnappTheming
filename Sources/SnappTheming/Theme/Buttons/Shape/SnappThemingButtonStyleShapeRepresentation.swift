@@ -44,7 +44,7 @@ public struct SnappThemingButtonStyleShapeRepresentation: Codable {
             }
         case .unevenRoundedRectangle:
             let radiiValue = try container.decode(UnevenRoundedRectangleValue.self, forKey: .value)
-            buttonStyleShape = .unevenRoundedRectangle(radiiValue.cornerRadii)
+            buttonStyleShape = .unevenRoundedRectangle(radiiValue.cornerRadii, radiiValue.styleValue.style)
         }
     }
 
@@ -108,10 +108,16 @@ extension StyleValue: Codable {
         }
     }
 }
+
 private struct CornerRadiusValue {
     let cornerRadius: CGFloat
     let styleValue: RoundedCornerStyleValue
+
+    enum CodingKeys: String, CodingKey {
+        case cornerRadius, styleValue = "style"
+    }
 }
+
 extension CornerRadiusValue: Codable {
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -119,18 +125,20 @@ extension CornerRadiusValue: Codable {
         self.styleValue = try container.decodeIfPresent(RoundedCornerStyleValue.self, forKey: .styleValue) ?? .continuous
     }
 }
+
 private struct CornerSizeValue {
     let cornerSize: CGSize
     let styleValue: RoundedCornerStyleValue
 
     enum CodingKeys: String, CodingKey {
-        case cornerSize, styleValue
+        case cornerSize, styleValue = "style"
     }
 
     enum CornerSizeCodingKeys: String, CodingKey {
         case width, height
     }
 }
+
 extension CornerSizeValue: Codable {
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -141,12 +149,13 @@ extension CornerSizeValue: Codable {
         self.cornerSize = CGSize(width: width, height: height)
     }
 }
+
 private struct UnevenRoundedRectangleValue {
     let cornerRadiiValue: CornerRadiiValue
     let styleValue: RoundedCornerStyleValue
 
     enum CodingKeys: String, CodingKey {
-        case styleValue, cornerRadiiValue = "cornerRadii"
+        case styleValue = "style", cornerRadiiValue = "cornerRadii"
     }
 
     var cornerRadii: RectangleCornerRadii {
@@ -158,19 +167,23 @@ private struct UnevenRoundedRectangleValue {
         )
     }
 }
+
 extension UnevenRoundedRectangleValue: Codable {
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.styleValue = try container.decodeIfPresent(RoundedCornerStyleValue.self, forKey: .styleValue) ?? .continuous
+        let value = try container.decodeIfPresent(RoundedCornerStyleValue.self, forKey: .styleValue)
+        self.styleValue = value ?? .continuous
         self.cornerRadiiValue = try container.decode(CornerRadiiValue.self, forKey: .cornerRadiiValue)
     }
 }
+
 private struct CornerRadiiValue {
     let topLeading: CGFloat
     let bottomLeading: CGFloat
     let bottomTrailing: CGFloat
     let topTrailing: CGFloat
 }
+
 extension CornerRadiiValue: Codable {
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -179,6 +192,7 @@ extension CornerRadiiValue: Codable {
         self.bottomTrailing = try container.decode(CGFloat.self, forKey: .bottomTrailing)
         self.topTrailing = try container.decode(CGFloat.self, forKey: .topTrailing)
     }
+
     init(rawValue: RectangleCornerRadii) {
         self.bottomLeading = rawValue.bottomLeading
         self.bottomTrailing = rawValue.bottomTrailing
@@ -186,8 +200,10 @@ extension CornerRadiiValue: Codable {
         self.topTrailing = rawValue.topTrailing
     }
 }
+
 private enum RoundedCornerStyleValue: String, Codable {
     case circular, continuous
+
     var style: RoundedCornerStyle {
         switch self {
         case .circular:
