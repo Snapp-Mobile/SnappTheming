@@ -86,17 +86,14 @@ struct ColorTests {
                     "light": "#E94E4A",
                     "dark": "#EF6820"
                 }
-                "secondary": {
-                    "light": "#00ff00",
-                    "dark": "#0000ff"
-                }
             }
         }
         """
-        let expectedBlue = 170
+        let expectedLightBlue = 74
+        let expectedDarkBlue = 32
         let declaration = try SnappThemingParser.parse(from: json)
 
-        let testColor: UIColor = declaration.colors.test
+        let testColor: UIColor = declaration.colors.primary
         let testColorUnspecified = testColor.resolvedColor(with: .init(userInterfaceStyle: .unspecified))
         let light = testColor.resolvedColor(with: .init(userInterfaceStyle: .light))
         let dark = testColor.resolvedColor(with: .init(userInterfaceStyle: .dark))
@@ -105,8 +102,40 @@ struct ColorTests {
         let testColorLightBlue = try #require(light.cgColor.components?[2])
         let testColorDarkBlue = try #require(dark.cgColor.components?[2])
 
-        #expect(Int(testColorUnspecifiedBlue*255) == expectedBlue)
-        #expect(Int(testColorLightBlue*255) == expectedBlue)
-        #expect(Int(testColorDarkBlue*255) == expectedBlue)
+        #expect(Int(testColorUnspecifiedBlue * 255) == expectedLightBlue)
+        #expect(Int(testColorLightBlue * 255) == expectedLightBlue)
+        #expect(Int(testColorDarkBlue * 255) == expectedDarkBlue)
+    }
+
+    @Test
+    func parseColorAliasing() throws {
+        let json =
+        """
+        {
+            "colors": {
+                "primary": {
+                    "light": "#E94E4A",
+                    "dark": "#EF6820"
+                },
+                "secondary": "$colors/primary"
+            }
+        }
+        """
+        let expectedLightBlue = 74
+        let expectedDarkBlue = 32
+        let declaration = try SnappThemingParser.parse(from: json)
+
+        let testColor: UIColor = declaration.colors.secondary
+        let testColorUnspecified = testColor.resolvedColor(with: .init(userInterfaceStyle: .unspecified))
+        let light = testColor.resolvedColor(with: .init(userInterfaceStyle: .light))
+        let dark = testColor.resolvedColor(with: .init(userInterfaceStyle: .dark))
+
+        let testColorUnspecifiedBlue = try #require(testColorUnspecified.cgColor.components?[2])
+        let testColorLightBlue = try #require(light.cgColor.components?[2])
+        let testColorDarkBlue = try #require(dark.cgColor.components?[2])
+
+        #expect(Int(testColorUnspecifiedBlue * 255) == expectedLightBlue)
+        #expect(Int(testColorLightBlue * 255) == expectedLightBlue)
+        #expect(Int(testColorDarkBlue * 255) == expectedDarkBlue)
     }
 }
