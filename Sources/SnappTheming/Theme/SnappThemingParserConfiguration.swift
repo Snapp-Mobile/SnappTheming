@@ -53,6 +53,9 @@ public struct SnappThemingParserConfiguration: Sendable {
     /// The name of the theme, used to identify different themes.
     public let themeName: String
 
+    /// The fallback lottie animation data to apply when no specific data for lottie animation provided.
+    public let fallbackLottieAnimationData: Data
+
     /// Initializes a new configuration with optional values. Defaults are provided for each property.
     public init(
         colorFormat: SnappThemingColorFormat = .rgba,
@@ -65,7 +68,8 @@ public struct SnappThemingParserConfiguration: Sendable {
         fallbackMetric: CGFloat = 0.0,
         fallbackTypographySize: CGFloat = 0.0,
         themeCacheRootURL: URL? = nil,
-        themeName: String = "default"
+        themeName: String = "default",
+        fallbackLottieAnimationData: Data = .init()
     ) {
         self.colorFormat = colorFormat
         self.encodeFonts = encodeFonts
@@ -78,6 +82,7 @@ public struct SnappThemingParserConfiguration: Sendable {
         self.fallbackTypographyFontSize = fallbackTypographySize
         self.themeCacheRootURL = themeCacheRootURL
         self.themeName = themeName
+        self.fallbackLottieAnimationData = fallbackLottieAnimationData
     }
 }
 

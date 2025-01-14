@@ -20,6 +20,8 @@ public typealias SnappThemingColorDeclarations = SnappThemingDeclarations<SnappT
 public struct SnappThemingColorConfiguration {
     /// The default color to fall back to when a color is not available in the theme.
     public let fallbackColor: Color
+    /// A `UIColor` representation of the `fallbackColor`.
+    public var fallbackUIColor: UIColor { UIColor(fallbackColor) }
 
     /// The format of the color (ARGB or RGBA).
     public let colorFormat: SnappThemingColorFormat
@@ -61,8 +63,7 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingColorRepre
     /// - Returns: The corresponding `UIColor` value if found, or `.clear` if not found.
     public subscript(dynamicMember keyPath: String) -> UIColor {
         guard let representation: SnappThemingColorRepresentation = self[dynamicMember: keyPath] else {
-            // TODO: Pick from configuration
-            return .clear
+            return configuration.fallbackUIColor
         }
         return representation.uiColor(using: configuration.colorFormat)
     }

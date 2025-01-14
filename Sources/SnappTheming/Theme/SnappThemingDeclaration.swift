@@ -37,11 +37,14 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
     public let toggleStyle: SnappThemingToggleStyleDeclarations
     /// Information about fonts used in the theme.
     public let fontInformations: [SnappThemingFontInformation]
+    /// Animation declarations.
+    public let animations: SnappThemingAnimationDeclarations
 
     public enum CodingKeys: String, CodingKey {
         case images, colors, metrics, fonts, typography, shapeStyle
         case buttonStyles, interactiveColors, shapes
         case segmentControlStyle, sliderStyle, toggleStyle
+        case animations
     }
 
     /// Key used to pass parser configuration through `JSONDecoder` or `JSONEncoder` user info.
@@ -65,6 +68,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
         segmentControlStyleCache: [String: SnappThemingToken<SnappThemingSegmentControlStyleRepresentation>]? = nil,
         sliderStyleCache: [String: SnappThemingToken<SnappThemingSliderStyleRepresentation>]? = nil,
         toggleStyleCache: [String: SnappThemingToken<SnappThemingToggleStyleRepresentation>]? = nil,
+        animationCache: [String: SnappThemingToken<SnappThemingAnimationRepresentation>]? = nil,
         using parserConfiguration: SnappThemingParserConfiguration = .default
     ) {
         self.images = .init(cache: imageCache, configuration: parserConfiguration)
@@ -88,6 +92,8 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
         self.sliderStyle = .init(cache: sliderStyleCache, configuration: parserConfiguration, metrics: metrics, colors: colors, fonts: fonts, typographies: typography)
 
         self.toggleStyle = .init(cache: toggleStyleCache, configuration: parserConfiguration, colors: colors)
+
+        self.animations = .init(cache: animationCache, configuration: parserConfiguration)
     }
 
     public init(from decoder: any Decoder) throws {
@@ -106,6 +112,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
             let segmentControlStyleCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingSegmentControlStyleRepresentation>].self, forKey: .segmentControlStyle)
             let sliderStyleCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingSliderStyleRepresentation>].self, forKey: .sliderStyle)
             let toggleStyleCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingToggleStyleRepresentation>].self, forKey: .toggleStyle)
+            let animationCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingAnimationRepresentation>].self, forKey: .animations)
 
             os_log("✅ Successfully decoded all declarations.")
 
@@ -121,6 +128,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
                       segmentControlStyleCache: segmentControlStyleCache,
                       sliderStyleCache: sliderStyleCache,
                       toggleStyleCache: toggleStyleCache,
+                      animationCache: animationCache,
                       using: parserConfiguration)
         } catch {
             error.log()
