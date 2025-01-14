@@ -9,6 +9,7 @@ import SnappTheming
 import SnappThemingSwiftUIHelpers
 import SwiftUI
 import OSLog
+import Lottie
 
 struct ThemedView: View {
     var declaration: SnappThemingDeclaration
@@ -37,6 +38,10 @@ struct ThemedView: View {
                 }
                 .frame(width: 200, height: 200)
                 .padding()
+
+            LottieView.init(animation: try? .from(data: declaration.animations.lego.data))
+                .playing()
+                .frame(width: 100, height: 100)
 
             Text("Title typography")
                 .font(declaration.typography.titleLarge)
