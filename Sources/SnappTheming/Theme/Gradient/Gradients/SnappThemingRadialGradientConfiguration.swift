@@ -30,7 +30,7 @@ public struct SnappThemingRadialGradientConfiguration: Sendable {
     }
 }
 
-extension SnappThemingRadialGradientConfiguration: SnappThemingShapeStyleProviding {
+extension SnappThemingRadialGradientConfiguration: SnappThemingGradientProviding {
     /// Creates a radial gradient shape style using the configuration properties.
     public var shapeStyle: some ShapeStyle {
         RadialGradient(

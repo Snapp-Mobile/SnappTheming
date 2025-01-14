@@ -26,7 +26,7 @@ struct NamedShapeStyle: Identifiable {
 }
 
 struct ShapeStylesView: View {
-    let declarations: SnappThemingShapeStyleDeclarations
+    let declarations: SnappThemingGradientDeclarations
     @State var selectedShape: NamedShapeStyle?
 
     var body: some View {
