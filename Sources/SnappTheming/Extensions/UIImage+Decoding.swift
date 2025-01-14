@@ -19,7 +19,7 @@ extension UIImage {
         switch type {
         case .pdf: .pdf(data: data)
         case .png, .jpeg: .init(data: data)
-        case .svg: SVGImageDataParserManager(data: data).uiImage
+        case .svg: SVGImageConverter(data: data).uiImage
         default: nil
         }
     }

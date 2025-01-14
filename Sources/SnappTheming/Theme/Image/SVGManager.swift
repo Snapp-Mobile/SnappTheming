@@ -10,8 +10,8 @@ import OSLog
 import UIKit
 import SVGKit
 
-/// A manager class for handling SVG data and converting it to a `UIImage`.
-class SVGImageDataParserManager {
+/// A utility class for converts SVG data and into a `UIImage`.
+class SVGImageConverter {
     /// The rendered `UIImage` representation of the SVG data.
     private(set) var uiImage: UIImage
 
