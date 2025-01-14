@@ -20,23 +20,32 @@ class SVGImageDataParserManager {
     /// - Parameter data: The SVG data to be rendered into a `UIImage`.
     /// - Note: If the SVG data is invalid or cannot be rendered, a default system image is used as a fallback.
     init(data: Data) {
-        if let svgImage = SVGKImage(data: data) {
+        var svgImage: SVGKImage? = SVGKImage(data: data)
+
+        // Retry logic for simulator or potential parsing issues
+        // error: `*** Assertion failure in +[SVGLength pixelsPerInchForCurrentDevice], SVGLength.m:238`
+        if svgImage == nil {
+            os_log(.info, "Initial SVG parsing failed. Retrying...")
+            svgImage = SVGKImage(data: data)
+        }
+        if let validSVGImage = svgImage {
             // Scale the SVG to a maximum size, maintaining its aspect ratio
             let targetSize = CGSize(
-                width: max(svgImage.size.width, 512),
-                height: max(svgImage.size.height, 512)
+                width: max(validSVGImage.size.width, 512),
+                height: max(validSVGImage.size.height, 512)
             )
-            svgImage.scaleToFit(inside: targetSize)
+            validSVGImage.scaleToFit(inside: targetSize)
 
-            if let renderedImage = svgImage.uiImage {
+            // Attempt to render the scaled SVG into a UIImage
+            if let renderedImage = validSVGImage.uiImage {
                 self.uiImage = renderedImage
             } else {
                 self.uiImage = Self.defaultFallbackImage
-                os_log(.error, "Failed to render SVG to UIImage. Using fallback image.")
+                os_log(.error, "Failed to render SVG to UIImage after scaling. Using fallback image.")
             }
         } else {
             self.uiImage = Self.defaultFallbackImage
-            os_log(.error, "Failed to parse SVG data. Using fallback image.")
+            os_log(.error, "Failed to parse SVG data after retry. Using fallback image.")
         }
     }
 
