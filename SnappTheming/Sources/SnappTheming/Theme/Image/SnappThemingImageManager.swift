@@ -10,7 +10,7 @@ import OSLog
 import UIKit
 
 public protocol SnappThemingImageManager: Sendable {
-    func object(for key: String, of dataURI: SnappThemingDataURI) -> UIImage?
+    func object(for key: String, of dataURI: SnappThemingDataURI, convert: @escaping (Data, SnappThemingDataURI) -> UIImage?) -> UIImage?
     func setObject(_ object: UIImage, for key: String)
     func store(_ dataURI: SnappThemingDataURI, for key: String)
 }
@@ -74,14 +74,18 @@ public final class SnappThemingImageManagerDefault: SnappThemingImageManager {
     ///   - key: The unique key identifying the image.
     ///   - dataURI: A `SnappThemingDataURI` object containing the image data and MIME type.
     /// - Returns: The retrieved `UIImage` or `nil` if not found.
-    public func object(for key: String, of dataURI: SnappThemingDataURI) -> UIImage? {
+    public func object(
+        for key: String,
+        of dataURI: SnappThemingDataURI,
+        convert: @escaping (Data, SnappThemingDataURI) -> UIImage?
+    ) -> UIImage? {
         accessQueue.sync {
             do {
                 if let cachedImage = cache.object(forKey: key as NSString) {
                     return cachedImage
                 } else if let imageURL = imageCacheURL(for: key, of: dataURI), fileManager.fileExists(atPath: imageURL.path()) {
                     let data = try Data(contentsOf: imageURL)
-                    return .from(data, of: dataURI.type)
+                    return convert(data, dataURI)
                 }
                 return nil
             } catch let error {
