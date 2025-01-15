@@ -8,6 +8,15 @@
 import Foundation
 import OSLog
 import UIKit
+import UniformTypeIdentifiers
+class SVGSnappThemingImageManager: SnappThemingImageManager {
+    override func from(_ data: Data, of type: UTType) -> UIImage? {
+        switch type {
+        case .svg: nil
+        default: super.from(data, of: type)
+        }
+    }
+}
 
 /// A manager for handling themed image caching and persistent storage.
 ///
@@ -15,7 +24,18 @@ import UIKit
 ///
 /// ### Note
 /// All file operations are confined to a dedicated directory to ensure security and prevent unauthorized file access.
-public final class SnappThemingImageManager {
+public class SnappThemingImageManager {
+    func from(_ dataURI: SnappThemingDataURI) -> UIImage? {
+        from(dataURI.data, of: dataURI.type)
+    }
+
+    func from(_ data: Data, of type: UTType) -> UIImage? {
+        switch type {
+        case .pdf: .pdf(data: data)
+        case .png, .jpeg: .init(data: data)
+        default: nil
+        }
+    }
     /// An enumeration of possible errors in `SnappThemingImageManager`.
     public enum ImagesManagerError: Error {
         /// Indicates that the images directory URL is unknown or inaccessible.
@@ -27,7 +47,8 @@ public final class SnappThemingImageManager {
 
     private let cache: NSCache<NSString, UIImage> = .init()
     private var fileManager: FileManager
-    private var imageCacheRootURL: URL?
+    private(set) var imageCacheRootURL: URL?
+    private(set) var themeName: String
     private let imagesFolderName = "images"
 
     /// Initializes the image manager with optional custom parameters.
@@ -42,6 +63,7 @@ public final class SnappThemingImageManager {
         themeName: String = "default"
     ) {
         self.fileManager = fileManager
+        self.themeName = themeName
         var isDirectory: ObjCBool = true
         if let rootURL = themeCacheRootURL ?? fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
             let imageCacheRootURL = rootURL.appendingPathComponent(themeName).appendingPathComponent(imagesFolderName)

@@ -12,6 +12,33 @@ import OSLog
 /// Manages image tokens. Supports bitmap assets for different scenarios.
 public typealias SnappThemingImageDeclarations = SnappThemingDeclarations<SnappThemingDataURI, SnappThemingImageConfiguration>
 
+/// Manages image tokens. Supports bitmap assets for different scenarios.
+public typealias SnappThemingSVGSupportImageDeclarations = SnappThemingDeclarations<SnappThemingDataURI, SnappThemingImageConfiguration>
+
+extension SnappThemingSVGSupportImageDeclarations where DeclaredValue == SnappThemingDataURI, Configuration == SnappThemingImageConfiguration {
+
+    /// Dynamically resolves an image using a key path.
+    /// - Parameter keyPath: The key path used to identify the desired image.
+    /// - Returns: The resolved image, or the fallback image if the resolution fails.
+    public subscript(dynamicMember keyPath: String) -> Image? {
+        guard let representation: SnappThemingDataURI = self[dynamicMember: keyPath] else {
+            os_log(.error, "Error resolving image with name: %@.", keyPath)
+            return configuration.fallbackImage
+        }
+
+        let cachedImage = configuration.imagesManager.object(for: keyPath, of: representation)
+        let uiImage: UIImage? = cachedImage ?? .fromDataURIWithSVGSupport(dataURI: representation)
+
+        if let uiImage {
+            configuration.imagesManager.setObject(uiImage, for: keyPath)
+            configuration.imagesManager.store(representation, for: keyPath)
+            return Image(uiImage: uiImage)
+        }
+
+        return configuration.fallbackImage
+    }
+}
+
 /// Configuration for handling themed images in a SnappTheming framework.
 public struct SnappThemingImageConfiguration {
     /// Fallback image to use when a specific image cannot be resolved.

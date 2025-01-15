@@ -7,12 +7,30 @@
 import Foundation
 import OSLog
 
+public extension SnappThemingDeclaration {
+    mutating func change() {
+        let configuration = images.configuration
+        let imageConfiguration = SnappThemingImageConfiguration.init(
+            fallbackImage: images.configuration.fallbackImage,
+            imagesManager: SVGSnappThemingImageManager(
+                themeCacheRootURL: configuration.imagesManager.imageCacheRootURL,
+                themeName: configuration.imagesManager.themeName
+            )
+        )
+        images = .init(
+            cache: images.cache,
+            rootKey: .images,
+            configuration: imageConfiguration
+        )
+    }
+}
+
 /// A model representing a comprehensive set of theming declarations for an application.
 public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
     // MARK: - Public Properties
 
     /// Image declarations.
-    public let images: SnappThemingImageDeclarations
+    public var images: SnappThemingImageDeclarations
     /// Color declarations.
     public let colors: SnappThemingColorDeclarations
     /// Interactive color declarations.

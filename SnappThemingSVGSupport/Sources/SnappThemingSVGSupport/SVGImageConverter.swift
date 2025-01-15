@@ -1,6 +1,6 @@
 //
-//  SVGManager.swift
-//  SnappTheming
+//  SVGImageConverter.swift
+//  SnappThemingSVGSupport
 //
 //  Created by Oleksii Kolomiiets on 14.01.2025.
 //
@@ -52,5 +52,16 @@ class SVGImageConverter {
     /// The default fallback image to use when SVG rendering fails.
     private static var defaultFallbackImage: UIImage {
         UIImage(systemName: "exclamationmark.triangle") ?? UIImage()
+    }
+}
+
+import SnappTheming
+
+extension SnappThemingDeclaration {
+    mutating func override1(
+        with other: SnappThemingDeclaration,
+        using configuration: SnappThemingParserConfiguration = .default
+    ) {
+       images = other.images
     }
 }

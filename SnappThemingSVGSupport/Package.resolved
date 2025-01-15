@@ -1,5 +1,5 @@
 {
-  "originHash" : "499d98210ee37c9d591d11d790329b7f26844867e06a64512d1939a7b10611e0",
+  "originHash" : "3bd4c12f7f5a7dc011f572d3266c9698c664ae8e86f9c1a550a372b0858727ab",
   "pins" : [
     {
       "identity" : "cocoalumberjack",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "4b8714a7fb84d42393314ce897127b3939885ec3",
         "version" : "3.8.5"
+      }
+    },
+    {
+      "identity" : "snapptheming",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Snapp-Mobile/SnappTheming",
+      "state" : {
+        "revision" : "407dc500d027efb7bcb81908fab74b6fc17c166f",
+        "version" : "0.0.6"
       }
     },
     {
