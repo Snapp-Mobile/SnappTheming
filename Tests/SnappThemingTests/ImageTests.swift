@@ -13,7 +13,7 @@ import UIKit
 @Suite
 struct ImageTests {
     @Test
-    func testParsing() throws {
+    func parsePNGImage() throws {
         let json =
         """
         {

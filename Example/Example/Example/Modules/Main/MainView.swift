@@ -119,8 +119,8 @@ struct MainView: View {
                         MetricsViewer(declarations: declaration.metrics)
                     case .typography:
                         TypographyViewer(declarations: declaration.typography)
-                    case .shapeStyle:
-                        ShapeStylesView(declarations: declaration.shapeStyle)
+                    case .gradients:
+                        GradientsView(declarations: declaration.gradients)
                     }
                 } else {
                     EmptyView()

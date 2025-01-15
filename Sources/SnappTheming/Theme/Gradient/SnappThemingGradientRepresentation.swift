@@ -18,6 +18,7 @@ import OSLog
 /// - **Angular Gradient**: A gradient that transitions along an angular direction around a central point.
 ///
 /// If an unsupported gradient type is encountered during decoding, it defaults to a `SnappThemingClearShapeStyleConfiguration` with a clear shape style.
+
 public struct SnappThemingGradientRepresentation: Codable {
     /// The shape style configuration used for defining the visual appearance of a shape.
     ///
@@ -39,8 +40,8 @@ public struct SnappThemingGradientRepresentation: Codable {
     /// - Throws: If decoding any of the expected types (linear, radial, or angular gradient) fails, or if an error occurs during decoding, this initializer will throw an error. If no supported gradient type is found, a default clear style is used without throwing an error.
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let leaner = try? container.decode(SnappThemingLinearGradientConfiguration.self) {
-            self.configuration = leaner
+        if let linear = try? container.decode(SnappThemingLinearGradientConfiguration.self) {
+            self.configuration = linear
         } else if let radial = try? container.decode(SnappThemingRadialGradientConfiguration.self) {
             self.configuration = radial
         } else if let angular = try? container.decode(SnappThemingAngularGradientConfiguration.self) {

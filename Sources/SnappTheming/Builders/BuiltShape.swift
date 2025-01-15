@@ -1,10 +1,9 @@
 //
-//  wrapping.swift
+//  BuiltShape.swift
 //  SnappTheming
 //
 //  Created by Ilian Konchev on 14.01.25.
 //
-
 
 import SwiftUI
 
@@ -27,15 +26,15 @@ import SwiftUI
 /// }
 /// ```
 public protocol BuiltShape: Shape {
-  associatedtype S: Shape
-
-  @ShapeBuilder var shape: S { get }
+    associatedtype S: Shape
+    
+    @ShapeBuilder var shape: S { get }
 }
 
 public extension BuiltShape {
-  func path(in rect: CGRect) -> Path {
-    shape.path(in: rect)
-  }
+    func path(in rect: CGRect) -> Path {
+        shape.path(in: rect)
+    }
 }
 
 /// A convenience protocol wrapping a `@InsettableShapeBuilder`
@@ -57,17 +56,17 @@ public extension BuiltShape {
 /// }
 /// ```
 public protocol BuiltInsettableShape: InsettableShape {
-  associatedtype S: InsettableShape
-
-  @InsettableShapeBuilder var shape: S { get }
+    associatedtype S: InsettableShape
+    
+    @InsettableShapeBuilder var shape: S { get }
 }
 
 public extension BuiltInsettableShape {
-  func path(in rect: CGRect) -> Path {
-    shape.path(in: rect)
-  }
-
-  func inset(by amount: CGFloat) -> S.InsetShape {
-    shape.inset(by: amount)
-  }
+    func path(in rect: CGRect) -> Path {
+        shape.path(in: rect)
+    }
+    
+    func inset(by amount: CGFloat) -> S.InsetShape {
+        shape.inset(by: amount)
+    }
 }

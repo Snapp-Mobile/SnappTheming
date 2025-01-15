@@ -26,7 +26,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
     /// Button style declarations.
     public let buttonStyles: SnappThemingButtonStyleDeclarations
     /// Shape style declarations.
-    public let shapeStyle: SnappThemingShapeStyleDeclarations
+    public let gradients: SnappThemingGradientDeclarations
     /// Shape declarations.
     public let shapes: SnappThemingButtonStyleShapeDeclarations
     /// Segment control style declarations.
@@ -39,7 +39,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
     public let fontInformations: [SnappThemingFontInformation]
 
     public enum CodingKeys: String, CodingKey {
-        case images, colors, metrics, fonts, typography, shapeStyle
+        case images, colors, metrics, fonts, typography, gradients
         case buttonDeclarations, interactiveColors, shapes
         case segmentControlStyle, sliderStyle, toggleStyle
     }
@@ -61,7 +61,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
         interactiveColorsCache: [String: SnappThemingToken<SnappThemingInteractiveColorInformation>]? = nil,
         buttonConfigurations: [String: SnappThemingToken<SnappThemingButtonStyleRepresentation>]? = nil,
         shapeInformation: [String: SnappThemingToken<SnappThemingButtonStyleShapeRepresentation>]? = nil,
-        shapeStyleCache: [String: SnappThemingToken<SnappThemingShapeStyleRepresentation>]? = nil,
+        gradientsCache: [String: SnappThemingToken<SnappThemingGradientRepresentation>]? = nil,
         segmentControlStyleCache: [String: SnappThemingToken<SnappThemingSegmentControlStyleRepresentation>]? = nil,
         sliderStyleCache: [String: SnappThemingToken<SnappThemingSliderStyleRepresentation>]? = nil,
         toggleStyleCache: [String: SnappThemingToken<SnappThemingToggleStyleRepresentation>]? = nil,
@@ -70,7 +70,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
         self.images = .init(cache: imageCache, configuration: parserConfiguration)
         self.colors = .init(cache: colorCache, configuration: parserConfiguration)
         self.interactiveColors = .init(cache: interactiveColorsCache, configuration: parserConfiguration)
-        self.shapeStyle = .init(cache: shapeStyleCache, configuration: parserConfiguration)
+        self.gradients = .init(cache: gradientsCache, configuration: parserConfiguration)
         self.shapes = .init(cache: shapeInformation, configuration: parserConfiguration)
         self.metrics = .init(cache: metricsCache, configuration: parserConfiguration)
         self.fonts = .init(cache: fontsCache, configuration: parserConfiguration)
@@ -102,7 +102,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
             let interactiveColorsCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingInteractiveColorInformation>].self, forKey: .interactiveColors)
             let buttonConfigurations = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingButtonStyleRepresentation>].self, forKey: .buttonDeclarations)
             let shapeInformation = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingButtonStyleShapeRepresentation>].self, forKey: .shapes)
-            let shapeStyleCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingShapeStyleRepresentation>].self, forKey: .shapeStyle)
+            let gradientsCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingGradientRepresentation>].self, forKey: .gradients)
             let segmentControlStyleCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingSegmentControlStyleRepresentation>].self, forKey: .segmentControlStyle)
             let sliderStyleCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingSliderStyleRepresentation>].self, forKey: .sliderStyle)
             let toggleStyleCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingToggleStyleRepresentation>].self, forKey: .toggleStyle)
@@ -117,7 +117,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
                       interactiveColorsCache: interactiveColorsCache,
                       buttonConfigurations: buttonConfigurations,
                       shapeInformation: shapeInformation,
-                      shapeStyleCache: shapeStyleCache,
+                      gradientsCache: gradientsCache,
                       segmentControlStyleCache: segmentControlStyleCache,
                       sliderStyleCache: sliderStyleCache,
                       toggleStyleCache: toggleStyleCache,
@@ -155,7 +155,7 @@ extension SnappThemingDeclaration {
                              interactiveColorsCache: interactiveColors.cache.override(other.interactiveColors.cache),
                              buttonConfigurations: buttonStyles.cache.override(other.buttonStyles.cache),
                              shapeInformation: shapes.cache.override(other.shapes.cache),
-                             shapeStyleCache: shapeStyle.cache.override(other.shapeStyle.cache),
+                             gradientsCache: gradients.cache.override(other.gradients.cache),
                              segmentControlStyleCache: segmentControlStyle.cache.override(other.segmentControlStyle.cache),
                              sliderStyleCache: sliderStyle.cache.override(other.sliderStyle.cache),
                              toggleStyleCache: toggleStyle.cache.override(other.toggleStyle.cache),

@@ -101,7 +101,7 @@ struct ThemedView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(
-            declaration.shapeStyle.appBackground
+            declaration.gradients.appBackground
         )
     }
 }

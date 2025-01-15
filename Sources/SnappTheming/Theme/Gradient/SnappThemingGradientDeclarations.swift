@@ -13,7 +13,7 @@ public typealias SnappThemingGradientDeclarations = SnappThemingDeclarations<Sna
 /// Configuration for resolving gradients in the theming system.
 public struct SnappThemingGradientConfiguration {
     /// The fallback color to use when a specific gradient cannot be resolved.
-    public let fallbackColor: Color
+    public let fallbackShapeStyle: Color
 }
 
 extension SnappThemingDeclarations where DeclaredValue == SnappThemingGradientRepresentation, Configuration == SnappThemingGradientConfiguration {
@@ -27,7 +27,7 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingGradientRe
             cache: cache,
             rootKey: .gradients,
             configuration: .init(
-                fallbackColor: configuration.fallbackColor
+                fallbackShapeStyle: configuration.fallbackColor
             )
         )
     }
@@ -35,12 +35,12 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingGradientRe
     /// Accesses the shape style corresponding to the given key path.
     ///
     /// - Parameter keyPath: The dynamic member key path representing the shape style.
-    /// - Returns: A resolved shape style, or the fallback shape style wrapped in `AnyShapeStyle` if not found.
-    public subscript(dynamicMember keyPath: String) -> any ShapeStyle {
-        guard let representation: SnappThemingGradientRepresentation = self[dynamicMember: keyPath] else {
-            return configuration.fallbackColor
+    /// - Returns: A resolved shape style, or the fallback shape style.
+    public subscript(dynamicMember keyPath: String) -> some ShapeStyle {
+        if let representation = cache[keyPath]?.value {
+            AnyShapeStyle(representation.configuration.shapeStyle)
+        } else {
+            AnyShapeStyle(configuration.fallbackShapeStyle)
         }
-
-        return representation.configuration.shapeStyle
     }
 }

@@ -12,7 +12,7 @@ import UIKit
 @Suite
 struct MetricsTests {
     @Test
-    func testParsing() throws {
+    func parseMetrics() throws {
         let json =
         """
         {

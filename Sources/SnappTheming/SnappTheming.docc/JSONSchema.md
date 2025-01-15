@@ -221,13 +221,36 @@ This allows you to define a rounded rectangle where corner radius varies for eac
 
 ### Gradients
 
-Gradients can be declared as described below. Supported are two gradient types - linear and radial
+Gradients can be declared as described below. Supported are two gradient types - angular, linear and radial
+
+#### Angular gradient
+
+The values of the start and end angle should be provided in degrees, as shown below
+
+````json
+{
+    "gradients": {
+        "angularGradient": {
+            "colors": [
+                "#843912",
+                "#242D2D"
+            ],
+            "center": [
+                2.0,
+                -0.2
+            ],
+            "startAngle": 0,
+            "endAngle": 180
+        }
+    }
+}
+````
 
 #### Linear gradient
 
 ```json
 {
-    "shapeStyle": {
+    "gradients": {
         "horizontalLinearGradient": {
             "colors": [
                 "$colors/appPrimary",
@@ -260,7 +283,7 @@ Gradients can be declared as described below. Supported are two gradient types -
 
 ```json
 {
-    "shapeStyle": {
+    "gradients": {
         "radialGradient": {
             "colors": [
                 "#843912",

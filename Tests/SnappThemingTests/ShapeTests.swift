@@ -16,7 +16,7 @@ enum ShapeParserError: Error {
 @Suite
 struct ShapeTests {
     @Test
-    func testParsingRectangle() throws {
+    func parseRectangle() throws {
         let json =
         """
         {
@@ -38,7 +38,7 @@ struct ShapeTests {
     }
 
     @Test
-    func testParsingEllipse() throws {
+    func parseEllipse() throws {
         let json =
         """
         {
@@ -60,7 +60,7 @@ struct ShapeTests {
     }
 
     @Test
-    func testParsingCircle() throws {
+    func parseCircle() throws {
         let json =
         """
         {
@@ -82,7 +82,7 @@ struct ShapeTests {
     }
 
     @Test
-    func testParsingCapsule() throws {
+    func parseCapsule() throws {
         let json =
         """
         {
@@ -116,7 +116,7 @@ struct ShapeTests {
     }
 
     @Test
-    func testParsingRoundedRectangleWithRadius() throws {
+    func parseRoundedRectanglesWithRadius() throws {
         let json =
         """
         {
@@ -154,7 +154,7 @@ struct ShapeTests {
     }
 
     @Test
-    func testParsingRoundedRectangleWithSize() throws {
+    func parseRoundedRectanglesWithSize() throws {
         let json =
         """
         {
@@ -200,7 +200,7 @@ struct ShapeTests {
     }
 
     @Test
-    func testParsingUnevenRoundedRectangle() throws {
+    func parseUnevenRoundedRectangle() throws {
         let json =
         """
         {

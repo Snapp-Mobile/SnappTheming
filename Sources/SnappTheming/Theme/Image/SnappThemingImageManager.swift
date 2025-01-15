@@ -119,11 +119,9 @@ public final class SnappThemingImageManagerDefault: SnappThemingImageManager {
     }
 
     private func imageCacheURL(for key: String, of dataURI: SnappThemingDataURI) -> URL? {
-        accessQueue.sync {
-            guard let imageCacheRootURL else { return nil }
-            return imageCacheRootURL
-                .appending(path: key)
-                .appendingPathExtension(for: dataURI.type)
-        }
+        guard let imageCacheRootURL else { return nil }
+        return imageCacheRootURL
+            .appending(path: key)
+            .appendingPathExtension(for: dataURI.type)
     }
 }
