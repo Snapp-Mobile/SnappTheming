@@ -52,7 +52,7 @@ struct MainView: View {
             let encodedOutput = try SnappThemingParser.encode(declaration, using: .init(encodeImages: true))
             _encoded = State(initialValue: String(data: encodedOutput, encoding: .utf8) ?? "Error")
 
-            let fontManager = SnappThemingFontManager(themeCacheRootURL: configuration.themeCacheRootURL, themeName: configuration.themeName)
+            let fontManager = SnappThemingFontManagerDefault(themeCacheRootURL: configuration.themeCacheRootURL, themeName: configuration.themeName)
             fontManager.registerFonts(declaration.fontInformations)
         } catch let error {
             os_log(.error, "Error: %@", error.localizedDescription)
@@ -63,7 +63,7 @@ struct MainView: View {
         guard let json = theme.json, let oldConfiguration = configuration, let oldDeclaration = declaration else { return }
         let configuration = theme.configuration
         do {
-            let deregisterFontManager = SnappThemingFontManager(themeCacheRootURL: oldConfiguration.themeCacheRootURL, themeName: oldConfiguration.themeName)
+            let deregisterFontManager = SnappThemingFontManagerDefault(themeCacheRootURL: oldConfiguration.themeCacheRootURL, themeName: oldConfiguration.themeName)
             deregisterFontManager.unregisterFonts(oldDeclaration.fontInformations)
 
             let declaration = try SnappThemingParser.parse(from: json, using: configuration)
@@ -72,7 +72,7 @@ struct MainView: View {
             let encodedOutput = try SnappThemingParser.encode(declaration, using: .init(encodeImages: true))
             encoded = String(data: encodedOutput, encoding: .utf8) ?? "Error"
 
-            let fontManager = SnappThemingFontManager(themeCacheRootURL: configuration.themeCacheRootURL, themeName: configuration.themeName)
+            let fontManager = SnappThemingFontManagerDefault(themeCacheRootURL: configuration.themeCacheRootURL, themeName: configuration.themeName)
             fontManager.registerFonts(declaration.fontInformations)
         } catch let error {
             os_log(.error, "Error: %@", error.localizedDescription)
@@ -120,7 +120,9 @@ struct MainView: View {
                     case .typography:
                         TypographyViewer(declarations: declaration.typography)
                     case .gradients:
-                        GradientsView(declarations: declaration.gradients)
+                        GradientsViewer(declarations: declaration.gradients)
+                    case .shapes:
+                        ShapesViewer(declarations: declaration.shapes)
                     }
                 } else {
                     EmptyView()

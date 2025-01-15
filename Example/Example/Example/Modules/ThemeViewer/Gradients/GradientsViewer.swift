@@ -8,16 +8,6 @@
 import SwiftUI
 import SnappTheming
 
-struct GradientView<Shape: ShapeStyle>: View {
-    let style: Shape
-
-    var body: some View {
-        RoundedRectangle(cornerRadius: 4)
-            .frame(width: 120, height: 48)
-            .foregroundStyle(style)
-    }
-}
-
 struct NamedGradient: Identifiable {
     var id: String { name }
 
@@ -25,7 +15,7 @@ struct NamedGradient: Identifiable {
     let shape: AnyShapeStyle
 }
 
-struct GradientsView: View {
+struct GradientsViewer: View {
     let declarations: SnappThemingGradientDeclarations
     @State var selectedShape: NamedGradient?
 
