@@ -8,7 +8,7 @@
 import Foundation
 
 /// Represents information about a theming font, including its PostScript name and source data.
-public struct SnappThemingFontInformation: Codable {
+public struct SnappThemingFontInformation: Codable, Hashable {
     /// The PostScript name of the font, used to identify the font in the system.
     public let postScriptName: String
 

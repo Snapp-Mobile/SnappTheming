@@ -9,7 +9,7 @@ import Foundation
 import UniformTypeIdentifiers
 
 /// Represents a data URI, which includes the data's type, encoding, and the data itself.
-public struct SnappThemingDataURI: Codable, Sendable {
+public struct SnappThemingDataURI: Codable, Sendable, Hashable {
     /// The encoding type used in the data URI.
     public enum Encoding: String, Sendable {
         case base64

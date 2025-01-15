@@ -30,14 +30,14 @@ struct GradientsTests {
         """
 
         let declaration = try SnappThemingParser.parse(from: json)
-        guard
-            let token = declaration.gradients.cache["horizontalLinearGradient"],
-            let configuration = token.value?.configuration as? SnappThemingLinearGradientConfiguration
-        else {
-            #expect(Bool(false))
-            return
-        }
-        #expect(configuration.startPoint == .leading && configuration.endPoint == .trailing && configuration.colors.count == 2)
+        let token = try #require(declaration.gradients.cache["horizontalLinearGradient"])
+        let configuration = try #require(token.value?.configuration as? SnappThemingLinearGradientConfiguration)
+
+        #expect(
+            configuration.startPoint == .leading
+            && configuration.endPoint == .trailing
+            && configuration.colors.count == 2
+        )
         #expect(declaration.gradients.horizontalLinearGradient != nil)
     }
 
@@ -60,14 +60,14 @@ struct GradientsTests {
         """
 
         let declaration = try SnappThemingParser.parse(from: json)
-        guard
-            let token = declaration.gradients.cache["verticalLinearGradient"],
-            let configuration = token.value?.configuration as? SnappThemingLinearGradientConfiguration
-        else {
-            #expect(Bool(false))
-            return
-        }
-        #expect(configuration.startPoint == .top && configuration.endPoint == .bottom && configuration.colors.count == 2)
+        let token = try #require(declaration.gradients.cache["verticalLinearGradient"])
+        let configuration = try #require(token.value?.configuration as? SnappThemingLinearGradientConfiguration)
+
+        #expect(
+            configuration.startPoint == .top
+            && configuration.endPoint == .bottom
+            && configuration.colors.count == 2
+        )
         #expect(declaration.gradients.verticalLinearGradient != nil)
     }
 
@@ -90,15 +90,14 @@ struct GradientsTests {
         """
 
         let declaration = try SnappThemingParser.parse(from: json)
-        
-        guard
-            let token = declaration.gradients.cache["diagonalLinearGradient"],
-            let configuration = token.value?.configuration as? SnappThemingLinearGradientConfiguration
-        else {
-            #expect(Bool(false))
-            return
-        }
-        #expect(configuration.startPoint == .topLeading && configuration.endPoint == .bottomTrailing && configuration.colors.count == 2)
+        let token = try #require(declaration.gradients.cache["diagonalLinearGradient"])
+        let configuration = try #require(token.value?.configuration as? SnappThemingLinearGradientConfiguration)
+
+        #expect(
+            configuration.startPoint == .topLeading
+            && configuration.endPoint == .bottomTrailing
+            && configuration.colors.count == 2
+        )
         #expect(declaration.gradients.diagonalLinearGradient != nil)
     }
 
@@ -125,15 +124,16 @@ struct GradientsTests {
         """
 
         let declaration = try SnappThemingParser.parse(from: json)
-        guard
-            let token = declaration.gradients.cache["radialGradient"],
-            let configuration = token.value?.configuration as? SnappThemingRadialGradientConfiguration
-        else {
-            #expect(Bool(false))
-            return
-        }
+        let token = try #require(declaration.gradients.cache["radialGradient"])
+        let configuration = try #require(token.value?.configuration as? SnappThemingRadialGradientConfiguration)
 
-        #expect(configuration.center.x == 2.0 && configuration.center.y == -0.2 && configuration.colors.count == 2 && configuration.startRadius == 0.0 && configuration.endRadius == 1075.0)
+        #expect(
+            configuration.center.x == 2.0
+            && configuration.center.y == -0.2
+            && configuration.colors.count == 2
+            && configuration.startRadius == 0.0
+            && configuration.endRadius == 1075.0
+        )
         #expect(declaration.gradients.radialGradient != nil)
     }
 
@@ -160,15 +160,17 @@ struct GradientsTests {
         """
 
         let declaration = try SnappThemingParser.parse(from: json)
-        guard
-            let token = declaration.gradients.cache["angularGradient"],
-            let configuration = token.value?.configuration as? SnappThemingAngularGradientConfiguration
-        else {
-            #expect(Bool(false))
-            return
-        }
 
-        #expect(configuration.center.x == 2.0 && configuration.center.y == -0.2 && configuration.colors.count == 2 && configuration.startAngle == Angle(degrees: 0.0) && configuration.endAngle == Angle(degrees: 180.0))
+        let token = try #require(declaration.gradients.cache["angularGradient"])
+        let configuration = try #require(token.value?.configuration as? SnappThemingAngularGradientConfiguration)
+
+        #expect(
+            configuration.center.x == 2.0
+            && configuration.center.y == -0.2
+            && configuration.colors.count == 2
+            && configuration.startAngle == Angle(degrees: 0.0)
+            && configuration.endAngle == Angle(degrees: 180.0)
+        )
         #expect(declaration.gradients.angularGradient != nil)
     }
 }

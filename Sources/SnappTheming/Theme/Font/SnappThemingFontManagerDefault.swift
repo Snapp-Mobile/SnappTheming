@@ -9,18 +9,25 @@ import Foundation
 import CoreText
 import OSLog
 
+public protocol SnappThemingFontManager {
+    func registerFonts(_ fonts: [SnappThemingFontInformation])
+    func unregisterFonts(_ fonts: [SnappThemingFontInformation])
+    func registerFont(_ font: SnappThemingFontInformation)
+}
+
+/// An enumeration of possible errors in `SnappThemingFontManager`.
+enum SnappThemingFontManagerError: Error {
+    /// Indicates that the font registration failed at the specified URL.
+    case failedToRegisterFont(at: URL)
+}
+
 /// A manager for dynamically registering and unregistering fonts in theming systems.
 ///
-/// The `SnappThemingFontManager` provides an API for runtime font management, enabling dynamic registration and unregistration of custom fonts.
-/// 
+/// The `SnappThemingFontManagerDefault` provides an API for runtime font management, enabling dynamic registration and unregistration of custom fonts.
+///
 /// ### Note
 /// All file operations are confined to a dedicated directory to ensure security and prevent unauthorized file access.
-public final class SnappThemingFontManager {
-    /// An enumeration of possible errors in `SnappThemingFontManager`.
-    enum Error: Swift.Error {
-        /// Indicates that the font registration failed at the specified URL.
-        case failedToRegisterFont(at: URL)
-    }
+public final class SnappThemingFontManagerDefault: SnappThemingFontManager {
 
     /// The scope in which fonts are registered or unregistered. Uses Core Text's `CTFontManagerScope`.
     public typealias Scope = CTFontManagerScope
@@ -126,7 +133,7 @@ public final class SnappThemingFontManager {
 
             let success = try registerFontsForURL(fontFileURL, scope: scope)
             if !success {
-                throw Error.failedToRegisterFont(at: fontFileURL)
+                throw SnappThemingFontManagerError.failedToRegisterFont(at: fontFileURL)
             }
 
         } catch {
@@ -140,7 +147,7 @@ public final class SnappThemingFontManager {
             if fileManager.fileExists(atPath: fontFileURL.path()) {
                 let success = try unregisterFontsForURL(fontFileURL, scope: scope)
                 if !success {
-                    throw Error.failedToRegisterFont(at: fontFileURL)
+                    throw SnappThemingFontManagerError.failedToRegisterFont(at: fontFileURL)
                 }
             }
         } catch {
@@ -150,7 +157,7 @@ public final class SnappThemingFontManager {
 }
 
 @discardableResult
-fileprivate func registerFontsForURL(_ fontURL: URL, scope: SnappThemingFontManager.Scope) throws -> Bool {
+fileprivate func registerFontsForURL(_ fontURL: URL, scope: SnappThemingFontManagerDefault.Scope) throws -> Bool {
     CTFontManagerRegisterFontsForURL(fontURL as CFURL, scope, nil)
 }
 
@@ -159,6 +166,6 @@ fileprivate func getRegisteredFontsPostScriptNames() -> [String] {
 }
 
 @discardableResult
-fileprivate func unregisterFontsForURL(_ fontURL: URL, scope: SnappThemingFontManager.Scope) throws -> Bool {
+fileprivate func unregisterFontsForURL(_ fontURL: URL, scope: SnappThemingFontManagerDefault.Scope) throws -> Bool {
     CTFontManagerUnregisterFontsForURL(fontURL as CFURL, scope, nil)
 }
