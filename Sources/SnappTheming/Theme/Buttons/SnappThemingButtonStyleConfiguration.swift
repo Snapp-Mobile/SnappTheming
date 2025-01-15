@@ -27,7 +27,7 @@ public struct SnappThemingButtonStyleConfiguration {
     public let fallbackBorderWidth: Double
 
     /// The default shape type for the button.
-    public let fallbackShape: SnappThemingButtonStyleType
+    public let fallbackShape: SnappThemingShapeType
 
     /// The default typography resolver for button text.
     public let fallbackTypography: SnappThemingTypographyResolver
@@ -40,7 +40,7 @@ public struct SnappThemingButtonStyleConfiguration {
     let metrics: SnappThemingMetricDeclarations
     let fonts: SnappThemingFontDeclarations
     let colors: SnappThemingColorDeclarations
-    let shapes: SnappThemingButtonStyleShapeDeclarations
+    let shapes: SnappThemingShapeDeclarations
     let typographies: SnappThemingTypographyDeclarations
     let interactiveColors: SnappThemingInteractiveColorDeclarations
     let themeConfiguration: SnappThemingParserConfiguration

@@ -28,7 +28,7 @@ public struct SnappThemingButtonStyleRepresentation: Codable {
     public let borderWidth: SnappThemingToken<Double>
 
     /// The token representing the button's shape.
-    public let shape: SnappThemingToken<SnappThemingButtonStyleShapeRepresentation>
+    public let shape: SnappThemingToken<SnappThemingShapeRepresentation>
 
     /// The token representing the button's typography.
     public let typography: SnappThemingToken<SnappThemingTypographyRepresentation>
@@ -62,7 +62,7 @@ public struct SnappThemingButtonStyleRepresentation: Codable {
             }
 
             self.borderWidth = try container.decode(SnappThemingToken<Double>.self, forKey: .borderWidth)
-            self.shape = try container.decode(SnappThemingToken<SnappThemingButtonStyleShapeRepresentation>.self, forKey: .shape)
+            self.shape = try container.decode(SnappThemingToken<SnappThemingShapeRepresentation>.self, forKey: .shape)
             self.typography = try container.decode(SnappThemingToken<SnappThemingTypographyRepresentation>.self, forKey: .typography)
         } catch {
             os_log(.error, "❌ Error decoding SnappThemingButtonStyleRepresentation: %{public}@", String(describing: error))
@@ -90,7 +90,7 @@ public extension SnappThemingButtonStyleRepresentation {
             let resolvedShape = configuration.shapes.resolver
                 .resolve(shape)?
                 .resolver()
-                .buttonStyleType,
+                .shapeType,
             let resolvedTypography = configuration.typographies.resolver.resolve(typography),
             let resolvedFont = configuration.fonts.resolver.resolve(resolvedTypography.font),
             let resolvedFontSize = configuration.metrics.resolver.resolve(resolvedTypography.fontSize)

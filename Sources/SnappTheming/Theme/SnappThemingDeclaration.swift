@@ -28,7 +28,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
     /// Shape style declarations.
     public let gradients: SnappThemingGradientDeclarations
     /// Shape declarations.
-    public let shapes: SnappThemingButtonStyleShapeDeclarations
+    public let shapes: SnappThemingShapeDeclarations
     /// Segment control style declarations.
     public let segmentControlStyle: SnappThemingSegmentControlStyleDeclarations
     /// Slider style declarations.
@@ -60,7 +60,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
         typographyCache: [String: SnappThemingToken<SnappThemingTypographyRepresentation>]? = nil,
         interactiveColorsCache: [String: SnappThemingToken<SnappThemingInteractiveColorInformation>]? = nil,
         buttonConfigurations: [String: SnappThemingToken<SnappThemingButtonStyleRepresentation>]? = nil,
-        shapeInformation: [String: SnappThemingToken<SnappThemingButtonStyleShapeRepresentation>]? = nil,
+        shapeInformation: [String: SnappThemingToken<SnappThemingShapeRepresentation>]? = nil,
         gradientsCache: [String: SnappThemingToken<SnappThemingGradientRepresentation>]? = nil,
         segmentControlStyleCache: [String: SnappThemingToken<SnappThemingSegmentControlStyleRepresentation>]? = nil,
         sliderStyleCache: [String: SnappThemingToken<SnappThemingSliderStyleRepresentation>]? = nil,
@@ -101,7 +101,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
             let typographyCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingTypographyRepresentation>].self, forKey: .typography)
             let interactiveColorsCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingInteractiveColorInformation>].self, forKey: .interactiveColors)
             let buttonConfigurations = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingButtonStyleRepresentation>].self, forKey: .buttonDeclarations)
-            let shapeInformation = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingButtonStyleShapeRepresentation>].self, forKey: .shapes)
+            let shapeInformation = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingShapeRepresentation>].self, forKey: .shapes)
             let gradientsCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingGradientRepresentation>].self, forKey: .gradients)
             let segmentControlStyleCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingSegmentControlStyleRepresentation>].self, forKey: .segmentControlStyle)
             let sliderStyleCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingSliderStyleRepresentation>].self, forKey: .sliderStyle)

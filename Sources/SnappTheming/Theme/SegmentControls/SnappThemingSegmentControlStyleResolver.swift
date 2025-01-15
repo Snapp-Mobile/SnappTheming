@@ -28,5 +28,5 @@ public struct SnappThemingSegmentControlStyleResolver {
     public let innerPadding: Double
 
     /// The resolved shape type for the segment control buttons.
-    public let shape: SnappThemingButtonStyleType
+    public let shape: SnappThemingShapeType
 }

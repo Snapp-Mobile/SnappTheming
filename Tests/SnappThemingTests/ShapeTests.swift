@@ -29,7 +29,7 @@ struct ShapeTests {
         """
 
         let declaration = try SnappThemingParser.parse(from: json)
-        switch declaration.shapes.rect?.buttonStyleShape {
+        switch declaration.shapes.rect?.shapeType {
         case .rectangle:
             #expect(true)
         default:
@@ -51,7 +51,7 @@ struct ShapeTests {
         """
 
         let declaration = try SnappThemingParser.parse(from: json)
-        switch declaration.shapes.ellipse?.buttonStyleShape {
+        switch declaration.shapes.ellipse?.shapeType {
         case .ellipse:
             #expect(true)
         default:
@@ -73,7 +73,7 @@ struct ShapeTests {
         """
 
         let declaration = try SnappThemingParser.parse(from: json)
-        switch declaration.shapes.circle?.buttonStyleShape {
+        switch declaration.shapes.circle?.shapeType {
         case .circle:
             #expect(true)
         default:
@@ -104,7 +104,7 @@ struct ShapeTests {
         """
 
         let declaration = try SnappThemingParser.parse(from: json)
-        switch (declaration.shapes.circularCapsule?.buttonStyleShape, declaration.shapes.continuousCapsule?.buttonStyleShape) {
+        switch (declaration.shapes.circularCapsule?.shapeType, declaration.shapes.continuousCapsule?.shapeType) {
         case (.capsule(let styleFirst), .capsule(let styleSecond)):
             #expect(
                 styleFirst == .circular
@@ -140,7 +140,7 @@ struct ShapeTests {
         """
 
         let declaration = try SnappThemingParser.parse(from: json)
-        switch (declaration.shapes.roundedRectangle?.buttonStyleShape, declaration.shapes.roundedRectangleAlt?.buttonStyleShape) {
+        switch (declaration.shapes.roundedRectangle?.shapeType, declaration.shapes.roundedRectangleAlt?.shapeType) {
         case (.roundedRectangleWithRadius(let radiusFirst, let styleFirst), .roundedRectangleWithRadius(let radiusSecond, let styleSecond)):
             #expect(
                 radiusFirst == 12
@@ -184,7 +184,7 @@ struct ShapeTests {
         """
 
         let declaration = try SnappThemingParser.parse(from: json)
-        switch (declaration.shapes.roundedRectangle?.buttonStyleShape, declaration.shapes.roundedRectangleAlt?.buttonStyleShape) {
+        switch (declaration.shapes.roundedRectangle?.shapeType, declaration.shapes.roundedRectangleAlt?.shapeType) {
         case (.roundedRectangleWithSize(let sizeFirst, let styleFirst), .roundedRectangleWithSize(let sizeSecond, let styleSecond)):
             #expect(
                 sizeFirst.width == 15.0
@@ -234,7 +234,7 @@ struct ShapeTests {
         """
 
         let declaration = try SnappThemingParser.parse(from: json)
-        switch (declaration.shapes.funkyRect?.buttonStyleShape, declaration.shapes.funkyRectAlt?.buttonStyleShape) {
+        switch (declaration.shapes.funkyRect?.shapeType, declaration.shapes.funkyRectAlt?.shapeType) {
         case (.unevenRoundedRectangle(let radiiFirst, let styleFirst), .unevenRoundedRectangle(let radiiSecond, let styleSecond)):
             #expect(
                 radiiFirst.topLeading == 0.0

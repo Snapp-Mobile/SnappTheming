@@ -16,7 +16,7 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingSegmentCon
         configuration: SnappThemingParserConfiguration,
         metrics: SnappThemingMetricDeclarations,
         colors: SnappThemingColorDeclarations,
-        shapes: SnappThemingButtonStyleShapeDeclarations,
+        shapes: SnappThemingShapeDeclarations,
         buttonStyles: SnappThemingButtonStyleDeclarations,
         fonts: SnappThemingFontDeclarations,
         typographies: SnappThemingTypographyDeclarations,
@@ -60,7 +60,7 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingSegmentCon
                 .resolve(representation.borderColor)?
                 .resolver(colorFormat: configuration.colorFormat, colors: configuration.colors)
                 .interactiveColor,
-            let shape = configuration.shapes.resolver.resolve(representation.shape)?.resolver().buttonStyleType,
+            let shape = configuration.shapes.resolver.resolve(representation.shape)?.resolver().shapeType,
             let selectedButtonStyle = configuration.buttonStyles.resolver
                 .resolve(representation.selectedButtonStyle)?
                 .resolver(using: configuration),

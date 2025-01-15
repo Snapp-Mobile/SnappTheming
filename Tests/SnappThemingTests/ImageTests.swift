@@ -24,15 +24,17 @@ struct ImageTests {
         """
 
         let imageManager = SnappThemingImageManagerMock()
-        let fallbackImage = Image(systemName: "square")
+        let fallbackUIImage = try #require(UIImage(systemName: "square"))
+        let fallbackImage = Image(uiImage: fallbackUIImage)
         let configuration = SnappThemingParserConfiguration(
             fallbackImage: fallbackImage,
             imageManager: imageManager
         )
 
         let declaration = try SnappThemingParser.parse(from: json, using: configuration)
-
+        
         #expect(declaration.images.basket != fallbackImage)
-        #expect(imageManager.cache.object(forKey: "basket") != nil)
+        let representation = try #require(imageManager.cache.object(forKey: "basket"))
+        #expect(representation.cgImage != fallbackUIImage.cgImage)
     }
 }

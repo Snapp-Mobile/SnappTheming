@@ -20,5 +20,7 @@ struct FontsTests {
 
         let declaration = try SnappThemingParser.parse(from: json)
         #expect(declaration.fonts.cache.count == 1)
+        let representation = try #require(declaration.fonts.cache["Roboto-Regular"]?.value)
+        #expect(representation.postScriptName == "Roboto-Regular")
     }
 }

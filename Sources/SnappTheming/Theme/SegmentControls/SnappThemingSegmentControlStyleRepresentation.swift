@@ -16,7 +16,7 @@ public struct SnappThemingSegmentControlStyleRepresentation: Codable {
     public let borderColor: SnappThemingToken<SnappThemingInteractiveColorInformation>
     public let borderWidth: SnappThemingToken<Double>
     public let padding: SnappThemingToken<Double>
-    public let shape: SnappThemingToken<SnappThemingButtonStyleShapeRepresentation>
+    public let shape: SnappThemingToken<SnappThemingShapeRepresentation>
 
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -24,7 +24,7 @@ public struct SnappThemingSegmentControlStyleRepresentation: Codable {
         self.normalButtonStyle = try container.decode(SnappThemingToken<SnappThemingButtonStyleRepresentation>.self, forKey: .normalButtonStyle)
         self.borderWidth = try container.decode(SnappThemingToken<Double>.self, forKey: .borderWidth)
         self.padding = try container.decode(SnappThemingToken<Double>.self, forKey: .padding)
-        self.shape = try container.decode(SnappThemingToken<SnappThemingButtonStyleShapeRepresentation>.self, forKey: .shape)
+        self.shape = try container.decode(SnappThemingToken<SnappThemingShapeRepresentation>.self, forKey: .shape)
 
         if let singleSurfaceColor = try? container.decode(SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .surfaceColor) {
             self.surfaceColor = .init(from: singleSurfaceColor)

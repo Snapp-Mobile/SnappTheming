@@ -19,7 +19,7 @@ public struct SnappThemingSegmentControlStyleConfiguration {
     public let fallbackBorderWidth: Double
 
     /// The fallback shape style for the segment control.
-    public let fallbackShape: SnappThemingButtonStyleType
+    public let fallbackShape: SnappThemingShapeType
 
     /// The fallback style for the selected segment of the control.
     public let fallbackSelectedSegment: SnappThemingButtonStyleResolver
@@ -30,7 +30,7 @@ public struct SnappThemingSegmentControlStyleConfiguration {
     let metrics: SnappThemingMetricDeclarations
     let fonts: SnappThemingFontDeclarations
     let colors: SnappThemingColorDeclarations
-    let shapes: SnappThemingButtonStyleShapeDeclarations
+    let shapes: SnappThemingShapeDeclarations
     let interactiveColors: SnappThemingInteractiveColorDeclarations
     let typographies: SnappThemingTypographyDeclarations
     let buttonStyles: SnappThemingButtonStyleDeclarations

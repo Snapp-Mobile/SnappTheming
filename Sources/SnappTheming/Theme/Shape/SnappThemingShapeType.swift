@@ -1,5 +1,5 @@
 //
-//  SnappThemingButtonStyleType.swift
+//  SnappThemingShapeType.swift
 //  SnappTheming
 //
 //  Created by Oleksii Kolomiiets on 12.12.2024.
@@ -16,7 +16,7 @@ import SwiftUI
 /// - `roundedRectangleWithRadius`:  A rounded rectangle with a specified corner radius.
 /// - `roundedRectangleWithSize`:  A rounded rectangle with a specified corner size.
 /// - `unevenRoundedRectangle`:  A rectangle with uneven corner radii.
-public enum SnappThemingButtonStyleType: Sendable {
+public enum SnappThemingShapeType: Sendable {
     case circle, rectangle, ellipse
     case capsule(RoundedCornerStyle = .continuous)
     case roundedRectangleWithRadius(CGFloat, RoundedCornerStyle = .continuous)
