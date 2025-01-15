@@ -98,7 +98,11 @@ var sampleJSON = """
     "interactiveColors": {
         "primary": {
             "normal": "$colors/brightRed",
-            "selected": "$colors/deepRed",
+            "pressed": "$colors/softRed",
+            "disabled": "#CBB8E8"
+        },
+        "primarySelected": {
+            "normal": "$colors/deepRed",
             "pressed": "$colors/softRed",
             "disabled": "#CBB8E8"
         },
@@ -117,9 +121,17 @@ var sampleJSON = """
             "padding": [12, 16]
         }
     },
-    "buttonConfigurations": {
+    "buttonStyles": {
         "primary": {
             "surfaceColor": "$interactiveColors/primary",
+            "textColor": "$colors/textPrimary",
+            "borderColor": "$colors/textPrimary",
+            "borderWidth": "$metrics/xSmall",
+            "shape": "$shapes/circle",
+            "typography": "$typography/title"
+        },
+        "primarySelected": {
+            "surfaceColor": "$interactiveColors/primarySelected",
             "textColor": "$colors/textPrimary",
             "borderColor": "$colors/textPrimary",
             "borderWidth": "$metrics/xSmall",
@@ -129,19 +141,36 @@ var sampleJSON = """
         "secondary": {
             "surfaceColor": {
                 "normal": "#CBB8E8",
-                "selected": "#B6A2D9",
                 "pressed": "#A68CC7",
                 "disabled": "#E2D3F4"
             },
             "textColor": {
                 "normal": "$colors/textSecondary",
-                "selected": "#5A3A99",
                 "pressed": "$colors/textSecondary",
                 "disabled": "#A68CC7"
             },
             "borderColor": {
                 "normal": "#8A6CC0",
-                "selected": "#7A5CA8",
+                "pressed": "#6C4C91",
+                "disabled": "#B89ECF"
+            },
+            "borderWidth": "$metrics/xSmall",
+            "shape": "$shapes/roundedRectangle",
+            "typography": "$typography/body"
+        },
+        "secondarySelected": {
+            "surfaceColor": {
+                "normal": "#B6A2D9",
+                "pressed": "#A68CC7",
+                "disabled": "#E2D3F4"
+            },
+            "textColor": {
+                "normal": "#5A3A99",
+                "pressed": "$colors/textSecondary",
+                "disabled": "#A68CC7"
+            },
+            "borderColor": {
+                "normal": "#7A5CA8",
                 "pressed": "#6C4C91",
                 "disabled": "#B89ECF"
             },

@@ -53,7 +53,7 @@ struct MainView: View {
             _encoded = State(initialValue: String(data: encodedOutput, encoding: .utf8) ?? "Error")
 
             let fontManager = SnappThemingFontManagerDefault(themeCacheRootURL: configuration.themeCacheRootURL, themeName: configuration.themeName)
-            fontManager.registerFonts(declaration.fontInformations)
+            fontManager.registerFonts(declaration.fontInformation)
         } catch let error {
             os_log(.error, "Error: %@", error.localizedDescription)
         }
@@ -64,7 +64,7 @@ struct MainView: View {
         let configuration = theme.configuration
         do {
             let deregisterFontManager = SnappThemingFontManagerDefault(themeCacheRootURL: oldConfiguration.themeCacheRootURL, themeName: oldConfiguration.themeName)
-            deregisterFontManager.unregisterFonts(oldDeclaration.fontInformations)
+            deregisterFontManager.unregisterFonts(oldDeclaration.fontInformation)
 
             let declaration = try SnappThemingParser.parse(from: json, using: configuration)
             self.configuration = configuration
@@ -73,7 +73,7 @@ struct MainView: View {
             encoded = String(data: encodedOutput, encoding: .utf8) ?? "Error"
 
             let fontManager = SnappThemingFontManagerDefault(themeCacheRootURL: configuration.themeCacheRootURL, themeName: configuration.themeName)
-            fontManager.registerFonts(declaration.fontInformations)
+            fontManager.registerFonts(declaration.fontInformation)
         } catch let error {
             os_log(.error, "Error: %@", error.localizedDescription)
         }

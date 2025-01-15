@@ -6,5 +6,5 @@
 //
 
 protocol SnappThemingOutput {
-    var fontInformations: [SnappThemingFontInformation] { get }
+    var fontInformation: [SnappThemingFontInformation] { get }
 }

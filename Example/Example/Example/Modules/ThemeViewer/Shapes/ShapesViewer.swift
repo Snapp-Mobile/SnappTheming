@@ -18,7 +18,7 @@ struct ShapesViewer: View {
                 ForEach(declarations.keys, id: \.self) { key in
                     LabeledContent(key) {
                         declarations[dynamicMember: key]
-                            .stroke(Color.blue)
+                            .stroke(Color.accentColor)
                             .frame(maxWidth: 80, minHeight: 30)
                             .padding(.vertical, 4)
                     }

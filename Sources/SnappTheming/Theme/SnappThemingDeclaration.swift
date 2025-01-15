@@ -36,11 +36,11 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
     /// Toggle style declarations.
     public let toggleStyle: SnappThemingToggleStyleDeclarations
     /// Information about fonts used in the theme.
-    public let fontInformations: [SnappThemingFontInformation]
+    public let fontInformation: [SnappThemingFontInformation]
 
     public enum CodingKeys: String, CodingKey {
         case images, colors, metrics, fonts, typography, gradients
-        case buttonDeclarations, interactiveColors, shapes
+        case buttonStyles, interactiveColors, shapes
         case segmentControlStyle, sliderStyle, toggleStyle
     }
 
@@ -59,7 +59,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
         fontsCache: [String: SnappThemingToken<SnappThemingFontInformation>]? = nil,
         typographyCache: [String: SnappThemingToken<SnappThemingTypographyRepresentation>]? = nil,
         interactiveColorsCache: [String: SnappThemingToken<SnappThemingInteractiveColorInformation>]? = nil,
-        buttonConfigurations: [String: SnappThemingToken<SnappThemingButtonStyleRepresentation>]? = nil,
+        buttonStylesCache: [String: SnappThemingToken<SnappThemingButtonStyleRepresentation>]? = nil,
         shapeInformation: [String: SnappThemingToken<SnappThemingShapeRepresentation>]? = nil,
         gradientsCache: [String: SnappThemingToken<SnappThemingGradientRepresentation>]? = nil,
         segmentControlStyleCache: [String: SnappThemingToken<SnappThemingSegmentControlStyleRepresentation>]? = nil,
@@ -79,9 +79,9 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
         // TODO: Think about the proper way of collecting fonts...
         let baseFonts = fontsCache.map(\.values).map(Array.init) ?? []
         let typographyFonts = typographyCache.map(\.values)?.compactMap(typography.resolver.resolve(_:)).map(\.font) ?? []
-        self.fontInformations = (baseFonts + typographyFonts).compactMap(\.value)
+        self.fontInformation = (baseFonts + typographyFonts).compactMap(\.value)
 
-        self.buttonStyles = .init(cache: buttonConfigurations, configuration: parserConfiguration, metrics: metrics, fonts: fonts, colors: colors, shapes: shapes, typographies: typography, interactiveColors: interactiveColors)
+        self.buttonStyles = .init(cache: buttonStylesCache, configuration: parserConfiguration, metrics: metrics, fonts: fonts, colors: colors, shapes: shapes, typographies: typography, interactiveColors: interactiveColors)
 
         self.segmentControlStyle = .init(cache: segmentControlStyleCache, configuration: parserConfiguration, metrics: metrics, colors: colors, shapes: shapes, buttonStyles: buttonStyles, fonts: fonts, typographies: typography, interactiveColors: interactiveColors)
 
@@ -100,7 +100,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
             let fontsCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingFontInformation>].self, forKey: .fonts)
             let typographyCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingTypographyRepresentation>].self, forKey: .typography)
             let interactiveColorsCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingInteractiveColorInformation>].self, forKey: .interactiveColors)
-            let buttonConfigurations = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingButtonStyleRepresentation>].self, forKey: .buttonDeclarations)
+            let buttonStylesCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingButtonStyleRepresentation>].self, forKey: .buttonStyles)
             let shapeInformation = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingShapeRepresentation>].self, forKey: .shapes)
             let gradientsCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingGradientRepresentation>].self, forKey: .gradients)
             let segmentControlStyleCache = try container.decodeIfPresent([String: SnappThemingToken<SnappThemingSegmentControlStyleRepresentation>].self, forKey: .segmentControlStyle)
@@ -115,7 +115,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
                       fontsCache: fontsCache,
                       typographyCache: typographyCache,
                       interactiveColorsCache: interactiveColorsCache,
-                      buttonConfigurations: buttonConfigurations,
+                      buttonStylesCache: buttonStylesCache,
                       shapeInformation: shapeInformation,
                       gradientsCache: gradientsCache,
                       segmentControlStyleCache: segmentControlStyleCache,
@@ -153,7 +153,7 @@ extension SnappThemingDeclaration {
                              fontsCache: fonts.cache.override(other.fonts.cache),
                              typographyCache: typography.cache.override(other.typography.cache),
                              interactiveColorsCache: interactiveColors.cache.override(other.interactiveColors.cache),
-                             buttonConfigurations: buttonStyles.cache.override(other.buttonStyles.cache),
+                             buttonStylesCache: buttonStyles.cache.override(other.buttonStyles.cache),
                              shapeInformation: shapes.cache.override(other.shapes.cache),
                              gradientsCache: gradients.cache.override(other.gradients.cache),
                              segmentControlStyleCache: segmentControlStyle.cache.override(other.segmentControlStyle.cache),

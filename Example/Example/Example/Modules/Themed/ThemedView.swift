@@ -6,6 +6,7 @@
 //
 
 import SnappTheming
+import SnappThemingSwiftUIHelpers
 import SwiftUI
 import OSLog
 
@@ -66,8 +67,10 @@ struct ThemedView: View {
 
                 } label: {
                     Image(systemName: "music.note.house.fill")
+                        .frame(minWidth: 64, minHeight: 64)
                 }
-                .buttonStyle(AppButtonStyle(selected: isSelected, style: declaration.buttonStyles.primary, width: 64))
+                .buttonStyle(declaration.buttonStyles.primary, selected: declaration.buttonStyles.primarySelected)
+                .selected(isSelected)
                 .simultaneousGesture(
                     DragGesture(minimumDistance: 0)
                         .onChanged { _ in
@@ -93,9 +96,10 @@ struct ThemedView: View {
                     }
                 } label: {
                     Text("123")
+                        .frame(minWidth: 64, minHeight: 64)
                 }
                 .disabled(!isButtonEnabled)
-                .buttonStyle(AppButtonStyle(style: declaration.buttonStyles.primaryBrand, width: 64))
+                .buttonStyle(declaration.buttonStyles.primaryBrand)
             }
 
         }
