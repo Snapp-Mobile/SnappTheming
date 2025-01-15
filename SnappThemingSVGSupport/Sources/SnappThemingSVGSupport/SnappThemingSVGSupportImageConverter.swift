@@ -1,5 +1,5 @@
 //
-//  SVGImageConverter.swift
+//  SnappThemingSVGSupportImageConverter.swift
 //  SnappThemingSVGSupport
 //
 //  Created by Oleksii Kolomiiets on 14.01.2025.
@@ -10,12 +10,12 @@ import OSLog
 import UIKit
 import SVGKit
 
-/// A utility class for converts SVG data and into a `UIImage`.
-class SVGImageConverter {
+/// A utility class for converts SVG data into a `UIImage`.
+class SnappThemingSVGSupportImageConverter {
     /// The rendered `UIImage` representation of the SVG data.
     private(set) var uiImage: UIImage
 
-    /// Initializes the `SVGManager` with the provided SVG data.
+    /// Initializes the `SnappThemingSVGSupportImageConverter` with the provided SVG data.
     ///
     /// - Parameter data: The SVG data to be rendered into a `UIImage`.
     /// - Note: If the SVG data is invalid or cannot be rendered, a default system image is used as a fallback.
@@ -52,16 +52,5 @@ class SVGImageConverter {
     /// The default fallback image to use when SVG rendering fails.
     private static var defaultFallbackImage: UIImage {
         UIImage(systemName: "exclamationmark.triangle") ?? UIImage()
-    }
-}
-
-import SnappTheming
-
-extension SnappThemingDeclaration {
-    mutating func override1(
-        with other: SnappThemingDeclaration,
-        using configuration: SnappThemingParserConfiguration = .default
-    ) {
-       images = other.images
     }
 }

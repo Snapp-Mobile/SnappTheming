@@ -12,33 +12,6 @@ import OSLog
 /// Manages image tokens. Supports bitmap assets for different scenarios.
 public typealias SnappThemingImageDeclarations = SnappThemingDeclarations<SnappThemingDataURI, SnappThemingImageConfiguration>
 
-/// Manages image tokens. Supports bitmap assets for different scenarios.
-public typealias SnappThemingSVGSupportImageDeclarations = SnappThemingDeclarations<SnappThemingDataURI, SnappThemingImageConfiguration>
-
-extension SnappThemingSVGSupportImageDeclarations where DeclaredValue == SnappThemingDataURI, Configuration == SnappThemingImageConfiguration {
-
-    /// Dynamically resolves an image using a key path.
-    /// - Parameter keyPath: The key path used to identify the desired image.
-    /// - Returns: The resolved image, or the fallback image if the resolution fails.
-    public subscript(dynamicMember keyPath: String) -> Image? {
-        guard let representation: SnappThemingDataURI = self[dynamicMember: keyPath] else {
-            os_log(.error, "Error resolving image with name: %@.", keyPath)
-            return configuration.fallbackImage
-        }
-
-        let cachedImage = configuration.imagesManager.object(for: keyPath, of: representation)
-        let uiImage: UIImage? = cachedImage ?? .fromDataURIWithSVGSupport(dataURI: representation)
-
-        if let uiImage {
-            configuration.imagesManager.setObject(uiImage, for: keyPath)
-            configuration.imagesManager.store(representation, for: keyPath)
-            return Image(uiImage: uiImage)
-        }
-
-        return configuration.fallbackImage
-    }
-}
-
 /// Configuration for handling themed images in a SnappTheming framework.
 public struct SnappThemingImageConfiguration {
     /// Fallback image to use when a specific image cannot be resolved.
@@ -57,7 +30,7 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingDataURI, C
         self.init(
             cache: cache,
             rootKey: .images,
-            configuration: .init(
+            configuration: SnappThemingImageConfiguration(
                 fallbackImage: configuration.fallbackImage,
                 imagesManager: .init(
                     themeCacheRootURL: configuration.themeCacheRootURL,
@@ -76,8 +49,15 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingDataURI, C
             return configuration.fallbackImage
         }
 
-        let cachedImage = configuration.imagesManager.object(for: keyPath, of: representation)
-        let uiImage: UIImage? = cachedImage ?? .from(representation)
+        let cachedImage = configuration.imagesManager
+            .object(for: keyPath, of: representation) { data, uri in
+                image(from: SnappThemingDataURI(
+                    type: uri.type,
+                    encoding: representation.encoding,
+                    data: data
+                ))
+            }
+        let uiImage: UIImage? = cachedImage ?? image(from: representation)
 
         if let uiImage {
             configuration.imagesManager.setObject(uiImage, for: keyPath)
@@ -86,5 +66,20 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingDataURI, C
         }
 
         return configuration.fallbackImage
+    }
+
+    private func image(from representation: SnappThemingDataURI) -> UIImage? {
+        switch representation.type {
+        case .pdf:
+                .pdf(data: representation.data)
+        case .png, .jpeg:
+            UIImage(data: representation.data)
+        default:
+            SnappThemingImageProcessorsRegistry
+                .shared
+                .registeredConverters()
+                .compactMap { $0.converte(representation) }
+                .first
+        }
     }
 }

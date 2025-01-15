@@ -84,13 +84,17 @@ public class SnappThemingImageManager {
     ///   - key: The unique key identifying the image.
     ///   - dataURI: A `SnappThemingDataURI` object containing the image data and MIME type.
     /// - Returns: The retrieved `UIImage` or `nil` if not found.
-    public func object(for key: String, of dataURI: SnappThemingDataURI) -> UIImage? {
+    public func object(
+        for key: String,
+        of dataURI: SnappThemingDataURI,
+        convert: @escaping (Data, SnappThemingDataURI) -> UIImage?
+    ) -> UIImage? {
         do {
             if let cachedImage = cache.object(forKey: key as NSString) {
                 return cachedImage
             } else if let imageURL = imageCacheURL(for: key, of: dataURI), fileManager.fileExists(atPath: imageURL.path()) {
                 let data = try Data(contentsOf: imageURL)
-                return .from(data, of: dataURI.type)
+                return convert(data, dataURI)
             }
             return nil
         } catch let error {

@@ -8,7 +8,6 @@
 import Foundation
 import OSLog
 import SnappTheming
-//import SnappThemingSVGSupport
 import SwiftUI
 
 enum Tab {

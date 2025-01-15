@@ -7,24 +7,6 @@
 import Foundation
 import OSLog
 
-public extension SnappThemingDeclaration {
-    mutating func change() {
-        let configuration = images.configuration
-        let imageConfiguration = SnappThemingImageConfiguration.init(
-            fallbackImage: images.configuration.fallbackImage,
-            imagesManager: SVGSnappThemingImageManager(
-                themeCacheRootURL: configuration.imagesManager.imageCacheRootURL,
-                themeName: configuration.imagesManager.themeName
-            )
-        )
-        images = .init(
-            cache: images.cache,
-            rootKey: .images,
-            configuration: imageConfiguration
-        )
-    }
-}
-
 /// A model representing a comprehensive set of theming declarations for an application.
 public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
     // MARK: - Public Properties
@@ -165,19 +147,21 @@ extension SnappThemingDeclaration {
         with other: SnappThemingDeclaration,
         using configuration: SnappThemingParserConfiguration = .default
     ) -> SnappThemingDeclaration {
-        SnappThemingDeclaration(imageCache: images.cache.override(other.images.cache),
-                             colorCache: colors.cache.override(other.colors.cache),
-                             metricsCache: metrics.cache.override(other.metrics.cache),
-                             fontsCache: fonts.cache.override(other.fonts.cache),
-                             typographyCache: typography.cache.override(other.typography.cache),
-                             interactiveColorsCache: interactiveColors.cache.override(other.interactiveColors.cache),
-                             buttonStylesCache: buttonStyles.cache.override(other.buttonStyles.cache),
-                             shapeInformation: shapes.cache.override(other.shapes.cache),
-                             shapeStyleCache: shapeStyle.cache.override(other.shapeStyle.cache),
-                             segmentControlStyleCache: segmentControlStyle.cache.override(other.segmentControlStyle.cache),
-                             sliderStyleCache: sliderStyle.cache.override(other.sliderStyle.cache),
-                             toggleStyleCache: toggleStyle.cache.override(other.toggleStyle.cache),
-                             using: configuration)
+        SnappThemingDeclaration(
+            imageCache: images.cache.override(other.images.cache),
+            colorCache: colors.cache.override(other.colors.cache),
+            metricsCache: metrics.cache.override(other.metrics.cache),
+            fontsCache: fonts.cache.override(other.fonts.cache),
+            typographyCache: typography.cache.override(other.typography.cache),
+            interactiveColorsCache: interactiveColors.cache.override(other.interactiveColors.cache),
+            buttonStylesCache: buttonStyles.cache.override(other.buttonStyles.cache),
+            shapeInformation: shapes.cache.override(other.shapes.cache),
+            shapeStyleCache: shapeStyle.cache.override(other.shapeStyle.cache),
+            segmentControlStyleCache: segmentControlStyle.cache.override(other.segmentControlStyle.cache),
+            sliderStyleCache: sliderStyle.cache.override(other.sliderStyle.cache),
+            toggleStyleCache: toggleStyle.cache.override(other.toggleStyle.cache),
+            using: configuration
+        )
     }
 }
 
