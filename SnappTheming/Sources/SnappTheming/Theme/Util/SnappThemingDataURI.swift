@@ -9,7 +9,7 @@ import Foundation
 import UniformTypeIdentifiers
 
 /// Represents a data URI, which includes the data's type, encoding, and the data itself.
-public struct SnappThemingDataURI: Codable, Sendable, Hashable {
+public struct SnappThemingDataURI: Sendable, Hashable {
     /// The encoding type used in the data URI.
     public enum Encoding: String, Sendable {
         case base64
@@ -34,7 +34,9 @@ public struct SnappThemingDataURI: Codable, Sendable, Hashable {
 
     /// The raw data represented by the data URI.
     public let data: Data
+}
 
+extension SnappThemingDataURI: Codable {
     /// Initializes a new instance by decoding a data URI from the provided decoder.
     ///
     /// The expected format is: `data:[<MIME-type>][;base64],<data>`.
@@ -82,7 +84,6 @@ public struct SnappThemingDataURI: Codable, Sendable, Hashable {
         self.encoding = encoding
         self.data = data
     }
-
 
     /// Encodes this data URI into the provided encoder.
     ///

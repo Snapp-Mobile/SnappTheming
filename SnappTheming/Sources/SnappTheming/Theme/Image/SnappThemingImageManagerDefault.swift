@@ -1,5 +1,5 @@
 //
-//  SnappThemingImageManager.swift
+//  SnappThemingImageManagerDefault.swift
 //  SnappTheming
 //
 //  Created by Ilian Konchev on 3.12.24.
@@ -8,12 +8,7 @@
 import Foundation
 import OSLog
 import UIKit
-
-public protocol SnappThemingImageManager: Sendable {
-    func object(for key: String, of dataURI: SnappThemingDataURI) -> UIImage?
-    func setObject(_ object: UIImage, for key: String)
-    func store(_ dataURI: SnappThemingDataURI, for key: String)
-}
+import UniformTypeIdentifiers
 
 /// An enumeration of possible errors in `SnappThemingImageManager`.
 public enum ImagesManagerError: Error {
@@ -74,20 +69,66 @@ public final class SnappThemingImageManagerDefault: SnappThemingImageManager {
     ///   - key: The unique key identifying the image.
     ///   - dataURI: A `SnappThemingDataURI` object containing the image data and MIME type.
     /// - Returns: The retrieved `UIImage` or `nil` if not found.
-    public func object(for key: String, of dataURI: SnappThemingDataURI) -> UIImage? {
+    public func object(
+        for key: String,
+        of dataURI: SnappThemingDataURI
+    ) -> UIImage? {
         accessQueue.sync {
             do {
                 if let cachedImage = cache.object(forKey: key as NSString) {
                     return cachedImage
                 } else if let imageURL = imageCacheURL(for: key, of: dataURI), fileManager.fileExists(atPath: imageURL.path()) {
                     let data = try Data(contentsOf: imageURL)
-                    return .from(data, of: dataURI.type)
+                    return image(from: data, of: dataURI.type)
                 }
                 return nil
             } catch let error {
                 os_log(.error, "Error getting object for key \"%@\": %@", key, error.localizedDescription)
                 return nil
             }
+        }
+    }
+
+    /// Processes image `Data` and `UIType` to generate a corresponding `UIImage`.
+    ///
+    /// - Parameter data: Image `Data`.
+    /// - Parameter type: Image `UTType`.
+    /// - Returns: A `UIImage` created from the provided representation, or `nil` if the conversion fails.
+    ///
+    /// This function handles different image formats based on their type:
+    /// - For `.pdf`: Converts the PDF data to a `UIImage`.
+    /// - For `.png` or `.jpeg`: Converts the data directly to a `UIImage` using `UIImage(data:)`.
+    /// - For other formats: Delegates the conversion to registered external image processors.
+    ///
+    /// - Warning: Make sure to validate `data` in external processors to prevent potential issues with corrupted or malicious data.
+    /// See how register external processors ``SnappThemingImageProcessorsRegistry``.
+    public func image(from data: Data, of type: UTType) -> UIImage? {
+        let dataURI = "data:\(String(describing: type.preferredMIMEType));\(data.base64EncodedString())"
+
+        switch type {
+        case .pdf:
+            guard let pdfImage = UIImage.pdf(data: data) else {
+                os_log(.error, "Failed to process PDF data into an image. DataURI: %@.", dataURI)
+                return nil
+            }
+            return pdfImage
+
+        case .png, .jpeg:
+            guard let image = UIImage(data: data) else {
+                os_log(.error, "Failed to process PNG/JPEG data into image. DataURI: %@.", dataURI)
+                return nil
+            }
+            return image
+
+        default:
+            let processors = SnappThemingImageProcessorsRegistry.shared.registeredProcessors()
+            for processor in processors {
+                if let processedImage = processor.process(data, of: type) {
+                    return processedImage
+                }
+            }
+            os_log(.error, "No suitable processor found for dataURI: %@.", dataURI)
+            return nil
         }
     }
 

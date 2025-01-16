@@ -30,7 +30,7 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingDataURI, C
         self.init(
             cache: cache,
             rootKey: .images,
-            configuration: .init(
+            configuration: SnappThemingImageConfiguration(
                 fallbackImage: configuration.fallbackImage,
                 imagesManager: configuration.imageManager ?? SnappThemingImageManagerDefault(
                     themeCacheRootURL: configuration.themeCacheRootURL,
@@ -50,7 +50,7 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingDataURI, C
         }
 
         let cachedImage = configuration.imagesManager.object(for: keyPath, of: representation)
-        let uiImage: UIImage? = cachedImage ?? .from(representation)
+        let uiImage: UIImage? = cachedImage ?? configuration.imagesManager.image(from: representation.data, of: representation.type)
 
         if let uiImage {
             configuration.imagesManager.setObject(uiImage, for: keyPath)

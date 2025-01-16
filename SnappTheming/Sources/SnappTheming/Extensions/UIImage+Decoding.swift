@@ -11,18 +11,6 @@ import PDFKit
 import UniformTypeIdentifiers
 
 extension UIImage {
-    static func from(_ dataURI: SnappThemingDataURI) -> UIImage? {
-        from(dataURI.data, of: dataURI.type)
-    }
-
-    static func from(_ data: Data, of type: UTType) -> UIImage? {
-        switch type {
-        case .pdf: .pdf(data: data)
-        case .png, .jpeg: .init(data: data)
-        default: nil
-        }
-    }
-
     static func pdf(data: Data) -> UIImage? {
         guard let page = PDFDocument(data: data)?.page(at: 0) else {
             return nil
