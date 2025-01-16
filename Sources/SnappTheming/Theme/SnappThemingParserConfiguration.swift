@@ -38,6 +38,8 @@ public struct SnappThemingParserConfiguration: Sendable {
     /// The fallback image to use when no specific image is provided.
     public let fallbackImage: Image
 
+    public let imageManager: SnappThemingImageManager?
+
     /// The fallback metric (e.g., size or margin) to use when no specific metric is defined.
     public let fallbackMetric: CGFloat
 
@@ -61,6 +63,7 @@ public struct SnappThemingParserConfiguration: Sendable {
         fallbackButtonStyle: SnappThemingButtonStyleResolver = .empty(),
         fallbackColor: Color = .clear,
         fallbackImage: Image = .init(systemName: "square"),
+        imageManager: SnappThemingImageManager? = nil,
         fallbackInteractiveColor: SnappThemingInteractiveColor = .clear,
         fallbackMetric: CGFloat = 0.0,
         fallbackTypographySize: CGFloat = 0.0,
@@ -73,6 +76,7 @@ public struct SnappThemingParserConfiguration: Sendable {
         self.fallbackButtonStyle = fallbackButtonStyle
         self.fallbackColor = fallbackColor
         self.fallbackImage = fallbackImage
+        self.imageManager = imageManager
         self.fallbackInteractiveColor = fallbackInteractiveColor
         self.fallbackMetric = fallbackMetric
         self.fallbackTypographyFontSize = fallbackTypographySize

@@ -25,7 +25,10 @@ let package = Package(
             name: "SnappTheming"),
         .testTarget(
             name: "SnappThemingTests",
-            dependencies: ["SnappTheming"]
+            dependencies: ["SnappTheming"],
+            resources: [
+                .copy("Resources/fonts.json")
+            ]
         ),
         .target(
             name: "SnappThemingSwiftUIHelpers"),

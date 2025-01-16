@@ -1,5 +1,5 @@
 //
-//  SnappThemingButtonStyleType.swift
+//  SnappThemingShapeType.swift
 //  SnappTheming
 //
 //  Created by Oleksii Kolomiiets on 12.12.2024.
@@ -16,7 +16,7 @@ import SwiftUI
 /// - `roundedRectangleWithRadius`:  A rounded rectangle with a specified corner radius.
 /// - `roundedRectangleWithSize`:  A rounded rectangle with a specified corner size.
 /// - `unevenRoundedRectangle`:  A rectangle with uneven corner radii.
-public enum SnappThemingButtonStyleType: Sendable {
+public enum SnappThemingShapeType: Sendable {
     case circle, rectangle, ellipse
     case capsule(RoundedCornerStyle = .continuous)
     case roundedRectangleWithRadius(CGFloat, RoundedCornerStyle = .continuous)
@@ -25,8 +25,9 @@ public enum SnappThemingButtonStyleType: Sendable {
 
     /// Provides the shape representation of the button style.
     /// This will return the appropriate `Shape` (e.g., `Circle`, `Rectangle`, `Capsule`).
-    public var value: AnyShape {
-        AnyShape(styleShape)
+    @ShapeBuilder
+    public var value: some Shape {
+        styleShape
     }
 
     /// Retrieves the corner radius associated with the button style.
@@ -46,19 +47,22 @@ public enum SnappThemingButtonStyleType: Sendable {
 
     /// A computed property that returns the corresponding `Shape` for the button style.
     /// - Returns: A `Shape` instance that corresponds to the button style type.
-    var styleShape: any Shape {
+    @ShapeBuilder var styleShape: some Shape {
         switch self {
-        case .circle: return Circle()
-        case .rectangle: return Rectangle()
-        case .ellipse: return Ellipse()
+        case .circle:
+            Circle()
+        case .rectangle:
+            Rectangle()
+        case .ellipse:
+            Ellipse()
         case let .capsule(style):
-            return Capsule(style: style)
+            Capsule(style: style)
         case let .roundedRectangleWithRadius(radius, style):
-            return RoundedRectangle(cornerRadius: radius, style: style)
+            RoundedRectangle(cornerRadius: radius, style: style)
         case let .roundedRectangleWithSize(size, style):
-            return RoundedRectangle(cornerSize: size, style: style)
+            RoundedRectangle(cornerSize: size, style: style)
         case let .unevenRoundedRectangle(radii, style):
-            return UnevenRoundedRectangle(cornerRadii: radii, style: style)
+            UnevenRoundedRectangle(cornerRadii: radii, style: style)
         }
     }
 }

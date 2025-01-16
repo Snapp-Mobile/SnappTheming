@@ -13,7 +13,7 @@ public struct SnappThemingButtonStyle: ButtonStyle {
     public let textColor: SnappThemingInteractiveColor
     public let borderColor: SnappThemingInteractiveColor
     public let borderWidth: Double
-    public let shape: SnappThemingButtonStyleType
+    public let shape: SnappThemingShapeType
     public let font: Font
 
     init(
@@ -21,7 +21,7 @@ public struct SnappThemingButtonStyle: ButtonStyle {
         textColor: SnappThemingInteractiveColor,
         borderColor: SnappThemingInteractiveColor,
         borderWidth: Double,
-        shape: SnappThemingButtonStyleType,
+        shape: SnappThemingShapeType,
         font: Font
     ) {
         self.surfaceColor = surfaceColor

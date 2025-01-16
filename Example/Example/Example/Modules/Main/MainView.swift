@@ -52,8 +52,8 @@ struct MainView: View {
             let encodedOutput = try SnappThemingParser.encode(declaration, using: .init(encodeImages: true))
             _encoded = State(initialValue: String(data: encodedOutput, encoding: .utf8) ?? "Error")
 
-            let fontManager = SnappThemingFontManager(themeCacheRootURL: configuration.themeCacheRootURL, themeName: configuration.themeName)
-            fontManager.registerFonts(declaration.fontInformations)
+            let fontManager = SnappThemingFontManagerDefault(themeCacheRootURL: configuration.themeCacheRootURL, themeName: configuration.themeName)
+            fontManager.registerFonts(declaration.fontInformation)
         } catch let error {
             os_log(.error, "Error: %@", error.localizedDescription)
         }
@@ -63,8 +63,8 @@ struct MainView: View {
         guard let json = theme.json, let oldConfiguration = configuration, let oldDeclaration = declaration else { return }
         let configuration = theme.configuration
         do {
-            let deregisterFontManager = SnappThemingFontManager(themeCacheRootURL: oldConfiguration.themeCacheRootURL, themeName: oldConfiguration.themeName)
-            deregisterFontManager.unregisterFonts(oldDeclaration.fontInformations)
+            let deregisterFontManager = SnappThemingFontManagerDefault(themeCacheRootURL: oldConfiguration.themeCacheRootURL, themeName: oldConfiguration.themeName)
+            deregisterFontManager.unregisterFonts(oldDeclaration.fontInformation)
 
             let declaration = try SnappThemingParser.parse(from: json, using: configuration)
             self.configuration = configuration
@@ -72,8 +72,8 @@ struct MainView: View {
             let encodedOutput = try SnappThemingParser.encode(declaration, using: .init(encodeImages: true))
             encoded = String(data: encodedOutput, encoding: .utf8) ?? "Error"
 
-            let fontManager = SnappThemingFontManager(themeCacheRootURL: configuration.themeCacheRootURL, themeName: configuration.themeName)
-            fontManager.registerFonts(declaration.fontInformations)
+            let fontManager = SnappThemingFontManagerDefault(themeCacheRootURL: configuration.themeCacheRootURL, themeName: configuration.themeName)
+            fontManager.registerFonts(declaration.fontInformation)
         } catch let error {
             os_log(.error, "Error: %@", error.localizedDescription)
         }
@@ -119,8 +119,10 @@ struct MainView: View {
                         MetricsViewer(declarations: declaration.metrics)
                     case .typography:
                         TypographyViewer(declarations: declaration.typography)
-                    case .shapeStyle:
-                        ShapeStylesView(declarations: declaration.shapeStyle)
+                    case .gradients:
+                        GradientsViewer(declarations: declaration.gradients)
+                    case .shapes:
+                        ShapesViewer(declarations: declaration.shapes)
                     }
                 } else {
                     EmptyView()

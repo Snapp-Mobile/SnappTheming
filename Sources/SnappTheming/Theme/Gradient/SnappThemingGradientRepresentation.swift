@@ -1,5 +1,5 @@
 //
-//  SnappThemingShapeStyleRepresentation.swift
+//  SnappThemingGradientRepresentation.swift
 //  SnappTheming
 //
 //  Created by Oleksii Kolomiiets on 05.12.2024.
@@ -10,7 +10,7 @@ import OSLog
 
 /// A representation of a shape style configuration in SnappTheming framework, which can include various gradient types.
 ///
-/// `SnappThemingShapeStyleRepresentation` encodes and decodes a shape style configuration based on a provided theme. It supports different gradient types (linear, radial, and angular), and defaults to a clear shape style if the gradient type is unsupported.
+/// `SnappThemingGradientRepresentation` encodes and decodes a shape style configuration based on a provided theme. It supports different gradient types (linear, radial, and angular), and defaults to a clear shape style if the gradient type is unsupported.
 ///
 /// ### Supported Gradient Types:
 /// - **Linear Gradient**: A gradient that transitions smoothly between two or more colors along a straight line.
@@ -18,15 +18,16 @@ import OSLog
 /// - **Angular Gradient**: A gradient that transitions along an angular direction around a central point.
 ///
 /// If an unsupported gradient type is encountered during decoding, it defaults to a `SnappThemingClearShapeStyleConfiguration` with a clear shape style.
-public struct SnappThemingShapeStyleRepresentation: Codable {
+
+public struct SnappThemingGradientRepresentation: Codable {
     /// The shape style configuration used for defining the visual appearance of a shape.
     ///
     /// This property holds an instance of a type conforming to the `SnappThemingShapeStyleProviding` protocol, which provides the shape style to be applied to a shape. The exact shape style can be determined dynamically, depending on the implementation of the configuration type. The configuration could be a specific type of gradient (linear, radial, angular), or a fallback clear style if no supported configuration is found during decoding.
     ///
     /// The `configuration` is encoded and decoded as part of the `SnappThemingShapeStyleRepresentation` to ensure persistence or transmission of the shape style data across different systems or components.
     ///
-    /// - See Also: ``SnappThemingShapeStyleProviding``, ``SnappThemingLinearGradientConfiguration``, ``SnappThemingRadialGradientConfiguration``, ``SnappThemingAngularGradientConfiguration``
-    public let configuration: any SnappThemingShapeStyleProviding
+    /// - See Also: ``SnappThemingGradientProviding``, ``SnappThemingLinearGradientConfiguration``, ``SnappThemingRadialGradientConfiguration``, ``SnappThemingAngularGradientConfiguration``
+    public let configuration: any SnappThemingGradientProviding
 
     /// Initializes a `SnappThemingShapeStyleRepresentation` instance from a decoder.
     ///
@@ -39,8 +40,8 @@ public struct SnappThemingShapeStyleRepresentation: Codable {
     /// - Throws: If decoding any of the expected types (linear, radial, or angular gradient) fails, or if an error occurs during decoding, this initializer will throw an error. If no supported gradient type is found, a default clear style is used without throwing an error.
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let leaner = try? container.decode(SnappThemingLinearGradientConfiguration.self) {
-            self.configuration = leaner
+        if let linear = try? container.decode(SnappThemingLinearGradientConfiguration.self) {
+            self.configuration = linear
         } else if let radial = try? container.decode(SnappThemingRadialGradientConfiguration.self) {
             self.configuration = radial
         } else if let angular = try? container.decode(SnappThemingAngularGradientConfiguration.self) {
@@ -58,7 +59,7 @@ public struct SnappThemingShapeStyleRepresentation: Codable {
     /// - Parameter encoder: The encoder used to encode the shape style configuration. The encoder must conform to the `Encoder` protocol, which can be used to encode the `configuration` property into a suitable format (e.g., JSON, Property List, etc.).
     /// - Throws: This method can throw an error if the encoding process fails, which may occur if the encoder encounters issues with serializing the configuration data.
     ///
-    /// - See Also: ``SnappThemingShapeStyleProviding``, ``SnappThemingLinearGradientConfiguration``, ``SnappThemingRadialGradientConfiguration``, ``SnappThemingAngularGradientConfiguration``
+    /// - See Also: ``SnappThemingGradientProviding``, ``SnappThemingLinearGradientConfiguration``, ``SnappThemingRadialGradientConfiguration``, ``SnappThemingAngularGradientConfiguration``
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(configuration)

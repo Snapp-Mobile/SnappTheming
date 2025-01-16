@@ -32,7 +32,7 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingDataURI, C
             rootKey: .images,
             configuration: .init(
                 fallbackImage: configuration.fallbackImage,
-                imagesManager: .init(
+                imagesManager: configuration.imageManager ?? SnappThemingImageManagerDefault(
                     themeCacheRootURL: configuration.themeCacheRootURL,
                     themeName: configuration.themeName
                 )

@@ -23,7 +23,9 @@ final class SnappThemingDeclarationTests {
         let declaration = SnappThemingDeclaration(
             colorCache: [
                 "baseWhite": .value(.hex("FFFFFF")),
-                "baseBlack": .value(.hex("000000"))])
+                "baseBlack": .value(.hex("000000"))
+            ]
+        )
         let baseWhite: UIColor = declaration.colors.baseWhite
         let baseBlack: UIColor = declaration.colors.baseBlack
         #expect(baseWhite == UIColor(hex: "FFFFFF", format: .rgba))

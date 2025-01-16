@@ -29,7 +29,7 @@ struct ChargingProgress: View {
 
                 RoundedRectangle(cornerRadius: declaration.metrics.windowRadiusSmall)
                     .fill(
-                        declaration.shapeStyle.chargingProgress
+                        declaration.gradients.chargingProgress
                     )
                     .shadow(color: Color(hex: "#000000", alpha: 0.2), radius: 20, x: 0, y: 4)
                     .frame(width: progressWidth(containerWidth: geometry.size.width))

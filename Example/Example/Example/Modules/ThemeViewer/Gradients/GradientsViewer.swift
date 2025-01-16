@@ -1,5 +1,5 @@
 //
-//  ColorsViewer.swift
+//  GradientsViewer.swift
 //  Example
 //
 //  Created by Volodymyr Voiko on 03.12.2024.
@@ -8,26 +8,16 @@
 import SwiftUI
 import SnappTheming
 
-struct ShapeStyleView<Shape: ShapeStyle>: View {
-    let shape: Shape
-
-    var body: some View {
-        RoundedRectangle(cornerRadius: 4)
-            .frame(width: 120, height: 48)
-            .foregroundStyle(shape)
-    }
-}
-
-struct NamedShapeStyle: Identifiable {
+struct NamedGradient: Identifiable {
     var id: String { name }
 
     let name: String
     let shape: AnyShapeStyle
 }
 
-struct ShapeStylesView: View {
-    let declarations: SnappThemingShapeStyleDeclarations
-    @State var selectedShape: NamedShapeStyle?
+struct GradientsViewer: View {
+    let declarations: SnappThemingGradientDeclarations
+    @State var selectedShape: NamedGradient?
 
     var body: some View {
         List {
@@ -37,13 +27,13 @@ struct ShapeStylesView: View {
                         Button {
                             selectedShape = .init(name: key, shape: AnyShapeStyle(declarations[dynamicMember: key]))
                         } label: {
-                            ShapeStyleView(shape: declarations[dynamicMember: key])
+                            GradientView(style: declarations[dynamicMember: key])
                         }
                     }
                 }
             }
         }
-        .navigationTitle("Shape Styles")
+        .navigationTitle("Gradients")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(item: $selectedShape) { shape in
             ZStack {

@@ -27,7 +27,7 @@ public struct SnappThemingButtonStyleResolver: Sendable {
     public let borderWidth: Double
 
     /// The shape type of the button, e.g., rounded, rectangle.
-    public let shape: SnappThemingButtonStyleType
+    public let shape: SnappThemingShapeType
 
     /// The typography configuration for the button's text.
     public let typography: SnappThemingTypographyResolver
@@ -43,7 +43,14 @@ public struct SnappThemingButtonStyleResolver: Sendable {
     ///   - borderWidth: The width of the button's border.
     ///   - shape: The shape of the button.
     ///   - typography: The typography configuration for the button's text.
-    init(surfaceColor: SnappThemingInteractiveColor, textColor: SnappThemingInteractiveColor, borderColor: SnappThemingInteractiveColor, borderWidth: Double, shape: SnappThemingButtonStyleType, typography: SnappThemingTypographyResolver) {
+    init(
+        surfaceColor: SnappThemingInteractiveColor,
+        textColor: SnappThemingInteractiveColor,
+        borderColor: SnappThemingInteractiveColor,
+        borderWidth: Double,
+        shape: SnappThemingShapeType,
+        typography: SnappThemingTypographyResolver
+    ) {
         self.surfaceColor = surfaceColor
         self.textColor = textColor
         self.borderColor = borderColor

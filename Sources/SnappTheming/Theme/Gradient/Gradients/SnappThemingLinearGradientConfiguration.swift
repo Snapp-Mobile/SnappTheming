@@ -28,7 +28,7 @@ public struct SnappThemingLinearGradientConfiguration: Sendable {
     }
 }
 
-extension SnappThemingLinearGradientConfiguration: SnappThemingShapeStyleProviding {
+extension SnappThemingLinearGradientConfiguration: SnappThemingGradientProviding {
     /// Creates a Linear Gradient shape style using the configuration properties.
     public var shapeStyle: some ShapeStyle {
         LinearGradient(

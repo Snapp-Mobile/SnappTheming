@@ -42,7 +42,7 @@
         "segmentRadiusInner": 4,
         "segmentRadiusOuter": 8
     },
-    "shapeStyle": {
+    "gradients": {
         "chargingProgress": {
             "colors": [
                 "#4FFEAA",
@@ -463,7 +463,7 @@
             },
             "borderWidth": 1,
             "typography": "$typography/textSmall",
-            "shape": "$shapes/roundedRectangle"
+            "shape": "$shapes/roundedRectangleAlt"
         },
         "primaryCritical": {
             "surfaceColor": {
@@ -513,7 +513,7 @@
             },
             "borderWidth": 1,
             "typography": "$typography/textSmall",
-            "shape": "$shapes/roundedRectangle"
+            "shape": "$shapes/ellipse"
         },
         "featuredSensor": {
             "surfaceColor": {
@@ -563,7 +563,7 @@
             },
             "borderWidth": 1,
             "typography": "$typography/textSmall",
-            "shape": "$shapes/roundedRectangle"
+            "shape": "$shapes/capsule"
         },
         "featuredSensorBackground": {
             "surfaceColor": {
@@ -613,7 +613,7 @@
             },
             "borderWidth": 1,
             "typography": "$typography/textLarge",
-            "shape": "$shapes/roundedRectangle"
+            "shape": "$shapes/rect"
         },
         "sensor": {
             "surfaceColor": {
@@ -663,7 +663,7 @@
             },
             "borderWidth": 1,
             "typography": "$typography/textSmall",
-            "shape": "$shapes/roundedRectangle"
+            "shape": "$shapes/circle"
         },
         "secondary": {
             "surfaceColor": {
@@ -713,7 +713,7 @@
             },
             "borderWidth": 1,
             "typography": "$typography/textSmall",
-            "shape": "$shapes/roundedRectangle"
+            "shape": "$shapes/fancyRect"
         }
     },
     "images": {
