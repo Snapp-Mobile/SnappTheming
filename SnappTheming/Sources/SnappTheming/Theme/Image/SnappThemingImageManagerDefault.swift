@@ -98,10 +98,10 @@ public final class SnappThemingImageManagerDefault: SnappThemingImageManager {
     /// This function handles different image formats based on their type:
     /// - For `.pdf`: Converts the PDF data to a `UIImage`.
     /// - For `.png` or `.jpeg`: Converts the data directly to a `UIImage` using `UIImage(data:)`.
-    /// - For other formats: Delegates the conversion to registered external image converters.
+    /// - For other formats: Delegates the conversion to registered external image processors.
     ///
-    /// - Warning: Make sure to validate `data` in external converters to prevent potential issues with corrupted or malicious data.
-    /// See how register external converters ``SnappThemingImageProcessorsRegistry``.
+    /// - Warning: Make sure to validate `data` in external processors to prevent potential issues with corrupted or malicious data.
+    /// See how register external processors ``SnappThemingImageProcessorsRegistry``.
     public func image(from data: Data, of type: UTType) -> UIImage? {
         let dataURI = "data:\(String(describing: type.preferredMIMEType));\(data.base64EncodedString())"
 
@@ -121,13 +121,13 @@ public final class SnappThemingImageManagerDefault: SnappThemingImageManager {
             return image
 
         default:
-            let converters = SnappThemingImageProcessorsRegistry.shared.registeredConverters()
-            for converter in converters {
-                if let processedImage = converter.process(data, of: type) {
+            let processors = SnappThemingImageProcessorsRegistry.shared.registeredProcessors()
+            for processor in processors {
+                if let processedImage = processor.process(data, of: type) {
                     return processedImage
                 }
             }
-            os_log(.error, "No suitable converter found for dataURI: %@.", dataURI)
+            os_log(.error, "No suitable processor found for dataURI: %@.", dataURI)
             return nil
         }
     }

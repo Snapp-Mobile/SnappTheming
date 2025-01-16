@@ -1,5 +1,5 @@
 //
-//  SnappThemingExternalImageConverterProtocol.swift
+//  SnappThemingExternalImageProcessorProtocol.swift
 //  SnappTheming
 //
 //  Created by Oleksii Kolomiiets on 15.01.2025.
@@ -8,8 +8,8 @@
 import UIKit
 import UniformTypeIdentifiers
 
-/// A protocol defining a converter for custom image types, enabling conversion of `SnappThemingDataURI` to `UIImage`.
-public protocol SnappThemingExternalImageConverterProtocol: Sendable {
+/// A protocol defining a processor for custom image types, enabling conversion of `SnappThemingDataURI` to `UIImage`.
+public protocol SnappThemingExternalImageProcessorProtocol: Sendable {
     /// Processing image `Data` and `UIType` to convert into a `UIImage`.
     ///
     /// - Parameter data: Image `Data`.

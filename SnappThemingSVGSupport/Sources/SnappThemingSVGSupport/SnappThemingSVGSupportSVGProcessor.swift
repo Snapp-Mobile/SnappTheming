@@ -12,16 +12,16 @@ import UIKit
 import UniformTypeIdentifiers
 import SVGKit
 
-/// Extension for `SnappThemingExternalImageConverterProtocol` to provide a default implementation for SVG processing.
-public extension SnappThemingExternalImageConverterProtocol where Self == SnappThemingSVGSupportSVGConverter {
-    /// Provides a static instance of `SnappThemingSVGSupportSVGConverter`.
+/// Extension for `SnappThemingExternalImageProcessorProtocol` to provide a default implementation for SVG processing.
+public extension SnappThemingExternalImageProcessorProtocol where Self == SnappThemingSVGSupportSVGProcessor {
+    /// Provides a static instance of `SnappThemingSVGSupportSVGProcessor`.
     ///
-    /// - Returns: A new instance of `SnappThemingSVGSupportSVGConverter` to handle `.svg` image processing.
-    static var svg: SnappThemingSVGSupportSVGConverter { SnappThemingSVGSupportSVGConverter() }
+    /// - Returns: A new instance of `SnappThemingSVGSupportSVGProcessor` to handle `.svg` image processing.
+    static var svg: SnappThemingSVGSupportSVGProcessor { SnappThemingSVGSupportSVGProcessor() }
 }
 
-/// A converter for handling SVG image data, conforming to `SnappThemingExternalImageConverterProtocol`.
-public struct SnappThemingSVGSupportSVGConverter: SnappThemingExternalImageConverterProtocol {
+/// A processor for handling SVG image data, conforming to `SnappThemingExternalImageProcessorProtocol`.
+public struct SnappThemingSVGSupportSVGProcessor: SnappThemingExternalImageProcessorProtocol {
     /// Processes the provided image data and type and converts it into a `UIImage` if the type is `.svg`.
     ///
     /// - Parameter data: Image `Data`.
@@ -41,8 +41,8 @@ public struct SnappThemingSVGSupportSVGConverter: SnappThemingExternalImageConve
         return uiImage
     }
 
-    /// Initializes the `SnappThemingSVGSupportSVGConverter`.
+    /// Initializes the `SnappThemingSVGSupportSVGProcessor`.
     ///
-    /// This default initializer is used to create instances of the converter for processing SVG data.
+    /// This default initializer is used to create instances of the processor for processing SVG data.
     public init() {}
 }
