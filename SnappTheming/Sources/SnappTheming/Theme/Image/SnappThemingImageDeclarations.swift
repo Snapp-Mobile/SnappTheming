@@ -49,15 +49,8 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingDataURI, C
             return configuration.fallbackImage
         }
 
-        let cachedImage = configuration.imagesManager
-            .object(for: keyPath, of: representation) { data, uri in
-                image(from: SnappThemingDataURI(
-                    type: uri.type,
-                    encoding: representation.encoding,
-                    data: data
-                ))
-            }
-        let uiImage: UIImage? = cachedImage ?? image(from: representation)
+        let cachedImage = configuration.imagesManager.object(for: keyPath, of: representation)
+        let uiImage: UIImage? = cachedImage ?? configuration.imagesManager.image(from: representation.data, of: representation.type)
 
         if let uiImage {
             configuration.imagesManager.setObject(uiImage, for: keyPath)
@@ -66,20 +59,5 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingDataURI, C
         }
 
         return configuration.fallbackImage
-    }
-
-    private func image(from representation: SnappThemingDataURI) -> UIImage? {
-        switch representation.type {
-        case .pdf:
-                .pdf(data: representation.data)
-        case .png, .jpeg:
-            UIImage(data: representation.data)
-        default:
-            SnappThemingImageProcessorsRegistry
-                .shared
-                .registeredConverters()
-                .compactMap { $0.converte(representation) }
-                .first
-        }
     }
 }

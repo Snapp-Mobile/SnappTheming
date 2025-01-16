@@ -7,6 +7,7 @@
 
 import SnappTheming
 import UIKit
+import UniformTypeIdentifiers
 
 final class SnappThemingImageManagerMock: SnappThemingImageManager {
     let cache: NSCache<NSString, UIImage> = .init()
@@ -28,4 +29,8 @@ final class SnappThemingImageManagerMock: SnappThemingImageManager {
         // pass
     }
 
+
+    func image(from data: Data, of type: UTType) -> UIImage? {
+        UIImage(data: data)
+    }
 }

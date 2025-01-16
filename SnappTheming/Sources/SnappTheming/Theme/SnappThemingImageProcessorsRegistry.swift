@@ -8,6 +8,34 @@
 import Foundation
 
 /// A registry for managing image processors in the SnappTheming framework.
+///
+/// ### Usage
+/// ```swift
+/// @main
+/// struct ExampleApp: App {
+///     var json: String = sampleJSON
+///     let configuration: SnappThemingParserConfiguration
+///
+///     init() {
+///         guard let themeJSON = AvailableTheme.night.json else {
+///             fatalError("Couldn't find the theme JSON")
+///         }
+///
+///         SnappThemingImageProcessorsRegistry.shared
+///             .register(SnappThemingSVGSupportSVGConverter())
+///
+///         self.configuration = AvailableTheme.night.configuration
+///
+///         self.json = themeJSON
+///     }
+///
+///     var body: some Scene {
+///         WindowGroup {
+///             MainView(json: json, configuration: configuration)
+///         }
+///     }
+/// }
+/// ```
 public final class SnappThemingImageProcessorsRegistry: @unchecked Sendable {
     /// The default shared instance of the registry.
     /// This singleton provides a thread-safe shared instance.

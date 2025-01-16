@@ -9,37 +9,40 @@ import Foundation
 import OSLog
 import SnappTheming
 import UIKit
+import UniformTypeIdentifiers
 import SVGKit
 
-/// Extension for `SnappThemingExternalImageConverterProtocol` to provide a default implementation for SVG converting.
+/// Extension for `SnappThemingExternalImageConverterProtocol` to provide a default implementation for SVG processing.
 public extension SnappThemingExternalImageConverterProtocol where Self == SnappThemingSVGSupportSVGConverter {
     /// Provides a static instance of `SnappThemingSVGSupportSVGConverter`.
+    ///
+    /// - Returns: A new instance of `SnappThemingSVGSupportSVGConverter` to handle `.svg` image processing.
     static var svg: SnappThemingSVGSupportSVGConverter { SnappThemingSVGSupportSVGConverter() }
 }
 
-/// A converter for handling SVG image data conforming to `SnappThemingExternalImageConverterProtocol`.
-/// This converter specifically handles URIs of the type `.svg`.
+/// A converter for handling SVG image data, conforming to `SnappThemingExternalImageConverterProtocol`.
 public struct SnappThemingSVGSupportSVGConverter: SnappThemingExternalImageConverterProtocol {
-    /// Converts the provided URI to a `UIImage` if it is of type `.svg`.
+    /// Processes the provided image data and type and converts it into a `UIImage` if the type is `.svg`.
     ///
-    /// - Parameter uri: A `SnappThemingDataURI` containing the data and type of the image.
-    /// - Returns: A `UIImage` if parsing and conversion are successful; otherwise, `nil`.
+    /// - Parameter data: Image `Data`.
+    /// - Parameter type: Image `UTType`.
+    /// - Returns: A `UIImage` if the processing and conversion are successful; otherwise, `nil`.
     ///
-    /// - Note:
-    ///   - This method ensures that only URIs explicitly of type `.svg` are processed.
-    ///   - The SVG data is passed to the `SnappThemingSVGSupportImageConverter` for rendering.
-    ///   - Any parsing or conversion issues will result in a `nil` response, ensuring the application does not crash.
-    public func converte(_ uri: SnappThemingDataURI) -> UIImage? {
-        guard uri.type == .svg else {
-            os_log(.error, "Invalid type provided: %{public}@. Only .svg type is supported.", "\(uri.type)")
+    /// - Note: This method specifically handles `.svg` type. If the type does not match, the method returns `nil`.
+    /// - Warning: Ensure that the `data` is valid SVG data to avoid potential rendering issues.
+    public func process(_ data: Data, of type: UTType) -> UIImage? {
+        guard type == .svg else {
+            os_log(.error, "Invalid type provided: %{public}@. Only .svg type is supported.", "\(type)")
             return nil
         }
 
-        // Convert SVG data into a UIImage using a safe converter.
-        let uiImage = SnappThemingSVGSupportImageConverter(data: uri.data).uiImage
+        let uiImage = SnappThemingSVGSupportImageConverter(data: data).uiImage
+
         return uiImage
     }
 
     /// Initializes the `SnappThemingSVGSupportSVGConverter`.
+    ///
+    /// This default initializer is used to create instances of the converter for processing SVG data.
     public init() {}
 }

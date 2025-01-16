@@ -5,14 +5,15 @@
 //  Created by Oleksii Kolomiiets on 15.01.2025.
 //
 
-import SnappTheming
 import UIKit
+import UniformTypeIdentifiers
 
 /// A protocol defining a converter for custom image types, enabling conversion of `SnappThemingDataURI` to `UIImage`.
 public protocol SnappThemingExternalImageConverterProtocol: Sendable {
-    /// Converts a `SnappThemingDataURI` into a `UIImage`.
+    /// Processing image `Data` and `UIType` to convert into a `UIImage`.
     ///
-    /// - Parameter uri: The data URI containing the image data and its associated type.
+    /// - Parameter data: Image `Data`.
+    /// - Parameter type: Image `UTType`.
     /// - Returns: A `UIImage` if the conversion is successful; otherwise, `nil`.
-    func converte(_ uri: SnappThemingDataURI) -> UIImage?
+    func process(_ data: Data, of type: UTType) -> UIImage?
 }
