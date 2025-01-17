@@ -13,11 +13,15 @@ jobs:
     build:
     runs-on: ubuntu-latest
 
+    jobs:
+  build:
+    runs-on: ubuntu-latest
+
     steps:
-        - name: Checkout code
+      - name: Checkout code
         uses: actions/checkout@v3
 
-        - name: Install Swift 6.0.0
+      - name: Install Swift 6.0.0
         run: |
           sudo apt-get update
           sudo apt-get install -y curl
@@ -27,11 +31,11 @@ jobs:
           echo "export PATH=/usr/local/swift-6.0/usr/bin:$PATH" >> $GITHUB_ENV
           source $GITHUB_ENV
 
-        - name: Verify Swift version
+      - name: Verify Swift version
         run: swift --version
 
-        - name: Build SnappTheming
+      - name: Build SnappTheming
         run: cd SnappTheming && swift build -v
 
-        - name: Run SnappThemingTests
+      - name: Run SnappThemingTests
         run: swift test -v
