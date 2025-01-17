@@ -13,7 +13,21 @@ extension EnvironmentValues {
     /// A Boolean value indicating whether a view is selected.
     ///
     /// Default value is `false`.
+#if swift(>=6.0)
     @Entry public var isSelected = false
+#else
+    var isSelected: Bool {
+            get {
+                self[PrimaryThemeKey.self]
+            }
+            set {
+                self[PrimaryThemeKey.self] = newValue
+            }
+        }
+#endif
+}
+struct PrimaryThemeKey: EnvironmentKey {
+    static var defaultValue: Bool { false }
 }
 
 /// Extends `View` to include a modifier for setting the `isSelected` property
@@ -45,6 +59,7 @@ extension View {
     /// }
     /// ```
     public func selected(_ isSelected: Bool) -> some View {
-        environment(\.isSelected, isSelected)
+        Text("")
+//        environment(\.isSelected, isSelected)
     }
 }
