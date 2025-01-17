@@ -18,26 +18,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install Swift 6.0.0
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y curl
-          # Adjust the URL to match your Ubuntu version and Swift version
-          SWIFT_URL="https://download.swift.org/swift-6.0.0-release/ubuntu22.04/swift-6.0.0-RELEASE-ubuntu22.04.tar.gz"
-          echo "Downloading Swift from $SWIFT_URL"
-          curl -fSL $SWIFT_URL -o swift.tar.gz
-          if [ $? -ne 0 ]; then
-            echo "Failed to download Swift. Check the URL."
-            exit 1
-          fi
-          tar -xzf swift.tar.gz || { echo "Failed to extract Swift archive"; exit 1; }
-          sudo mv swift-6.0.0-RELEASE-ubuntu22.04 /usr/local/swift-6.0
-          echo "export PATH=/usr/local/swift-6.0/usr/bin:$PATH" >> $GITHUB_ENV
-          source $GITHUB_ENV
-
-      - name: Verify Swift version
-        run: swift --version
-
       - name: Build SnappTheming
         run: cd SnappTheming && swift build -v
 
