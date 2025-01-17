@@ -18,9 +18,13 @@ public enum ImagesManagerError: Error {
     /// Indicates that the MIME type for the image is unknown or unsupported.
     case unknownMIMEType
 }
-
+#if swift(>=6.0)
 extension NSCache: @retroactive @unchecked Sendable {}
 extension FileManager: @retroactive @unchecked Sendable {}
+#else
+extension NSCache: @unchecked Sendable {}
+extension FileManager: @unchecked Sendable {}
+#endif
 
 /// A manager for handling themed image caching and persistent storage.
 ///
