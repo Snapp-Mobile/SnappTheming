@@ -18,4 +18,4 @@ jobs:
 #        run: sudo xcode-select -switch /Applications/Xcode_15.4.app
 
       - name: Build SnappTheming Package
-        run: cd SnappTheming && xcodebuild test -scheme SnappTheming -destination 'platform=iOS Simulator,OS=16.0,name=iPhone 12 Pro'
+        run: cd SnappTheming && xcodebuild test -scheme SnappTheming-Package -destination 'platform=iOS Simulator,OS=16.0,name=iPhone 12 Pro'
