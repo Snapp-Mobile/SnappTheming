@@ -123,6 +123,8 @@ struct MainView: View {
                         GradientsViewer(declarations: declaration.gradients)
                     case .shapes:
                         ShapesViewer(declarations: declaration.shapes)
+                    case .animations:
+                        AnimationsViewer(declarations: declaration.animations)
                     }
                 } else {
                     EmptyView()

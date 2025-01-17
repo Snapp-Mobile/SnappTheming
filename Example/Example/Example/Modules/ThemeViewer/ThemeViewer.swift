@@ -9,7 +9,7 @@ import SwiftUI
 import SnappTheming
 
 enum ThemeDestination: String, Hashable, CaseIterable {
-    case buttons, colors, fonts, images, metrics, shapes, typography, gradients
+    case buttons, colors, fonts, images, metrics, shapes, typography, gradients, animations
 }
 
 struct ThemeViewer: View {
