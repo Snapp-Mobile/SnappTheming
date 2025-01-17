@@ -17,13 +17,13 @@ jobs:
 
 #      - name: Set up Xcode
 #        run: sudo xcode-select -switch /Applications/Xcode_15.4.app
-#      - name: List Available Simulators
-#        run: xcrun simctl list devices
+      - name: List Available Simulators
+        run: xcrun simctl list devices
       - name: Build SnappTheming Package
         run: |
             cd SnappTheming
             xcodebuild test \
-                -scheme SnappTheming \
+                -scheme SnappTheming-Package \
                 -destination 'platform=iOS Simulator,OS=17.5,name=iPhone 14'
 #            xcodebuild test \
 #                -scheme SnappTheming-Package \
