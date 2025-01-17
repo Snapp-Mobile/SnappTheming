@@ -15,7 +15,9 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up Xcode
-        run: sudo xcode-select -switch /Applications/Xcode_15.4.app
+        uses: actions/setup-xcode@v2
+        with:
+            xcode-version: '15.4'
 
       - name: Build SnappTheming Package
         run: |
