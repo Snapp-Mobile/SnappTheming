@@ -21,7 +21,7 @@ jobs:
         run: |
           cd Example/Example
           xcodebuild clean build \
-            -workspace Example.xcworkspace \
+            -project Example.xcodeproj \
             -scheme Example \
             -sdk iphonesimulator \
             -destination 'platform=iOS Simulator,name=iPhone 14,OS=17.0'
