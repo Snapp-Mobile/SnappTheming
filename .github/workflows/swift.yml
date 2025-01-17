@@ -10,18 +10,15 @@ jobs:
   build:
     runs-on: macos-latest
 
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-     - uses: SwiftyLab/setup-swift@v1
-       with:
-            swift-version: '6.0'
 #      - name: Set up Xcode
 #        run: sudo xcode-select -switch /Applications/Xcode_15.4.app
 
       - name: Build SnappTheming Package
+        uses: SwiftyLab/setup-swift@latest
         run: |
             cd SnappTheming
             xcodebuild test \
