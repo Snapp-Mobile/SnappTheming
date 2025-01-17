@@ -21,8 +21,8 @@ jobs:
       - name: Set up Xcode
         run: sudo xcode-select -switch /Applications/Xcode.app
 
-      - name: Build SnappThemingSVGSupport
-        run: cd SnappThemingSVGSupport && swift test -v
+      - name: Test SnappTheming
+        run: cd SnappTheming && swift test -v
 
       - name: Run SnappThemingTests
         run: swift test --parallel
