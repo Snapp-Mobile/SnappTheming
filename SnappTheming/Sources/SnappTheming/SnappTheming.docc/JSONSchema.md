@@ -333,6 +333,23 @@ Below is an example of a valid image declaration (the base64-encoded string is s
 }
 ```
 
+### Animations
+
+Animations can be added as base64-encoded entities under the root-level `animations` property.
+
+Below is an example of lottie animation declaration (the base64-encoded string is shortened for readability):
+
+```json
+{
+    "animations": {
+        "lego": {
+            "type": "lottie",
+            "value": "eyJ2IjoiNC44LjAiLCJtZXRhIjp7ImciOiJMb3R0aWVGaWxlcyBBRSAiLCJhIjoiIiwiayI6IiIsImQiOiIiLCJ0YyI6IiJ9LC..."
+        }
+    }
+}
+```
+
 ### Aliases
 
 Aliases can be used to link a value to another value. Providing an alias instead of a value means that the value of the objevt that you are aliasing will be used instead. Think of these as declaration hyperlinks. They are useful when building high-level configurations (typography, button styles, shapes).

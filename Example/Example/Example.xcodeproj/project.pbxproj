@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2DCC022F2D3515A600D8C07A /* SnappTheming in Frameworks */ = {isa = PBXBuildFile; productRef = 2DCC022E2D3515A600D8C07A /* SnappTheming */; };
-		53A783B52D39042400A6057F /* SnappThemingSwiftUIHelpers in Frameworks */ = {isa = PBXBuildFile; productRef = 53A783B42D39042400A6057F /* SnappThemingSwiftUIHelpers */; };
-		2DE9A3952D3525F000C5F3C1 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		53BF1E7B2D39784E0041CD44 /* SnappThemingSwiftUIHelpers in Frameworks */ = {isa = PBXBuildFile; productRef = 53BF1E7A2D39784E0041CD44 /* SnappThemingSwiftUIHelpers */; };
+		53BF1E7D2D3978600041CD44 /* SnappTheming in Frameworks */ = {isa = PBXBuildFile; productRef = 53BF1E7C2D3978600041CD44 /* SnappTheming */; };
 		53CF32D02D37A0EC0054F9CB /* SnappThemingSVGSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 53CF32CF2D37A0EC0054F9CB /* SnappThemingSVGSupport */; };
+		53F240072D36753400264B36 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 53F240062D36753400264B36 /* Lottie */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,10 +30,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				53A783B52D39042400A6057F /* SnappThemingSwiftUIHelpers in Frameworks */,
+				53F240072D36753400264B36 /* Lottie in Frameworks */,
+				53BF1E7B2D39784E0041CD44 /* SnappThemingSwiftUIHelpers in Frameworks */,
 				53CF32D02D37A0EC0054F9CB /* SnappThemingSVGSupport in Frameworks */,
-				2DE9A3952D3525F000C5F3C1 /* (null) in Frameworks */,
-				2DCC022F2D3515A600D8C07A /* SnappTheming in Frameworks */,
+				53BF1E7D2D3978600041CD44 /* SnappTheming in Frameworks */
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,9 +84,10 @@
 			);
 			name = Example;
 			packageProductDependencies = (
-				2DCC022E2D3515A600D8C07A /* SnappTheming */,
-				53A783B42D39042400A6057F /* SnappThemingSwiftUIHelpers */,
+				53F240062D36753400264B36 /* Lottie */,
 				53CF32CF2D37A0EC0054F9CB /* SnappThemingSVGSupport */,
+				53BF1E7A2D39784E0041CD44 /* SnappThemingSwiftUIHelpers */,
+				53BF1E7C2D3978600041CD44 /* SnappTheming */,
 			);
 			productName = Example;
 			productReference = 53F233062D31511E00264B36 /* Example.app */;
@@ -117,6 +118,7 @@
 			mainGroup = 53F232FD2D31511E00264B36;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				53F240032D3674F900264B36 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				53A783B12D39042400A6057F /* XCLocalSwiftPackageReference "../../SnappTheming" */,
 				53A783B62D39043200A6057F /* XCLocalSwiftPackageReference "../../SnappThemingSVGSupport" */,
 			);
@@ -362,18 +364,36 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
-/* Begin XCSwiftPackageProductDependency section */
-		2DCC022E2D3515A600D8C07A /* SnappTheming */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SnappTheming;
+/* Begin XCRemoteSwiftPackageReference section */
+		53F240032D3674F900264B36 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.0;
+			};
 		};
-		53A783B42D39042400A6057F /* SnappThemingSwiftUIHelpers */ = {
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		53BF1E7A2D39784E0041CD44 /* SnappThemingSwiftUIHelpers */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 53A783B12D39042400A6057F /* XCLocalSwiftPackageReference "../../SnappTheming" */;
 			productName = SnappThemingSwiftUIHelpers;
+		};
+		53BF1E7C2D3978600041CD44 /* SnappTheming */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 53A783B12D39042400A6057F /* XCLocalSwiftPackageReference "../../SnappTheming" */;
+			productName = SnappTheming;
 		};
 		53CF32CF2D37A0EC0054F9CB /* SnappThemingSVGSupport */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SnappThemingSVGSupport;
+		};
+		53F240062D36753400264B36 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 53F240032D3674F900264B36 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
