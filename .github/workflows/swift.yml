@@ -17,12 +17,11 @@ jobs:
       - name: Set up Xcode
         run: sudo xcode-select -switch /Applications/Xcode.app
 
-      - name: Build SnappTheming
+      - name: Build the Project Target
         run: |
-          cd SnappTheming
-          xcrun --sdk iphonesimulator swift build -Xswiftc -target -Xswiftc arm64-apple-ios14.0-simulator
-
-      - name: Run SnappThemingTests
-        run: |
-          cd SnappTheming
-          xcrun --sdk iphonesimulator swift test --parallel
+          cd Example/Example
+          xcodebuild clean build \
+            -workspace Example.xcworkspace \
+            -scheme Example \
+            -sdk iphonesimulator \
+            -destination 'platform=iOS Simulator,name=iPhone 14,OS=17.0'
