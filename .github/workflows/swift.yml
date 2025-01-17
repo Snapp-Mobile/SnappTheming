@@ -23,7 +23,7 @@ jobs:
         run: |
             cd SnappTheming
             xcodebuild clean build \
-                -scheme SnappThemingTests \
+                -scheme SnappTheming-Package \
                 -destination 'platform=iOS Simulator,OS=18.1,name=iPhone 16 Pro' \
                 -sdk iphonesimulator \
                 -verbose
