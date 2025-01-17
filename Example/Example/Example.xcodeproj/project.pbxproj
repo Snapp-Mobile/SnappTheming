@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		53BF1E7B2D39784E0041CD44 /* SnappThemingSwiftUIHelpers in Frameworks */ = {isa = PBXBuildFile; productRef = 53BF1E7A2D39784E0041CD44 /* SnappThemingSwiftUIHelpers */; };
+		538C47DE2D3A50C5000A1EDC /* SnappThemingSwiftUIHelpers in Frameworks */ = {isa = PBXBuildFile; productRef = 538C47DD2D3A50C5000A1EDC /* SnappThemingSwiftUIHelpers */; };
 		53BF1E7D2D3978600041CD44 /* SnappTheming in Frameworks */ = {isa = PBXBuildFile; productRef = 53BF1E7C2D3978600041CD44 /* SnappTheming */; };
 		53CF32D02D37A0EC0054F9CB /* SnappThemingSVGSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 53CF32CF2D37A0EC0054F9CB /* SnappThemingSVGSupport */; };
 		53F240072D36753400264B36 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 53F240062D36753400264B36 /* Lottie */; };
@@ -31,9 +31,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				53F240072D36753400264B36 /* Lottie in Frameworks */,
-				53BF1E7B2D39784E0041CD44 /* SnappThemingSwiftUIHelpers in Frameworks */,
 				53CF32D02D37A0EC0054F9CB /* SnappThemingSVGSupport in Frameworks */,
-				53BF1E7D2D3978600041CD44 /* SnappTheming in Frameworks */
+				538C47DE2D3A50C5000A1EDC /* SnappThemingSwiftUIHelpers in Frameworks */,
+				53BF1E7D2D3978600041CD44 /* SnappTheming in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,8 +86,8 @@
 			packageProductDependencies = (
 				53F240062D36753400264B36 /* Lottie */,
 				53CF32CF2D37A0EC0054F9CB /* SnappThemingSVGSupport */,
-				53BF1E7A2D39784E0041CD44 /* SnappThemingSwiftUIHelpers */,
 				53BF1E7C2D3978600041CD44 /* SnappTheming */,
+				538C47DD2D3A50C5000A1EDC /* SnappThemingSwiftUIHelpers */,
 			);
 			productName = Example;
 			productReference = 53F233062D31511E00264B36 /* Example.app */;
@@ -376,7 +376,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		53BF1E7A2D39784E0041CD44 /* SnappThemingSwiftUIHelpers */ = {
+		538C47DD2D3A50C5000A1EDC /* SnappThemingSwiftUIHelpers */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 53A783B12D39042400A6057F /* XCLocalSwiftPackageReference "../../SnappTheming" */;
 			productName = SnappThemingSwiftUIHelpers;
