@@ -20,5 +20,5 @@ jobs:
       - name: Build SnappTheming Package
         run: |
             cd SnappTheming
-            swift test --parallel
+            swift test --destination 'platform=iOS Simulator,OS=17.5,name=iPhone 15 Plus'
 #        run: cd SnappTheming && xcrun test -scheme SnappTheming -destination 'platform=iOS Simulator,OS=17.5,name=iPhone 15 Plus'
