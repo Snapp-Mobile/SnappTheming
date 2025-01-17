@@ -12,14 +12,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: Set up Xcode
-        uses: actions/setup-xcode@v2
-        with:
-            xcode-version: '15.4'
+#      - name: Set up Xcode
+#        run: sudo xcode-select -switch /Applications/Xcode_15.4.app
 
       - name: Build SnappTheming Package
-        run: |
-          cd SnappTheming
-          swift build --sdk iphonesimulator
+        run: xcodebuild test -scheme Earendil -destination 'platform=iOS Simulator,OS=16.0,name=iPhone 12 Pro'
