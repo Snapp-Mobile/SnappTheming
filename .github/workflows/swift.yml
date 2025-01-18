@@ -34,6 +34,9 @@ jobs:
       - name: Build SnappTheming Package
         run: |
             cd SnappTheming
-            xcrun test \
-                -destination 'platform=iOS Simulator,OS=18.1,name=iPhone 16' -verbose
+            swift build -v \
+                -Xswiftc "-sdk" \
+                -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" \
+                -Xswiftc "-target" \
+                -Xswiftc "x86_64-apple-ios13.0-simulator"
 #        run: cd SnappTheming && xcrun test -scheme SnappTheming -destination 'platform=iOS Simulator,OS=17.5,name=iPhone 15 Plus'
