@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: SwiftyLab/setup-swift@latest
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Generate Swift Package.resolved
         id: swift_package_resolve
         run: |
@@ -34,11 +34,7 @@ jobs:
       - name: Test
         run: |
             cd SnappTheming
-            xcodebuild \
-               -scheme 'SnappTheming-Package' \
-               -sdk iphonesimulator \
-               -destination 'platform=iOS Simulator,name=iPad Air (4th generation),OS=15.0' \
-               test
+            xcodebuild -scheme SnappTheming-Package test -destination "platform=iOS Simulator,name=iPhone 12 Pro,OS=18.2"
       - name: Build SnappTheming Package
         run: |
             cd SnappTheming
