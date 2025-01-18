@@ -15,6 +15,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Homebrew build helpers install
+        run: brew bundle
+      - name: Show the currently detailed version of Xcode for CLI
+        run: xcode-select -p
+
       - name: Checkout
         uses: actions/checkout@v1
       - name: Build and Test
@@ -24,18 +29,3 @@ jobs:
         env:
           DEVELOPER_DIR: /Applications/Xcode_16.2.app/Contents/Developer
 
-
-#      - name: List Available Simulators (Debug Step)
-#        run: xcrun simctl list devices
-      - uses: futureware-tech/simulator-action@v4
-        with:
-            model: 'iPhone 16'
-            os_version: "18.1"
-            os: "iOS"
-      - name: Test
-        run: |
-            cd SnappTheming
-            xcodebuild build \
-                -scheme SnappTheming \
-                -destination "platform=iOS Simulator,OS=18.1,name=iPhone 16" \
-                -sdk iphonesimulator
