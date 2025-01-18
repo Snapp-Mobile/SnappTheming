@@ -11,7 +11,7 @@ jobs:
     runs-on: macos-14
 
     steps:
-#      - uses: SwiftyLab/setup-swift@latest
+      - uses: SwiftyLab/setup-swift@latest
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -20,8 +20,8 @@ jobs:
 
       - name: Test
         run: |
-            cd SnappThemingSVGSupport
-            xcodebuild build \
-                -scheme SnappThemingSVGSupport \
+            cd Example/Example
+            xcodebuild clean test -project 'Example.xcodeproj' \
+                -scheme Example \
                 -destination "platform=iOS Simulator,OS=18.2,name=iPhone 16" \
                 -sdk iphonesimulator
