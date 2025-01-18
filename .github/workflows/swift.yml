@@ -17,6 +17,7 @@ jobs:
       - name: Generate Swift Package.resolved
         id: swift_package_resolve
         run: |
+          cd SnappTheming
           swift package resolve
 
 #      - name: Generate cache key
