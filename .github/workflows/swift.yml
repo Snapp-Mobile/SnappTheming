@@ -14,33 +14,14 @@ jobs:
       - uses: SwiftyLab/setup-swift@latest
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Generate Swift Package.resolved
-        id: swift_package_resolve
-        run: |
-          cd SnappTheming
-          swift package resolve
 
-#      - name: Generate cache key
-#        id: generate_cache_key
-#        run: |
-#          cache_key="${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}"
-#          echo "cache_key=${cache_key}" >> "$GITHUB_OUTPUT"
-
-#      - name: xcodebuild list
-#        run: cd SnappTheming && xcodebuild -list
-
-#      - name: List Available Simulators
+#      - name: List Available Simulators (Debug Step)
 #        run: xcrun simctl list devices
+
       - name: Test
         run: |
-            cd SnappTheming
-            xcodebuild -scheme SnappTheming-Package test -destination "platform=iOS Simulator,name=iPhone 12 Pro,OS=18.2"
-      - name: Build SnappTheming Package
-        run: |
-            cd SnappTheming
-            swift build -v \
-                -Xswiftc "-sdk" \
-                -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" \
-                -Xswiftc "-target" \
-                -Xswiftc "x86_64-apple-ios13.0-simulator"
-#        run: cd SnappTheming && xcrun test -scheme SnappTheming -destination 'platform=iOS Simulator,OS=17.5,name=iPhone 15 Plus'
+          cd SnappTheming
+          xcodebuild test \
+            -scheme SnappTheming-Package \
+            -destination "platform=iOS Simulator,OS=17.5,name=iPhone 15" \
+            -sdk iphonesimulator
