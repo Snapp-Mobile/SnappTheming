@@ -12,18 +12,21 @@ jobs:
 
     steps:
       - uses: SwiftyLab/setup-swift@latest
+        with:
+          swift-version: "6.0.0"
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: xcodebuild list
-        run: cd SnappTheming && xcodebuild -list
+#      - name: xcodebuild list
+#        run: cd SnappTheming && xcodebuild -list
+
 #      - name: List Available Simulators
 #        run: xcrun simctl list devices
       - name: Build SnappTheming Package
         run: |
             cd SnappTheming
-            xcodebuild -scheme SnappTheming build \
-                -destination 'platform=iOS Simulator,OS=18.1,name=iPhone 16' \
+            xcodebuild -scheme SnappTheming-Package build test \
+                -destination 'platform=iOS Simulator,OS=18.1,name=iPhone 16 Pro' \
                 -verbose
 #            xcodebuild test \
 #                -scheme SnappTheming-Package \
