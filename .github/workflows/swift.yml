@@ -17,7 +17,11 @@ jobs:
 
 #      - name: List Available Simulators (Debug Step)
 #        run: xcrun simctl list devices
-
+      - uses: futureware-tech/simulator-action@v4
+        with:
+            model: 'iPhone 16'
+            os_version: "18.1"
+            os: "iOS"
       - name: Test
         run: |
             cd Example/Example

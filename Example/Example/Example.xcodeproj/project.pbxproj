@@ -13,11 +13,27 @@
 		53F240072D36753400264B36 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 53F240062D36753400264B36 /* Lottie */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		5355DEB62D3C05430086FB5F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53F232FE2D31511E00264B36 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 53F233052D31511E00264B36;
+			remoteInfo = Example;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		5355DEB22D3C05430086FB5F /* ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		53F233062D31511E00264B36 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		5355DEB32D3C05430086FB5F /* ExampleTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ExampleTests;
+			sourceTree = "<group>";
+		};
 		53F233082D31511E00264B36 /* Example */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Example;
@@ -26,6 +42,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5355DEAF2D3C05430086FB5F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		53F233032D31511E00264B36 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -51,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				53F233082D31511E00264B36 /* Example */,
+				5355DEB32D3C05430086FB5F /* ExampleTests */,
 				2DE9A3932D3525F000C5F3C1 /* Frameworks */,
 				53F233072D31511E00264B36 /* Products */,
 			);
@@ -60,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				53F233062D31511E00264B36 /* Example.app */,
+				5355DEB22D3C05430086FB5F /* ExampleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -67,6 +92,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		5355DEB12D3C05430086FB5F /* ExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5355DEBA2D3C05430086FB5F /* Build configuration list for PBXNativeTarget "ExampleTests" */;
+			buildPhases = (
+				5355DEAE2D3C05430086FB5F /* Sources */,
+				5355DEAF2D3C05430086FB5F /* Frameworks */,
+				5355DEB02D3C05430086FB5F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5355DEB72D3C05430086FB5F /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5355DEB32D3C05430086FB5F /* ExampleTests */,
+			);
+			name = ExampleTests;
+			packageProductDependencies = (
+			);
+			productName = ExampleTests;
+			productReference = 5355DEB22D3C05430086FB5F /* ExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		53F233052D31511E00264B36 /* Example */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 53F233142D31512000264B36 /* Build configuration list for PBXNativeTarget "Example" */;
@@ -103,6 +151,10 @@
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					5355DEB12D3C05430086FB5F = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 53F233052D31511E00264B36;
+					};
 					53F233052D31511E00264B36 = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -128,11 +180,19 @@
 			projectRoot = "";
 			targets = (
 				53F233052D31511E00264B36 /* Example */,
+				5355DEB12D3C05430086FB5F /* ExampleTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5355DEB02D3C05430086FB5F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		53F233042D31511E00264B36 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -143,6 +203,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5355DEAE2D3C05430086FB5F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		53F233022D31511E00264B36 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -152,7 +219,51 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		5355DEB72D3C05430086FB5F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 53F233052D31511E00264B36 /* Example */;
+			targetProxy = 5355DEB62D3C05430086FB5F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		5355DEB82D3C05430086FB5F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 44H75889S4;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.snappmobile.io.ExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Example";
+			};
+			name = Debug;
+		};
+		5355DEB92D3C05430086FB5F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 44H75889S4;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.snappmobile.io.ExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Example";
+			};
+			name = Release;
+		};
 		53F233122D31512000264B36 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -333,6 +444,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5355DEBA2D3C05430086FB5F /* Build configuration list for PBXNativeTarget "ExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5355DEB82D3C05430086FB5F /* Debug */,
+				5355DEB92D3C05430086FB5F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		53F233012D31511E00264B36 /* Build configuration list for PBXProject "Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
