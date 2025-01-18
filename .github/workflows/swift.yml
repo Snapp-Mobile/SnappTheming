@@ -19,6 +19,8 @@ jobs:
 #        run: sudo xcode-select -switch /Applications/Xcode_15.4.app
 #      - name: List Available Simulators
 #        run: xcrun simctl list devices
+      - name: Xcode
+        run: xcode-select --print-path
       - name: Build SnappTheming Package
         run: |
             cd SnappTheming
