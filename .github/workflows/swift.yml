@@ -15,17 +15,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-#      - name: Set up Xcode
-#        run: sudo xcode-select -switch /Applications/Xcode_15.4.app
+      - name: xcodebuild list
+        run: xcodebuild -list
 #      - name: List Available Simulators
 #        run: xcrun simctl list devices
-      - name: Xcode
-        run: xcode-select --print-path
       - name: Build SnappTheming Package
         run: |
             cd SnappTheming
             xcodebuild -scheme SnappTheming build \
-                -destination "platform=iOS Simulator,name=iPhone 16,OS=18.1" \
+                -destination 'platform=iOS Simulator,OS=18.1,name=iPhone 16' \
                 -verbose
 #            xcodebuild test \
 #                -scheme SnappTheming-Package \
