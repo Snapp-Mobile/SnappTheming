@@ -5,7 +5,9 @@
 //  Created by Oleksii Kolomiiets on 15.01.2025.
 //
 
+#if canImport(UIKit)
 import UIKit
+#endif
 import UniformTypeIdentifiers
 
 /// A protocol defining a processor for custom image types, enabling conversion of `SnappThemingDataURI` to `UIImage`.

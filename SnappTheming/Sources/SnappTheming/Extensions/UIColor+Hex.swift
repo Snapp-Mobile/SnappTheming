@@ -5,7 +5,9 @@
 //  Created by Ilian Konchev on 25.11.24.
 //
 
+#if canImport(UIKit)
 import UIKit
+#endif
 
 public extension UIColor {
     convenience init(hex: String, alpha: Double = 1.0, format: SnappThemingColorFormat = .rgba) {

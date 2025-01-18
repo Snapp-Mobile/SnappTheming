@@ -1,6 +1,8 @@
 import Testing
 @testable import SnappTheming
+#if canImport(UIKit)
 import UIKit
+#endif
 
 final class SnappThemingDeclarationTests {
     @Test func parseDeclaration() async throws {

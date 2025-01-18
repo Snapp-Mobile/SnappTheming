@@ -7,7 +7,9 @@
 
 import Foundation
 import UniformTypeIdentifiers
+#if canImport(UIKit)
 import UIKit
+#endif
 
 /// A protocol defining the responsibilities of a theming image manager,
 /// enabling image handling, caching, and storage for theming purposes.

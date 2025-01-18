@@ -7,8 +7,13 @@
 
 @testable import SnappTheming
 import Testing
+
+#if canImport(SwiftUI)
 import SwiftUI
+#endif
+#if canImport(UIKit)
 import UIKit
+#endif
 
 @Suite
 struct ImageTests {

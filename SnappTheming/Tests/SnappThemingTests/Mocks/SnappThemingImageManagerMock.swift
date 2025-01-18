@@ -6,7 +6,9 @@
 //
 
 import SnappTheming
+#if canImport(UIKit)
 import UIKit
+#endif
 import UniformTypeIdentifiers
 
 final class SnappThemingImageManagerMock: SnappThemingImageManager {
