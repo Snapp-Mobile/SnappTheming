@@ -31,6 +31,14 @@ jobs:
 
 #      - name: List Available Simulators
 #        run: xcrun simctl list devices
+      - name: Test
+        run: |
+            cd SnappTheming
+            xcodebuild \
+               -scheme 'SnappTheming-Package' \
+               -sdk iphonesimulator \
+               -destination 'platform=iOS Simulator,name=iPad Air (4th generation),OS=15.0' \
+               test
       - name: Build SnappTheming Package
         run: |
             cd SnappTheming
