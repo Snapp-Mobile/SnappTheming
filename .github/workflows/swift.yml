@@ -8,12 +8,22 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-14
 
     steps:
       - uses: SwiftyLab/setup-swift@latest
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: Generate Swift Package.resolved
+        id: swift_package_resolve
+        run: |
+          swift package resolve
+
+#      - name: Generate cache key
+#        id: generate_cache_key
+#        run: |
+#          cache_key="${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}"
+#          echo "cache_key=${cache_key}" >> "$GITHUB_OUTPUT"
 
 #      - name: xcodebuild list
 #        run: cd SnappTheming && xcodebuild -list
@@ -24,6 +34,5 @@ jobs:
         run: |
             cd SnappTheming
             xcrun test \
-                -scheme SnappTheming-Package \
                 -destination 'platform=iOS Simulator,OS=18.1,name=iPhone 16' -verbose
 #        run: cd SnappTheming && xcrun test -scheme SnappTheming -destination 'platform=iOS Simulator,OS=17.5,name=iPhone 15 Plus'
