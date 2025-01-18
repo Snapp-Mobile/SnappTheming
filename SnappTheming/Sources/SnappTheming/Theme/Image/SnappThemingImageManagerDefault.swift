@@ -7,9 +7,7 @@
 
 import Foundation
 import OSLog
-#if canImport(UIKit)
 import UIKit
-#endif
 import UniformTypeIdentifiers
 
 /// An enumeration of possible errors in `SnappThemingImageManager`.

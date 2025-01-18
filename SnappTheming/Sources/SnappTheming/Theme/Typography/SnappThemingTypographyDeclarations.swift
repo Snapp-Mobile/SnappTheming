@@ -6,9 +6,7 @@
 //
 
 import Foundation
-#if canImport(UIKit)
 import UIKit
-#endif
 import SwiftUI
 
 /// Manages typography tokens, combining font and size. Provides full control over how text styles are applied in the app.

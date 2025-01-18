@@ -6,9 +6,7 @@
 //
 
 import Foundation
-#if canImport(UIKit)
 import UIKit
-#endif
 import SwiftUI
 
 /// Resolves fonts for theming purposes, supporting custom and system fonts.

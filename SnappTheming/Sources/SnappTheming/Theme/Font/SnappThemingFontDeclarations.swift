@@ -5,9 +5,7 @@
 //  Created by Volodymyr Voiko on 22.11.2024.
 //
 
-#if canImport(UIKit)
 import UIKit
-#endif
 import SwiftUI
 import CoreText
 

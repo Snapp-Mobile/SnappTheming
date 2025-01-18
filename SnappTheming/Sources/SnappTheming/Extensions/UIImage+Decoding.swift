@@ -6,9 +6,7 @@
 //
 
 
-#if canImport(UIKit)
 import UIKit
-#endif
 import PDFKit
 import UniformTypeIdentifiers
 
