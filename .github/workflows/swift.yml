@@ -24,8 +24,8 @@ jobs:
             os: "iOS"
       - name: Test
         run: |
-            cd Example/Example
-            xcodebuild clean test -project 'Example.xcodeproj' \
-                -scheme Example \
-                -destination "platform=iOS Simulator,OS=18.2,name=iPhone 16" \
+            cd SnappTheming
+            xcodebuild test \
+                -scheme SnappTheming-Package \
+                -destination "platform=iOS Simulator,OS=18.1,name=iPhone 16" \
                 -sdk iphonesimulator
