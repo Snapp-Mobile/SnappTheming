@@ -4,23 +4,34 @@ The main building blocks
 
 ## Overview
 
-This article describes the types of objects that you can describe to construct a valid theme declaration JSON. 
+This article describes the types of objects you can use to construct a valid theme declaration JSON. 
 
+We have split the object types into two main groups - foundation objects and high-level objects
 
-Below is the list of the foundation objects:
+#### Foundation Objects
 
 - [Colors](<doc:Colors>)
+- [Fonts](<doc:Fonts>)
+- [Gradients](<doc:Gradients>)
+  - [Angular](<doc:Angular-Gradient>) 
+  - [Linear](<doc:Linear-Gradient>)
+  - [Radial](<doc:Radial-Gradient>)
+- [Images](<doc:Images>)
+- [Lottie Animations](<doc:Lottie-Animations>)
 - [Metrics](<doc:Metrics>)
 - [Shapes](<doc:Shapes>)
-- [Gradients](<doc:Gradients>)
-- [Fonts](<doc:Fonts>)
-- [Images](<doc:Images>)
+  - [Rectangle](<doc:Rectangle>)
+  - [Ellipse](<doc:Ellipse>)
+  - [Circle](<doc:Circle>)
+  - [Capsule](<doc:Capsule>)
+  - [Rounded rectangle](<doc:Rounded-Rectangle>)
+  - [Uneven rouded rectangle](<doc:Uneven-Rounded-Rectangle>)
 
-On top of those the library provides support for:
+#### High-level objects
 
 - [Aliases](<doc:Aliases>)
+- [Button Styles](doc:Button-Styles)
 - [Typography](<doc:Typography>)
-- [Button styles](doc:Button-styles)
 
 ### Colors
 
@@ -74,11 +85,170 @@ Mixing the color declaration style is also supported.  The following is a valid 
 }
 ```
 
-> In the example above the `appSecondary` will be initialized with the value of `#FF00000A` which will be used in both the system light and dark modes
+> In the example above the `appSecondary` color will be initialized with a value of `#FF00000A` which will be used in both the system light and dark modes
 
 ### Providing hints on the color format to the parser
 
-For the most part decoding the colors correctly should work out out of the box. The parser can recognize between the color annotations. It defaults to recognizing RGBA color annotations. In case you need to support ARGB, make sure to provide the correct value to the ``SnappThemingParserConfiguration/colorFormat`` property of ``SnappThemingParserConfiguration`` (see ``SnappThemingColorFormat`` for the list of supported values)
+For the most part decoding the colors correctly should work out out of the box. The parser can deal with different HEX-driven color styles. Both `#FFF` and `#FFFFFF` annotations will be recognized and supported out of the box. The parser defaults to recognizing RGBA color annotations as well (e.g: `#FFFFFF0A`). In case you need to support ARGB, make sure to provide the correct value to the ``SnappThemingParserConfiguration/colorFormat`` property of ``SnappThemingParserConfiguration`` (see ``SnappThemingColorFormat`` for the list of supported values)
+
+### Fonts
+
+The framework adds support for custom fonts. Fonts can be added as annotated object entities under the root-level `fonts` property.
+
+The annotation should contain the PostScript font name and the actual base64-encoded font data.
+
+Below is an example of a valid font declaration (the base64-encoded string is shortened for readability):
+
+```json
+{
+    "fonts": {
+        "Roboto-Regular": {
+            "postScriptName": "Roboto-Regular",
+            "source": "data:font/ttf;base64,AAEAAAAS...=="
+        }
+    }
+}
+```
+
+Make sure that you deregister the old theme fonts and register thew new ones when loading the theme (or when starting the app). Here's an example on how to do that:
+
+```swift
+do {
+    let deregisterFontManager = SnappThemingFontManagerDefault(
+        themeCacheRootURL: oldConfiguration.themeCacheRootURL, 
+        themeName: oldConfiguration.themeName
+    )
+    deregisterFontManager.unregisterFonts(oldDeclaration.fontInformation)
+
+    // passing the themeName to the configuration is important
+    // for caching the theme assets in a separate namespace
+    let configuration = SnappThemingParserConfiguration(themeName: "newTheme")
+    let declaration = try SnappThemingParser.parse(from: json, using: configuration)
+    let fontManager = SnappThemingFontManagerDefault(
+        themeCacheRootURL: configuration.themeCacheRootURL, 
+        themeName: configuration.themeName
+    )
+    fontManager.registerFonts(declaration.fontInformation)
+} catch let error {
+    os_log(.error, "Error: %@", error.localizedDescription)
+}
+
+```
+
+### Gradients
+
+Gradients can be declared as described below. Supported are three gradient types - [angular](<doc:Angular-Gradient>), [linear](<doc:Linear-Gradient>), and [radial](<doc:Radial-Gradient>)
+
+#### Angular Gradient
+
+The values of the start and end angle should be provided in degrees, as shown below
+
+````json
+{
+    "gradients": {
+        "angularGradient": {
+            "colors": [
+                "#843912",
+                "#242D2D"
+            ],
+            "center": [
+                2.0,
+                -0.2
+            ],
+            "startAngle": 0,
+            "endAngle": 180
+        }
+    }
+}
+````
+
+#### Linear Gradient
+
+```json
+{
+    "gradients": {
+        "horizontalLinearGradient": {
+            "colors": [
+                "$colors/appPrimary",
+                "$colors/appSecondary"
+            ],
+            "startPoint": "leading",
+            "endPoint": "trailing"
+        },
+        "verticallLinearGradient": {
+            "colors": [
+                "$colors/appPrimary",
+                "$colors/appSecondary"
+            ],
+            "startPoint": "top",
+            "endPoint": "bottom"
+        },
+        "diagonalLinearGradient": {
+            "colors": [
+                "$colors/appPrimary",
+                "$colors/appSecondary"
+            ],
+            "startPoint": "topLeading",
+            "endPoint": "bottomTrailing"
+        }
+    }
+}
+```
+
+#### Radial Gradient
+
+```json
+{
+    "gradients": {
+        "radialGradient": {
+            "colors": [
+                "#843912",
+                "#242D2D"
+            ],
+            "center": [
+                2.0,
+                -0.2
+            ],
+            "startRadius": 0,
+            "endRadius": 1075
+        }
+    }
+}
+```
+
+
+### Images
+
+Images can be added as base64-encoded entities under the root-level `images` property. 
+
+Below is an example of a valid image declaration (the base64-encoded string is shortened for readability):
+
+```json
+{
+    "images": {
+        "basket": "data:image/png;base64,iVBORw0KG...=="
+    }
+}
+```
+
+> The library provides support for JPEG, PNG and PDF assets out of the box. Additional support for SVG assets (using [`SGVKit`](https://github.com/SVGKit/SVGKit)) is available through the [`SnappThemingSVGSupport`](https://github.com/Snapp-Mobile/SnappTheming) package.
+
+### Lottie Animations
+
+Animations can be added as base64-encoded entities under the root-level `animations` property.
+
+Below is an example of Lottie animation declaration (the base64-encoded string is shortened for readability):
+
+```json
+{
+    "animations": {
+        "lego": {
+            "type": "lottie",
+            "value": "eyJ2IjoiNC44LjAiLCJtZXRhIjp7ImciOiJMb3R0aWVGaWxlcyBBRSAiLCJhIjoiIiwiayI6IiIsImQiOiIiLCJ0YyI6IiJ9LC..."
+        }
+    }
+}
+```
 
 ### Metrics
 
@@ -106,8 +276,8 @@ Supported are a number of objects, as follows:
 - [Ellipse](<doc:Ellipse>)
 - [Circle](<doc:Circle>)
 - [Capsule](<doc:Capsule>)
-- [Rounded rectangle](<doc:Rounded-rectangle>)
-- [Uneven rouded rectangle](<doc:Uneven-rounded-rectangle>)
+- [Rounded rectangle](<doc:Rounded-Rectangle>)
+- [Uneven rouded rectangle](<doc:Uneven-Rounded-Rectangle>)
 
 #### Rectangle
 
@@ -160,7 +330,7 @@ Supported are a number of objects, as follows:
 }
 ```
 
-#### Rounded rectangle
+#### Rounded Rectangle
 
 Rounded rectangles with uniform corner radius can be defined as follows
 
@@ -195,7 +365,7 @@ Rounded rectangles with variable corner radius can be defined as follows
 }
 ```
 
-#### Uneven rounded rectangle
+#### Uneven Rounded Rectangle
 
 This allows you to define a rounded rectangle where corner radius varies for each corner, as below
 
@@ -213,138 +383,6 @@ This allows you to define a rounded rectangle where corner radius varies for eac
                 },
                 "style": "circular"
             }
-        }
-    }
-}
-```
-
-
-### Gradients
-
-Gradients can be declared as described below. Supported are two gradient types - angular, linear and radial
-
-#### Angular gradient
-
-The values of the start and end angle should be provided in degrees, as shown below
-
-````json
-{
-    "gradients": {
-        "angularGradient": {
-            "colors": [
-                "#843912",
-                "#242D2D"
-            ],
-            "center": [
-                2.0,
-                -0.2
-            ],
-            "startAngle": 0,
-            "endAngle": 180
-        }
-    }
-}
-````
-
-#### Linear gradient
-
-```json
-{
-    "gradients": {
-        "horizontalLinearGradient": {
-            "colors": [
-                "$colors/appPrimary",
-                "$colors/appSecondary"
-            ],
-            "startPoint": "leading",
-            "endPoint": "trailing"
-        },
-        "verticallLinearGradient": {
-            "colors": [
-                "$colors/appPrimary",
-                "$colors/appSecondary"
-            ],
-            "startPoint": "top",
-            "endPoint": "bottom"
-        },
-        "diagonalLinearGradient": {
-            "colors": [
-                "$colors/appPrimary",
-                "$colors/appSecondary"
-            ],
-            "startPoint": "topLeading",
-            "endPoint": "bottomTrailing"
-        }
-    }
-}
-```
-
-#### Radial gradient
-
-```json
-{
-    "gradients": {
-        "radialGradient": {
-            "colors": [
-                "#843912",
-                "#242D2D"
-            ],
-            "center": [
-                2.0,
-                -0.2
-            ],
-            "startRadius": 0,
-            "endRadius": 1075
-        }
-    }
-}
-```
-
-### Fonts
-
-Custom fonts are also supported. Fonts can be added as annotated object entities under the root-level `fonts` property.
-
-The annotation should contain the PostScript font name and the actual base64-encoded font data.
-
-Below is an example of a valid font declaration (the base64-encoded string is shortened for readability):
-
-```json
-{
-    "images": {
-        "Roboto-Regular": {
-            "postScriptName": "Roboto-Regular",
-            "source": "data:font/ttf;base64,AAEAAAAS...=="
-        }
-    }
-}
-```
-
-### Images
-
-Images can be added as base64-encoded entities under the root-level `images` property. 
-
-Below is an example of a valid image declaration (the base64-encoded string is shortened for readability):
-
-```json
-{
-    "images": {
-        "basket": "data:image/png;base64,iVBORw0KG...=="
-    }
-}
-```
-
-### Animations
-
-Animations can be added as base64-encoded entities under the root-level `animations` property.
-
-Below is an example of lottie animation declaration (the base64-encoded string is shortened for readability):
-
-```json
-{
-    "animations": {
-        "lego": {
-            "type": "lottie",
-            "value": "eyJ2IjoiNC44LjAiLCJtZXRhIjp7ImciOiJMb3R0aWVGaWxlcyBBRSAiLCJhIjoiIiwiayI6IiIsImQiOiIiLCJ0YyI6IiJ9LC..."
         }
     }
 }
@@ -369,39 +407,9 @@ Below is an example of a valid use of aliases as `surfaceWidgetPrimary` is decla
 }
 ```
 
-### Typography
+### Button Styles
 
-Typography declarations are considered high-level as they should point to primitives like metrics and fonts.
-
-Below is an example of a valid font declaration:
-
-```json
-{
-    "typography": {
-        "body": {
-            "font": "$fonts/Roboto-Regular",
-            "fontSize": "$metrics/fontBody"
-        }
-    }
-}
-```
-
-Also supported are local values for the font size:
-
-```json
-{
-    "typography": {
-        "body": {
-            "font": "$fonts/Roboto-Regular",
-            "fontSize": 16.0
-        }
-    }
-}
-```
-
-### Button styles
-
-Below is an example of two button styles. Button styles may contains aliases to [shapes]<doc:Shapes>, [colors](<doc:Colors>), [typography](<doc:Typography>).
+Below is an example of two button styles. Button styles may contains aliases to [shapes](<doc:Shapes>), [colors](<doc:Colors>) and [typography](<doc:Typography>) declarations.
 
 For more information, see ``SnappThemingButtonStyleRepresentation``
 
@@ -452,4 +460,32 @@ For more information, see ``SnappThemingButtonStyleRepresentation``
 }
 ```
 
+### Typography
 
+Typography declarations are considered high-level as they should point to primitives like metrics and fonts.
+
+Below is an example of a valid font declaration:
+
+```json
+{
+    "typography": {
+        "body": {
+            "font": "$fonts/Roboto-Regular",
+            "fontSize": "$metrics/fontBody"
+        }
+    }
+}
+```
+
+Also supported are local values for the font size:
+
+```json
+{
+    "typography": {
+        "body": {
+            "font": "$fonts/Roboto-Regular",
+            "fontSize": 16.0
+        }
+    }
+}
+```
