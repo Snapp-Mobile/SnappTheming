@@ -8,28 +8,33 @@ on:
 
 jobs:
   build:
-    runs-on: macos-14
+    strategy:
+      matrix:
+        scheme: ["SnappTheming", "SnappTheming-Package", "SnappThemingTests", "SnappThemingSwiftUIHelpers"]
+    runs-on: macos-latest
 
     steps:
-      - uses: SwiftyLab/setup-swift@latest
+      - uses: SwiftyLab/setup-swift@v1
+        with:
+            swift-version: 6.0
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Build and Test
+      - name: SnappTheming Destinations
         run: |
             cd SnappTheming
-            xcodebuild -scheme "SnappTheming" -showdestinations
+            xcodebuild -scheme ${{ matrix.scheme }} -showdestinations
 
-      - name: Homebrew build helpers install
-        run: brew bundle
-      - name: Show the currently detailed version of Xcode for CLI
-        run: xcode-select -p
-
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Build and Test
-        run: |
-            cd SnappTheming
-            swift test
-        env:
-          DEVELOPER_DIR: /Applications/Xcode_16.2.app/Contents/Developer
+#      - name: Homebrew build helpers install
+#        run: brew bundle
+#      - name: Show the currently detailed version of Xcode for CLI
+#        run: xcode-select -p
+#
+#      - name: Checkout
+#        uses: actions/checkout@v1
+#      - name: Build and Test
+#        run: |
+#            cd SnappTheming
+#            swift test
+#        env:
+#          DEVELOPER_DIR: /Applications/Xcode_16.2.app/Contents/Developer
 
