@@ -37,8 +37,8 @@ import OSLog
 /// - ``SnappThemingButtonStyleDeclarations``:
 ///   Manages button style tokens, including properties like surface and text colors, border widths and color, shape and typography for various button states.
 ///
-/// - ``SnappThemingButtonStyleShapeDeclarations``:
-///   Manages button shape tokens, defining the appearance of button outlines, such as circular, rounded rectangle, or custom shapes.
+/// - ``SnappThemingShapeDeclarations``:
+///   Manages shape tokens, defining the appearance of button outlines, such as circular, rounded rectangle, or custom shapes.
 ///
 /// - ``SnappThemingGradientDeclarations``:
 ///   Manages shape style tokens, including support for gradients such as linear, radial, and angular, enabling the creation of dynamic and visually appealing shape backgrounds.
