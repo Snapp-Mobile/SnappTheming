@@ -1,5 +1,5 @@
 //
-//  ChargingProgress.swift
+//  Progress.swift
 //  Example
 //
 //  Created by Oleksii Kolomiiets on 05.12.2024.
@@ -8,7 +8,7 @@
 import SnappTheming
 import SwiftUI
 
-struct ChargingProgress: View {
+struct Progress: View {
     var declaration: SnappThemingDeclaration
     @State var progress: Int
     @State var limit: Int
@@ -29,7 +29,7 @@ struct ChargingProgress: View {
 
                 RoundedRectangle(cornerRadius: declaration.metrics.windowRadiusSmall)
                     .fill(
-                        declaration.gradients.chargingProgress
+                        declaration.gradients.progress
                     )
                     .shadow(color: Color(hex: "#000000", alpha: 0.2), radius: 20, x: 0, y: 4)
                     .frame(width: progressWidth(containerWidth: geometry.size.width))
