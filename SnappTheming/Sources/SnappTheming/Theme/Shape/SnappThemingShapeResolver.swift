@@ -19,7 +19,7 @@ public struct SnappThemingShapeResolver: Sendable {
 
     /// Initializes a new `SnappThemingShapeResolver` with the specified button style type.
     ///
-    /// - Parameter buttonStyleType: The button style type to resolve (e.g., circle, rectangle).
+    /// - Parameter shapeType: The shape style to resolve (e.g., circle, rectangle).
     public init(shapeType: SnappThemingShapeType) {
         self.shapeType = shapeType
     }
