@@ -46,17 +46,17 @@ public final class SnappThemingImageProcessorsRegistry: @unchecked Sendable {
 
     /// An internal thread-safe array for storing external image processors.
     private var _externalImageProcessors: [any SnappThemingExternalImageProcessorProtocol] = []
-    private let lock = NSLock()
+    private let queue = DispatchQueue(label: "ImageProcessorsQueue")
 
     /// Registers a new external image processor.
     ///
     /// - Parameter processor: The image processor to register.
     /// - Discussion:
     ///   This method is thread-safe. Registered processors are stored in a private array.
-    public func register(_ processors: any SnappThemingExternalImageProcessorProtocol) {
-        lock.lock()
-        defer { lock.unlock() }
-        _externalImageProcessors.append(processors)
+    public func register(_ processor: any SnappThemingExternalImageProcessorProtocol) {
+        queue.sync {
+            _externalImageProcessors.append(processor)
+        }
     }
 
     /// Retrieves all registered external image processors.
@@ -65,8 +65,8 @@ public final class SnappThemingImageProcessorsRegistry: @unchecked Sendable {
     /// - Discussion:
     ///   Accessing the processors is thread-safe and returns a snapshot of the current state.
     public func registeredProcessors() -> [any SnappThemingExternalImageProcessorProtocol] {
-        lock.lock()
-        defer { lock.unlock() }
-        return _externalImageProcessors
+        queue.sync {
+            return _externalImageProcessors
+        }
     }
 }
