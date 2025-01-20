@@ -14,6 +14,10 @@ jobs:
       - uses: SwiftyLab/setup-swift@latest
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Build and Test
+        run: |
+            cd SnappTheming
+            xcodebuild -scheme "SnappTheming" -showdestinations
 
       - name: Homebrew build helpers install
         run: brew bundle
