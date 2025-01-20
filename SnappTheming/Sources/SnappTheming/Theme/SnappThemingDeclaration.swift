@@ -147,6 +147,15 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
         if parserConfiguration.encodeFonts {
             try container.encode(fonts.cache, forKey: .fonts)
         }
+        try container.encode(typography.cache, forKey:  .typography)
+        try container.encode(gradients.cache, forKey:  .gradients)
+        try container.encode(buttonStyles.cache, forKey:  .buttonStyles)
+        try container.encode(interactiveColors.cache, forKey:  .interactiveColors)
+        try container.encode(shapes.cache, forKey:  .shapes)
+        try container.encode(segmentControlStyle.cache, forKey:  .segmentControlStyle)
+        try container.encode(sliderStyle.cache, forKey:  .sliderStyle)
+        try container.encode(toggleStyle.cache, forKey:  .toggleStyle)
+        try container.encode(animations.cache, forKey:  .animations)
     }
 }
 
@@ -156,18 +165,18 @@ extension SnappThemingDeclaration {
         using configuration: SnappThemingParserConfiguration = .default
     ) -> SnappThemingDeclaration {
         SnappThemingDeclaration(imageCache: images.cache.override(other.images.cache),
-                             colorCache: colors.cache.override(other.colors.cache),
-                             metricsCache: metrics.cache.override(other.metrics.cache),
-                             fontsCache: fonts.cache.override(other.fonts.cache),
-                             typographyCache: typography.cache.override(other.typography.cache),
-                             interactiveColorsCache: interactiveColors.cache.override(other.interactiveColors.cache),
-                             buttonStylesCache: buttonStyles.cache.override(other.buttonStyles.cache),
-                             shapeInformation: shapes.cache.override(other.shapes.cache),
-                             gradientsCache: gradients.cache.override(other.gradients.cache),
-                             segmentControlStyleCache: segmentControlStyle.cache.override(other.segmentControlStyle.cache),
-                             sliderStyleCache: sliderStyle.cache.override(other.sliderStyle.cache),
-                             toggleStyleCache: toggleStyle.cache.override(other.toggleStyle.cache),
-                             using: configuration)
+                                colorCache: colors.cache.override(other.colors.cache),
+                                metricsCache: metrics.cache.override(other.metrics.cache),
+                                fontsCache: fonts.cache.override(other.fonts.cache),
+                                typographyCache: typography.cache.override(other.typography.cache),
+                                interactiveColorsCache: interactiveColors.cache.override(other.interactiveColors.cache),
+                                buttonStylesCache: buttonStyles.cache.override(other.buttonStyles.cache),
+                                shapeInformation: shapes.cache.override(other.shapes.cache),
+                                gradientsCache: gradients.cache.override(other.gradients.cache),
+                                segmentControlStyleCache: segmentControlStyle.cache.override(other.segmentControlStyle.cache),
+                                sliderStyleCache: sliderStyle.cache.override(other.sliderStyle.cache),
+                                toggleStyleCache: toggleStyle.cache.override(other.toggleStyle.cache),
+                                using: configuration)
     }
 }
 

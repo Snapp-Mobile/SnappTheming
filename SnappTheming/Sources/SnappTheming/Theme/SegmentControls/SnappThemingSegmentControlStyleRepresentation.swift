@@ -27,12 +27,12 @@ public struct SnappThemingSegmentControlStyleRepresentation: Codable {
         self.shape = try container.decode(SnappThemingToken<SnappThemingShapeRepresentation>.self, forKey: .shape)
 
         if let singleSurfaceColor = try? container.decode(SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .surfaceColor) {
-            self.surfaceColor = .init(from: singleSurfaceColor)
+            self.surfaceColor = SnappThemingToken(from: singleSurfaceColor)
         } else {
             self.surfaceColor = try container.decode(SnappThemingToken<SnappThemingInteractiveColorInformation>.self, forKey: .surfaceColor)
         }
         if let singleBorderColor = try? container.decode(SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .borderColor) {
-            self.borderColor = .init(from: singleBorderColor)
+            self.borderColor = SnappThemingToken(from: singleBorderColor)
         } else {
             self.borderColor = try container.decode(SnappThemingToken<SnappThemingInteractiveColorInformation>.self, forKey: .borderColor)
         }

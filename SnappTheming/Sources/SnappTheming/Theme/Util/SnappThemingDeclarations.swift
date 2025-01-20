@@ -108,10 +108,10 @@ public struct SnappThemingDeclarations<DeclaredValue, Configuration> where Decla
         }
 
         // Build the token path
-        let path = SnappThemingTokenPath(component: rootKey.rawValue, name: keyPath)
+        let tokenPath = SnappThemingTokenPath(component: rootKey.rawValue, name: keyPath)
 
         // Resolve the value using the resolver
-        guard let resolvedValue = resolver.resolve(.alias(path)) else {
+        guard let resolvedValue = resolver.resolve(.alias(tokenPath)) else {
             os_log(.debug, "Invalid access to keyPath '%@': Failed to resolve the value", keyPath)
             return nil
         }

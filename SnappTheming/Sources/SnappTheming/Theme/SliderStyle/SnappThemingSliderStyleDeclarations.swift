@@ -22,7 +22,7 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingSliderStyl
         self.init(
             cache: cache,
             rootKey: .sliderStyle,
-            configuration: SnappThemingSliderStyleConfiguration(
+            configuration: Configuration(
                 fallbackMinimumTrackTintColor: configuration.fallbackColor,
                 fallbackMaximumTrackTintColor: configuration.fallbackColor,
                 fallbackFontSize: configuration.fallbackMetric,
@@ -38,7 +38,7 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingSliderStyl
 
     public subscript(dynamicMember keyPath: String) -> SnappThemingSliderStyleResolver {
         guard
-            let representation: SnappThemingSliderStyleRepresentation = self[dynamicMember: keyPath],
+            let representation: DeclaredValue = self[dynamicMember: keyPath],
             let resolvedMinimumTrackTintColor = configuration.colors
                 .resolver.resolve(representation.minimumTrackTintColor)?
                 .color(using: configuration.colorFormat),

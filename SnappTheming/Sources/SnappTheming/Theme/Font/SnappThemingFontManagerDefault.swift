@@ -9,14 +9,8 @@ import Foundation
 import CoreText
 import OSLog
 
-public protocol SnappThemingFontManager {
-    func registerFonts(_ fonts: [SnappThemingFontInformation])
-    func unregisterFonts(_ fonts: [SnappThemingFontInformation])
-    func registerFont(_ font: SnappThemingFontInformation)
-}
-
 /// An enumeration of possible errors in `SnappThemingFontManager`.
-enum SnappThemingFontManagerError: Error {
+fileprivate enum SnappThemingFontManagerError: Error {
     /// Indicates that the font registration failed at the specified URL.
     case failedToRegisterFont(at: URL)
 }

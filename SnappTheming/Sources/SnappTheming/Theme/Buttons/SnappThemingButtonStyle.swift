@@ -9,6 +9,8 @@
 import SwiftUI
 
 public struct SnappThemingButtonStyle: ButtonStyle {
+    @Environment(\.isEnabled) private var isEnabled
+
     public let surfaceColor: SnappThemingInteractiveColor
     public let textColor: SnappThemingInteractiveColor
     public let borderColor: SnappThemingInteractiveColor
@@ -31,8 +33,6 @@ public struct SnappThemingButtonStyle: ButtonStyle {
         self.shape = shape
         self.font = font
     }
-
-    @Environment(\.isEnabled) private var isEnabled
 
     public func makeBody(configuration: Configuration) -> some View {
         let shape = shape.value

@@ -12,25 +12,16 @@ import OSLog
 /// Manages image tokens. Supports bitmap assets for different scenarios.
 public typealias SnappThemingImageDeclarations = SnappThemingDeclarations<SnappThemingDataURI, SnappThemingImageConfiguration>
 
-/// Configuration for handling themed images in a SnappTheming framework.
-public struct SnappThemingImageConfiguration {
-    /// Fallback image to use when a specific image cannot be resolved.
-    public let fallbackImage: Image
-
-    /// Manager for handling image caching and retrieval.
-    public let imagesManager: SnappThemingImageManager
-}
-
 extension SnappThemingDeclarations where DeclaredValue == SnappThemingDataURI, Configuration == SnappThemingImageConfiguration {
     /// Initializes the declarations for themed images.
     /// - Parameters:
     ///   - cache: A cache of image tokens keyed by their identifiers.
     ///   - configuration: The parser configuration used to define fallback and manager behavior.
-    public init(cache: [String: SnappThemingToken<SnappThemingDataURI>]?, configuration: SnappThemingParserConfiguration = .default) {
+    public init(cache: [String: SnappThemingToken<DeclaredValue>]?, configuration: SnappThemingParserConfiguration = .default) {
         self.init(
             cache: cache,
             rootKey: .images,
-            configuration: SnappThemingImageConfiguration(
+            configuration: Configuration(
                 fallbackImage: configuration.fallbackImage,
                 imagesManager: configuration.imageManager ?? SnappThemingImageManagerDefault(
                     themeCacheRootURL: configuration.themeCacheRootURL,
@@ -44,7 +35,7 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingDataURI, C
     /// - Parameter keyPath: The key path used to identify the desired image.
     /// - Returns: The resolved image, or the fallback image if the resolution fails.
     public subscript(dynamicMember keyPath: String) -> Image {
-        guard let representation: SnappThemingDataURI = self[dynamicMember: keyPath] else {
+        guard let representation: DeclaredValue = self[dynamicMember: keyPath] else {
             os_log(.error, "Error resolving image with name: %@.", keyPath)
             return configuration.fallbackImage
         }

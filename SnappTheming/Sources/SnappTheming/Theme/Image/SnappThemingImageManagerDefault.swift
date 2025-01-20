@@ -11,7 +11,7 @@ import UIKit
 import UniformTypeIdentifiers
 
 /// An enumeration of possible errors in `SnappThemingImageManager`.
-public enum ImagesManagerError: Error {
+fileprivate enum ImagesManagerError: Error {
     /// Indicates that the images directory URL is unknown or inaccessible.
     case unknownImagesDirectoryURL
 

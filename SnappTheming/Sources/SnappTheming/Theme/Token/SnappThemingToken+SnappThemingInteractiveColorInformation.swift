@@ -1,5 +1,5 @@
 //
-//  SnappThemingToken+InteractiveColorInformation.swift
+//  SnappThemingToken+SnappThemingInteractiveColorInformation.swift
 //  SnappTheming
 //
 //  Created by Ilian Konchev on 3.12.24.
@@ -17,12 +17,12 @@ extension SnappThemingToken where Value == SnappThemingInteractiveColorInformati
         switch token {
         case .alias(let path):
             if path.component == "colors" {
-                self = .value(.init(.alias(path)))
+                self = .value(Value(.alias(path)))
             } else {
                 self = .alias(path)
             }
         case .value(let v):
-            self = .value(.init(.value(v)))
+            self = .value(Value(.value(v)))
         }
     }
 }

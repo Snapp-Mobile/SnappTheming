@@ -11,14 +11,6 @@ import OSLog
 /// A type alias for theming animation declarations, mapping animations to their representations and configurations.
 public typealias SnappThemingAnimationDeclarations = SnappThemingDeclarations<SnappThemingAnimationRepresentation, SnappThemingAnimationConfiguration>
 
-/// Configuration for theming animations.
-///
-/// This struct holds fallback data for Lottie animations in case no specific animation is provided.
-public struct SnappThemingAnimationConfiguration {
-    /// The fallback Lottie animation data used when no valid animation is available.
-    public let fallbackLottieAnimationData: Data
-}
-
 extension SnappThemingAnimationDeclarations where DeclaredValue == SnappThemingAnimationRepresentation, Configuration == SnappThemingAnimationConfiguration {
     /// Initializes animation declarations with caching and configuration options.
     ///
@@ -29,7 +21,7 @@ extension SnappThemingAnimationDeclarations where DeclaredValue == SnappThemingA
         self.init(
             cache: cache,
             rootKey: .animations,
-            configuration: .init(
+            configuration: Configuration(
                 fallbackLottieAnimationData: configuration.fallbackLottieAnimationData
             )
         )

@@ -22,7 +22,7 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingInteractiv
         self.init(
             cache: cache,
             rootKey: .interactiveColors,
-            configuration: .init(
+            configuration: Configuration(
                 fallbackColor: configuration.fallbackInteractiveColor,
                 colorFormat: configuration.colorFormat,
                 themeConfiguration: configuration

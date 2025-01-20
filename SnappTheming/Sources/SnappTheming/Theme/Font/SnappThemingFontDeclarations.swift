@@ -13,12 +13,12 @@ import CoreText
 public typealias SnappThemingFontDeclarations = SnappThemingDeclarations<SnappThemingFontInformation, Void>
 
 extension SnappThemingDeclarations where DeclaredValue == SnappThemingFontInformation, Configuration == Void {
-    public init(cache: [String: SnappThemingToken<SnappThemingFontInformation>]?, configuration: SnappThemingParserConfiguration = .default) {
+    public init(cache: [String: SnappThemingToken<DeclaredValue>]?, configuration: SnappThemingParserConfiguration = .default) {
         self.init(cache: cache, rootKey: .fonts)
     }
 
     public subscript(dynamicMember keyPath: String) -> SnappThemingFontResolver {
-        guard let representation: SnappThemingFontInformation = self[dynamicMember: keyPath] else {
+        guard let representation: DeclaredValue = self[dynamicMember: keyPath] else {
             return .system
         }
         return representation.resolver
