@@ -25,7 +25,7 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingSegmentCon
         self.init(
             cache: cache,
             rootKey: .segmentControlStyle,
-            configuration: SnappThemingSegmentControlStyleConfiguration(
+            configuration: Configuration(
                 fallbackSurfaceColor: configuration.fallbackButtonStyle.surfaceColor,
                 fallbackBorderColor: configuration.fallbackButtonStyle.borderColor,
                 fallbackBorderWidth: configuration.fallbackButtonStyle.borderWidth,
@@ -47,7 +47,7 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingSegmentCon
 
     public subscript(dynamicMember keyPath: String) -> SnappThemingSegmentControlStyleResolver {
         guard
-            let representation: SnappThemingSegmentControlStyleRepresentation = self[dynamicMember: keyPath],
+            let representation: DeclaredValue = self[dynamicMember: keyPath],
             let borderWidth = configuration.metrics.resolver
                 .resolve(representation.borderWidth),
             let padding = configuration.metrics.resolver

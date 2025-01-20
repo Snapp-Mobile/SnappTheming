@@ -12,36 +12,9 @@ import SwiftUI
 /// Manages typography tokens, combining font and size. Provides full control over how text styles are applied in the app.
 public typealias SnappThemingTypographyDeclarations = SnappThemingDeclarations<SnappThemingTypographyRepresentation, SnappThemingTypographyConfiguration>
 
-/// Configuration for resolving typography in the SnappTheming framework.
-public struct SnappThemingTypographyConfiguration {
-    /// Fallback font size to use when a specific typography size cannot be resolved.
-    let fallbackFontSize: CGFloat
-    /// A declaration of font-related theming configurations.
-    let fonts: SnappThemingFontDeclarations
-    /// A declaration of metric-related theming configurations.
-    let metrics: SnappThemingMetricDeclarations
-}
-
-/// Resolver for typography in the SnappTheming framework.
-public struct SnappThemingTypographyResolver: Sendable {
-    /// Resolved `UIFont` for UIKit usage.
-    public let uiFont: UIFont
-    /// Resolved `Font` for SwiftUI usage.
-    public let font: Font
-
-    /// Initializes a typography resolver with a given font resolver and font size.
-    /// - Parameters:
-    ///   - resolver: The font resolver containing the font information.
-    ///   - fontSize: The size of the font to resolve.
-    public init(_ resolver: SnappThemingFontResolver, fontSize: CGFloat) {
-        self.uiFont = resolver.uiFont(size: fontSize)
-        self.font = resolver.font(size: fontSize)
-    }
-}
-
 extension SnappThemingDeclarations where DeclaredValue == SnappThemingTypographyRepresentation, Configuration == SnappThemingTypographyConfiguration {
     public init(
-        cache: [String: SnappThemingToken<SnappThemingTypographyRepresentation>]?,
+        cache: [String: SnappThemingToken<DeclaredValue>]?,
         configuration: SnappThemingParserConfiguration,
         fonts: SnappThemingFontDeclarations,
         metrics: SnappThemingMetricDeclarations
@@ -49,7 +22,7 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingTypography
         self.init(
             cache: cache,
             rootKey: .typography,
-            configuration: .init(
+            configuration: Configuration(
                 fallbackFontSize: configuration.fallbackTypographyFontSize,
                 fonts: fonts,
                 metrics: metrics
@@ -59,13 +32,13 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingTypography
 
     public subscript(dynamicMember keyPath: String) -> SnappThemingTypographyResolver {
         guard
-            let representation: SnappThemingTypographyRepresentation = self[dynamicMember: keyPath],
+            let representation: DeclaredValue = self[dynamicMember: keyPath],
             let font = configuration.fonts.resolver.resolve(representation.font),
             let fontSize = configuration.metrics.resolver.resolve(representation.fontSize)
         else {
-            return .init(.system, fontSize: configuration.fallbackFontSize)
+            return SnappThemingTypographyResolver(.system, fontSize: configuration.fallbackFontSize)
         }
-        return .init(font.resolver, fontSize: fontSize.cgFloat)
+        return SnappThemingTypographyResolver(font.resolver, fontSize: fontSize.cgFloat)
     }
 
     public subscript(dynamicMember keyPath: String) -> UIFont {

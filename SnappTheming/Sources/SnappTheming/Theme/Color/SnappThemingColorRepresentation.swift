@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import SwiftUI
+import UIKit
 
 /// A representation of color in the SnappTheming framework.
 public enum SnappThemingColorRepresentation: Codable {
@@ -35,6 +37,26 @@ public enum SnappThemingColorRepresentation: Codable {
             try container.encode(value)
         case .dynamic(let value):
             try container.encode(value)
+        }
+    }
+}
+
+extension SnappThemingColorRepresentation {
+    func color(using format: SnappThemingColorFormat) -> Color {
+        switch self {
+        case let .dynamic(dynamicColor):
+            dynamicColor.color(using: format)
+        case let .hex(hexValue):
+            Color(hex: hexValue, format: format)
+        }
+    }
+
+    func uiColor(using format: SnappThemingColorFormat) -> UIColor {
+        switch self {
+        case let .dynamic(dynamicColor):
+            dynamicColor.uiColor(using: format)
+        case let .hex(hexValue):
+            UIColor(hex: hexValue, format: format)
         }
     }
 }
