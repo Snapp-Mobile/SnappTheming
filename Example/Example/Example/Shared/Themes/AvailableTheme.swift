@@ -17,9 +17,9 @@ enum AvailableTheme: String, Identifiable, CustomStringConvertible, CaseIterable
 
     var description: String {
         switch self {
-        case .day: 
+        case .day:
             return "Day"
-        case .night: 
+        case .night:
             return "Night"
         }
     }
@@ -30,8 +30,8 @@ enum AvailableTheme: String, Identifiable, CustomStringConvertible, CaseIterable
 
     var json: String? {
         guard let url = url,
-              let data = try? Data(contentsOf: url),
-              let json = String(data: data, encoding: .utf8)
+            let data = try? Data(contentsOf: url),
+            let json = String(data: data, encoding: .utf8)
         else { return nil }
         return json
     }

@@ -67,4 +67,3 @@ struct ChargingProgress: View {
         containerWidth * Double(progress) / 100.0
     }
 }
-

@@ -5,8 +5,8 @@
 //  Created by Volodymyr Voiko on 03.12.2024.
 //
 
-import SwiftUI
 import SnappTheming
+import SwiftUI
 
 struct NamedGradient: Identifiable {
     var id: String { name }

@@ -5,7 +5,6 @@
 //  Created by Volodymyr Voiko on 05.12.2024.
 //
 
-
 import SwiftUI
 
 struct NamedImage: Identifiable {
@@ -19,7 +18,7 @@ struct ImageViewer: View {
     let namedImage: NamedImage
 
     @Environment(\.dismiss) var dismiss
-    
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -31,7 +30,11 @@ struct ImageViewer: View {
             .padding()
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button { dismiss() } label: { Text("Close") }
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("Close")
+                    }
                 }
             }
             .navigationBarTitleDisplayMode(.inline)

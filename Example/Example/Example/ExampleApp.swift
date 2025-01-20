@@ -5,10 +5,9 @@
 //  Created by Ilian Konchev on 21.11.24.
 //
 
-import SwiftUI
 import SnappTheming
-// In case SVG support is needed
 import SnappThemingSVGSupport
+import SwiftUI
 
 @main
 struct ExampleApp: App {
@@ -20,6 +19,7 @@ struct ExampleApp: App {
             fatalError("Couldn't find the theme JSON")
         }
 
+        // Do this for turning the SVG processor on
         SnappThemingImageProcessorsRegistry.shared.register(.svg)
 
         self.configuration = AvailableTheme.night.configuration

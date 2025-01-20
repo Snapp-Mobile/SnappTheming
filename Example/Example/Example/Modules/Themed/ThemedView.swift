@@ -5,11 +5,11 @@
 //  Created by Ilian Konchev on 21.11.24.
 //
 
+import Lottie
+import OSLog
 import SnappTheming
 import SnappThemingSwiftUIHelpers
 import SwiftUI
-import OSLog
-import Lottie
 
 struct ThemedView: View {
     var declaration: SnappThemingDeclaration
@@ -23,7 +23,7 @@ struct ThemedView: View {
         self.declaration = declaration
         _regular = .init(wrappedValue: declaration.metrics.windowRadiusSmall)
     }
-    
+
     var body: some View {
         VStack {
             ChargingProgress(declaration: declaration, progress: 58, limit: 75)

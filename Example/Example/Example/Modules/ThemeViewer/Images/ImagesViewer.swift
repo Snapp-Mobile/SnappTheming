@@ -17,17 +17,19 @@ struct ImagesViewer: View {
             Section {
                 ForEach(declarations.keys, id: \.self) { key in
                     let image: Image = declarations[dynamicMember: key]
-                    LabeledContent(key, content: {
-                        Button {
-                            selectedImage = .init(name: key, image: image)
-                        } label: {
-                            image
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                                .scaledToFit()
-                        }
+                    LabeledContent(
+                        key,
+                        content: {
+                            Button {
+                                selectedImage = .init(name: key, image: image)
+                            } label: {
+                                image
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
+                                    .scaledToFit()
+                            }
 
-                    })
+                        })
                 }
             }
         }
