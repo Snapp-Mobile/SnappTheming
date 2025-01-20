@@ -43,7 +43,7 @@
         "segmentRadiusOuter": 8
     },
     "gradients": {
-        "chargingProgress": {
+        "progress": {
             "colors": [
                 "#4FFEAA",
                 "#54FACF"
