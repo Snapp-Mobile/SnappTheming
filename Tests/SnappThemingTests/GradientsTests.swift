@@ -5,29 +5,30 @@
 //  Created by Ilian Konchev on 13.01.25.
 //
 
-@testable import SnappTheming
-import Testing
 import SwiftUI
+import Testing
+
+@testable import SnappTheming
 
 @Suite
 struct GradientsTests {
     @Test
     func parseHorizontalLinearGradient() throws {
         let json =
-        """
-        {
-            "gradients": {
-                "horizontalLinearGradient": {
-                    "colors": [
-                        "#000000",
-                        "#FF00FF"
-                    ],
-                    "startPoint": "leading",
-                    "endPoint": "trailing"
+            """
+            {
+                "gradients": {
+                    "horizontalLinearGradient": {
+                        "colors": [
+                            "#000000",
+                            "#FF00FF"
+                        ],
+                        "startPoint": "leading",
+                        "endPoint": "trailing"
+                    }
                 }
             }
-        }
-        """
+            """
 
         let declaration = try SnappThemingParser.parse(from: json)
         let token = try #require(declaration.gradients.cache["horizontalLinearGradient"])
@@ -35,8 +36,8 @@ struct GradientsTests {
 
         #expect(
             configuration.startPoint == .leading
-            && configuration.endPoint == .trailing
-            && configuration.colors.count == 2
+                && configuration.endPoint == .trailing
+                && configuration.colors.count == 2
         )
         #expect(declaration.gradients.horizontalLinearGradient != nil)
     }
@@ -44,20 +45,20 @@ struct GradientsTests {
     @Test
     func parseVerticalLinearGradient() throws {
         let json =
-        """
-        {
-            "gradients": {
-                "verticalLinearGradient": {
-                    "colors": [
-                        "#000000",
-                        "#FF00FF"
-                    ],
-                    "startPoint": "top",
-                    "endPoint": "bottom"
+            """
+            {
+                "gradients": {
+                    "verticalLinearGradient": {
+                        "colors": [
+                            "#000000",
+                            "#FF00FF"
+                        ],
+                        "startPoint": "top",
+                        "endPoint": "bottom"
+                    }
                 }
             }
-        }
-        """
+            """
 
         let declaration = try SnappThemingParser.parse(from: json)
         let token = try #require(declaration.gradients.cache["verticalLinearGradient"])
@@ -65,8 +66,8 @@ struct GradientsTests {
 
         #expect(
             configuration.startPoint == .top
-            && configuration.endPoint == .bottom
-            && configuration.colors.count == 2
+                && configuration.endPoint == .bottom
+                && configuration.colors.count == 2
         )
         #expect(declaration.gradients.verticalLinearGradient != nil)
     }
@@ -74,20 +75,20 @@ struct GradientsTests {
     @Test
     func parseDiagonalLinearGradient() throws {
         let json =
-        """
-        {
-            "gradients": {
-                "diagonalLinearGradient": {
-                    "colors": [
-                        "#000000",
-                        "#FF00FF"
-                    ],
-                    "startPoint": "topLeading",
-                    "endPoint": "bottomTrailing"
+            """
+            {
+                "gradients": {
+                    "diagonalLinearGradient": {
+                        "colors": [
+                            "#000000",
+                            "#FF00FF"
+                        ],
+                        "startPoint": "topLeading",
+                        "endPoint": "bottomTrailing"
+                    }
                 }
             }
-        }
-        """
+            """
 
         let declaration = try SnappThemingParser.parse(from: json)
         let token = try #require(declaration.gradients.cache["diagonalLinearGradient"])
@@ -95,8 +96,8 @@ struct GradientsTests {
 
         #expect(
             configuration.startPoint == .topLeading
-            && configuration.endPoint == .bottomTrailing
-            && configuration.colors.count == 2
+                && configuration.endPoint == .bottomTrailing
+                && configuration.colors.count == 2
         )
         #expect(declaration.gradients.diagonalLinearGradient != nil)
     }
@@ -104,24 +105,24 @@ struct GradientsTests {
     @Test
     func parseRadialGradient() throws {
         let json =
-        """
-        {
-            "gradients": {
-                "radialGradient": {
-                    "colors": [
-                        "#843912",
-                        "#242D2D"
-                    ],
-                    "center": [
-                        2.0,
-                        -0.2
-                    ],
-                    "startRadius": 0,
-                    "endRadius": 1075
+            """
+            {
+                "gradients": {
+                    "radialGradient": {
+                        "colors": [
+                            "#843912",
+                            "#242D2D"
+                        ],
+                        "center": [
+                            2.0,
+                            -0.2
+                        ],
+                        "startRadius": 0,
+                        "endRadius": 1075
+                    }
                 }
             }
-        }
-        """
+            """
 
         let declaration = try SnappThemingParser.parse(from: json)
         let token = try #require(declaration.gradients.cache["radialGradient"])
@@ -129,10 +130,10 @@ struct GradientsTests {
 
         #expect(
             configuration.center.x == 2.0
-            && configuration.center.y == -0.2
-            && configuration.colors.count == 2
-            && configuration.startRadius == 0.0
-            && configuration.endRadius == 1075.0
+                && configuration.center.y == -0.2
+                && configuration.colors.count == 2
+                && configuration.startRadius == 0.0
+                && configuration.endRadius == 1075.0
         )
         #expect(declaration.gradients.radialGradient != nil)
     }
@@ -140,24 +141,24 @@ struct GradientsTests {
     @Test
     func parseAngularGradient() throws {
         let json =
-        """
-        {
-            "gradients": {
-                "angularGradient": {
-                    "colors": [
-                        "#843912",
-                        "#242D2D"
-                    ],
-                    "center": [
-                        2.0,
-                        -0.2
-                    ],
-                    "startAngle": 0,
-                    "endAngle": 180
+            """
+            {
+                "gradients": {
+                    "angularGradient": {
+                        "colors": [
+                            "#843912",
+                            "#242D2D"
+                        ],
+                        "center": [
+                            2.0,
+                            -0.2
+                        ],
+                        "startAngle": 0,
+                        "endAngle": 180
+                    }
                 }
             }
-        }
-        """
+            """
 
         let declaration = try SnappThemingParser.parse(from: json)
 
@@ -166,10 +167,10 @@ struct GradientsTests {
 
         #expect(
             configuration.center.x == 2.0
-            && configuration.center.y == -0.2
-            && configuration.colors.count == 2
-            && configuration.startAngle == Angle(degrees: 0.0)
-            && configuration.endAngle == Angle(degrees: 180.0)
+                && configuration.center.y == -0.2
+                && configuration.colors.count == 2
+                && configuration.startAngle == Angle(degrees: 0.0)
+                && configuration.endAngle == Angle(degrees: 180.0)
         )
         #expect(declaration.gradients.angularGradient != nil)
     }

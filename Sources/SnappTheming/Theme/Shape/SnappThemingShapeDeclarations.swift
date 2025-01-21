@@ -9,11 +9,20 @@ import Foundation
 import SwiftUI
 
 /// Manages button shape tokens, defining the appearance of button outlines, such as circular, rounded rectangle, or custom shapes.
-public typealias SnappThemingShapeDeclarations = SnappThemingDeclarations<SnappThemingShapeRepresentation, SnappThemingShapeConfiguration>
+public typealias SnappThemingShapeDeclarations = SnappThemingDeclarations<
+    SnappThemingShapeRepresentation,
+    SnappThemingShapeConfiguration
+>
 
-extension SnappThemingDeclarations where DeclaredValue == SnappThemingShapeRepresentation, Configuration == SnappThemingShapeConfiguration
+extension SnappThemingDeclarations
+where
+    DeclaredValue == SnappThemingShapeRepresentation,
+    Configuration == SnappThemingShapeConfiguration
 {
-    public init(cache: [String: SnappThemingToken<DeclaredValue>]?, configuration: SnappThemingParserConfiguration = .default) {
+    public init(
+        cache: [String: SnappThemingToken<DeclaredValue>]?,
+        configuration: SnappThemingParserConfiguration = .default
+    ) {
         self.init(
             cache: cache,
             rootKey: .shapes,

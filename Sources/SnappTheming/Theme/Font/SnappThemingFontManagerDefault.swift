@@ -5,12 +5,12 @@
 //  Created by Ilian Konchev on 25.11.24.
 //
 
-import Foundation
 import CoreText
+import Foundation
 import OSLog
 
 /// An enumeration of possible errors in `SnappThemingFontManager`.
-fileprivate enum SnappThemingFontManagerError: Error {
+private enum SnappThemingFontManagerError: Error {
     /// Indicates that the font registration failed at the specified URL.
     case failedToRegisterFont(at: URL)
 }
@@ -57,7 +57,7 @@ public final class SnappThemingFontManagerDefault: SnappThemingFontManager {
     ) {
         self.fileManager = fileManager
         self.scope = scope
-        
+
         var isDirectory: ObjCBool = true
         if let rootURL = themeCacheRootURL ?? fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
             let fontCacheURL = rootURL.appendingPathComponent(themeName).appendingPathComponent(fontsFolderName)
@@ -151,15 +151,15 @@ public final class SnappThemingFontManagerDefault: SnappThemingFontManager {
 }
 
 @discardableResult
-fileprivate func registerFontsForURL(_ fontURL: URL, scope: SnappThemingFontManagerDefault.Scope) throws -> Bool {
+private func registerFontsForURL(_ fontURL: URL, scope: SnappThemingFontManagerDefault.Scope) throws -> Bool {
     CTFontManagerRegisterFontsForURL(fontURL as CFURL, scope, nil)
 }
 
-fileprivate func getRegisteredFontsPostScriptNames() -> [String] {
+private func getRegisteredFontsPostScriptNames() -> [String] {
     CTFontManagerCopyAvailablePostScriptNames() as! [String]
 }
 
 @discardableResult
-fileprivate func unregisterFontsForURL(_ fontURL: URL, scope: SnappThemingFontManagerDefault.Scope) throws -> Bool {
+private func unregisterFontsForURL(_ fontURL: URL, scope: SnappThemingFontManagerDefault.Scope) throws -> Bool {
     CTFontManagerUnregisterFontsForURL(fontURL as CFURL, scope, nil)
 }

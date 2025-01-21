@@ -43,7 +43,23 @@ public struct SnappThemingSegmentControlStyleConfiguration {
     let buttonStyles: SnappThemingButtonStyleDeclarations
     let themeConfiguration: SnappThemingParserConfiguration
 
-    internal init(fallbackSurfaceColor: SnappThemingInteractiveColor, fallbackBorderColor: SnappThemingInteractiveColor, fallbackBorderWidth: Double, fallbackShape: SnappThemingShapeType, fallbackSelectedSegment: SnappThemingButtonStyleResolver, fallbackNormalSegment: SnappThemingButtonStyleResolver, metrics: SnappThemingMetricDeclarations, fonts: SnappThemingFontDeclarations, colors: SnappThemingColorDeclarations, shapes: SnappThemingShapeDeclarations, interactiveColors: SnappThemingInteractiveColorDeclarations, typographies: SnappThemingTypographyDeclarations, buttonStyles: SnappThemingButtonStyleDeclarations, colorFormat: SnappThemingColorFormat, themeConfiguration: SnappThemingParserConfiguration) {
+    internal init(
+        fallbackSurfaceColor: SnappThemingInteractiveColor,
+        fallbackBorderColor: SnappThemingInteractiveColor,
+        fallbackBorderWidth: Double,
+        fallbackShape: SnappThemingShapeType,
+        fallbackSelectedSegment: SnappThemingButtonStyleResolver,
+        fallbackNormalSegment: SnappThemingButtonStyleResolver,
+        metrics: SnappThemingMetricDeclarations,
+        fonts: SnappThemingFontDeclarations,
+        colors: SnappThemingColorDeclarations,
+        shapes: SnappThemingShapeDeclarations,
+        interactiveColors: SnappThemingInteractiveColorDeclarations,
+        typographies: SnappThemingTypographyDeclarations,
+        buttonStyles: SnappThemingButtonStyleDeclarations,
+        colorFormat: SnappThemingColorFormat,
+        themeConfiguration: SnappThemingParserConfiguration
+    ) {
         self.fallbackSurfaceColor = fallbackSurfaceColor
         self.fallbackBorderColor = fallbackBorderColor
         self.fallbackBorderWidth = fallbackBorderWidth

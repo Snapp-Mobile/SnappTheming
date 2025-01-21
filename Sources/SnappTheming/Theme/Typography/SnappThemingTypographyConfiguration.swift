@@ -16,4 +16,3 @@ public struct SnappThemingTypographyConfiguration {
     /// A declaration of metric-related theming configurations.
     let metrics: SnappThemingMetricDeclarations
 }
-

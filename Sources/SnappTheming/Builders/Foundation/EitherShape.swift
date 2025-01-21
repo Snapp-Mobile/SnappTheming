@@ -10,12 +10,12 @@ import SwiftUI
 public enum EitherShape<First: Shape, Second: Shape>: Shape {
     case first(First)
     case second(Second)
-    
+
     public func path(in rect: CGRect) -> Path {
         switch self {
-        case let .first(first):
+        case .first(let first):
             return first.path(in: rect)
-        case let .second(second):
+        case .second(let second):
             return second.path(in: rect)
         }
     }

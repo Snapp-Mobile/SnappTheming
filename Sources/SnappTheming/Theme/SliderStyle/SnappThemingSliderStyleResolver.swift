@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-/// A resolver that provides the style properties for a slider, including track colors, typography, and tick mark color.
+/// A resolver that provides the style properties for a slider, including track colors,
+/// typography, and tick mark color.
 public struct SnappThemingSliderStyleResolver {
     /// The color used for the minimum track of the slider.
     public let minimumTrackTintColor: Color
@@ -28,11 +29,12 @@ public struct SnappThemingSliderStyleResolver {
     public let tickMarkColor: Color
 }
 
-public extension SnappThemingSliderStyleResolver {
+extension SnappThemingSliderStyleResolver {
     /// A static method to return a `SnappThemingSliderStyleResolver` with default values.
     ///
-    /// - Returns: A `SnappThemingSliderStyleResolver` instance with default colors set to `.clear` and default typography settings set to `.system` font with a size of `32`.
-    static func empty() -> Self {
+    /// - Returns: A `SnappThemingSliderStyleResolver` instance with default colors set to `.clear`
+    /// and default typography settings set to `.system` font with a size of `32`.
+    public static func empty() -> Self {
         SnappThemingSliderStyleResolver(
             minimumTrackTintColor: .clear,
             minimumTrackTintColorSecondary: .clear,

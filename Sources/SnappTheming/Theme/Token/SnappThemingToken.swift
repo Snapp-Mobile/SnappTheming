@@ -18,32 +18,33 @@ public enum SnappThemingToken<Value>: Codable where Value: Codable {
     /// - Throws: A decoding error if the data cannot be decoded into a valid `SnappThemingToken`.
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self = if let path = try? container.decode(SnappThemingTokenPath.self) {
-            .alias(path)
-        } else {
-            .value(try container.decode(Value.self))
-        }
+        self =
+            if let path = try? container.decode(SnappThemingTokenPath.self) {
+                .alias(path)
+            } else {
+                .value(try container.decode(Value.self))
+            }
     }
-    
+
     /// Encodes the `SnappThemingToken` to the provided encoder.
     /// - Parameter encoder: The encoder to write the data to.
     /// - Throws: An encoding error if the token cannot be encoded.
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
-        case let .value(wrappedValue):
+        case .value(let wrappedValue):
             try container.encode(wrappedValue)
-        case let .alias(path):
+        case .alias(let path):
             try container.encode(path)
         }
     }
 }
 
-public extension SnappThemingToken {
+extension SnappThemingToken {
     /// Returns the underlying value if the token is a direct value, or `nil` if it's an alias.
-    var value: Value? {
+    public var value: Value? {
         switch self {
-        case let .value(wrappedValue): wrappedValue
+        case .value(let wrappedValue): wrappedValue
         case .alias: nil
         }
     }

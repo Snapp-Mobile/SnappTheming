@@ -18,13 +18,13 @@ final class SnappThemingFontManagerMock: SnappThemingFontManager {
             registeredFonts.formUnion(fonts)
         }
     }
-    
+
     func unregisterFonts(_ fonts: [SnappThemingFontInformation]) {
         queue.sync {
             registeredFonts.subtract(fonts)
         }
     }
-    
+
     func registerFont(_ font: SnappThemingFontInformation) {
         queue.sync {
             registeredFonts.insert(font)

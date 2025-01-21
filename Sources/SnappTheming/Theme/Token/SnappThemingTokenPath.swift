@@ -42,7 +42,8 @@ public struct SnappThemingTokenPath: Codable, Equatable {
         guard
             path.starts(with: Self.prefix),
             path.contains(Self.separator),
-            let pathComponents = path
+            let pathComponents =
+                path
                 .split(separator: Self.prefix).last?
                 .split(separator: Self.separator),
             pathComponents.count == 2

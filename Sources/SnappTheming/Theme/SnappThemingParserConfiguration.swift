@@ -90,7 +90,7 @@ public struct SnappThemingParserConfiguration: Sendable {
     }
 }
 
-public extension SnappThemingParserConfiguration {
+extension SnappThemingParserConfiguration {
     /// A default configuration instance with pre-defined values.
-    static let `default`: SnappThemingParserConfiguration = .init()
+    public static let `default`: SnappThemingParserConfiguration = .init()
 }

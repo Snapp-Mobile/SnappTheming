@@ -21,8 +21,8 @@ public struct SnappThemingDynamicColor: Codable {
         return UIColor { (traits) -> UIColor in
             // Return one of two colors depending on light or dark mode
             return traits.userInterfaceStyle == .dark
-            ? UIColor(hex: dark, format: colorFormat)
-            : UIColor(hex: light, format: colorFormat)
+                ? UIColor(hex: dark, format: colorFormat)
+                : UIColor(hex: light, format: colorFormat)
         }
     }
 

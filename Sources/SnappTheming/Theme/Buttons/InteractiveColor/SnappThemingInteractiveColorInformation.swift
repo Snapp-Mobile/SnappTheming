@@ -25,7 +25,11 @@ public struct SnappThemingInteractiveColorInformation: Codable {
     ///   - normal: The color token for the normal state.
     ///   - pressed: The color token for the pressed state.
     ///   - disabled: The color token for the disabled state.
-    public init(normal: SnappThemingToken<SnappThemingColorRepresentation>, pressed: SnappThemingToken<SnappThemingColorRepresentation>, disabled: SnappThemingToken<SnappThemingColorRepresentation>) {
+    public init(
+        normal: SnappThemingToken<SnappThemingColorRepresentation>,
+        pressed: SnappThemingToken<SnappThemingColorRepresentation>,
+        disabled: SnappThemingToken<SnappThemingColorRepresentation>
+    ) {
         self.normal = normal
         self.pressed = pressed
         self.disabled = disabled
@@ -44,7 +48,9 @@ public struct SnappThemingInteractiveColorInformation: Codable {
     ///
     /// - Parameter decoder: The decoder from which to initialize the interactive color information.
     public init(from decoder: any Decoder) throws {
-        if let singleColor = try? decoder.singleValueContainer().decode(SnappThemingToken<SnappThemingColorRepresentation>.self) {
+        if let singleColor = try? decoder.singleValueContainer().decode(
+            SnappThemingToken<SnappThemingColorRepresentation>.self
+        ) {
             // Init with all states equal to this single color
             self.normal = singleColor
             self.pressed = singleColor
@@ -52,20 +58,33 @@ public struct SnappThemingInteractiveColorInformation: Codable {
         } else {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.normal = try container.decode(SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .normal)
-            self.pressed = try container.decodeIfPresent(SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .pressed) ?? self.normal
-            self.disabled = try container.decodeIfPresent(SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .disabled)  ?? self.normal
+            self.pressed =
+                try container.decodeIfPresent(SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .pressed)
+                ?? self.normal
+            self.disabled =
+                try container.decodeIfPresent(
+                    SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .disabled) ?? self.normal
         }
     }
 }
 
-public extension SnappThemingInteractiveColorInformation {
+extension SnappThemingInteractiveColorInformation {
     /// Resolves the interactive color information into an interactive color resolver, which provides resolved colors for the various states.
     ///
     /// - Parameters:
     ///   - colorFormat: The color format to use (e.g., ARGB, RGBA).
     ///   - colors: The color declarations used to resolve the color tokens.
     /// - Returns: A `SnappThemingInteractiveColorResolver` that provides the resolved interactive colors.
-    func resolver(colorFormat: SnappThemingColorFormat, colors: SnappThemingColorDeclarations) -> SnappThemingInteractiveColorResolver {
-        SnappThemingInteractiveColorResolver(normal: normal, pressed: pressed, disabled: disabled, colorFormat: colorFormat, colors: colors)
+    public func resolver(
+        colorFormat: SnappThemingColorFormat,
+        colors: SnappThemingColorDeclarations
+    ) -> SnappThemingInteractiveColorResolver {
+        .init(
+            normal: normal,
+            pressed: pressed,
+            disabled: disabled,
+            colorFormat: colorFormat,
+            colors: colors
+        )
     }
 }

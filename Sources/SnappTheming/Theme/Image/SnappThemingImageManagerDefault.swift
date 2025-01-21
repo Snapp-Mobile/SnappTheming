@@ -11,7 +11,7 @@ import UIKit
 import UniformTypeIdentifiers
 
 /// An enumeration of possible errors in `SnappThemingImageManager`.
-fileprivate enum ImagesManagerError: Error {
+private enum ImagesManagerError: Error {
     /// Indicates that the images directory URL is unknown or inaccessible.
     case unknownImagesDirectoryURL
 
@@ -77,7 +77,9 @@ public final class SnappThemingImageManagerDefault: SnappThemingImageManager {
             do {
                 if let cachedImage = cache.object(forKey: key as NSString) {
                     return cachedImage
-                } else if let imageURL = imageCacheURL(for: key, of: dataURI), fileManager.fileExists(atPath: imageURL.path()) {
+                } else if let imageURL = imageCacheURL(for: key, of: dataURI),
+                    fileManager.fileExists(atPath: imageURL.path())
+                {
                     let data = try Data(contentsOf: imageURL)
                     return image(from: data, of: dataURI.type)
                 }
@@ -161,7 +163,8 @@ public final class SnappThemingImageManagerDefault: SnappThemingImageManager {
 
     private func imageCacheURL(for key: String, of dataURI: SnappThemingDataURI) -> URL? {
         guard let imageCacheRootURL else { return nil }
-        return imageCacheRootURL
+        return
+            imageCacheRootURL
             .appending(path: key)
             .appendingPathExtension(for: dataURI.type)
     }

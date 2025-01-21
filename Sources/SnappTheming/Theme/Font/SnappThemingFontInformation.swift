@@ -16,9 +16,9 @@ public struct SnappThemingFontInformation: Codable, Hashable {
     public let source: SnappThemingDataURI
 }
 
-public extension SnappThemingFontInformation {
+extension SnappThemingFontInformation {
     /// A resolver for the font, providing access to the font resource using its PostScript name.
-    var resolver: SnappThemingFontResolver {
+    public var resolver: SnappThemingFontResolver {
         SnappThemingFontResolver(fontName: postScriptName)
     }
 }

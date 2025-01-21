@@ -36,11 +36,11 @@ public enum SnappThemingShapeType: Sendable {
         switch self {
         case .circle, .ellipse, .capsule: return 1000
         case .rectangle: return 0
-        case let .roundedRectangleWithRadius(radius, _):
+        case .roundedRectangleWithRadius(let radius, _):
             return radius
-        case let .roundedRectangleWithSize(size, _):
+        case .roundedRectangleWithSize(let size, _):
             return size.width
-        case let .unevenRoundedRectangle(radii, _):
+        case .unevenRoundedRectangle(let radii, _):
             return radii.topLeading
         }
     }
@@ -55,13 +55,13 @@ public enum SnappThemingShapeType: Sendable {
             Rectangle()
         case .ellipse:
             Ellipse()
-        case let .capsule(style):
+        case .capsule(let style):
             Capsule(style: style)
-        case let .roundedRectangleWithRadius(radius, style):
+        case .roundedRectangleWithRadius(let radius, let style):
             RoundedRectangle(cornerRadius: radius, style: style)
-        case let .roundedRectangleWithSize(size, style):
+        case .roundedRectangleWithSize(let size, let style):
             RoundedRectangle(cornerSize: size, style: style)
-        case let .unevenRoundedRectangle(radii, style):
+        case .unevenRoundedRectangle(let radii, let style):
             UnevenRoundedRectangle(cornerRadii: radii, style: style)
         }
     }

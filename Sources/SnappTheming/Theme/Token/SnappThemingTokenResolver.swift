@@ -44,10 +44,10 @@ public struct SnappThemingTokenResolver<Value> where Value: Codable {
     /// - Returns: The resolved `Value` if it can be found, or `nil` if the token cannot be resolved.
     private func resolve(_ token: SnappThemingToken<Value>, from visitedPaths: [SnappThemingTokenPath]) -> Value? {
         switch token {
-        case let .value(value):
+        case .value(let value):
             // If the token directly holds a value, return it.
             return value
-        case let .alias(path) where !visitedPaths.contains(path):
+        case .alias(let path) where !visitedPaths.contains(path):
             // If the token is an alias and the path has not been visited:
             // 1. Look up the alias in the baseValues dictionary.
             // 2. If found, recursively resolve the alias, adding the current path to visitedPaths.

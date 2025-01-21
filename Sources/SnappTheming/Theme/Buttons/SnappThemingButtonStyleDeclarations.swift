@@ -9,9 +9,16 @@ import Foundation
 import SwiftUI
 
 /// Manages button style tokens, including properties like surface and text colors, border widths and color, shape and typography for various button states.
-public typealias SnappThemingButtonStyleDeclarations = SnappThemingDeclarations<SnappThemingButtonStyleRepresentation, SnappThemingButtonStyleConfiguration>
+public typealias SnappThemingButtonStyleDeclarations = SnappThemingDeclarations<
+    SnappThemingButtonStyleRepresentation,
+    SnappThemingButtonStyleConfiguration
+>
 
-extension SnappThemingDeclarations where DeclaredValue == SnappThemingButtonStyleRepresentation, Configuration == SnappThemingButtonStyleConfiguration {
+extension SnappThemingDeclarations
+where
+    DeclaredValue == SnappThemingButtonStyleRepresentation,
+    Configuration == SnappThemingButtonStyleConfiguration
+{
     public init(
         cache: [String: SnappThemingToken<DeclaredValue>]?,
         configuration: SnappThemingParserConfiguration,
@@ -49,11 +56,15 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingButtonStyl
             let representation: SnappThemingButtonStyleRepresentation = self[dynamicMember: keyPath],
             let borderWidth = configuration.metrics.resolver.resolve(representation.borderWidth),
             let surfaceColor = configuration.interactiveColors.resolver
-                .resolve(representation.surfaceColor)?.resolver(colorFormat: configuration.colorFormat, colors: configuration.colors).interactiveColor,
+                .resolve(representation.surfaceColor)?.resolver(
+                    colorFormat: configuration.colorFormat, colors: configuration.colors
+                ).interactiveColor,
             let textColor = configuration
                 .interactiveColors.resolver.resolve(representation.textColor)?
                 .resolver(colorFormat: configuration.colorFormat, colors: configuration.colors).interactiveColor,
-            let borderColor = configuration.interactiveColors.resolver.resolve(representation.borderColor)?.resolver(colorFormat: configuration.colorFormat, colors: configuration.colors).interactiveColor,
+            let borderColor = configuration.interactiveColors.resolver.resolve(representation.borderColor)?.resolver(
+                colorFormat: configuration.colorFormat, colors: configuration.colors
+            ).interactiveColor,
             let shape = configuration.shapes.resolver.resolve(representation.shape)?.resolver().shapeType,
             let typography = configuration.typographies.resolver.resolve(representation.typography),
             let font = configuration.fonts.resolver.resolve(typography.font),

@@ -21,15 +21,21 @@ extension Error {
                 }
 
             case .keyNotFound(let key, let context):
-                logger.error("Key not found: \(key.stringValue, privacy: .public) in \(context.codingPath.map(\.stringValue).joined(separator: " -> "), privacy: .public)")
+                logger.error(
+                    "Key not found: \(key.stringValue, privacy: .public) in \(context.codingPath.map(\.stringValue).joined(separator: " -> "), privacy: .public)"
+                )
                 logger.error("Debug description: \(context.debugDescription, privacy: .public)")
 
             case .typeMismatch(let type, let context):
-                logger.error("Type mismatch for type \(String(describing: type), privacy: .public) at \(context.codingPath.map(\.stringValue).joined(separator: " -> "), privacy: .public)")
+                logger.error(
+                    "Type mismatch for type \(String(describing: type), privacy: .public) at \(context.codingPath.map(\.stringValue).joined(separator: " -> "), privacy: .public)"
+                )
                 logger.error("Debug description: \(context.debugDescription, privacy: .public)")
 
             case .valueNotFound(let value, let context):
-                logger.error("Value \(String(describing: value), privacy: .public) not found at \(context.codingPath.map(\.stringValue).joined(separator: " -> "), privacy: .public)")
+                logger.error(
+                    "Value \(String(describing: value), privacy: .public) not found at \(context.codingPath.map(\.stringValue).joined(separator: " -> "), privacy: .public)"
+                )
                 logger.error("Debug description: \(context.debugDescription, privacy: .public)")
             @unknown default:
                 logger.error("Unknown decoding error: \(localizedDescription, privacy: .public)")

@@ -5,22 +5,23 @@
 //  Created by Oleksii Kolomiiets on 13.01.2025.
 //
 
-@testable import SnappTheming
 import Testing
 import UIKit
+
+@testable import SnappTheming
 
 @Suite
 struct ColorTests {
     @Test(arguments: [
-    """
-    {"colors": {"test": "#FFFFFF"}}
-    """,
-    """
-    {"colors": {"test": "#000000"}}
-    """,
-    """
-    {"colors": {"test": {"light": "#00ff00", "dark": "#0000ff"}}}
-    """
+        """
+        {"colors": {"test": "#FFFFFF"}}
+        """,
+        """
+        {"colors": {"test": "#000000"}}
+        """,
+        """
+        {"colors": {"test": {"light": "#00ff00", "dark": "#0000ff"}}}
+        """,
     ])
     func parseCorrectlyProvidedColor(
         _ json: String
@@ -36,26 +37,38 @@ struct ColorTests {
     }
 
     @Test(arguments: [
-    ("""
-    {"colors": {"test": "#0000AA"}}
-    """, SnappThemingColorFormat.rgba),
-    ("""
-    {"colors": {"test": "#0011AA"}}
-    """, SnappThemingColorFormat.rgba),
-    ("""
-    {"colors": {"test": "#AAAAAA"}}
-    """, SnappThemingColorFormat.rgba),
-    ("""
-    {"colors": {"test": "#AAAAAA00"}}
-    """, SnappThemingColorFormat.rgba),
-    ("""
-    {"colors": {"test": "#00A"}}
-    """, SnappThemingColorFormat.rgba),
-    ("""
-    {"colors": {"test": "#00FFFFAA"}}
-    """, SnappThemingColorFormat.argb)
+        (
+            """
+            {"colors": {"test": "#0000AA"}}
+            """, SnappThemingColorFormat.rgba
+        ),
+        (
+            """
+            {"colors": {"test": "#0011AA"}}
+            """, SnappThemingColorFormat.rgba
+        ),
+        (
+            """
+            {"colors": {"test": "#AAAAAA"}}
+            """, SnappThemingColorFormat.rgba
+        ),
+        (
+            """
+            {"colors": {"test": "#AAAAAA00"}}
+            """, SnappThemingColorFormat.rgba
+        ),
+        (
+            """
+            {"colors": {"test": "#00A"}}
+            """, SnappThemingColorFormat.rgba
+        ),
+        (
+            """
+            {"colors": {"test": "#00FFFFAA"}}
+            """, SnappThemingColorFormat.argb
+        ),
     ])
-    func parseColor_blue(
+    func parseColorBlue(
         _ json: (String, SnappThemingColorFormat)
     ) throws {
         // "AA" -> 170
@@ -71,24 +84,24 @@ struct ColorTests {
         let testColorLightBlue = try #require(light.cgColor.components?[2])
         let testColorDarkBlue = try #require(dark.cgColor.components?[2])
 
-        #expect(Int(testColorUnspecifiedBlue*255) == expectedBlue)
-        #expect(Int(testColorLightBlue*255) == expectedBlue)
-        #expect(Int(testColorDarkBlue*255) == expectedBlue)
+        #expect(Int(testColorUnspecifiedBlue * 255) == expectedBlue)
+        #expect(Int(testColorLightBlue * 255) == expectedBlue)
+        #expect(Int(testColorDarkBlue * 255) == expectedBlue)
     }
 
     @Test
     func parseColorDarkLightColor() throws {
         let json =
-        """
-        {
-            "colors": {
-                "primary": {
-                    "light": "#E94E4A",
-                    "dark": "#EF6820"
+            """
+            {
+                "colors": {
+                    "primary": {
+                        "light": "#E94E4A",
+                        "dark": "#EF6820"
+                    }
                 }
             }
-        }
-        """
+            """
         let expectedLightBlue = 74
         let expectedDarkBlue = 32
         let declaration = try SnappThemingParser.parse(from: json)
@@ -110,17 +123,17 @@ struct ColorTests {
     @Test
     func parseColorAliasing() throws {
         let json =
-        """
-        {
-            "colors": {
-                "primary": {
-                    "light": "#E94E4A",
-                    "dark": "#EF6820"
-                },
-                "secondary": "$colors/primary"
+            """
+            {
+                "colors": {
+                    "primary": {
+                        "light": "#E94E4A",
+                        "dark": "#EF6820"
+                    },
+                    "secondary": "$colors/primary"
+                }
             }
-        }
-        """
+            """
         let expectedLightBlue = 74
         let expectedDarkBlue = 32
         let declaration = try SnappThemingParser.parse(from: json)

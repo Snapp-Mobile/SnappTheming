@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+
 /// A configuration structure for button style shapes in the SnappTheming framework.
 ///
 /// This struct defines the fallback shape for a button style, providing a default

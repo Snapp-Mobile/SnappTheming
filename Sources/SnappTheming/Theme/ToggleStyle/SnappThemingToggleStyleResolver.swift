@@ -16,11 +16,11 @@ public struct SnappThemingToggleStyleResolver {
     public let disabledTintColor: Color
 }
 
-public extension SnappThemingToggleStyleResolver {
+extension SnappThemingToggleStyleResolver {
     /// A static method to return a `SnappThemingToggleStyleResolver` with default clear colors.
     ///
     /// - Returns: A `SnappThemingToggleStyleResolver` instance with `tintColor` and `disabledTintColor` set to `.clear`.
-    static func empty() -> Self {
+    public static func empty() -> Self {
         SnappThemingToggleStyleResolver(
             tintColor: .clear,
             disabledTintColor: .clear

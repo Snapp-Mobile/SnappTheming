@@ -44,18 +44,18 @@ public enum SnappThemingColorRepresentation: Codable {
 extension SnappThemingColorRepresentation {
     func color(using format: SnappThemingColorFormat) -> Color {
         switch self {
-        case let .dynamic(dynamicColor):
+        case .dynamic(let dynamicColor):
             dynamicColor.color(using: format)
-        case let .hex(hexValue):
+        case .hex(let hexValue):
             Color(hex: hexValue, format: format)
         }
     }
 
     func uiColor(using format: SnappThemingColorFormat) -> UIColor {
         switch self {
-        case let .dynamic(dynamicColor):
+        case .dynamic(let dynamicColor):
             dynamicColor.uiColor(using: format)
-        case let .hex(hexValue):
+        case .hex(let hexValue):
             UIColor(hex: hexValue, format: format)
         }
     }

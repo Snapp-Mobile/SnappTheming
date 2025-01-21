@@ -5,15 +5,22 @@
 //  Created by Volodymyr Voiko on 22.11.2024.
 //
 
-import UIKit
-import SwiftUI
 import CoreText
+import SwiftUI
+import UIKit
 
 /// Manages font tokens, such as font families and sizes. Enables consistent typography across the app by centralizing font definitions.
 public typealias SnappThemingFontDeclarations = SnappThemingDeclarations<SnappThemingFontInformation, Void>
 
-extension SnappThemingDeclarations where DeclaredValue == SnappThemingFontInformation, Configuration == Void {
-    public init(cache: [String: SnappThemingToken<DeclaredValue>]?, configuration: SnappThemingParserConfiguration = .default) {
+extension SnappThemingDeclarations
+where
+    DeclaredValue == SnappThemingFontInformation,
+    Configuration == Void
+{
+    public init(
+        cache: [String: SnappThemingToken<DeclaredValue>]?,
+        configuration: SnappThemingParserConfiguration = .default
+    ) {
         self.init(cache: cache, rootKey: .fonts)
     }
 
