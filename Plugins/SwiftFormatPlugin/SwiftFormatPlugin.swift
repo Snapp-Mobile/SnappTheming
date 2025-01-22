@@ -10,7 +10,7 @@ import PackagePlugin
 
 /// A Swift Package Manager build tool plugin to run SwiftFormat during the build process.
 @main
-struct SwiftLintPlugin: BuildToolPlugin {
+struct SwiftFormatPlugin: BuildToolPlugin {
     /// Creates build commands for the plugin.
     /// - Parameters:
     ///   - context: The plugin context providing details like the package directory.
