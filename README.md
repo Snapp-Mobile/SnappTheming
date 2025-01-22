@@ -10,12 +10,9 @@ By leveraging JSON declarations, the framework allows developers to easily extra
 
 ## Contents
 
-This repository contains the `SnappTheming` framework as well as an Example Xcode project to demonstrate its capabilities. Hosted along with the main framework is a plugin that adds support for SVG image assets (using [`SVGKit`](https://github.com/svgkit/svgkit))
+This repository contains the `SnappTheming` framework as well as an Example Xcode project to demonstrate its capabilities.
 
 ## Documentation
 
-The documentation for the packages is as follows:
-
-- [`SnappTheming`](https://ios-theming.snappmobile.io/documentation/snapptheming/)
-- `SnappThemingSVGSupport`
+The documentation for the package can be found [here](https://ios-theming.snappmobile.io/documentation/snapptheming/)
 
