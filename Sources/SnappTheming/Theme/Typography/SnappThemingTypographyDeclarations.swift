@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 import UIKit
 
-/// Manages typography tokens, combining font and size. Provides full control over how text styles are applied in the app.
 public typealias SnappThemingTypographyDeclarations = SnappThemingDeclarations<
     SnappThemingTypographyRepresentation,
     SnappThemingTypographyConfiguration

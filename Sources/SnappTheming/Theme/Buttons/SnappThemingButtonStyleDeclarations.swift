@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUI
 
-/// Manages button style tokens, including properties like surface and text colors, border widths and color, shape and typography for various button states.
 public typealias SnappThemingButtonStyleDeclarations = SnappThemingDeclarations<
     SnappThemingButtonStyleRepresentation,
     SnappThemingButtonStyleConfiguration

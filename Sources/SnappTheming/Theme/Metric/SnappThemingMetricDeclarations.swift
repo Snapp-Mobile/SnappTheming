@@ -7,7 +7,6 @@
 
 import Foundation
 
-/// Handles numeric tokens, such as spacing, corner radius, border widths. Useful for creating a consistent design language with reusable measurements.
 public typealias SnappThemingMetricDeclarations = SnappThemingDeclarations<Double, SnappThemingMetricConfiguration>
 
 extension SnappThemingDeclarations

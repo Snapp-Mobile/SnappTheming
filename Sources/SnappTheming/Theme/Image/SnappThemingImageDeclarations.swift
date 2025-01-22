@@ -9,7 +9,6 @@ import Foundation
 import OSLog
 import SwiftUI
 
-/// Manages image tokens. Supports bitmap assets for different scenarios.
 public typealias SnappThemingImageDeclarations = SnappThemingDeclarations<
     SnappThemingDataURI,
     SnappThemingImageConfiguration
