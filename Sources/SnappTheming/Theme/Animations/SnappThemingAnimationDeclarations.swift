@@ -8,7 +8,6 @@
 import Foundation
 import OSLog
 
-/// A type alias for theming animation declarations, mapping animations to their representations and configurations.
 public typealias SnappThemingAnimationDeclarations = SnappThemingDeclarations<
     SnappThemingAnimationRepresentation,
     SnappThemingAnimationConfiguration

@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-/// Manages gradient tokens, including support for linear, radial, and angular gradients,
-/// enabling the creation of dynamic and visually appealing shape backgrounds.
 public typealias SnappThemingGradientDeclarations = SnappThemingDeclarations<
     SnappThemingGradientRepresentation,
     SnappThemingGradientConfiguration

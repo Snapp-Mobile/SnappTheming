@@ -9,7 +9,6 @@ import CoreText
 import SwiftUI
 import UIKit
 
-/// Manages font tokens, such as font families and sizes. Enables consistent typography across the app by centralizing font definitions.
 public typealias SnappThemingFontDeclarations = SnappThemingDeclarations<SnappThemingFontInformation, Void>
 
 extension SnappThemingDeclarations
