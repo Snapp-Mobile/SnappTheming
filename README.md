@@ -1,6 +1,8 @@
 # SnappTheming
 
-![SnappTheming Logo](Sources/SnappTheming/SnappTheming.docc/Resources/logo%402x.png)
+<p align="center">
+    ![SnappTheming Logo](Sources/SnappTheming/SnappTheming.docc/Resources/logo%402x.png)
+</p>
 
 `SnappTheming` is a Swift framework designed to streamline the process of integrating dynamic design themes into iOS applications. 
 
