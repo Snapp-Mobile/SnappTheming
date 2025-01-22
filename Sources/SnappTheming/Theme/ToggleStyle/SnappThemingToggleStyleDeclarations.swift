@@ -7,7 +7,6 @@
 
 import Foundation
 
-/// Manages toggle style tokens, allowing control over the appearance of toggles, such as colors for enabled/disabled states.
 public typealias SnappThemingToggleStyleDeclarations = SnappThemingDeclarations<
     SnappThemingToggleStyleRepresentation,
     SnappThemingToggleStyleConfiguration

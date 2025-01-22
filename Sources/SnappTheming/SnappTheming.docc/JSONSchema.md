@@ -33,6 +33,11 @@ We have split the object types into two main groups - foundation objects and hig
 - [Button Styles](doc:SnappThemingButtonStyleDeclarations)
 - [Typography](<doc:SnappThemingTypographyDeclarations>)
 
+#### UI Components
+
+- [Toggle Styles](<doc:SnappThemingToggleStyleDeclarations>)
+- [Segment Control Styles](<doc:SnappThemingSegmentControlStyleDeclarations>)
+- [Slider Styles](<doc:SnappThemingSliderStyleDeclarations>)
 
 ### Aliases
 
