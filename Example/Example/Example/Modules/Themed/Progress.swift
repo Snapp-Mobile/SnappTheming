@@ -67,4 +67,3 @@ struct Progress: View {
         containerWidth * Double(progress) / 100.0
     }
 }
-

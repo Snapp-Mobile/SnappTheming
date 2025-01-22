@@ -31,7 +31,7 @@ public struct SnappThemingAngularGradientConfiguration: Sendable {
     }
 }
 
-extension SnappThemingAngularGradientConfiguration: SnappThemingGradientProviding {    
+extension SnappThemingAngularGradientConfiguration: SnappThemingGradientProviding {
     /// Creates an Angular Gradient shape style using the configuration properties.
     public var shapeStyle: some ShapeStyle {
         AngularGradient(

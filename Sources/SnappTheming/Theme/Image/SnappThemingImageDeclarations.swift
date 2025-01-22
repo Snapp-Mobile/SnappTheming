@@ -6,27 +6,35 @@
 //
 
 import Foundation
-import SwiftUI
 import OSLog
+import SwiftUI
 
 /// Manages image tokens. Supports bitmap assets for different scenarios.
-public typealias SnappThemingImageDeclarations = SnappThemingDeclarations<SnappThemingDataURI, SnappThemingImageConfiguration>
+public typealias SnappThemingImageDeclarations = SnappThemingDeclarations<
+    SnappThemingDataURI,
+    SnappThemingImageConfiguration
+>
 
-extension SnappThemingDeclarations where DeclaredValue == SnappThemingDataURI, Configuration == SnappThemingImageConfiguration {
+extension SnappThemingDeclarations
+where DeclaredValue == SnappThemingDataURI, Configuration == SnappThemingImageConfiguration {
     /// Initializes the declarations for themed images.
     /// - Parameters:
     ///   - cache: A cache of image tokens keyed by their identifiers.
     ///   - configuration: The parser configuration used to define fallback and manager behavior.
-    public init(cache: [String: SnappThemingToken<DeclaredValue>]?, configuration: SnappThemingParserConfiguration = .default) {
+    public init(
+        cache: [String: SnappThemingToken<DeclaredValue>]?,
+        configuration: SnappThemingParserConfiguration = .default
+    ) {
         self.init(
             cache: cache,
             rootKey: .images,
             configuration: Configuration(
                 fallbackImage: configuration.fallbackImage,
-                imagesManager: configuration.imageManager ?? SnappThemingImageManagerDefault(
-                    themeCacheRootURL: configuration.themeCacheRootURL,
-                    themeName: configuration.themeName
-                )
+                imagesManager: configuration.imageManager
+                    ?? SnappThemingImageManagerDefault(
+                        themeCacheRootURL: configuration.themeCacheRootURL,
+                        themeName: configuration.themeName
+                    )
             )
         )
     }
@@ -41,7 +49,8 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingDataURI, C
         }
 
         let cachedImage = configuration.imagesManager.object(for: keyPath, of: representation)
-        let uiImage: UIImage? = cachedImage ?? configuration.imagesManager.image(from: representation.data, of: representation.type)
+        let uiImage: UIImage? =
+            cachedImage ?? configuration.imagesManager.image(from: representation.data, of: representation.type)
 
         if let uiImage {
             configuration.imagesManager.setObject(uiImage, for: keyPath)

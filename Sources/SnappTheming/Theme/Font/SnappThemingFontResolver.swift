@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import UIKit
 import SwiftUI
+import UIKit
 
 /// Resolves fonts for theming purposes, supporting custom and system fonts.
 public struct SnappThemingFontResolver: Sendable {
@@ -35,7 +35,7 @@ public struct SnappThemingFontResolver: Sendable {
     }
 }
 
-public extension SnappThemingFontResolver {
+extension SnappThemingFontResolver {
     /// A resolver for the system font.
-    static let system = Self(fontName: nil)
+    public static let system = Self(fontName: nil)
 }

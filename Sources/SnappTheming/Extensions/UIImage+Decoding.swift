@@ -5,9 +5,8 @@
 //  Created by Volodymyr Voiko on 04.12.2024.
 //
 
-
-import UIKit
 import PDFKit
+import UIKit
 import UniformTypeIdentifiers
 
 extension UIImage {
@@ -22,7 +21,7 @@ extension UIImage {
             cgContext.saveGState()
             cgContext.translateBy(x: 0, y: size.height)
             cgContext.scaleBy(x: 1, y: -1)
-            
+
             page.draw(with: .mediaBox, to: cgContext)
 
             cgContext.restoreGState()

@@ -5,7 +5,6 @@
 //  Created by Volodymyr Voiko on 09.01.2025.
 //
 
-
 import SwiftUI
 
 public struct SnappThemingButtonStyle: ButtonStyle {
@@ -45,8 +44,8 @@ public struct SnappThemingButtonStyle: ButtonStyle {
     }
 }
 
-private extension SnappThemingInteractiveColor {
-    func value(for configuration: ButtonStyle.Configuration, isEnabled: Bool) -> Color {
+extension SnappThemingInteractiveColor {
+    fileprivate func value(for configuration: ButtonStyle.Configuration, isEnabled: Bool) -> Color {
         switch (configuration.isPressed, isEnabled) {
         case (_, false): disabled
         case (true, true): pressed

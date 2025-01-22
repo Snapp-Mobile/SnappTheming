@@ -10,9 +10,16 @@ import SwiftUI
 import UIKit
 
 /// Responsible for managing and resolving color tokens. This includes static colors and dynamic system colors, supporting light/dark mode.
-public typealias SnappThemingColorDeclarations = SnappThemingDeclarations<SnappThemingColorRepresentation, SnappThemingColorConfiguration>
+public typealias SnappThemingColorDeclarations = SnappThemingDeclarations<
+    SnappThemingColorRepresentation,
+    SnappThemingColorConfiguration
+>
 
-extension SnappThemingDeclarations where DeclaredValue == SnappThemingColorRepresentation, Configuration == SnappThemingColorConfiguration {
+extension SnappThemingDeclarations
+where
+    DeclaredValue == SnappThemingColorRepresentation,
+    Configuration == SnappThemingColorConfiguration
+{
     /// Initializes a `SnappThemingDeclarations` object for colors, optionally using a cached color representation.
     ///
     /// - Parameters:
@@ -20,7 +27,10 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingColorRepre
     ///   - configuration: A configuration object that defines the fallback color and color format. Defaults to `.default`.
     ///
     /// - This initializer allows the creation of color declarations using pre-defined fallback values and color format configuration.
-    public init(cache: [String: SnappThemingToken<DeclaredValue>]?, configuration: SnappThemingParserConfiguration = .default) {
+    public init(
+        cache: [String: SnappThemingToken<DeclaredValue>]?,
+        configuration: SnappThemingParserConfiguration = .default
+    ) {
         self.init(
             cache: cache,
             rootKey: .colors,

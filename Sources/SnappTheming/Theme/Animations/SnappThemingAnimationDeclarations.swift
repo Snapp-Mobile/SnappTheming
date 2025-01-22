@@ -9,15 +9,25 @@ import Foundation
 import OSLog
 
 /// A type alias for theming animation declarations, mapping animations to their representations and configurations.
-public typealias SnappThemingAnimationDeclarations = SnappThemingDeclarations<SnappThemingAnimationRepresentation, SnappThemingAnimationConfiguration>
+public typealias SnappThemingAnimationDeclarations = SnappThemingDeclarations<
+    SnappThemingAnimationRepresentation,
+    SnappThemingAnimationConfiguration
+>
 
-extension SnappThemingAnimationDeclarations where DeclaredValue == SnappThemingAnimationRepresentation, Configuration == SnappThemingAnimationConfiguration {
+extension SnappThemingAnimationDeclarations
+where
+    DeclaredValue == SnappThemingAnimationRepresentation,
+    Configuration == SnappThemingAnimationConfiguration
+{
     /// Initializes animation declarations with caching and configuration options.
     ///
     /// - Parameters:
     ///   - cache: A dictionary of cached theming tokens for declared animation values.
     ///   - configuration: The configuration for the parser, including fallback animation data.
-    public init(cache: [String: SnappThemingToken<DeclaredValue>]?, configuration: SnappThemingParserConfiguration = .default) {
+    public init(
+        cache: [String: SnappThemingToken<DeclaredValue>]?,
+        configuration: SnappThemingParserConfiguration = .default
+    ) {
         self.init(
             cache: cache,
             rootKey: .animations,

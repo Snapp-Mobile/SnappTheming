@@ -5,8 +5,8 @@
 //  Created by Volodymyr Voiko on 03.12.2024.
 //
 
-import SwiftUI
 import SnappTheming
+import SwiftUI
 
 struct SpacingMetricView: View {
     let metric: CGFloat
@@ -40,7 +40,7 @@ struct MetricsViewer: View {
                 SpacingMetricView(metric: metric)
             }
 
-            section("Corner radius") {metric in
+            section("Corner radius") { metric in
                 CornerRadiusMetricView(metric: metric)
             }
         }

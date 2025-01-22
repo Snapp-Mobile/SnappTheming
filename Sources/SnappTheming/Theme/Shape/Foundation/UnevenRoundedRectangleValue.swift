@@ -13,7 +13,8 @@ struct UnevenRoundedRectangleValue {
     let styleValue: RoundedCornerStyleValue
 
     enum CodingKeys: String, CodingKey {
-        case styleValue = "style", cornerRadiiValue = "cornerRadii"
+        case styleValue = "style"
+        case cornerRadiiValue = "cornerRadii"
     }
 
     var cornerRadii: RectangleCornerRadii {

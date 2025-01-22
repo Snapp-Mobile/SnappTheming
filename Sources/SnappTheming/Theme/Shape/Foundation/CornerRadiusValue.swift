@@ -12,7 +12,8 @@ struct CornerRadiusValue {
     let styleValue: RoundedCornerStyleValue
 
     enum CodingKeys: String, CodingKey {
-        case cornerRadius, styleValue = "style"
+        case cornerRadius
+        case styleValue = "style"
     }
 }
 
@@ -20,6 +21,7 @@ extension CornerRadiusValue: Codable {
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.cornerRadius = try container.decode(CGFloat.self, forKey: .cornerRadius)
-        self.styleValue = try container.decodeIfPresent(RoundedCornerStyleValue.self, forKey: .styleValue) ?? .continuous
+        self.styleValue =
+            try container.decodeIfPresent(RoundedCornerStyleValue.self, forKey: .styleValue) ?? .continuous
     }
 }

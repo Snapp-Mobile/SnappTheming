@@ -8,9 +8,16 @@
 import Foundation
 
 /// Handles slider style tokens, managing properties like track colors, tick mark styles for sliders used in the UI.
-public typealias SnappThemingSliderStyleDeclarations = SnappThemingDeclarations<SnappThemingSliderStyleRepresentation, SnappThemingSliderStyleConfiguration>
+public typealias SnappThemingSliderStyleDeclarations = SnappThemingDeclarations<
+    SnappThemingSliderStyleRepresentation,
+    SnappThemingSliderStyleConfiguration
+>
 
-extension SnappThemingDeclarations where DeclaredValue == SnappThemingSliderStyleRepresentation, Configuration == SnappThemingSliderStyleConfiguration {
+extension SnappThemingDeclarations
+where
+    DeclaredValue == SnappThemingSliderStyleRepresentation,
+    Configuration == SnappThemingSliderStyleConfiguration
+{
     public init(
         cache: [String: SnappThemingToken<DeclaredValue>]?,
         configuration: SnappThemingParserConfiguration,
@@ -77,8 +84,10 @@ extension SnappThemingDeclarations where DeclaredValue == SnappThemingSliderStyl
             minimumTrackTintColor: resolvedMinimumTrackTintColor,
             minimumTrackTintColorSecondary: resolvedMinimumTrackTintColorSecondary,
             maximumTrackTintColor: resolvedMaximumTrackTintColor,
-            headerTypography: SnappThemingTypographyResolver(resolvedHeaderFont.resolver, fontSize: resolvedHeaderFontSize),
-            tickMarkTypography: SnappThemingTypographyResolver(resolvedTickMarkFont.resolver, fontSize: resolvedTickMarkFontSize),
+            headerTypography: SnappThemingTypographyResolver(
+                resolvedHeaderFont.resolver, fontSize: resolvedHeaderFontSize),
+            tickMarkTypography: SnappThemingTypographyResolver(
+                resolvedTickMarkFont.resolver, fontSize: resolvedTickMarkFontSize),
             tickMarkColor: resolvedTickMarkColor
         )
     }

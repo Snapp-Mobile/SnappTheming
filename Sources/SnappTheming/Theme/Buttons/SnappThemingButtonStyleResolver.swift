@@ -32,40 +32,13 @@ public struct SnappThemingButtonStyleResolver: Sendable {
     /// The typography configuration for the button's text.
     public let typography: SnappThemingTypographyResolver
 
-    // MARK: - Initializer
-
-    /// Initializes a new `SnappThemingButtonStyleResolver` with the given properties.
-    ///
-    /// - Parameters:
-    ///   - surfaceColor: The button's surface (background) color.
-    ///   - textColor: The button's text color.
-    ///   - borderColor: The color of the button's border.
-    ///   - borderWidth: The width of the button's border.
-    ///   - shape: The shape of the button.
-    ///   - typography: The typography configuration for the button's text.
-    init(
-        surfaceColor: SnappThemingInteractiveColor,
-        textColor: SnappThemingInteractiveColor,
-        borderColor: SnappThemingInteractiveColor,
-        borderWidth: Double,
-        shape: SnappThemingShapeType,
-        typography: SnappThemingTypographyResolver
-    ) {
-        self.surfaceColor = surfaceColor
-        self.textColor = textColor
-        self.borderColor = borderColor
-        self.borderWidth = borderWidth
-        self.shape = shape
-        self.typography = typography
-    }
-
     // MARK: - Static Methods
 
     /// Returns a default, empty button style resolver with placeholder values.
     ///
     /// - Returns: A `SnappThemingButtonStyleResolver` instance with default values, such as clear colors and a rectangle shape.
     public static func empty() -> Self {
-        SnappThemingButtonStyleResolver(
+        .init(
             surfaceColor: .clear,
             textColor: .clear,
             borderColor: .clear,

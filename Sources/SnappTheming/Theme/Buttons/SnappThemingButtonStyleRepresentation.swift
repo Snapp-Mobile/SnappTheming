@@ -43,36 +43,49 @@ public struct SnappThemingButtonStyleRepresentation: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         do {
-            if let singleSurfaceColor = try? container.decode(SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .surfaceColor) {
+            if let singleSurfaceColor = try? container.decode(
+                SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .surfaceColor)
+            {
                 self.surfaceColor = SnappThemingToken(from: singleSurfaceColor)
             } else {
-                self.surfaceColor = try container.decode(SnappThemingToken<SnappThemingInteractiveColorInformation>.self, forKey: .surfaceColor)
+                self.surfaceColor = try container.decode(
+                    SnappThemingToken<SnappThemingInteractiveColorInformation>.self, forKey: .surfaceColor)
             }
 
-            if let singleTextColor = try? container.decode(SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .textColor) {
+            if let singleTextColor = try? container.decode(
+                SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .textColor)
+            {
                 self.textColor = SnappThemingToken(from: singleTextColor)
             } else {
-                self.textColor = try container.decode(SnappThemingToken<SnappThemingInteractiveColorInformation>.self, forKey: .textColor)
+                self.textColor = try container.decode(
+                    SnappThemingToken<SnappThemingInteractiveColorInformation>.self, forKey: .textColor)
             }
 
-            if let singleBorderColor = try? container.decode(SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .borderColor) {
+            if let singleBorderColor = try? container.decode(
+                SnappThemingToken<SnappThemingColorRepresentation>.self, forKey: .borderColor)
+            {
                 self.borderColor = SnappThemingToken(from: singleBorderColor)
             } else {
-                self.borderColor = try container.decode(SnappThemingToken<SnappThemingInteractiveColorInformation>.self, forKey: .borderColor)
+                self.borderColor = try container.decode(
+                    SnappThemingToken<SnappThemingInteractiveColorInformation>.self, forKey: .borderColor)
             }
 
             self.borderWidth = try container.decode(SnappThemingToken<Double>.self, forKey: .borderWidth)
             self.shape = try container.decode(SnappThemingToken<SnappThemingShapeRepresentation>.self, forKey: .shape)
-            self.typography = try container.decode(SnappThemingToken<SnappThemingTypographyRepresentation>.self, forKey: .typography)
+            self.typography = try container.decode(
+                SnappThemingToken<SnappThemingTypographyRepresentation>.self, forKey: .typography)
         } catch {
-            os_log(.error, "❌ Error decoding SnappThemingButtonStyleRepresentation: %{public}@", String(describing: error))
+            os_log(
+                .error, "❌ Error decoding SnappThemingButtonStyleRepresentation: %{public}@", String(describing: error))
             throw error
         }
     }
 }
 
-public extension SnappThemingButtonStyleRepresentation {
-    func resolver(using configuration: SnappThemingSegmentControlStyleConfiguration) -> SnappThemingButtonStyleResolver {
+extension SnappThemingButtonStyleRepresentation {
+    public func resolver(using configuration: SnappThemingSegmentControlStyleConfiguration)
+        -> SnappThemingButtonStyleResolver
+    {
         guard
             let resolvedSurfaceColor = configuration.interactiveColors.resolver
                 .resolve(surfaceColor)?

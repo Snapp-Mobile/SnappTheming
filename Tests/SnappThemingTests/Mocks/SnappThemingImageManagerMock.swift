@@ -18,17 +18,16 @@ final class SnappThemingImageManagerMock: SnappThemingImageManager {
             cache.object(forKey: key as NSString)
         }
     }
-    
+
     func setObject(_ object: UIImage, for key: String) {
         accessQueue.sync {
             cache.setObject(object, forKey: key as NSString)
         }
     }
-    
+
     func store(_ dataURI: SnappThemingDataURI, for key: String) {
         // pass
     }
-
 
     func image(from data: Data, of type: UTType) -> UIImage? {
         UIImage(data: data)

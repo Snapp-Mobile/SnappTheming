@@ -59,14 +59,20 @@ public struct SnappThemingShapeRepresentation: Codable {
 
         switch shapeType {
         case .circle, .rectangle, .ellipse: break
-        case let .capsule(style):
+        case .capsule(let style):
             try container.encode(StyleValue(style), forKey: .value)
-        case let .roundedRectangleWithRadius(radius, style):
-            try container.encode(CornerRadiusValue(cornerRadius: radius, styleValue: RoundedCornerStyleValue(style: style)), forKey: .value)
-        case let .roundedRectangleWithSize(size, style):
-            try container.encode(CornerSizeValue(cornerSize: size, styleValue: RoundedCornerStyleValue(style: style)), forKey: .value)
-        case let .unevenRoundedRectangle(radii, style):
-            try container.encode(UnevenRoundedRectangleValue(cornerRadiiValue: CornerRadiiValue(rawValue: radii), styleValue: RoundedCornerStyleValue(style: style)), forKey: .value)
+        case .roundedRectangleWithRadius(let radius, let style):
+            try container.encode(
+                CornerRadiusValue(cornerRadius: radius, styleValue: RoundedCornerStyleValue(style: style)),
+                forKey: .value)
+        case .roundedRectangleWithSize(let size, let style):
+            try container.encode(
+                CornerSizeValue(cornerSize: size, styleValue: RoundedCornerStyleValue(style: style)), forKey: .value)
+        case .unevenRoundedRectangle(let radii, let style):
+            try container.encode(
+                UnevenRoundedRectangleValue(
+                    cornerRadiiValue: CornerRadiiValue(rawValue: radii),
+                    styleValue: RoundedCornerStyleValue(style: style)), forKey: .value)
         }
     }
 
