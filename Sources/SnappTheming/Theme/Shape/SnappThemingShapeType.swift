@@ -16,7 +16,7 @@ import SwiftUI
 /// - `roundedRectangleWithRadius`:  A rounded rectangle with a specified corner radius.
 /// - `roundedRectangleWithSize`:  A rounded rectangle with a specified corner size.
 /// - `unevenRoundedRectangle`:  A rectangle with uneven corner radii.
-public enum SnappThemingShapeType: Sendable {
+public enum SnappThemingShapeType: Sendable, Equatable {
     case circle, rectangle, ellipse
     case capsule(RoundedCornerStyle = .continuous)
     case roundedRectangleWithRadius(CGFloat, RoundedCornerStyle = .continuous)
