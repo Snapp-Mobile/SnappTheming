@@ -52,7 +52,8 @@ struct MainView: View {
             let encodedOutput = try SnappThemingParser.encode(declaration, using: .init(encodeImages: true))
             _encoded = State(initialValue: String(data: encodedOutput, encoding: .utf8) ?? "Error")
 
-            let fontManager = SnappThemingFontManagerDefault(themeCacheRootURL: configuration.themeCacheRootURL, themeName: configuration.themeName)
+            let fontManager = SnappThemingFontManagerDefault(
+                themeCacheRootURL: configuration.themeCacheRootURL, themeName: configuration.themeName)
             fontManager.registerFonts(declaration.fontInformation)
         } catch let error {
             os_log(.error, "Error: %@", error.localizedDescription)
@@ -60,10 +61,13 @@ struct MainView: View {
     }
 
     private func changeTheme(to theme: AvailableTheme) {
-        guard let json = theme.json, let oldConfiguration = configuration, let oldDeclaration = declaration else { return }
+        guard let json = theme.json, let oldConfiguration = configuration, let oldDeclaration = declaration else {
+            return
+        }
         let configuration = theme.configuration
         do {
-            let deregisterFontManager = SnappThemingFontManagerDefault(themeCacheRootURL: oldConfiguration.themeCacheRootURL, themeName: oldConfiguration.themeName)
+            let deregisterFontManager = SnappThemingFontManagerDefault(
+                themeCacheRootURL: oldConfiguration.themeCacheRootURL, themeName: oldConfiguration.themeName)
             deregisterFontManager.unregisterFonts(oldDeclaration.fontInformation)
 
             let declaration = try SnappThemingParser.parse(from: json, using: configuration)
@@ -72,7 +76,8 @@ struct MainView: View {
             let encodedOutput = try SnappThemingParser.encode(declaration, using: .init(encodeImages: true))
             encoded = String(data: encodedOutput, encoding: .utf8) ?? "Error"
 
-            let fontManager = SnappThemingFontManagerDefault(themeCacheRootURL: configuration.themeCacheRootURL, themeName: configuration.themeName)
+            let fontManager = SnappThemingFontManagerDefault(
+                themeCacheRootURL: configuration.themeCacheRootURL, themeName: configuration.themeName)
             fontManager.registerFonts(declaration.fontInformation)
         } catch let error {
             os_log(.error, "Error: %@", error.localizedDescription)
@@ -132,21 +137,20 @@ struct MainView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Menu(content: {
-                        ForEach(AvailableTheme.allCases) { theme in
-                            Button {
-                                changeTheme(to: theme)
+                    Menu(
+                        content: {
+                            ForEach(AvailableTheme.allCases) { theme in
+                                Button {
+                                    changeTheme(to: theme)
+                                } label: {
+                                    Label(
+                                        theme.description,
+                                        systemImage: theme.configuration.themeName == configuration?.themeName ?? ""
+                                            ? "paintbrush.fill" : "paintbrush"
+                                    )
+                                }
                             }
-                            label: {
-                                Label(
-                                    theme.description,
-                                    systemImage: theme.configuration.themeName == configuration?.themeName ?? "" ?
-                                        "paintbrush.fill" :
-                                        "paintbrush"
-                                )
-                            }
-                        }
-                    }, label: { Image(systemName: "slider.horizontal.3") })
+                        }, label: { Image(systemName: "slider.horizontal.3") })
                 }
             }
         }
@@ -158,7 +162,6 @@ struct MainView: View {
     MainView(json: sampleJSON, configuration: .default)
         .preferredColorScheme(.light)
 }
-
 
 #Preview("Dark") {
     MainView(json: sampleJSON, configuration: .default)

@@ -5,11 +5,11 @@
 //  Created by Volodymyr Voiko on 03.12.2024.
 //
 
-import SwiftUI
 import SnappTheming
+import SwiftUI
 
 enum ThemeDestination: String, Hashable, CaseIterable {
-    case buttons, colors, fonts, images, metrics, shapes, typography, gradients, animations
+    case animations, buttons, colors, fonts, images, metrics, shapes, typography, gradients
 }
 
 struct ThemeViewer: View {
