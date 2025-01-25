@@ -3,7 +3,11 @@
 
  name: Swift
  env:
-   destination: 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0'
+   destination: 'platform=iOS Simulator,name=iPhone 16,OS=18.2'
+   SDK: '$(sudo xcode-select -p)/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk'
+   TARGET: 'arm64-apple-ios18'
+
+
  on:
    push:
      branches: [ "main" ]
@@ -22,6 +26,8 @@
      - name: Select Xcode 16.2
        run: sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer
      - name: Build
-       run: swift build -Xswiftc "-sdk" -Xswiftc "$(xcrun --sdk iphonesimulator --show-sdk-path)" -Xswiftc "-target" -Xswiftc "arm64-apple-ios16.0-simulator"
-     - name: Run tests
-       run: swift test -Xswiftc "-sdk" -Xswiftc "$(xcrun --sdk iphonesimulator --show-sdk-path)" -Xswiftc "-target" -Xswiftc "arm64-apple-ios16.0-simulator"
+       run: swift build --sdk ${{env.SDK}} --triple ${{env.TARGET}} --scratch-path "./.build/${{env.TARGET}}" "$@"
+     - name: Test
+       run: swift test --sdk ${{env.SDK}} --triple ${{env.TARGET}} --scratch-path "./.build/${{env.TARGET}}" "$@"
+#     - name: Run tests
+#       run: swift test -Xswiftc "-sdk" -Xswiftc "$(xcrun --sdk iphonesimulator --show-sdk-path)" -Xswiftc "-target" -Xswiftc "arm64-apple-ios16.0-simulator"
