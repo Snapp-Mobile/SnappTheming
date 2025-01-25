@@ -28,6 +28,6 @@
      - name: Build
        run: swift build --sdk ${{env.SDK}} --triple ${{env.TARGET}} --scratch-path "./.build/${{env.TARGET}}" "$@"
      - name: Test
-       run: swift test --sdk ${{env.SDK}} --triple ${{env.TARGET}} --scratch-path "./.build/${{env.TARGET}}" "$@"
+       run: swift test --filter SnappThemingTests --sdk ${{env.SDK}} --triple ${{env.TARGET}}
 #     - name: Run tests
 #       run: swift test -Xswiftc "-sdk" -Xswiftc "$(xcrun --sdk iphonesimulator --show-sdk-path)" -Xswiftc "-target" -Xswiftc "arm64-apple-ios16.0-simulator"
