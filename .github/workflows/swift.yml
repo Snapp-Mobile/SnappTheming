@@ -6,8 +6,7 @@
    destination: 'platform=iOS Simulator,name=iPhone 16,OS=18.2'
    SDK: '$(sudo xcode-select -p)/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk'
    TARGET: 'arm64-apple-ios18'
-
-
+   PATH: '/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin'
  on:
    push:
      branches: [ "main" ]
@@ -20,7 +19,7 @@
      runs-on: macos-latest
 
      steps:
-     - uses: actions/checkout@v4
+     - uses: actions/checkout@v2
      - name: List Xcode installations
        run: sudo ls -1 /Applications | grep "Xcode"
      - name: Select Xcode 16.2
@@ -34,6 +33,6 @@
      - name: Get swift version
        run: swift --version
      - name: Test
-       run: swift test --filter SnappThemingTests --sdk ${{env.SDK}} --triple ${{env.TARGET}} --scratch-path "./.build/${{env.TARGET}}" "$@" | xcpretty
+       run: swift test --filter SnappThemingTests --sdk ${{env.SDK}} --triple ${{env.TARGET}} --toolchain ${{env.PATH}}  --scratch-path "./.build/${{env.TARGET}}" "$@" | xcpretty
 #     - name: Run tests
 #       run: swift test -Xswiftc "-sdk" -Xswiftc "$(xcrun --sdk iphonesimulator --show-sdk-path)" -Xswiftc "-target" -Xswiftc "arm64-apple-ios16.0-simulator"
