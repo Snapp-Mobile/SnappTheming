@@ -31,6 +31,6 @@ struct FontsTests {
     }
 }
 
-private extension UTType {
-    static let truetypeTTFFont: UTType = .init("public.truetype-ttf-font")!
+extension UTType {
+    fileprivate static let truetypeTTFFont: UTType = .init("public.truetype-ttf-font")!
 }
