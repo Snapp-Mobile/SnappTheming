@@ -26,13 +26,15 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "SnappTheming",
-            dependencies: [.product(name: "Testing", package: "swift-testing")],
             plugins: [
                 .plugin(name: "SwiftFormatPlugin")
             ]),
         .testTarget(
             name: "SnappThemingTests",
-            dependencies: ["SnappTheming"],
+            dependencies: [
+                "SnappTheming",
+                .product(name: "Testing", package: "swift-testing"),
+            ],
             resources: [
                 .copy("Resources/fonts.json")
             ]
