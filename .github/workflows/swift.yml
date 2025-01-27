@@ -1,7 +1,7 @@
 # This workflow will test a Swift project
  # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
 
- name: Swift ${{env.SCHEME}}
+ name: Package Test
  env:
    DESTINATION: 'platform=macOS,variant=Mac Catalyst,name=My Mac'
    SCHEME: 'SnappTheming-Package'
@@ -34,3 +34,10 @@
             -skipMacroValidation \
             -quiet
          mkdir -p '${{env.COVERAGE_OUTPUT}}'
+     - name: Generate Coverage Report
+       run: |
+         xcrun xccov view --report --json $(find . -name "*.xccovarchive") > '${{env.COVERAGE_OUTPUT}}/coverage.json'
+     - name: Upload Coverage to Codecov
+       uses: codecov/codecov-action@v3
+       with:
+         file: '${{env.COVERAGE_OUTPUT}}/coverage.json'
