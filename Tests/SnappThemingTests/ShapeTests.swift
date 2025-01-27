@@ -32,7 +32,7 @@ struct ShapeTests {
         let declaration = try SnappThemingParser.parse(from: json)
         switch declaration.shapes.rect?.shapeType {
         case .rectangle:
-            #expect(true)
+            #expect(Bool(false))
         default:
             throw ShapeParserError.invalidShapeType
         }
