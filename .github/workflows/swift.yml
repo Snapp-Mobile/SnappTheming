@@ -35,11 +35,8 @@
             -skipMacroValidation \
             -quiet
         
-            echo "Code Coverage Summary:"
-            xcrun xccov view --report "${{env.COVERAGE_REPORT_PATH}}"
-
-            echo "Saving Code Coverage as JSON:"
-            xcrun xccov view --json "${{env.COVERAGE_REPORT_PATH}}" > coverage-summary.json
+            echo "Overall Code Coverage:"
+            xcrun xccov view --report --only-targets "${{env.COVERAGE_REPORT_PATH}}" | tail -n 1
 
 
 #     - name: Upload coverage report to Codecov
