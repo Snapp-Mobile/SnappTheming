@@ -188,8 +188,6 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
                 forKey: .animations
             )
 
-            os_log("✅ Successfully decoded all declarations.")
-
             self.init(
                 imageCache: imageCache,
                 colorCache: colorCache,
