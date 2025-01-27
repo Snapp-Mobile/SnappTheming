@@ -33,6 +33,6 @@
      - name: Get swift version
        run: swift --version
      - name: Test
-       run: swift test --filter SnappThemingTests --sdk ${{env.SDK}} --triple ${{env.TARGET}} --toolchain ${{env.TOOLCHAIN_PATH}}  --scratch-path "./.build/${{env.TARGET}}" "$@" | xcpretty
+       run: swift test --sdk ${{env.SDK}} --triple ${{env.TARGET}} --toolchain ${{env.TOOLCHAIN_PATH}}  --scratch-path "./.build/${{env.TARGET}}" "$@"
 #     - name: Run tests
 #       run: swift test -Xswiftc "-sdk" -Xswiftc "$(xcrun --sdk iphonesimulator --show-sdk-path)" -Xswiftc "-target" -Xswiftc "arm64-apple-ios16.0-simulator"
