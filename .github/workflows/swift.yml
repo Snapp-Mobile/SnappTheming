@@ -1,0 +1,28 @@
+# This workflow will build a Swift project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
+
+name: Swift
+env:
+  destination: 'platform=iOS Simulator,name=iPhone 16,OS=18.2'
+  SDK: '$(sudo xcode-select -p)/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk'
+  TARGET: 'arm64-apple-ios18'
+  PATH: '/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin'
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: List Xcode installations
+      run: sudo ls -1 /Applications | grep "Xcode"
+    - name: Select Xcode 16.2
+      run: sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer
+    - name: Build
+      run: swift build --sdk ${{env.SDK}} --triple ${{env.TARGET}} --scratch-path "./.build/${{env.TARGET}}" "$@" | xcpretty
