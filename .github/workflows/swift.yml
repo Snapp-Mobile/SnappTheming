@@ -35,8 +35,8 @@
             -skipMacroValidation \
             -quiet
         
-            echo "Overall Code Coverage:"
-            xcrun xccov view --report --only-targets "${{env.COVERAGE_REPORT_PATH}}" | tail -n 1
+         echo "Overall Code Coverage:"
+         xcrun xccov view --report --only-targets "${{env.COVERAGE_REPORT_PATH}}" | tail -n 1
 
 
 #     - name: Upload coverage report to Codecov
