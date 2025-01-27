@@ -34,9 +34,6 @@
             -resultBundlePath '${{env.COVERAGE_REPORT_PATH}}' \
             -skipMacroValidation \
             -quiet
-        
-         echo "Overall Code Coverage:"
-         xcrun xccov view --report --only-targets "${{env.COVERAGE_REPORT_PATH}}" | tail -n 2
 
      - name: Comment on Pull Request
        if: github.event_name == 'pull_request'
