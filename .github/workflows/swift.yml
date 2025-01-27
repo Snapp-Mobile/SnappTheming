@@ -23,7 +23,7 @@
       - name: Checkout Repository
         uses: actions/checkout@v2
         with:
-        fetch-depth: 1 # Fetch only the latest commit for better performance
+          fetch-depth: 1 # Fetch only the latest commit for better performance
 
       # Step 2: List all installed versions of Xcode for debugging purposes
       - name: List Xcode installations
