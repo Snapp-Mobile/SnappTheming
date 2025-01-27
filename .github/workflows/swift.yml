@@ -30,10 +30,11 @@
      - name: Get swift version
        run: swift --version
 
-     - name: Resolve package dependencies
-       run: |
-          # Ensure dependencies are resolved, and Xcode workspace is created
-          xcodebuild -resolvePackageDependencies
+     - name: Resolve Package Dependencies
+       run: swift package resolve
+
+     - name: Generate Xcode Project
+       run: swift package generate-xcodeproj
 
      - name: Find the workspace
        id: find_workspace
