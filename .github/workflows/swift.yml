@@ -35,21 +35,26 @@
           # Ensure dependencies are resolved, and Xcode workspace is created
           xcodebuild -resolvePackageDependencies
 
-     - name: Run tests
+     - name: Find the workspace
+       id: find_workspace
        run: |
-          # Get the absolute path to the workspace
-          WORKSPACE_PATH="$(pwd)/.swiftpm/xcode/package.xcworkspace"
+          # Locate the package.xcworkspace in the project directory
+          WORKSPACE_PATH=$(find "$(pwd)" -name "package.xcworkspace" -type d)
 
-          if [ ! -d "$WORKSPACE_PATH" ]; then
-            echo "Error: Workspace not found at $WORKSPACE_PATH"
+          if [ -z "$WORKSPACE_PATH" ]; then
+            echo "Error: Workspace not found!"
             exit 1
           fi
 
-          # Run tests using the resolved workspace
+          echo "Workspace found at: $WORKSPACE_PATH"
+          echo "workspace_path=$WORKSPACE_PATH" >> $GITHUB_ENV
+
+     - name: Run tests
+       run: |
           xcodebuild test \
-            -workspace "$WORKSPACE_PATH" \
+            -workspace "${{ env.workspace_path }}" \
             -scheme SnappTheming-Package \
-            -destination "${{env.destination}}"
+            -destination "${{ env.destination }}"
 
 
      - name: Build
