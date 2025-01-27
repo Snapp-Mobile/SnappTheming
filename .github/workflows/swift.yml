@@ -24,4 +24,4 @@
      - name: Select Xcode 16.2
        run: sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer
      - name: Test
-       run: xcodebuild test -workspace "${{env.WORKSPACE_PATH}}" -scheme "${{env.SCHEME}}" -destination "${{env.DESTINATION}}" -skipMacroValidation
+       run: xcodebuild test -workspace "${{env.WORKSPACE_PATH}}" -scheme "${{env.SCHEME}}" -destination "${{env.DESTINATION}}" -skipMacroValidation -quiet
