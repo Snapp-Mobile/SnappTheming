@@ -5,8 +5,8 @@
 //  Created by Oleksii Kolomiiets on 22.01.2025.
 //
 
-import Testing
 import SwiftUI
+import Testing
 
 @testable import SnappTheming
 
