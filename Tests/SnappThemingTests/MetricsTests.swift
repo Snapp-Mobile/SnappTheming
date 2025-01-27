@@ -26,8 +26,10 @@ struct MetricsTests {
             """
 
         let declaration = try SnappThemingParser.parse(from: json)
-        #expect(declaration.metrics.small == 4.0)
-        #expect(declaration.metrics.medium == 8.5)
+        let smallDouble: Double = declaration.metrics.small
+        let mediumCGFloat: CGFloat = declaration.metrics.medium
+        #expect(smallDouble == 4.0)
+        #expect(mediumCGFloat == 8.5)
         #expect(declaration.metrics.large == 12.0)
     }
 }
