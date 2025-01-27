@@ -30,7 +30,7 @@ let package = Package(
                 .plugin(name: "SwiftFormatPlugin")
             ]),
         .testTarget(
-            name: "SnappThemingTests",
+            name: "SnappThemingPackageTests",
             dependencies: [
                 "SnappTheming",
                 .product(name: "Testing", package: "swift-testing"),
