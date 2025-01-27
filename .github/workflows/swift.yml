@@ -5,8 +5,8 @@
  env:
    DESTINATION: 'platform=macOS,variant=Mac Catalyst,name=My Mac'
    SCHEME: 'SnappTheming-Package'
-   WORKSPACE_PATH: '.swiftpm/xcode/package.xcworkspace'         # Path to the Xcode workspace
-   COVERAGE_OUTPUT: './coverage-report'
+   WORKSPACE_PATH: '.swiftpm/xcode/package.xcworkspace'
+   COVERAGE_REPORT_PATH: './coverage/coverage.xcresult'
  on:
    push:
      branches: [ "main" ]
@@ -31,13 +31,13 @@
             -scheme "${{env.SCHEME}}" \
             -destination "${{env.DESTINATION}}" \
             -enableCodeCoverage YES \
+            -resultBundlePath '${{env.COVERAGE_REPORT_PATH}}' \
             -skipMacroValidation \
             -quiet
          mkdir -p '${{env.COVERAGE_OUTPUT}}'
-     - name: Generate Coverage Report
-       run: |
-         xcrun xccov view --report --json $(find . -name "*.xccovarchive") > '${{env.COVERAGE_OUTPUT}}/coverage.json'
-     - name: Upload Coverage to Codecov
-       uses: codecov/codecov-action@v3
+
+     - name: Upload code coverage report
+       uses: codecov/codecov-action@v2
        with:
-         file: '${{env.COVERAGE_OUTPUT}}/coverage.json'
+         file: ${{env.COVERAGE_REPORT_PATH}}/codecov-report.json
+         name: codecov-report
