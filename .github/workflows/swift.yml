@@ -33,17 +33,16 @@
      - name: Resolve Swift package dependencies
        run: swift package resolve
 
-     - name: Create .swiftpm folder (if missing)
-       run: mkdir -p .swiftpm/xcode
-
-     - name: Ensure .swiftpm folder exists
+     - name: Generate Xcode project and prepare workspace
        run: |
-         if [ -d ".swiftpm" ]; then
-           echo ".swiftpm folder exists"
-         else
-           echo "error: .swiftpm folder not found!" >&2
-           exit 1
-         fi
+        if [ ! -d ".swiftpm/xcode/package.xcworkspace" ]; then
+            echo "Workspace not found. Resolving package dependencies..."
+            xcodebuild -resolvePackageDependencies
+        fi
+        
+        echo "Running tests..."
+        xcodebuild test -workspace .swiftpm/xcode/package.xcworkspace -scheme SnappTheming-Package -destination ${{env.destination}}
+
 
      - name: Build
        run: swift build --sdk ${{env.SDK}} --triple ${{env.TARGET}} --scratch-path "./.build/${{env.TARGET}}" "$@" | xcpretty
