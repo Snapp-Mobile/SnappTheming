@@ -30,6 +30,9 @@
      - name: Get swift version
        run: swift --version
 
+     - name: Resolve Dependencies
+       run: swift package resolve
+
      - name: Build
        run: swift build --sdk ${{env.SDK}} --triple ${{env.TARGET}}
 
