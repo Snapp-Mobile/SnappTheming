@@ -33,8 +33,10 @@ struct ImageTests {
         )
 
         let declaration = try SnappThemingParser.parse(from: json, using: configuration)
-
-        #expect(declaration.images.basket != fallbackImage)
+        let imageData: SnappThemingDataURI = try #require(declaration.images.basket)
+        let image: Image = declaration.images.basket
+        #expect(imageData.type == .png)
+        #expect(image != fallbackImage)
         let representation = try #require(imageManager.cache.object(forKey: "basket"))
         #expect(representation.cgImage != fallbackUIImage.cgImage)
     }
