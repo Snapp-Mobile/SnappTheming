@@ -30,24 +30,27 @@
      - name: Get swift version
        run: swift --version
 
-     - name: Resolve Package Dependencies
-       run: swift package resolve
+     - name: Build
+       run: swift build --sdk ${{env.SDK}} --triple ${{env.TARGET}} --scratch-path "./.build/${{env.TARGET}}" "$@"
 
-     - name: Generate Xcode Project
-       run: swift package generate-xcodeproj
+#     - name: Generate `.swiftpm/xcode` Workspace
+#       run: |
+#         xcodebuild \
+#            -scheme SnappTheming-Package \
+#            -destination '${{ env.destination }}' \
+#            -showBuildSettings
 
-     - name: Find the workspace
-       id: find_workspace
+     - name: Check for Generated Workspace
+       id: check_workspace
        run: |
-          # Locate the package.xcworkspace in the project directory
-          WORKSPACE_PATH=$(find "$(pwd)" -name "package.xcworkspace" -type d)
+         WORKSPACE_PATH=".swiftpm/xcode/package.xcworkspace"
 
-          if [ -z "$WORKSPACE_PATH" ]; then
-            echo "Error: Workspace not found!"
-            exit 1
-          fi
+         if [ ! -d "$WORKSPACE_PATH" ]; then
+           echo "Error: Workspace not found at $WORKSPACE_PATH!"
+           exit 1
+         fi
 
-          echo "Workspace found at: $WORKSPACE_PATH"
+          echo "Workspace found: $WORKSPACE_PATH"
           echo "workspace_path=$WORKSPACE_PATH" >> $GITHUB_ENV
 
      - name: Run tests
@@ -58,8 +61,6 @@
             -destination "${{ env.destination }}"
 
 
-     - name: Build
-       run: swift build --sdk ${{env.SDK}} --triple ${{env.TARGET}} --scratch-path "./.build/${{env.TARGET}}" "$@" | xcpretty
 
 #     - name: Test
 #       run: xcodebuild test -workspace .swiftpm/xcode/package.xcworkspace -scheme SnappTheming-Package -destination ${{env.destination}}
