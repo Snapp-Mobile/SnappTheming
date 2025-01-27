@@ -6,7 +6,7 @@
    DESTINATION: 'platform=macOS,variant=Mac Catalyst,name=My Mac'
    SCHEME: 'SnappTheming-Package'
    WORKSPACE_PATH: '.swiftpm/xcode/package.xcworkspace'         # Path to the Xcode workspace
-   COVERAGE_OUTPUT: './coverage-report'                
+   COVERAGE_OUTPUT: './coverage-report'
  on:
    push:
      branches: [ "main" ]
@@ -31,6 +31,6 @@
             -scheme "${{env.SCHEME}}" \
             -destination "${{env.DESTINATION}}" \
             -enableCodeCoverage YES \
-            -skipMacroValidation 
+            -skipMacroValidation \
             -quiet
          mkdir -p '${{env.COVERAGE_OUTPUT}}'    
