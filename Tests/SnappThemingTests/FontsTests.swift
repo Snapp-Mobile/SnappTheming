@@ -7,6 +7,7 @@
 
 import Testing
 import UIKit
+import UniformTypeIdentifiers
 
 @testable import SnappTheming
 
@@ -21,8 +22,15 @@ struct FontsTests {
         let json = try #require(String(data: jsonData, encoding: .utf8), "JSON should be readable")
 
         let declaration = try SnappThemingParser.parse(from: json)
-        #expect(declaration.fonts.cache.count == 1)
-        let representation = try #require(declaration.fonts.cache["Roboto-Regular"]?.value)
-        #expect(representation.postScriptName == "Roboto-Regular")
+        let fontInformation: SnappThemingFontInformation = try #require(declaration.fonts[dynamicMember: "Roboto-Regular"])
+        let fontResolver: SnappThemingFontResolver = declaration.fonts[dynamicMember: "Roboto-Regular"]
+
+        #expect(fontInformation.postScriptName == "Roboto-Regular")
+        #expect(fontInformation.source.type == .truetypeTTFFont)
+        #expect(fontResolver != .system)
     }
+}
+
+private extension UTType {
+    static let truetypeTTFFont: UTType = .init("public.truetype-ttf-font")!
 }
