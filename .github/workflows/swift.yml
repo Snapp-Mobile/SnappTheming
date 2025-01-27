@@ -5,7 +5,8 @@
  env:
    DESTINATION: 'platform=macOS,variant=Mac Catalyst,name=My Mac'
    SCHEME: 'SnappTheming-Package'
-   WORKSPACE_PATH: '.swiftpm/xcode/package.xcworkspace'
+   WORKSPACE_PATH: '.swiftpm/xcode/package.xcworkspace'         # Path to the Xcode workspace
+   COVERAGE_OUTPUT: './coverage-report'                
  on:
    push:
      branches: [ "main" ]
@@ -24,4 +25,12 @@
      - name: Select Xcode 16.2
        run: sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer
      - name: Test
-       run: xcodebuild test -workspace "${{env.WORKSPACE_PATH}}" -scheme "${{env.SCHEME}}" -destination "${{env.DESTINATION}}" -skipMacroValidation -quiet
+       run: |
+         xcodebuild test \
+            -workspace "${{env.WORKSPACE_PATH}}" \
+            -scheme "${{env.SCHEME}}" \
+            -destination "${{env.DESTINATION}}" \
+            -enableCodeCoverage YES \
+            -skipMacroValidation 
+            -quiet
+         mkdir -p '${{env.COVERAGE_OUTPUT}}'    
