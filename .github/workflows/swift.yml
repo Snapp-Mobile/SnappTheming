@@ -30,22 +30,30 @@
      - name: Get swift version
        run: swift --version
 
-     - name: Resolve Swift package dependencies
-       run: swift package resolve
-
-     - name: Generate Xcode project and prepare workspace
+     - name: Resolve package dependencies
        run: |
-        if [ ! -d ".swiftpm/xcode/package.xcworkspace" ]; then
-            echo "Workspace not found. Resolving package dependencies..."
-            xcodebuild -resolvePackageDependencies
-        fi
-        
-        echo "Running tests..."
-        xcodebuild test -workspace .swiftpm/xcode/package.xcworkspace -scheme SnappTheming-Package -destination ${{env.destination}}
+          # Ensure dependencies are resolved, and Xcode workspace is created
+          xcodebuild -resolvePackageDependencies
+
+     - name: Run tests
+       run: |
+          # Get the absolute path to the workspace
+          WORKSPACE_PATH="$(pwd)/.swiftpm/xcode/package.xcworkspace"
+
+          if [ ! -d "$WORKSPACE_PATH" ]; then
+            echo "Error: Workspace not found at $WORKSPACE_PATH"
+            exit 1
+          fi
+
+          # Run tests using the resolved workspace
+          xcodebuild test \
+            -workspace "$WORKSPACE_PATH" \
+            -scheme SnappTheming-Package \
+            -destination "${{env.destination}}"
 
 
      - name: Build
        run: swift build --sdk ${{env.SDK}} --triple ${{env.TARGET}} --scratch-path "./.build/${{env.TARGET}}" "$@" | xcpretty
 
-     - name: Test
-       run: xcodebuild test -workspace .swiftpm/xcode/package.xcworkspace -scheme SnappTheming-Package -destination ${{env.destination}}
+#     - name: Test
+#       run: xcodebuild test -workspace .swiftpm/xcode/package.xcworkspace -scheme SnappTheming-Package -destination ${{env.destination}}
