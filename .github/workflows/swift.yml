@@ -1,0 +1,27 @@
+# This workflow will test a Swift project
+ # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
+
+ name: Swift
+ env:
+   DESTINATION: 'platform=macOS,variant=Mac Catalyst,name=My Mac'
+   SCHEME: 'SnappTheming-Package'
+   WORKSPACE_PATH: '.swiftpm/xcode/package.xcworkspace'
+ on:
+   push:
+     branches: [ "main" ]
+   pull_request:
+     branches: [ "main" ]
+
+ jobs:
+   build:
+
+     runs-on: macos-latest
+
+     steps:
+     - uses: actions/checkout@v2
+     - name: List Xcode installations
+       run: sudo ls -1 /Applications | grep "Xcode"
+     - name: Select Xcode 16.2
+       run: sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer
+     - name: Test
+       run: xcodebuild test -workspace "${{env.WORKSPACE_PATH}}" -scheme "${{env.SCHEME}}" -destination "${{env.DESTINATION}}" -skipMacroValidation -quiet
