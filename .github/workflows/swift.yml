@@ -20,19 +20,30 @@
 
      steps:
      - uses: actions/checkout@v2
+
      - name: List Xcode installations
        run: sudo ls -1 /Applications | grep "Xcode"
+
      - name: Select Xcode 16.2
        run: sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer
+
+     - name: Get swift version
+       run: swift --version
+
+     - name: Resolve Swift package dependencies
+       run: swift package resolve
+
+     - name: Ensure .swiftpm folder exists
+       run: |
+         if [ -d ".swiftpm" ]; then
+           echo ".swiftpm folder exists"
+         else
+           echo "error: .swiftpm folder not found!" >&2
+           exit 1
+         fi
+
      - name: Build
        run: swift build --sdk ${{env.SDK}} --triple ${{env.TARGET}} --scratch-path "./.build/${{env.TARGET}}" "$@" | xcpretty
 
-#     - uses: swift-actions/setup-swift@v2
-#       with:
-#         swift-version: "6.0.3"
-     - name: Get swift version
-       run: swift --version
      - name: Test
-       run: swift test --sdk ${{env.SDK}} --skip SnappThemingPackageTests --enable-swift-testing --enable-code-coverage --triple ${{env.TARGET}} --toolchain ${{env.TOOLCHAIN_PATH}} --scratch-path "./.build/${{env.TARGET}}" "$@"
-#     - name: Run tests
-#       run: swift test -Xswiftc "-sdk" -Xswiftc "$(xcrun --sdk iphonesimulator --show-sdk-path)" -Xswiftc "-target" -Xswiftc "arm64-apple-ios16.0-simulator"
+       run: xcodebuild test -workspace .swiftpm/xcode/package.xcworkspace -scheme SnappTheming-Package -destination ${{env.destination}}
