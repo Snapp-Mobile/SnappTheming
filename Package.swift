@@ -19,7 +19,7 @@ let package = Package(
             targets: ["SnappThemingSwiftUIHelpers"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/swiftlang/swift-testing", branch: "main")
+        .package(url: "https://github.com/swiftlang/swift-testing.git", branch: "main")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
