@@ -27,4 +27,4 @@ jobs:
     - name: Build
       run: swift build --sdk ${{env.SDK}} --triple ${{env.TARGET}} --scratch-path "./.build/${{env.TARGET}}" "$@" | xcpretty
     - name: Test
-      run: swift test --filter SnappThemingTests --sdk ${{env.SDK}} --triple ${{env.TARGET}} --toolchain ${{env.THE_PATH}}  --scratch-path "./.build/${{env.TARGET}}" "$@" | xcpretty
+      run: swift test --sdk ${{env.SDK}} --triple ${{env.TARGET}} --toolchain ${{env.THE_PATH}}  --scratch-path "./.build/${{env.TARGET}}" "$@"
