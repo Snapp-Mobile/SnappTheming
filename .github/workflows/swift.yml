@@ -34,11 +34,13 @@
             -resultBundlePath '${{env.COVERAGE_REPORT_PATH}}' \
             -skipMacroValidation \
             -quiet
+        
+            echo "Code Coverage Summary:"
+            xcrun xccov view --report "${{env.COVERAGE_REPORT_PATH}}"
 
-     - name: Print Code Coverage Summary
-       run: |
-         xcrun xccov view --report ${{env.COVERAGE_REPORT_PATH}}/Logs/Test/*.xcresult
-         xcrun xccov view --json ${{env.COVERAGE_REPORT_PATH}}/Logs/Test/*.xcresult > coverage-summary.json
+            echo "Saving Code Coverage as JSON:"
+            xcrun xccov view --json "${{env.COVERAGE_REPORT_PATH}}" > coverage-summary.json
+
 
 #     - name: Upload coverage report to Codecov
 #       uses: codecov/codecov-action@v2
