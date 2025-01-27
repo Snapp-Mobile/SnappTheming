@@ -6,7 +6,7 @@
    destination: 'platform=iOS Simulator,name=iPhone 16,OS=18.2'
    SDK: '$(sudo xcode-select -p)/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk'
    TARGET: 'arm64-apple-ios18'
-   TOOLCHAIN_PATH: '/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin'
+   TOOLCHAIN_PATH: '$(sudo xcode-select -p)/Contents/Developer/Toolchains/swift-latest.xctoolchain/usr/bin'
  on:
    push:
      branches: [ "main" ]
