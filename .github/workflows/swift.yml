@@ -47,10 +47,18 @@
 
             // Run the command to get code coverage and store the result
             const coverageOutput = execSync(
-            `xcrun xccov view --report --only-targets ${{env.COVERAGE_REPORT_PATH}} | tail -n 1`
+              `xcrun xccov view --report --only-targets ${{env.COVERAGE_REPORT_PATH}} | tail -n 2`
             ).toString().trim();
 
-            const overallCoverage = coverageOutput.split(" ")[1]; // Extract the percentage value
+            // Handle empty last line and extract the percentage value from the second-to-last line
+            const lines = coverageOutput.split("\n").filter(line => line.trim() !== "");
+            const lastLine = lines[lines.length - 1]; // Should be the actual last line with content
+            const coverageMatch = lastLine.match(/(\d+\.\d+)%/); // Match the coverage percentage
+
+            let overallCoverage = "N/A";
+            if (coverageMatch) {
+              overallCoverage = coverageMatch[1] + "%";
+            }
 
             const comment = `
             ### Code Coverage Report
@@ -61,10 +69,10 @@
 
             // Create a comment on the pull request
             github.rest.issues.createComment({
-            issue_number: context.payload.pull_request.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: comment,
+              issue_number: context.payload.pull_request.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment,
             });
 
 #     - name: Upload coverage report to Codecov
