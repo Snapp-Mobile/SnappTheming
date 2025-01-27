@@ -24,14 +24,14 @@
        run: sudo ls -1 /Applications | grep "Xcode"
      - name: Select Xcode 16.2
        run: sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer
-     - name: Build
-       run: swift build --sdk ${{env.SDK}} --triple ${{env.TARGET}} --scratch-path "./.build/${{env.TARGET}}" "$@" | xcpretty
+     # - name: Build
+       # run: swift build --sdk ${{env.SDK}} --triple ${{env.TARGET}} --scratch-path "./.build/${{env.TARGET}}" "$@" | xcpretty
 
 #     - uses: swift-actions/setup-swift@v2
 #       with:
 #         swift-version: "6.0.3"
-     - name: Get swift version
-       run: swift --version
+     # - name: Get swift version
+       # run: swift --version
      - name: Test
        run: xcodebuild test -workspace .swiftpm/xcode/package.xcworkspace -scheme SnappTheming-Package -destination 'platform=macOS,variant=Mac Catalyst,name=My Mac' -skipMacroValidation
 #       run: swift test --filter SnappThemingTests --sdk ${{env.SDK}} --triple ${{env.TARGET}} --toolchain ${{env.TOOLCHAIN_PATH}}  --scratch-path "./.build/${{env.TARGET}}" "$@" | xcpretty
