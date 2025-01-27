@@ -31,7 +31,12 @@
        run: swift --version
 
      - name: Build
-       run: swift build --sdk ${{env.SDK}} --triple ${{env.TARGET}} --scratch-path "./.build/${{env.TARGET}}" "$@"
+       run: swift build --sdk ${{env.SDK}} --triple ${{env.TARGET}}
+
+     - name: List Package Folder
+       run: |
+         echo "Listing package folder contents:"
+         ls -R
 
 #     - name: Generate `.swiftpm/xcode` Workspace
 #       run: |
@@ -43,7 +48,7 @@
      - name: Check for Generated Workspace
        id: check_workspace
        run: |
-         WORKSPACE_PATH="/Users/runner/work/SnappTheming/SnappTheming/.swiftpm/xcode/package.xcworkspace"
+         WORKSPACE_PATH=".swiftpm/xcode/package.xcworkspace"
 
          if [ ! -d "$WORKSPACE_PATH" ]; then
            echo "Error: Workspace not found at $WORKSPACE_PATH!"
