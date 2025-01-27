@@ -6,6 +6,7 @@
 //
 
 import Testing
+import SwiftUI
 
 @testable import SnappTheming
 
@@ -22,13 +23,17 @@ struct ButtonStyleTests {
         )
     )
 
+    @MainActor
     @Test(arguments: correctJSONs)
-    func testSuccessfulParsing(json: String) throws {
+    func testSuccessfulParsing(json: String) async throws {
         let declaration = try SnappThemingParser.parse(from: json, using: configuration)
+        let _: SnappThemingButtonStyleRepresentation = try #require(declaration.buttonStyles.primary)
         let buttonStyleResolver: SnappThemingButtonStyleResolver = declaration.buttonStyles.primary
+        let buttonStyle: some ButtonStyle = declaration.buttonStyles.primary
         let borderWidth = buttonStyleResolver.borderWidth
         let shape = buttonStyleResolver.shape
         let typography = buttonStyleResolver.typography
+        #expect(buttonStyle is SnappThemingButtonStyle)
         #expect(
             borderWidth != configuration.fallbackButtonStyle.borderWidth,
             "Parsed button style border width should not match the fallback border width."
