@@ -10,7 +10,7 @@ import SwiftUI
 import UIKit
 
 /// Resolver for typography in the SnappTheming framework.
-public struct SnappThemingTypographyResolver: Sendable {
+public struct SnappThemingTypographyResolver: Sendable, Equatable {
     /// Resolved `UIFont` for UIKit usage.
     public let uiFont: UIFont
     /// Resolved `Font` for SwiftUI usage.

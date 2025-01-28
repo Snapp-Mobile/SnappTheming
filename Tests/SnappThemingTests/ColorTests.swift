@@ -5,6 +5,7 @@
 //  Created by Oleksii Kolomiiets on 13.01.2025.
 //
 
+import SwiftUI
 import Testing
 import UIKit
 
@@ -28,10 +29,12 @@ struct ColorTests {
     ) throws {
         let declaration = try SnappThemingParser.parse(from: json)
 
-        let testColor: UIColor = declaration.colors.test
-        let light = testColor.resolvedColor(with: .init(userInterfaceStyle: .light))
-        let dark = testColor.resolvedColor(with: .init(userInterfaceStyle: .dark))
+        let color: Color = declaration.colors.test
+        let uiColor: UIColor = declaration.colors.test
+        let light = uiColor.resolvedColor(with: .init(userInterfaceStyle: .light))
+        let dark = uiColor.resolvedColor(with: .init(userInterfaceStyle: .dark))
 
+        #expect(color != .clear, "Correctly provided color should not be transparent.")
         #expect(light != .clear, "Correctly provided light color should not be transparent.")
         #expect(dark != .clear, "Correctly provided dark color should not be transparent.")
     }
@@ -150,5 +153,18 @@ struct ColorTests {
         #expect(Int(testColorUnspecifiedBlue * 255) == expectedLightBlue)
         #expect(Int(testColorLightBlue * 255) == expectedLightBlue)
         #expect(Int(testColorDarkBlue * 255) == expectedDarkBlue)
+    }
+
+    @Test
+    func useFallbackColor() throws {
+        let json = "{ \"colors\": { } }"
+
+        let declaration = try SnappThemingParser.parse(from: json)
+
+        let primaryUIColor: UIColor = declaration.colors.primary
+        let primaryColor: Color = declaration.colors.primary
+
+        #expect(primaryUIColor == SnappThemingParserConfiguration.default.fallbackColor.uiColor)
+        #expect(primaryColor == SnappThemingParserConfiguration.default.fallbackColor)
     }
 }
