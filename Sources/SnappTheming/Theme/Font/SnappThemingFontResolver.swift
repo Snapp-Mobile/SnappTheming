@@ -10,7 +10,7 @@ import SwiftUI
 import UIKit
 
 /// Resolves fonts for theming purposes, supporting custom and system fonts.
-public struct SnappThemingFontResolver: Sendable {
+public struct SnappThemingFontResolver: Sendable, Equatable {
     /// The font name of the font, if available.
     private let fontName: String?
 

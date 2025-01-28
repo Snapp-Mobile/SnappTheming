@@ -34,7 +34,7 @@ public struct SnappThemingAnimationRepresentation: Codable {
     }
 
     /// Enum defining the value for an animation.
-    public enum SnappThemingAnimationValue: Codable {
+    public enum SnappThemingAnimationValue: Codable, Equatable {
         /// Represents Lottie animation data.
         case lottie(Data)
 

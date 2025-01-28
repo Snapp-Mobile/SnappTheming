@@ -16,6 +16,7 @@ enum ShapeParserError: Error {
 
 @Suite
 struct ShapeTests {
+
     @Test
     func parseRectangle() throws {
         let json =
@@ -30,7 +31,8 @@ struct ShapeTests {
             """
 
         let declaration = try SnappThemingParser.parse(from: json)
-        switch declaration.shapes.rect?.shapeType {
+        let shapeRepresentation: SnappThemingShapeRepresentation = try #require(declaration.shapes.rect)
+        switch shapeRepresentation.shapeType {
         case .rectangle:
             #expect(Bool(true))
         default:
@@ -52,7 +54,8 @@ struct ShapeTests {
             """
 
         let declaration = try SnappThemingParser.parse(from: json)
-        switch declaration.shapes.ellipse?.shapeType {
+        let shapeRepresentation: SnappThemingShapeRepresentation = try #require(declaration.shapes.ellipse)
+        switch shapeRepresentation.shapeType {
         case .ellipse:
             #expect(Bool(true))
         default:
@@ -74,7 +77,8 @@ struct ShapeTests {
             """
 
         let declaration = try SnappThemingParser.parse(from: json)
-        switch declaration.shapes.circle?.shapeType {
+        let shapeRepresentation: SnappThemingShapeRepresentation = try #require(declaration.shapes.circle)
+        switch shapeRepresentation.shapeType {
         case .circle:
             #expect(Bool(true))
         default:
@@ -105,7 +109,9 @@ struct ShapeTests {
             """
 
         let declaration = try SnappThemingParser.parse(from: json)
-        switch (declaration.shapes.circularCapsule?.shapeType, declaration.shapes.continuousCapsule?.shapeType) {
+        let circularCapsuleShapeRepresentation: SnappThemingShapeRepresentation = try #require(declaration.shapes.circularCapsule)
+        let continuousCapsuleShapeRepresentation: SnappThemingShapeRepresentation = try #require(declaration.shapes.continuousCapsule)
+        switch (circularCapsuleShapeRepresentation.shapeType, continuousCapsuleShapeRepresentation.shapeType) {
         case (.capsule(let styleFirst), .capsule(let styleSecond)):
             #expect(
                 styleFirst == .circular

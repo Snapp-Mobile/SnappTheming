@@ -1,16 +1,18 @@
 //
-//  TypographyTest.swift
+//  TypographyTests.swift
 //  SnappTheming
 //
 //  Created by Oleksii Kolomiiets on 24.01.2025.
 //
 
+import SwiftUI
 import Testing
+import UIKit
 
 @testable import SnappTheming
 
 @Suite
-struct TypographyTest {
+struct TypographyTests {
     @Test(arguments: [
         """
         {
@@ -41,16 +43,19 @@ struct TypographyTest {
 
         let declaration = try SnappThemingParser.parse(
             from: json, using: configuration)
-        let typography: SnappThemingTypographyResolver = declaration.typography
-            .displayLarge
+        let typography: SnappThemingTypographyResolver = declaration.typography.displayLarge
+        let uiKITFont: UIFont = declaration.typography.displayLarge
+        let swiftUIFont: Font = declaration.typography.displayLarge
 
+        #expect(uiKITFont != .systemFont(ofSize: configuration.fallbackTypographyFontSize))
+        #expect(swiftUIFont != .system(size: configuration.fallbackTypographyFontSize))
         #expect(declaration.typography.cache.count == 1)
 
         let representation = try #require(
             declaration.typography.cache["displayLarge"]?.value)
         #expect(representation.fontSize.value == 60)
 
-        let uiFont = typography.uiFont
+        let uiFont: UIFont = typography.uiFont
         #expect(
             uiFont.pointSize != configuration.fallbackTypographyFontSize,
             "Parsed typography font size should not match the fallback one."
@@ -60,4 +65,12 @@ struct TypographyTest {
             "Parsed typography font size should be 60.")
     }
 
+    @Test
+    func useFallbackTypography() throws {
+        let declaration = try SnappThemingParser.parse(from: "{}")
+
+        let typography: SnappThemingTypographyResolver = declaration.typography.displayLarge
+
+        #expect(typography == .init(.system, fontSize: SnappThemingParserConfiguration.default.fallbackTypographyFontSize))
+    }
 }
