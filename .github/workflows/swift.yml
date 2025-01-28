@@ -65,7 +65,7 @@
 
             // Identify and delete previous bot comments
             const botComments = comments.data.filter(comment =>
-              comment.body.includes("### Code Coverage Report")
+              comment.body.includes("### 🛡️ Code Coverage Report")
             );
 
             for (const botComment of botComments) {
