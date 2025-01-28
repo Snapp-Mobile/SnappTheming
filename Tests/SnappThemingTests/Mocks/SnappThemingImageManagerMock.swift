@@ -6,39 +6,46 @@
 //
 
 import SnappTheming
-import UIKit
 import UniformTypeIdentifiers
 
-final class SnappThemingImageManagerMock: SnappThemingImageManager {
-    let cache: NSCache<NSString, UIImage>
-    private let accessQueue = DispatchQueue(label: "SharedCacheAccess")
-    let image: @Sendable (Data, UTType) -> UIImage?
+#if canImport(UIKit)
+    import UIKit
 
-    init(
-        cache: NSCache<NSString, UIImage> = .init(),
-        image: @escaping @Sendable (Data, UTType) -> UIImage? = { data, _ in UIImage(data: data) }
-    ) {
-        self.cache = cache
-        self.image = image
-    }
+    final class SnappThemingImageManagerMock: SnappThemingImageManager {
+        let cache: NSCache<NSString, UIImage>
+        private let accessQueue = DispatchQueue(label: "SharedCacheAccess")
+        let image: @Sendable (Data, UTType) -> UIImage?
 
-    func object(for key: String, of dataURI: SnappThemingDataURI) -> UIImage? {
-        accessQueue.sync {
-            cache.object(forKey: key as NSString)
+        init(
+            cache: NSCache<NSString, UIImage> = .init(),
+            image: @escaping @Sendable (Data, UTType) -> UIImage? = { data, _ in
+                UIImage(data: data)
+            }
+        ) {
+            self.cache = cache
+            self.image = image
+        }
+
+        func object(for key: String, of dataURI: SnappThemingDataURI)
+            -> UIImage?
+        {
+            accessQueue.sync {
+                cache.object(forKey: key as NSString)
+            }
+        }
+
+        func setObject(_ object: UIImage, for key: String) {
+            accessQueue.sync {
+                cache.setObject(object, forKey: key as NSString)
+            }
+        }
+
+        func store(_ dataURI: SnappThemingDataURI, for key: String) {
+            // pass
+        }
+
+        func image(from data: Data, of type: UTType) -> UIImage? {
+            image(data, type)
         }
     }
-
-    func setObject(_ object: UIImage, for key: String) {
-        accessQueue.sync {
-            cache.setObject(object, forKey: key as NSString)
-        }
-    }
-
-    func store(_ dataURI: SnappThemingDataURI, for key: String) {
-        // pass
-    }
-
-    func image(from data: Data, of type: UTType) -> UIImage? {
-        image(data, type)
-    }
-}
+#endif

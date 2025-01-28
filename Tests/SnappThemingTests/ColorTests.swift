@@ -7,9 +7,12 @@
 
 import SwiftUI
 import Testing
-import UIKit
 
 @testable import SnappTheming
+
+#if canImport(UIKit)
+    import UIKit
+#endif
 
 @Suite
 struct ColorTests {
@@ -30,13 +33,22 @@ struct ColorTests {
         let declaration = try SnappThemingParser.parse(from: json)
 
         let color: Color = declaration.colors.test
-        let uiColor: UIColor = declaration.colors.test
-        let light = uiColor.resolvedColor(with: .init(userInterfaceStyle: .light))
-        let dark = uiColor.resolvedColor(with: .init(userInterfaceStyle: .dark))
-
-        #expect(color != .clear, "Correctly provided color should not be transparent.")
-        #expect(light != .clear, "Correctly provided light color should not be transparent.")
-        #expect(dark != .clear, "Correctly provided dark color should not be transparent.")
+        #expect(
+            color != .clear,
+            "Correctly provided color should not be transparent.")
+        #if canImport(UIKit)
+            let uiColor: UIColor = declaration.colors.test
+            let light = uiColor.resolvedColor(
+                with: .init(userInterfaceStyle: .light))
+            let dark = uiColor.resolvedColor(
+                with: .init(userInterfaceStyle: .dark))
+            #expect(
+                light != .clear,
+                "Correctly provided light color should not be transparent.")
+            #expect(
+                dark != .clear,
+                "Correctly provided dark color should not be transparent.")
+        #endif
     }
 
     @Test(arguments: [
@@ -76,20 +88,26 @@ struct ColorTests {
     ) throws {
         // "AA" -> 170
         let expectedBlue = 170
-        let declaration = try SnappThemingParser.parse(from: json.0, using: .init(colorFormat: json.1))
+        let declaration = try SnappThemingParser.parse(
+            from: json.0, using: .init(colorFormat: json.1))
+        #if canImport(UIKit)
+            let testColor: UIColor = declaration.colors.test
+            let testColorUnspecified = testColor.resolvedColor(
+                with: .init(userInterfaceStyle: .unspecified))
+            let light = testColor.resolvedColor(
+                with: .init(userInterfaceStyle: .light))
+            let dark = testColor.resolvedColor(
+                with: .init(userInterfaceStyle: .dark))
 
-        let testColor: UIColor = declaration.colors.test
-        let testColorUnspecified = testColor.resolvedColor(with: .init(userInterfaceStyle: .unspecified))
-        let light = testColor.resolvedColor(with: .init(userInterfaceStyle: .light))
-        let dark = testColor.resolvedColor(with: .init(userInterfaceStyle: .dark))
+            let testColorUnspecifiedBlue = try #require(
+                testColorUnspecified.cgColor.components?[2])
+            let testColorLightBlue = try #require(light.cgColor.components?[2])
+            let testColorDarkBlue = try #require(dark.cgColor.components?[2])
 
-        let testColorUnspecifiedBlue = try #require(testColorUnspecified.cgColor.components?[2])
-        let testColorLightBlue = try #require(light.cgColor.components?[2])
-        let testColorDarkBlue = try #require(dark.cgColor.components?[2])
-
-        #expect(Int(testColorUnspecifiedBlue * 255) == expectedBlue)
-        #expect(Int(testColorLightBlue * 255) == expectedBlue)
-        #expect(Int(testColorDarkBlue * 255) == expectedBlue)
+            #expect(Int(testColorUnspecifiedBlue * 255) == expectedBlue)
+            #expect(Int(testColorLightBlue * 255) == expectedBlue)
+            #expect(Int(testColorDarkBlue * 255) == expectedBlue)
+        #endif
     }
 
     @Test
@@ -109,18 +127,24 @@ struct ColorTests {
         let expectedDarkBlue = 32
         let declaration = try SnappThemingParser.parse(from: json)
 
-        let testColor: UIColor = declaration.colors.primary
-        let testColorUnspecified = testColor.resolvedColor(with: .init(userInterfaceStyle: .unspecified))
-        let light = testColor.resolvedColor(with: .init(userInterfaceStyle: .light))
-        let dark = testColor.resolvedColor(with: .init(userInterfaceStyle: .dark))
+        #if canImport(UIKit)
+            let testColor: UIColor = declaration.colors.primary
+            let testColorUnspecified = testColor.resolvedColor(
+                with: .init(userInterfaceStyle: .unspecified))
+            let light = testColor.resolvedColor(
+                with: .init(userInterfaceStyle: .light))
+            let dark = testColor.resolvedColor(
+                with: .init(userInterfaceStyle: .dark))
 
-        let testColorUnspecifiedBlue = try #require(testColorUnspecified.cgColor.components?[2])
-        let testColorLightBlue = try #require(light.cgColor.components?[2])
-        let testColorDarkBlue = try #require(dark.cgColor.components?[2])
+            let testColorUnspecifiedBlue = try #require(
+                testColorUnspecified.cgColor.components?[2])
+            let testColorLightBlue = try #require(light.cgColor.components?[2])
+            let testColorDarkBlue = try #require(dark.cgColor.components?[2])
 
-        #expect(Int(testColorUnspecifiedBlue * 255) == expectedLightBlue)
-        #expect(Int(testColorLightBlue * 255) == expectedLightBlue)
-        #expect(Int(testColorDarkBlue * 255) == expectedDarkBlue)
+            #expect(Int(testColorUnspecifiedBlue * 255) == expectedLightBlue)
+            #expect(Int(testColorLightBlue * 255) == expectedLightBlue)
+            #expect(Int(testColorDarkBlue * 255) == expectedDarkBlue)
+        #endif
     }
 
     @Test
@@ -140,19 +164,24 @@ struct ColorTests {
         let expectedLightBlue = 74
         let expectedDarkBlue = 32
         let declaration = try SnappThemingParser.parse(from: json)
+        #if canImport(UIKit)
+            let testColor: UIColor = declaration.colors.secondary
+            let testColorUnspecified = testColor.resolvedColor(
+                with: .init(userInterfaceStyle: .unspecified))
+            let light = testColor.resolvedColor(
+                with: .init(userInterfaceStyle: .light))
+            let dark = testColor.resolvedColor(
+                with: .init(userInterfaceStyle: .dark))
 
-        let testColor: UIColor = declaration.colors.secondary
-        let testColorUnspecified = testColor.resolvedColor(with: .init(userInterfaceStyle: .unspecified))
-        let light = testColor.resolvedColor(with: .init(userInterfaceStyle: .light))
-        let dark = testColor.resolvedColor(with: .init(userInterfaceStyle: .dark))
+            let testColorUnspecifiedBlue = try #require(
+                testColorUnspecified.cgColor.components?[2])
+            let testColorLightBlue = try #require(light.cgColor.components?[2])
+            let testColorDarkBlue = try #require(dark.cgColor.components?[2])
 
-        let testColorUnspecifiedBlue = try #require(testColorUnspecified.cgColor.components?[2])
-        let testColorLightBlue = try #require(light.cgColor.components?[2])
-        let testColorDarkBlue = try #require(dark.cgColor.components?[2])
-
-        #expect(Int(testColorUnspecifiedBlue * 255) == expectedLightBlue)
-        #expect(Int(testColorLightBlue * 255) == expectedLightBlue)
-        #expect(Int(testColorDarkBlue * 255) == expectedDarkBlue)
+            #expect(Int(testColorUnspecifiedBlue * 255) == expectedLightBlue)
+            #expect(Int(testColorLightBlue * 255) == expectedLightBlue)
+            #expect(Int(testColorDarkBlue * 255) == expectedDarkBlue)
+        #endif
     }
 
     @Test
@@ -161,10 +190,16 @@ struct ColorTests {
 
         let declaration = try SnappThemingParser.parse(from: json)
 
-        let primaryUIColor: UIColor = declaration.colors.primary
         let primaryColor: Color = declaration.colors.primary
-
-        #expect(primaryUIColor == SnappThemingParserConfiguration.default.fallbackColor.uiColor)
-        #expect(primaryColor == SnappThemingParserConfiguration.default.fallbackColor)
+        #expect(
+            primaryColor
+                == SnappThemingParserConfiguration.default.fallbackColor)
+        #if canImport(UIKit)
+            let primaryUIColor: UIColor = declaration.colors.primary
+            #expect(
+                primaryUIColor
+                    == SnappThemingParserConfiguration.default.fallbackColor
+                    .uiColor)
+        #endif
     }
 }

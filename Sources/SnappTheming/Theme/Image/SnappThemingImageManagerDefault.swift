@@ -7,8 +7,10 @@
 
 import Foundation
 import OSLog
-import UIKit
 import UniformTypeIdentifiers
+#if canImport(UIKit)
+    import UIKit
+#endif
 
 /// An enumeration of possible errors in `SnappThemingImageManager`.
 private enum ImagesManagerError: Error {
@@ -29,7 +31,9 @@ extension FileManager: @retroactive @unchecked Sendable {}
 /// ### Note
 /// All file operations are confined to a dedicated directory to ensure security and prevent unauthorized file access.
 public final class SnappThemingImageManagerDefault: SnappThemingImageManager {
-    private let cache: NSCache<NSString, UIImage> = .init()
+    #if canImport(UIKit)
+        private let cache: NSCache<NSString, UIImage> = .init()
+    #endif
     private let fileManager: FileManager
     private let imageCacheRootURL: URL?
     private let imagesFolderName = "images"
@@ -63,87 +67,89 @@ public final class SnappThemingImageManagerDefault: SnappThemingImageManager {
         }
     }
 
-    /// Retrieves an image from the cache or storage.
-    ///
-    /// - Parameters:
-    ///   - key: The unique key identifying the image.
-    ///   - dataURI: A `SnappThemingDataURI` object containing the image data and MIME type.
-    /// - Returns: The retrieved `UIImage` or `nil` if not found.
-    public func object(
-        for key: String,
-        of dataURI: SnappThemingDataURI
-    ) -> UIImage? {
-        accessQueue.sync {
-            do {
-                if let cachedImage = cache.object(forKey: key as NSString) {
-                    return cachedImage
-                } else if let imageURL = imageCacheURL(for: key, of: dataURI),
-                    fileManager.fileExists(atPath: imageURL.path())
-                {
-                    let data = try Data(contentsOf: imageURL)
-                    return image(from: data, of: dataURI.type)
-                }
-                return nil
-            } catch let error {
-                os_log(.error, "Error getting object for key \"%@\": %@", key, error.localizedDescription)
-                return nil
-            }
-        }
-    }
-
-    /// Processes image `Data` and `UIType` to generate a corresponding `UIImage`.
-    ///
-    /// - Parameter data: Image `Data`.
-    /// - Parameter type: Image `UTType`.
-    /// - Returns: A `UIImage` created from the provided representation, or `nil` if the conversion fails.
-    ///
-    /// This function handles different image formats based on their type:
-    /// - For `.pdf`: Converts the PDF data to a `UIImage`.
-    /// - For `.png` or `.jpeg`: Converts the data directly to a `UIImage` using `UIImage(data:)`.
-    /// - For other formats: Delegates the conversion to registered external image processors.
-    ///
-    /// - Warning: Make sure to validate `data` in external processors to prevent potential issues with corrupted or malicious data.
-    /// See how register external processors ``SnappThemingImageProcessorsRegistry``.
-    public func image(from data: Data, of type: UTType) -> UIImage? {
-        let dataURI = "data:\(String(describing: type.preferredMIMEType));\(data.base64EncodedString())"
-
-        switch type {
-        case .pdf:
-            guard let pdfImage = UIImage.pdf(data: data) else {
-                os_log(.error, "Failed to process PDF data into an image. DataURI: %@.", dataURI)
-                return nil
-            }
-            return pdfImage
-
-        case .png, .jpeg:
-            guard let image = UIImage(data: data) else {
-                os_log(.error, "Failed to process PNG/JPEG data into image. DataURI: %@.", dataURI)
-                return nil
-            }
-            return image
-
-        default:
-            let processors = SnappThemingImageProcessorsRegistry.shared.registeredProcessors()
-            for processor in processors {
-                if let processedImage = processor.process(data, of: type) {
-                    return processedImage
+    #if canImport(UIKit)
+        /// Retrieves an image from the cache or storage.
+        ///
+        /// - Parameters:
+        ///   - key: The unique key identifying the image.
+        ///   - dataURI: A `SnappThemingDataURI` object containing the image data and MIME type.
+        /// - Returns: The retrieved `UIImage` or `nil` if not found.
+        public func object(
+            for key: String,
+            of dataURI: SnappThemingDataURI
+        ) -> UIImage? {
+            accessQueue.sync {
+                do {
+                    if let cachedImage = cache.object(forKey: key as NSString) {
+                        return cachedImage
+                    } else if let imageURL = imageCacheURL(for: key, of: dataURI),
+                        fileManager.fileExists(atPath: imageURL.path())
+                    {
+                        let data = try Data(contentsOf: imageURL)
+                        return image(from: data, of: dataURI.type)
+                    }
+                    return nil
+                } catch let error {
+                    os_log(.error, "Error getting object for key \"%@\": %@", key, error.localizedDescription)
+                    return nil
                 }
             }
-            os_log(.error, "No suitable processor found for dataURI: %@.", dataURI)
-            return nil
         }
-    }
 
-    /// Caches an image in memory.
-    ///
-    /// - Parameters:
-    ///   - object: The `UIImage` to cache.
-    ///   - key: The unique key associated with the image.
-    public func setObject(_ object: UIImage, for key: String) {
-        accessQueue.sync {
-            cache.setObject(object, forKey: key as NSString)
+        /// Processes image `Data` and `UIType` to generate a corresponding `UIImage`.
+        ///
+        /// - Parameter data: Image `Data`.
+        /// - Parameter type: Image `UTType`.
+        /// - Returns: A `UIImage` created from the provided representation, or `nil` if the conversion fails.
+        ///
+        /// This function handles different image formats based on their type:
+        /// - For `.pdf`: Converts the PDF data to a `UIImage`.
+        /// - For `.png` or `.jpeg`: Converts the data directly to a `UIImage` using `UIImage(data:)`.
+        /// - For other formats: Delegates the conversion to registered external image processors.
+        ///
+        /// - Warning: Make sure to validate `data` in external processors to prevent potential issues with corrupted or malicious data.
+        /// See how register external processors ``SnappThemingImageProcessorsRegistry``.
+        public func image(from data: Data, of type: UTType) -> UIImage? {
+            let dataURI = "data:\(String(describing: type.preferredMIMEType));\(data.base64EncodedString())"
+
+            switch type {
+            case .pdf:
+                guard let pdfImage = UIImage.pdf(data: data) else {
+                    os_log(.error, "Failed to process PDF data into an image. DataURI: %@.", dataURI)
+                    return nil
+                }
+                return pdfImage
+
+            case .png, .jpeg:
+                guard let image = UIImage(data: data) else {
+                    os_log(.error, "Failed to process PNG/JPEG data into image. DataURI: %@.", dataURI)
+                    return nil
+                }
+                return image
+
+            default:
+                let processors = SnappThemingImageProcessorsRegistry.shared.registeredProcessors()
+                for processor in processors {
+                    if let processedImage = processor.process(data, of: type) {
+                        return processedImage
+                    }
+                }
+                os_log(.error, "No suitable processor found for dataURI: %@.", dataURI)
+                return nil
+            }
         }
-    }
+
+        /// Caches an image in memory.
+        ///
+        /// - Parameters:
+        ///   - object: The `UIImage` to cache.
+        ///   - key: The unique key associated with the image.
+        public func setObject(_ object: UIImage, for key: String) {
+            accessQueue.sync {
+                cache.setObject(object, forKey: key as NSString)
+            }
+        }
+    #endif
 
     /// Stores an image persistently on disk.
     ///

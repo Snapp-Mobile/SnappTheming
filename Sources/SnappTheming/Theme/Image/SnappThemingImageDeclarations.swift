@@ -47,15 +47,18 @@ where DeclaredValue == SnappThemingDataURI, Configuration == SnappThemingImageCo
             return configuration.fallbackImage
         }
 
-        let cachedImage = configuration.imagesManager.object(for: keyPath, of: representation)
-        let uiImage: UIImage? =
-            cachedImage ?? configuration.imagesManager.image(from: representation.data, of: representation.type)
+        #if canImport(UIKit)
+            let cachedImage = configuration.imagesManager.object(for: keyPath, of: representation)
 
-        if let uiImage {
-            configuration.imagesManager.setObject(uiImage, for: keyPath)
-            configuration.imagesManager.store(representation, for: keyPath)
-            return Image(uiImage: uiImage)
-        }
+            let uiImage: UIImage? =
+                cachedImage ?? configuration.imagesManager.image(from: representation.data, of: representation.type)
+
+            if let uiImage {
+                configuration.imagesManager.setObject(uiImage, for: keyPath)
+                configuration.imagesManager.store(representation, for: keyPath)
+                return Image(uiImage: uiImage)
+            }
+        #endif
 
         return configuration.fallbackImage
     }

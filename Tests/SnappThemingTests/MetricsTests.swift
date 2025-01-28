@@ -5,10 +5,12 @@
 //  Created by Ilian Konchev on 13.01.25.
 //
 
+import Foundation
 import Testing
-import UIKit
-
 @testable import SnappTheming
+#if canImport(UIKit)
+    import UIKit
+#endif
 
 @Suite
 struct MetricsTests {

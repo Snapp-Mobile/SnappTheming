@@ -6,8 +6,6 @@
 //
 
 import CoreText
-import SwiftUI
-import UIKit
 
 public typealias SnappThemingFontDeclarations = SnappThemingDeclarations<SnappThemingFontInformation, Void>
 

@@ -44,11 +44,14 @@ struct ButtonStyleTests {
             "Parsed button style shape should not match the fallback shape."
         )
         #expect(shape == .circle, "Parsed button style shape should be equal to circle.")
-        #expect(
-            typography.uiFont.pointSize != configuration.fallbackButtonStyle.typography.uiFont.pointSize,
-            "Parsed button style typography should not match the fallback typography."
-        )
-        #expect(typography.uiFont.pointSize == 16, "Parsed button style typography font size should be equal to 16.")
+
+        #if canImport(UIKit)
+            #expect(
+                typography.uiFont.pointSize != configuration.fallbackButtonStyle.typography.uiFont.pointSize,
+                "Parsed button style typography should not match the fallback typography."
+            )
+            #expect(typography.uiFont.pointSize == 16, "Parsed button style typography font size should be equal to 16.")
+        #endif
     }
 
     @Test(arguments: brokenAliasesJSONs)
@@ -63,12 +66,14 @@ struct ButtonStyleTests {
         )
         #expect(borderWidth == 777, "Parsed button style border width should fallback to 777.")
 
-        let typography = buttonStyleResolver.typography
-        #expect(
-            typography.uiFont.pointSize == configuration.fallbackButtonStyle.typography.uiFont.pointSize,
-            "Parsed button style typography should match the fallback typography."
-        )
-        #expect(typography.uiFont.pointSize == 99, "Parsed button style typography font size should fallback to 99.")
+        #if canImport(UIKit)
+            let typography = buttonStyleResolver.typography
+            #expect(
+                typography.uiFont.pointSize == configuration.fallbackButtonStyle.typography.uiFont.pointSize,
+                "Parsed button style typography should match the fallback typography."
+            )
+            #expect(typography.uiFont.pointSize == 99, "Parsed button style typography font size should fallback to 99.")
+        #endif
 
         let surfaceColor = buttonStyleResolver.surfaceColor
         #expect(
