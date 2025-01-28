@@ -35,6 +35,9 @@
             -skipMacroValidation \
             -quiet
 
+         echo "Code Coverage:"
+         xcrun xccov view --report --only-targets "${{env.COVERAGE_REPORT_PATH}}"
+
      - name: Comment on Pull Request
        if: github.event_name == 'pull_request'
        uses: actions/github-script@v6
@@ -90,9 +93,3 @@
               repo: context.repo.repo,
               body: newComment,
             });
-
-#     - name: Upload coverage report to Codecov
-#       uses: codecov/codecov-action@v2
-#       with:
-#         file: ${{env.COVERAGE_REPORT_PATH}}/CodeCoverage.json
-#         token: ${{ secrets.CODECOV_TOKEN }} # TODO: add CODECOV_TOKEN to secrets
