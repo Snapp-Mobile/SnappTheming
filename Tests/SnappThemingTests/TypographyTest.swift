@@ -65,4 +65,12 @@ struct TypographyTest {
             "Parsed typography font size should be 60.")
     }
 
+    @Test
+    func useFallbackTypography() throws {
+        let declaration = try SnappThemingParser.parse(from: "{}")
+
+        let typography: SnappThemingTypographyResolver = declaration.typography.displayLarge
+
+        #expect(typography == .init(.system, fontSize: SnappThemingParserConfiguration.default.fallbackTypographyFontSize))
+    }
 }
