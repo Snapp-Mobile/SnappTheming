@@ -46,15 +46,16 @@ struct ToggleStyleTests {
             from: json, using: configuration)
         let _ = try #require(declaration.toggleStyle.cache["primary"]?.value)
         let toggleStyle: SnappThemingToggleStyleResolver = declaration.toggleStyle.primary
+        let toggleStyleFallbackConfiguration = declaration.toggleStyle.configuration
 
         #expect(declaration.toggleStyle.cache.count == 1)
 
         let tintColor: Color = toggleStyle.tintColor
-        #expect(tintColor != configuration.fallbackColor)
+        #expect(tintColor != toggleStyleFallbackConfiguration.fallbackTintColor)
         #expect(tintColor == Color(hex: "#C22973"))
 
         let disabledTintColor: Color = toggleStyle.disabledTintColor
-        #expect(disabledTintColor != configuration.fallbackColor)
+        #expect(disabledTintColor != toggleStyleFallbackConfiguration.fallbackDisabledTintColor)
         #expect(disabledTintColor == Color(hex: "#7A214B"))
     }
 
@@ -93,11 +94,11 @@ struct ToggleStyleTests {
         #expect(declaration.toggleStyle.cache.count == 1)
 
         let toggleStyle: SnappThemingToggleStyleResolver = declaration.toggleStyle.primary
-        let fallbackConfiguration = declaration.toggleStyle.configuration
+        let toggleStyleFallbackConfiguration = declaration.toggleStyle.configuration
         let tintColor: Color = toggleStyle.tintColor
-        #expect(tintColor == fallbackConfiguration.fallbackTintColor)
+        #expect(tintColor == toggleStyleFallbackConfiguration.fallbackTintColor)
         let disabledTintColor: Color = toggleStyle.disabledTintColor
-        #expect(disabledTintColor == fallbackConfiguration.fallbackTintColor)
+        #expect(disabledTintColor == toggleStyleFallbackConfiguration.fallbackTintColor)
     }
 
     @Test()

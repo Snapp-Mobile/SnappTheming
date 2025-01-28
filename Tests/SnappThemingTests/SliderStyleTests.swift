@@ -69,30 +69,31 @@ struct SliderStyleTests {
             from: json, using: configuration)
         let _ = try #require(declaration.sliderStyle.cache["primary"]?.value)
         let sliderStyle: SnappThemingSliderStyleResolver = declaration.sliderStyle.primary
+        let sliderStyleFallbackConfiguration = declaration.sliderStyle.configuration
 
         #expect(declaration.sliderStyle.cache.count == 1)
 
         let minimumTrackTintColor: Color = sliderStyle.minimumTrackTintColor
-        #expect(minimumTrackTintColor != configuration.fallbackColor)
+        #expect(minimumTrackTintColor != sliderStyleFallbackConfiguration.fallbackMinimumTrackTintColor)
         #expect(minimumTrackTintColor == Color(hex: "#ABCD12"))
 
         let minimumTrackTintColorSecondary: Color = sliderStyle.minimumTrackTintColorSecondary
-        #expect(minimumTrackTintColorSecondary != configuration.fallbackColor)
+        #expect(minimumTrackTintColorSecondary != sliderStyleFallbackConfiguration.fallbackMinimumTrackTintColor)
         #expect(minimumTrackTintColorSecondary == Color(hex: "#616161"))
 
         let maximumTrackTintColor: Color = sliderStyle.maximumTrackTintColor
-        #expect(maximumTrackTintColor != configuration.fallbackColor)
+        #expect(maximumTrackTintColor != sliderStyleFallbackConfiguration.fallbackMaximumTrackTintColor)
         #expect(maximumTrackTintColor == Color(hex: "#FFFFFF0F"))
 
         let tickMarkColor: Color = sliderStyle.tickMarkColor
-        #expect(tickMarkColor != configuration.fallbackColor)
+        #expect(tickMarkColor != sliderStyleFallbackConfiguration.fallbackTickMarkColor)
         #expect(tickMarkColor == Color(hex: "#FFFFFF80"))
 
         // Header Typography
         let headerTypography = sliderStyle.headerTypography
         #expect(headerTypography.uiFont != nil)
         #expect(
-            headerTypography.uiFont.pointSize != configuration.fallbackTypographyFontSize,
+            headerTypography.uiFont.pointSize != sliderStyleFallbackConfiguration.fallbackFontSize,
             "Parsed typography font size should not match the fallback one."
         )
         #expect(headerTypography.uiFont.pointSize == 34.0, "Header typography font size should be 34.")
@@ -102,7 +103,7 @@ struct SliderStyleTests {
         let tickMarkTypography = sliderStyle.tickMarkTypography
         #expect(tickMarkTypography.uiFont != nil)
         #expect(
-            tickMarkTypography.uiFont.pointSize != configuration.fallbackTypographyFontSize,
+            tickMarkTypography.uiFont.pointSize != sliderStyleFallbackConfiguration.fallbackFontSize,
             "Parsed typography font size should not match the fallback one."
         )
         #expect(tickMarkTypography.uiFont.pointSize == 22.0, "Header typography font size should be 22.")
@@ -152,23 +153,24 @@ struct SliderStyleTests {
             from: json, using: configuration)
         let _ = try #require(declaration.sliderStyle.cache["primary"]?.value)
         let sliderStyle: SnappThemingSliderStyleResolver = declaration.sliderStyle.primary
+        let sliderStyleFallbackConfiguration = declaration.sliderStyle.configuration
 
         #expect(declaration.sliderStyle.cache.count == 1)
 
         let minimumTrackTintColor: Color = sliderStyle.minimumTrackTintColor
-        #expect(minimumTrackTintColor == configuration.fallbackColor)
+        #expect(minimumTrackTintColor == sliderStyleFallbackConfiguration.fallbackMinimumTrackTintColor)
         let minimumTrackTintColorSecondary: Color = sliderStyle.minimumTrackTintColorSecondary
-        #expect(minimumTrackTintColorSecondary == configuration.fallbackColor)
+        #expect(minimumTrackTintColorSecondary == sliderStyleFallbackConfiguration.fallbackMinimumTrackTintColor)
         let maximumTrackTintColor: Color = sliderStyle.maximumTrackTintColor
-        #expect(maximumTrackTintColor == configuration.fallbackColor)
+        #expect(maximumTrackTintColor == sliderStyleFallbackConfiguration.fallbackMaximumTrackTintColor)
         let tickMarkColor: Color = sliderStyle.tickMarkColor
-        #expect(tickMarkColor == configuration.fallbackColor)
+        #expect(tickMarkColor == sliderStyleFallbackConfiguration.fallbackTickMarkColor)
 
         // Header Typography
         let headerTypography = sliderStyle.headerTypography
         #expect(headerTypography.uiFont != nil)
         #expect(
-            headerTypography.uiFont.pointSize == configuration.fallbackTypographyFontSize,
+            headerTypography.uiFont.pointSize == sliderStyleFallbackConfiguration.fallbackFontSize,
             "Parsed typography font size should match the fallback one."
         )
         #expect(headerTypography.uiFont.pointSize == 0.0, "Header typography font size should fall to 0.")
@@ -178,7 +180,7 @@ struct SliderStyleTests {
         let tickMarkTypography = sliderStyle.tickMarkTypography
         #expect(tickMarkTypography.uiFont != nil)
         #expect(
-            tickMarkTypography.uiFont.pointSize == configuration.fallbackTypographyFontSize,
+            tickMarkTypography.uiFont.pointSize == sliderStyleFallbackConfiguration.fallbackFontSize,
             "Parsed typography font size should match the fallback one."
         )
         #expect(tickMarkTypography.uiFont.pointSize == 0.0, "Tick Mark typography font size should fall to 0.")
