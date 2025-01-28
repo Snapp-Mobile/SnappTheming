@@ -35,9 +35,10 @@ where
                 fallbackSurfaceColor: configuration.fallbackButtonStyle.surfaceColor,
                 fallbackBorderColor: configuration.fallbackButtonStyle.borderColor,
                 fallbackBorderWidth: configuration.fallbackButtonStyle.borderWidth,
+                fallbackInnerPadding: configuration.fallbackButtonStyle.borderWidth,
                 fallbackShape: configuration.fallbackButtonStyle.shape,
-                fallbackSelectedSegment: configuration.fallbackButtonStyle,
-                fallbackNormalSegment: configuration.fallbackButtonStyle,
+                fallbackSelectedSegmentButtonStyle: configuration.fallbackButtonStyle,
+                fallbackNormalSegmentButtonStyle: configuration.fallbackButtonStyle,
                 metrics: metrics,
                 fonts: fonts,
                 colors: colors,
@@ -75,8 +76,8 @@ where
                 .resolver(using: configuration)
         else {
             return SnappThemingSegmentControlStyleResolver(
-                selectedButtonStyle: configuration.fallbackSelectedSegment,
-                normalButtonStyle: configuration.fallbackNormalSegment,
+                selectedButtonStyle: configuration.fallbackSelectedSegmentButtonStyle,
+                normalButtonStyle: configuration.fallbackNormalSegmentButtonStyle,
                 surfaceColor: configuration.fallbackSurfaceColor,
                 borderColor: configuration.fallbackBorderColor,
                 borderWidth: configuration.fallbackBorderWidth,
