@@ -154,4 +154,17 @@ struct ColorTests {
         #expect(Int(testColorLightBlue * 255) == expectedLightBlue)
         #expect(Int(testColorDarkBlue * 255) == expectedDarkBlue)
     }
+
+    @Test
+    func useFallbackColor() throws {
+        let json = "{ \"colors\": { } }"
+
+        let declaration = try SnappThemingParser.parse(from: json)
+
+        let primaryUIColor: UIColor = declaration.colors.primary
+        let primaryColor: Color = declaration.colors.primary
+
+        #expect(primaryUIColor == SnappThemingParserConfiguration.default.fallbackColor.uiColor)
+        #expect(primaryColor == SnappThemingParserConfiguration.default.fallbackColor)
+    }
 }
