@@ -29,6 +29,16 @@ struct FontsTests {
         #expect(fontInformation.source.type == .truetypeTTFFont)
         #expect(fontResolver != .system)
     }
+
+    @Test
+    func useFallbackFont() throws {
+        let declaration = try SnappThemingParser.parse(from: "{}")
+        let fontInformation: SnappThemingFontInformation? = declaration.fonts[dynamicMember: "Roboto-Regular"]
+        let fontResolver: SnappThemingFontResolver = declaration.fonts[dynamicMember: "Roboto-Regular"]
+
+        #expect(fontInformation == nil)
+        #expect(fontResolver == .system)
+    }
 }
 
 extension UTType {
