@@ -1,5 +1,5 @@
 //
-//  TypographyTest.swift
+//  TypographyTests.swift
 //  SnappTheming
 //
 //  Created by Oleksii Kolomiiets on 24.01.2025.
@@ -12,7 +12,7 @@ import UIKit
 @testable import SnappTheming
 
 @Suite
-struct TypographyTest {
+struct TypographyTests {
     @Test(arguments: [
         """
         {
