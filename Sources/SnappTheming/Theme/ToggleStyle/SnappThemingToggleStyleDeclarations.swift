@@ -43,7 +43,12 @@ where
             let resolvedDisabledTintColor = configuration.colors
                 .resolver.resolve(representation.disabledTintColor)?
                 .color(using: configuration.colorFormat)
-        else { return .empty() }
+        else {
+            return SnappThemingToggleStyleResolver(
+                tintColor: configuration.fallbackTintColor,
+                disabledTintColor: configuration.fallbackDisabledTintColor
+            )
+        }
 
         return SnappThemingToggleStyleResolver(
             tintColor: resolvedTintColor,
