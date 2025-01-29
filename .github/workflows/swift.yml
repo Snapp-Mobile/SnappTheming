@@ -33,25 +33,27 @@
 
      - name: Swift Test
        run: |
+          mkdir -p .build/debug
           export LLVM_PROFILE_FILE="$(pwd)/.build/debug/code-%p.profraw"
-          swift test --enable-code-coverage
+          swift test --enable-code-coverage --verbose
 
+     - name: Merge Coverage Data
+       run: |
+         xcrun llvm-profdata merge -sparse .build/debug/code-*.profraw -o .build/debug/default.profdata
 
      - name: Extract Code Coverage
        run: |
-         COVERAGE_FILE=$(find .build -name "default.profdata" | head -n 1)
-         if [ -z "$COVERAGE_FILE" ]; then
-           echo "⚠️ Error: Coverage data not found!"
-           exit 1
-         fi
-         TARGET_EXECUTABLE=$(find .build/debug -type f -perm +111 | grep Tests || true)
+         TARGET_EXECUTABLE=$(find .build/debug -type f -perm +111 | grep -E     "(Tests|xctest|test)" || true)
+
          if [ -z "$TARGET_EXECUTABLE" ]; then
            echo "⚠️ Error: Test executable not found!"
            exit 1
          fi
-         xcrun llvm-cov report $TARGET_EXECUTABLE \
-           -instr-profile "$COVERAGE_FILE" \
+
+         xcrun llvm-cov report "$TARGET_EXECUTABLE" \
+           -instr-profile .build/debug/default.profdata \
            > coverage-report.txt
+
          tail -n 5 coverage-report.txt > pr_coverage_summary.txt
 
 #     - name: Test
@@ -71,7 +73,7 @@
        with:
          script: |
             const fs = require('fs');
-            const coverageOutput = fs.readFileSync('pr_coverage_summary.txt', 'utf8').trim();
+            const coverageOutput = fs.readFileSync('pr_coverage_summary.txt', 'utf8');
 
             const newComment = `
             ### 🛡️ Code Coverage Report
