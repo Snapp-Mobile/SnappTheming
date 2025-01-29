@@ -28,14 +28,14 @@ let package = Package(
             ]),
         .testTarget(
             name: "SnappThemingTests",
-            dependencies: [
-                "SnappTheming",
-            ],
+            dependencies: ["SnappTheming"],
             resources: [
                 .copy("Resources/fonts.json")
             ]
         ),
         .target(name: "SnappThemingSwiftUIHelpers"),
-        .plugin(name: "SwiftFormatPlugin", capability: .buildTool(), path: "Plugins/SwiftFormatPlugin"),
+        .plugin(
+            name: "SwiftFormatPlugin", capability: .buildTool(),
+            path: "Plugins/SwiftFormatPlugin"),
     ]
 )
