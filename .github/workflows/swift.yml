@@ -27,6 +27,7 @@
 
      - name: Run Swift Tests with Coverage
        run: |
+         swift test --enable-swift-testing --enable-code-coverage
          CODECOV_PATH=$(swift test --enable-code-coverage --show-codecov-path)
          echo $CODECOV_PATH
          
@@ -37,10 +38,6 @@
 
          # Save coverage as an environment variable
          echo "OVERALL_COVERAGE=$OVERALL_COVERAGE" >> $GITHUB_ENV
-
-     - name: Swift Test
-       run: |
-         swift test --enable-swift-testing --enable-code-coverage
 
      - name: Comment on Pull Request
        if: github.event_name == 'pull_request'
