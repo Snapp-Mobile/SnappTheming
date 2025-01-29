@@ -18,9 +18,6 @@ let package = Package(
             name: "SnappThemingSwiftUIHelpers",
             targets: ["SnappThemingSwiftUIHelpers"]),
     ],
-    dependencies: [
-        .package(url: "https://github.com/swiftlang/swift-testing", revision: "18c42c19cac3fafd61cab1156d4088664b7424ae")
-    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
@@ -33,7 +30,6 @@ let package = Package(
             name: "SnappThemingTests",
             dependencies: [
                 "SnappTheming",
-                .product(name: "Testing", package: "swift-testing"),
             ],
             resources: [
                 .copy("Resources/fonts.json")
