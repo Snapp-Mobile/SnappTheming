@@ -33,35 +33,18 @@
 
      - name: Run Swift Tests with Coverage
        run: |
-         CODECOV_PATH=$(swift test --enable-code-coverage --show-codecov-path | tail -n 1)
-         echo "CODECOV_PATH=$CODECOV_PATH" >> $GITHUB_ENV
+         swift test --enable-code-coverage --show-codecov-path
 
      - name: Extract Overall Code Coverage
        run: |
-         if [ ! -f "$CODECOV_PATH" ]; then
-           echo "❌ Code coverage file not found!"
-           exit 1
-         fi
-     
          # Extract the total code coverage percentage
-         OVERALL_COVERAGE=$(jq '.data.totals.lines.percent' "$CODECOV_PATH")
+         OVERALL_COVERAGE=$(jq '.data.totals.lines.percent' "/Users/runner/work/SnappTheming/SnappTheming/.build/arm64-apple-macosx/debug/codecov/SnappTheming.json")
      
          echo "🛡️ Overall Code Coverage: ${OVERALL_COVERAGE}%"
          echo "Overall Coverage: ${OVERALL_COVERAGE}%" > pr_coverage_summary.txt
      
          # Save coverage as an environment variable for later use
          echo "OVERALL_COVERAGE=$OVERALL_COVERAGE" >> $GITHUB_ENV
-
-#     - name: Test
-#       run: |
-#         xcodebuild test \
-#            -workspace "${{env.WORKSPACE_PATH}}" \
-#            -scheme "${{env.SCHEME}}" \
-#            -destination "${{env.DESTINATION}}" \
-#            -enableCodeCoverage YES \
-#            -resultBundlePath '${{env.COVERAGE_REPORT_PATH}}' \
-#            -skipMacroValidation \
-#            -quiet
 
      - name: Comment on Pull Request
        if: github.event_name == 'pull_request'
