@@ -30,6 +30,8 @@
          swift test -v --enable-swift-testing --enable-code-coverage
          OVERALL_COVERAGE=$(cat /Users/runner/work/SnappTheming/SnappTheming/.build/arm64-apple-macosx/debug/codecov/SnappTheming.json | jq '.data[0].totals.lines.percent')
          echo "Overall Code Coverage: ${OVERALL_COVERAGE}%"
+         xcrun xccov view --report --json --files-for-target SnappTheming ./build.xcresult > coverage.json
+         echo coverage.json
 
 #     - name: Merge Coverage Data
 #       run: |
