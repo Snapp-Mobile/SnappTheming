@@ -26,11 +26,7 @@
        run: sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer
 
      - name: Swift Test
-       run: |
-          swift test \
-          --enable-code-coverage \
-          --enable-swift-testing \
-          --show-codecov-path
+       run: swift test -v --enable-swift-testing --enable-code-coverage --show-codecov-path
 
 #     - name: Merge Coverage Data
 #       run: |
