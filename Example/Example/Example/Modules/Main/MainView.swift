@@ -11,7 +11,7 @@ import SnappTheming
 import SwiftUI
 
 enum Tab {
-    case json, preview, tokens
+    case json, preview, tokens, banking
 
     @ViewBuilder
     var label: some View {
@@ -22,6 +22,8 @@ enum Tab {
             Label(title, systemImage: "theatermask.and.paintbrush")
         case .tokens:
             Label(title, systemImage: "swatchpalette.fill")
+        case .banking:
+            Label(title, systemImage: "wallet.bifold.fill")
         }
     }
 
@@ -33,6 +35,8 @@ enum Tab {
             "Preview"
         case .tokens:
             "Tokens"
+        case .banking:
+            "Banking"
         }
     }
 }
@@ -47,14 +51,19 @@ struct MainView: View {
 
     init(json: String, configuration: SnappThemingParserConfiguration) {
         do {
-            let declaration = try SnappThemingParser.parse(from: json, using: configuration)
+            let declaration = try SnappThemingParser.parse(
+                from: json, using: configuration)
             _configuration = State(initialValue: configuration)
             _declaration = State(initialValue: declaration)
-            let encodedOutput = try SnappThemingParser.encode(declaration, using: .init(encodeImages: true))
-            _encoded = State(initialValue: String(data: encodedOutput, encoding: .utf8) ?? "Error")
+            let encodedOutput = try SnappThemingParser.encode(
+                declaration, using: .init(encodeImages: true))
+            _encoded = State(
+                initialValue: String(data: encodedOutput, encoding: .utf8)
+                    ?? "Error")
 
             let fontManager = SnappThemingFontManagerDefault(
-                themeCacheRootURL: configuration.themeCacheRootURL, themeName: configuration.themeName)
+                themeCacheRootURL: configuration.themeCacheRootURL,
+                themeName: configuration.themeName)
             fontManager.registerFonts(declaration.fontInformation)
         } catch let error {
             os_log(.error, "Error: %@", error.localizedDescription)
@@ -62,23 +71,30 @@ struct MainView: View {
     }
 
     private func changeTheme(to theme: AvailableTheme) {
-        guard let json = theme.json, let oldConfiguration = configuration, let oldDeclaration = declaration else {
+        guard let json = theme.json, let oldConfiguration = configuration,
+            let oldDeclaration = declaration
+        else {
             return
         }
         let configuration = theme.configuration
         do {
             let deregisterFontManager = SnappThemingFontManagerDefault(
-                themeCacheRootURL: oldConfiguration.themeCacheRootURL, themeName: oldConfiguration.themeName)
-            deregisterFontManager.unregisterFonts(oldDeclaration.fontInformation)
+                themeCacheRootURL: oldConfiguration.themeCacheRootURL,
+                themeName: oldConfiguration.themeName)
+            deregisterFontManager.unregisterFonts(
+                oldDeclaration.fontInformation)
 
-            let declaration = try SnappThemingParser.parse(from: json, using: configuration)
+            let declaration = try SnappThemingParser.parse(
+                from: json, using: configuration)
             self.configuration = configuration
             self.declaration = declaration
-            let encodedOutput = try SnappThemingParser.encode(declaration, using: .init(encodeImages: true))
+            let encodedOutput = try SnappThemingParser.encode(
+                declaration, using: .init(encodeImages: true))
             encoded = String(data: encodedOutput, encoding: .utf8) ?? "Error"
 
             let fontManager = SnappThemingFontManagerDefault(
-                themeCacheRootURL: configuration.themeCacheRootURL, themeName: configuration.themeName)
+                themeCacheRootURL: configuration.themeCacheRootURL,
+                themeName: configuration.themeName)
             fontManager.registerFonts(declaration.fontInformation)
         } catch let error {
             os_log(.error, "Error: %@", error.localizedDescription)
@@ -86,118 +102,90 @@ struct MainView: View {
     }
 
     var body: some View {
-        NavigationStack(path: $destinations) {
-            VStack {
-                if let declaration {
-                    TabView(selection: $selectedTab) {
-                        ThemeViewer(declaration: declaration)
-                            .tabItem { Tab.tokens.label }
-                            .tag(Tab.tokens)
-
-                        ThemedView(declaration: declaration)
-                            .tabItem { Tab.preview.label }
-                            .tag(Tab.preview)
-
-                        #if !os(tvOS) && !os(watchOS)
-                            TextEditor(text: .constant(encoded))
-                                .font(.system(size: 12.0, design: .monospaced))
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                .padding()
-                                .tabItem { Tab.json.label }
-                                .tag(Tab.json)
-                        #endif
-                    }
-                    #if os(tvOS)
-                        .tabViewStyle(.sidebarAdaptable)
-                    #endif
-                    .navigationTitle(selectedTab.title)
-                } else {
-                    Text("Theme declaration is invalid.")
-                }
-            }
-            .navigationDestination(for: ThemeDestination.self) { destination in
-                if let declaration {
-                    switch destination {
-                    case .buttons:
-                        ButtonsViewer(declarations: declaration.buttonStyles)
-                    case .colors:
-                        ColorsViewer(declarations: declaration.colors)
-                    case .fonts:
-                        FontsViewer(declarations: declaration.fonts)
-                    case .images:
-                        ImagesViewer(declarations: declaration.images)
-                    case .metrics:
-                        MetricsViewer(declarations: declaration.metrics)
-                    case .typography:
-                        TypographyViewer(declarations: declaration.typography)
-                    case .gradients:
-                        GradientsViewer(declarations: declaration.gradients)
-                    case .shapes:
-                        ShapesViewer(declarations: declaration.shapes)
-                    case .animations:
-                        #if !os(watchOS)
-                            AnimationsViewer(declarations: declaration.animations)
-                        #else
-                            Text("Lottie animations are not supported on watchOS (for now)")
-                        #endif
-                    }
-                } else {
-                    EmptyView()
-                }
-            }
-            .toolbar {
-                #if os(watchOS) || os(tvOS)
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button(
-                            action: {
-                                showsThemeSwitcher = true
-                            },
-                            label: {
-                                Image(systemName: "slider.horizontal.3")
-                                    .focusable()
+        VStack {
+            if let declaration {
+                TabView(selection: $selectedTab) {
+                    NavigationStack(path: $destinations) {
+                        themeToolbar {
+                            ThemeViewer(declaration: declaration)
+                        }
+                        .navigationDestination(for: ThemeDestination.self) { destination in
+                            switch destination {
+                            case .buttons:
+                                ButtonsViewer(declarations: declaration.buttonStyles)
+                            case .colors:
+                                ColorsViewer(declarations: declaration.colors)
+                            case .fonts:
+                                FontsViewer(declarations: declaration.fonts)
+                            case .images:
+                                ImagesViewer(declarations: declaration.images)
+                            case .metrics:
+                                MetricsViewer(declarations: declaration.metrics)
+                            case .typography:
+                                TypographyViewer(declarations: declaration.typography)
+                            case .gradients:
+                                GradientsViewer(declarations: declaration.gradients)
+                            case .shapes:
+                                ShapesViewer(declarations: declaration.shapes)
+                            case .animations:
+                                AnimationsViewer(declarations: declaration.animations)
                             }
-                        )
-                        .buttonStyle(.plain)
+                        }
                     }
-                #else
-                    ToolbarItem(placement: .confirmationAction) {
-                        Menu(
-                            content: {
-                                ForEach(AvailableTheme.allCases) { theme in
-                                    Button {
-                                        changeTheme(to: theme)
-                                    } label: {
-                                        Label(
-                                            theme.description,
-                                            systemImage: theme.configuration.themeName == configuration?.themeName ?? ""
-                                                ? "paintbrush.fill" : "paintbrush"
-                                        )
-                                    }
-                                }
-                            },
-                            label: {
-                                Image(systemName: "slider.horizontal.3")
-                            })
+                    .tabItem { Tab.tokens.label }
+                    .tag(Tab.tokens)
+
+                    themeToolbar {
+                        ThemedView(declaration: declaration)
                     }
-                #endif
-            }
-            .confirmationDialog("Pick a theme", isPresented: $showsThemeSwitcher) {
-                ForEach(AvailableTheme.allCases) { theme in
-                    Button(
-                        action: {
-                            changeTheme(to: theme)
-                        },
-                        label: {
-                            Label(
-                                theme.description,
-                                systemImage: theme.configuration.themeName == configuration?.themeName ?? ""
-                                    ? "paintbrush.fill" : "paintbrush"
-                            )
-                        })
+                    .tabItem { Tab.preview.label }
+                    .tag(Tab.preview)
+
+                    themeToolbar {
+                        TextEditor(text: .constant(encoded))
+                            .font(.system(size: 12.0, design: .monospaced))
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .padding()
+                    }
+                    .tabItem { Tab.json.label }
+                    .tag(Tab.json)
+
+                    NavigationStack {
+                        AccountsView()
+                    }
+                    .tabItem { Tab.banking.label }
+                    .tag(Tab.banking)
                 }
+                .navigationTitle(selectedTab.title)
+            } else {
+                Text("Theme declaration is invalid.")
             }
         }
         .tint(declaration?.colors.textLink)
+    }
+
+    private func themeToolbar(@ViewBuilder _ content: () -> some View)
+        -> some View
+    {
+        content().toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Menu(
+                    content: {
+                        ForEach(AvailableTheme.allCases) { theme in
+                            Button {
+                                changeTheme(to: theme)
+                            } label: {
+                                Label(
+                                    theme.description,
+                                    systemImage: theme.configuration.themeName
+                                        == configuration?.themeName ?? ""
+                                        ? "paintbrush.fill" : "paintbrush"
+                                )
+                            }
+                        }
+                    }, label: { Image(systemName: "slider.horizontal.3") })
+            }
+        }
     }
 }
 
