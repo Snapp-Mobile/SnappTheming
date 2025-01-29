@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import UIKit
 
 /// A struct representing a dynamic color that adapts to system traits (light/dark mode).
 /// It contains two color values: one for light mode and one for dark mode.

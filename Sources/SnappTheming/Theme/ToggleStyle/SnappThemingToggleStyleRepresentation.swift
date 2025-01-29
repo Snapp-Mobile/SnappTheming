@@ -18,16 +18,4 @@ public struct SnappThemingToggleStyleRepresentation: Codable {
 
     /// The tint color of the toggle when it is in its disabled state.
     public let disabledTintColor: SnappThemingToken<SnappThemingColorRepresentation>
-
-    /// Initializes a new instance of `SnappThemingToggleStyleRepresentation`.
-    /// - Parameters:
-    ///   - tintColor: The active tint color of the toggle.
-    ///   - disabledTintColor: The tint color of the toggle when it is disabled.
-    public init(
-        tintColor: SnappThemingToken<SnappThemingColorRepresentation>,
-        disabledTintColor: SnappThemingToken<SnappThemingColorRepresentation>
-    ) {
-        self.tintColor = tintColor
-        self.disabledTintColor = disabledTintColor
-    }
 }
