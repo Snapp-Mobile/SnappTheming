@@ -33,17 +33,31 @@
 
      - name: Run Swift Tests with Coverage
        run: |
-         swift test --enable-code-coverage --show-codecov-path
+         swift test --enable-code-coverage
 
      - name: Extract Overall Code Coverage
        run: |
-         # Extract the total code coverage percentage
-         OVERALL_COVERAGE=$(jq '.data.totals.lines.percent' "/Users/runner/work/SnappTheming/SnappTheming/.build/arm64-apple-macosx/debug/codecov/SnappTheming.json")
+         PROFDATA_PATH=$(swift test --show-codecov-path | xargs dirname)/default.profdata
+         TEST_BINARY_PATH=$(swift test --show-test-binary-path)
+     
+         if [ ! -f "$PROFDATA_PATH" ]; then
+           echo "❌ Profdata file not found!"
+           exit 1
+         fi
+     
+         echo "✅ Found profdata at $PROFDATA_PATH"
+         echo "✅ Found test binary at $TEST_BINARY_PATH"
+     
+         # Extract coverage using llvm-cov
+         OVERALL_COVERAGE=$(xcrun llvm-cov export \
+            --ignore-filename-regex='(.build|Tests)[/\\].*' \
+            -instr-profile "$PROFDATA_PATH" \
+            "$TEST_BINARY_PATH" | jq '.data.totals.lines.percent')
      
          echo "🛡️ Overall Code Coverage: ${OVERALL_COVERAGE}%"
          echo "Overall Coverage: ${OVERALL_COVERAGE}%" > pr_coverage_summary.txt
      
-         # Save coverage as an environment variable for later use
+         # Save coverage as an environment variable
          echo "OVERALL_COVERAGE=$OVERALL_COVERAGE" >> $GITHUB_ENV
 
      - name: Comment on Pull Request
