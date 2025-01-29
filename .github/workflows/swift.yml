@@ -25,13 +25,16 @@
      - name: Select Xcode 16.2
        run: sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer
 
+     - name: Run Swift Tests with Coverage
+       run: |
+         CODECOV_PATH=$(swift test --enable-code-coverage --show-codecov-path | tail -n 1)
+         echo "CODECOV_PATH=$CODECOV_PATH" >> $GITHUB_ENV
+
      - name: Swift Test
        run: |
          swift test -v --enable-swift-testing --enable-code-coverage
          OVERALL_COVERAGE=$(cat /Users/runner/work/SnappTheming/SnappTheming/.build/arm64-apple-macosx/debug/codecov/SnappTheming.json | jq '.data[0].totals.lines.percent')
          echo "Overall Code Coverage: ${OVERALL_COVERAGE}%"
-         xcrun xccov view --report --json --files-for-target SnappTheming ./build.xcresult > coverage.json
-         echo coverage.json
 
 #     - name: Merge Coverage Data
 #       run: |
