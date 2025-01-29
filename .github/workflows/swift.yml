@@ -28,7 +28,8 @@
      - name: Swift Test
        run: |
          swift test -v --enable-swift-testing --enable-code-coverage
-         cat /Users/runner/work/SnappTheming/SnappTheming/.build/arm64-apple-macosx/debug/codecov/SnappTheming.json
+         OVERALL_COVERAGE=$(cat /Users/runner/work/SnappTheming/SnappTheming/.build/arm64-apple-macosx/debug/codecov/SnappTheming.json | jq '.totals.lines.percent')
+         echo "Overall Code Coverage: ${OVERALL_COVERAGE}%"
 
 #     - name: Merge Coverage Data
 #       run: |
