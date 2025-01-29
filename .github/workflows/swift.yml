@@ -25,18 +25,23 @@
      - name: Select Xcode 16.2
        run: sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer
      - name: Swift Test
-       run: swift test --enable-code-coverage
+       run: |
+          export LLVM_PROFILE_FILE="$(pwd)/.build/debug/code-%p.profraw"
+          swift test --enable-code-coverage
+
+     - name: Fix Permissions for Coverage
+       run: chmod -R u+w .build
 
      - name: Extract Code Coverage
        run: |
          COVERAGE_FILE=$(find .build -name "default.profdata" | head -n 1)
          if [ -z "$COVERAGE_FILE" ]; then
-           echo "Error: Coverage data not found!"
+           echo "⚠️ Error: Coverage data not found!"
            exit 1
          fi
          TARGET_EXECUTABLE=$(find .build/debug -type f -perm +111 | grep Tests || true)
          if [ -z "$TARGET_EXECUTABLE" ]; then
-           echo "Error: Test executable not found!"
+           echo "⚠️ Error: Test executable not found!"
            exit 1
          fi
          xcrun llvm-cov report $TARGET_EXECUTABLE \
