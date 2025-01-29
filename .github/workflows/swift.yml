@@ -25,28 +25,43 @@
      - name: Select Xcode 16.2
        run: sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer
      - name: Swift Test
-       run: swift test
-     - name: Test
+       run: swift test --enable-code-coverage
+
+     - name: Extract Code Coverage
        run: |
-         xcodebuild test \
-            -workspace "${{env.WORKSPACE_PATH}}" \
-            -scheme "${{env.SCHEME}}" \
-            -destination "${{env.DESTINATION}}" \
-            -enableCodeCoverage YES \
-            -resultBundlePath '${{env.COVERAGE_REPORT_PATH}}' \
-            -skipMacroValidation \
-            -quiet
+         COVERAGE_FILE=$(find .build -name "default.profdata" | head -n 1)
+         if [ -z "$COVERAGE_FILE" ]; then
+           echo "Error: Coverage data not found!"
+           exit 1
+         fi
+         TARGET_EXECUTABLE=$(find .build/debug -type f -perm +111 | grep Tests || true)
+         if [ -z "$TARGET_EXECUTABLE" ]; then
+           echo "Error: Test executable not found!"
+           exit 1
+         fi
+         xcrun llvm-cov report $TARGET_EXECUTABLE \
+           -instr-profile "$COVERAGE_FILE" \
+           > coverage-report.txt
+         tail -n 5 coverage-report.txt > pr_coverage_summary.txt
+
+#     - name: Test
+#       run: |
+#         xcodebuild test \
+#            -workspace "${{env.WORKSPACE_PATH}}" \
+#            -scheme "${{env.SCHEME}}" \
+#            -destination "${{env.DESTINATION}}" \
+#            -enableCodeCoverage YES \
+#            -resultBundlePath '${{env.COVERAGE_REPORT_PATH}}' \
+#            -skipMacroValidation \
+#            -quiet
 
      - name: Comment on Pull Request
        if: github.event_name == 'pull_request'
        uses: actions/github-script@v6
        with:
          script: |
-            const { execSync } = require("child_process");
-
-            const coverageOutput = execSync(
-              `xcrun xccov view --report --only-targets ${{env.COVERAGE_REPORT_PATH}}`
-            ).toString().trim();
+            const fs = require('fs');
+            const coverageOutput = fs.readFileSync('pr_coverage_summary.txt', 'utf8').trim();
 
             const newComment = `
             ### 🛡️ Code Coverage Report
