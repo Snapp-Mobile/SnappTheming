@@ -26,7 +26,9 @@
        run: sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer
 
      - name: Swift Test
-       run: swift test -v --enable-swift-testing --enable-code-coverage --show-codecov-path
+       run: |
+         swift test -v --enable-swift-testing --enable-code-coverage
+         cat /Users/runner/work/SnappTheming/SnappTheming/.build/arm64-apple-macosx/debug/codecov/SnappTheming.json
 
 #     - name: Merge Coverage Data
 #       run: |
