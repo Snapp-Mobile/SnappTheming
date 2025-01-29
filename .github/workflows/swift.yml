@@ -27,16 +27,9 @@
 
      - name: Run Swift Tests with Coverage
        run: |
-         CODECOV_PATH=$(swift test --enable-code-coverage --show-codecov-path | tail -n 1)
-         echo "CODECOV_PATH=$CODECOV_PATH" >> $GITHUB_ENV
-
-     - name: Extract Overall Code Coverage
-       run: |
-         if [ ! -f "$CODECOV_PATH" ]; then
-           echo "❌ Code coverage file not found!"
-           exit 1
-         fi
-     
+         CODECOV_PATH=$(swift test --enable-code-coverage --show-codecov-path)
+         echo $CODECOV_PATH
+         OVERALL_COVERAGE=$(jq '.data[0].totals.lines.percent' "$CODECOV_PATH")
          # Extract total line coverage percentage
          OVERALL_COVERAGE=$(jq '.data[0].totals.lines.percent' "$CODECOV_PATH")
      
