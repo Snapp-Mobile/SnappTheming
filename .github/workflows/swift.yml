@@ -24,13 +24,15 @@
        run: sudo ls -1 /Applications | grep "Xcode"
      - name: Select Xcode 16.2
        run: sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer
+
+     - name: Fix Permissions for Coverage
+       run: chmod -R u+w .build
+
      - name: Swift Test
        run: |
           export LLVM_PROFILE_FILE="$(pwd)/.build/debug/code-%p.profraw"
           swift test --enable-code-coverage
 
-     - name: Fix Permissions for Coverage
-       run: chmod -R u+w .build
 
      - name: Extract Code Coverage
        run: |
