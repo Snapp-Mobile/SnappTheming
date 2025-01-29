@@ -29,12 +29,8 @@
        run: |
          CODECOV_PATH=$(swift test --enable-code-coverage --show-codecov-path)
          echo $CODECOV_PATH
-         if [[ -f "$CODECOV_PATH" ]]; then
-            OVERALL_COVERAGE=$(jq '.data[0].totals.lines.percent' "$CODECOV_PATH")
-         else
-           echo "❌ Coverage file not found!"
-           exit 1
-         fi
+         
+         OVERALL_COVERAGE=$(jq '.data[0].totals.lines.percent' "$CODECOV_PATH")
 
          echo "🛡️ Overall Code Coverage: ${OVERALL_COVERAGE}%"
          echo "Overall Coverage: ${OVERALL_COVERAGE}%" > pr_coverage_summary.txt
