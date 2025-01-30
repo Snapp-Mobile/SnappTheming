@@ -5,6 +5,30 @@ CODECOV_PATH=$(swift test --enable-code-coverage --show-codecov-path)
 echo "📄 Full Code Coverage JSON Output:"
 jq '.' "$CODECOV_PATH"
 
+# Extract all line percentages for files containing 'SnappTheming/Sources'
+LINES_PERCENT=$(jq -r '.data[0].files[] | select(.filename | contains("SnappTheming/Sources")) | .summary.lines.percent' "$CODECOV_PATH")
+
+# Initialize sum and count variables
+sum=0
+count=0
+
+# Loop through each line coverage percentage and calculate sum and count
+for percent in $LINES_PERCENT; do
+  sum=$(echo "$sum + $percent" | bc)  # Add the current percentage to sum
+  count=$((count + 1))  # Increment the count
+done
+
+# Calculate average
+if [ $count -gt 0 ]; then
+  average=$(echo "scale=2; $sum / $count" | bc)  # Calculate average to two decimal places
+else
+  average=0
+fi
+
+# Output the results
+echo "$LINES_PERCENT"
+echo "Average line coverage for files containing 'SnappTheming/Sources': $average%"
+
 COVERAGE_FUNCTIONS_COVERED=$(jq '.data[0].totals.functions.covered' "$CODECOV_PATH")
 COVERAGE_FUNCTIONS_TOTAL=$(jq '.data[0].totals.functions.count' "$CODECOV_PATH")
 COVERAGE_FUNCTIONS_PERCENT=$(jq -r '.data[0].totals.functions.percent | floor' "$CODECOV_PATH")
