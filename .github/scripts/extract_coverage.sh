@@ -27,13 +27,13 @@ done
 
 # Calculate the average line coverage percentage
 if [ $total_lines -gt 0 ]; then
-  average_coverage=$(echo "scale=2; $covered_lines * 100 / $total_lines" | bc)  # Calculate average coverage
+  average_coverage=$(echo "scale=6; $covered_lines * 100 / $total_lines" | bc)  # Keep 6 decimal places
 else
   average_coverage=0
 fi
 
 # Generate coverage badge URL
-badge_url="![](https://geps.dev/progress/${average_coverage})"
+average_coverage_rounded=$(echo "$average_coverage" | awk '{print int($1 * 100 + 0.5) / 100}')
 
 # Save to pr_coverage_summary.txt
 cat <<EOF > pr_coverage_summary.txt
