@@ -27,7 +27,7 @@
 
      - name: Run Swift Tests with Coverage
        run: |
-         swift test --filter SnappTheming --enable-swift-testing --enable-code-coverage
+         swift test list --enable-swift-testing --enable-code-coverage
          CODECOV_PATH=$(swift test --enable-code-coverage --show-codecov-path)
          echo $CODECOV_PATH
 
