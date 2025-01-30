@@ -5,9 +5,12 @@
 //  Created by Volodymyr Voiko on 29.01.2025.
 //
 
+import SnappTheming
 import SwiftUI
 
 struct AccountsView: View {
+    var declaration: SnappThemingDeclaration
+
     var body: some View {
         VStack(spacing: 0) {
             VStack(spacing: 24) {
@@ -81,6 +84,6 @@ struct AccountsView: View {
 
 #Preview {
     NavigationStack {
-        AccountsView()
+        AccountsView(declaration: .bankingLight)
     }
 }
