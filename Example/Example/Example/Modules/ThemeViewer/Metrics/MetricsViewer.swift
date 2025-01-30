@@ -45,7 +45,9 @@ struct MetricsViewer: View {
             }
         }
         .navigationTitle("Metrics")
-        .navigationBarTitleDisplayMode(.inline)
+        #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
     }
 
     func section<V>(_ title: String, content: @escaping (CGFloat) -> V) -> some View where V: View {

@@ -26,6 +26,8 @@ struct AnimationsViewer: View {
             }
         }
         .navigationTitle("Animations")
-        .navigationBarTitleDisplayMode(.inline)
+        #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
     }
 }
