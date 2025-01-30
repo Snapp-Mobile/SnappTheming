@@ -7,7 +7,6 @@ CODECOV_PATH=$(swift test --enable-code-coverage --show-codecov-path)
 
 # Extract all line coverage data for files containing 'SnappTheming/Sources'
 FILES_LINE_COUNTS=$(jq -r '.data[0].files[] | select(.filename | contains("SnappTheming/Sources")) | .summary.lines' "$CODECOV_PATH")
-echo $FILES_LINE_COUNTS
 
 # Initialize variables for total lines, covered lines, and count
 total_lines=0
@@ -35,6 +34,7 @@ fi
 
 # Generate coverage badge URL
 average_coverage_rounded=$(echo "$average_coverage" | awk '{print int($1 * 100 + 0.5) / 100}')
+echo $average_coverage_rounded
 # Generate coverage badge URL
 badge_url="![](https://geps.dev/progress/${average_coverage_rounded})"
 
