@@ -30,6 +30,10 @@
          swift test list --enable-swift-testing --enable-code-coverage
          CODECOV_PATH=$(swift test --enable-code-coverage --show-codecov-path)
          echo $CODECOV_PATH
+         xcrun llvm-cov export \
+           --ignore-filename-regex='(.build|Tests)[/\\].*' \
+           -instr-profile $(swift test --show-codecov-path | xargs dirname)/default.profdata \
+           $(swift test --show-test-binary-path)
 
      - name: Run Coverage Extraction Script
        run: bash .github/scripts/extract_coverage.sh
