@@ -35,6 +35,8 @@ fi
 
 # Generate coverage badge URL
 average_coverage_rounded=$(echo "$average_coverage" | awk '{print int($1 * 100 + 0.5) / 100}')
+# Generate coverage badge URL
+badge_url="![](https://geps.dev/progress/${average_coverage_rounded})"
 
 # Save to pr_coverage_summary.txt
 cat <<EOF > pr_coverage_summary.txt
