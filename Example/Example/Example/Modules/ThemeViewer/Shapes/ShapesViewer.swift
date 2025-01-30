@@ -26,7 +26,9 @@ struct ShapesViewer: View {
             }
         }
         .navigationTitle("Shapes")
-        .navigationBarTitleDisplayMode(.inline)
+        #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
     }
 }
 

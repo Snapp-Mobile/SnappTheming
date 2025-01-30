@@ -38,7 +38,9 @@ struct ColorsViewer: View {
             }
         }
         .navigationTitle("Colors")
-        .navigationBarTitleDisplayMode(.inline)
+        #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
     }
 }
 
