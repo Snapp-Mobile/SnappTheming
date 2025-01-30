@@ -84,15 +84,16 @@ extension Color {
             opacity: cAlpha
         )
     }
-
-    /// Converts the `Color` instance into a `UIColor`.
-    ///
-    /// - Returns: A `UIColor` representation of the current `Color`. Returns `.clear` if the conversion fails.
-    public var uiColor: UIColor {
-        guard let cgColor else {
-            os_log(.error, "Failed to retrieve CGColor from Color")
-            return .clear
+    #if canImport(UIKit)
+        /// Converts the `Color` instance into a `UIColor`.
+        ///
+        /// - Returns: A `UIColor` representation of the current `Color`. Returns `.clear` if the conversion fails.
+        public var uiColor: UIColor {
+            guard let cgColor else {
+                os_log(.error, "Failed to retrieve CGColor from Color")
+                return .clear
+            }
+            return UIColor(cgColor: cgColor)
         }
-        return UIColor(cgColor: cgColor)
-    }
+    #endif
 }

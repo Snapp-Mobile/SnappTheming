@@ -7,7 +7,9 @@
 
 import Foundation
 import SwiftUI
-import UIKit
+#if canImport(UIKit)
+    import UIKit
+#endif
 
 public typealias SnappThemingColorDeclarations = SnappThemingDeclarations<
     SnappThemingColorRepresentation,
@@ -51,14 +53,16 @@ where
         return representation.color(using: configuration.colorFormat)
     }
 
-    /// Accesses a color by its dynamic key path, returning a `UIColor` value.
-    ///
-    /// - Parameter keyPath: The key path of the color to fetch.
-    /// - Returns: The corresponding `UIColor` value if found, or `.clear` if not found.
-    public subscript(dynamicMember keyPath: String) -> UIColor {
-        guard let representation: DeclaredValue = self[dynamicMember: keyPath] else {
-            return configuration.fallbackUIColor
+    #if canImport(UIKit)
+        /// Accesses a color by its dynamic key path, returning a `UIColor` value.
+        ///
+        /// - Parameter keyPath: The key path of the color to fetch.
+        /// - Returns: The corresponding `UIColor` value if found, or `.clear` if not found.
+        public subscript(dynamicMember keyPath: String) -> UIColor {
+            guard let representation: DeclaredValue = self[dynamicMember: keyPath] else {
+                return configuration.fallbackUIColor
+            }
+            return representation.uiColor(using: configuration.colorFormat)
         }
-        return representation.uiColor(using: configuration.colorFormat)
-    }
+    #endif
 }

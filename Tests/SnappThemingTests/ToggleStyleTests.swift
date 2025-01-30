@@ -7,9 +7,10 @@
 
 import SwiftUI
 import Testing
-import UIKit
-
 @testable import SnappTheming
+#if canImport(UIKit)
+    import UIKit
+#endif
 
 @Suite
 struct ToggleStyleTests {

@@ -7,7 +7,10 @@
 
 import Foundation
 import SwiftUI
-import UIKit
+
+#if canImport(UIKit)
+    import UIKit
+#endif
 
 /// A structure representing the configuration for theming colors in the Snapp application.
 ///
@@ -18,8 +21,10 @@ import UIKit
 public struct SnappThemingColorConfiguration {
     /// The default color to fall back to when a color is not available in the theme.
     public let fallbackColor: Color
-    /// A `UIColor` representation of the `fallbackColor`.
-    public var fallbackUIColor: UIColor { UIColor(fallbackColor) }
+    #if canImport(UIKit)
+        /// A `UIColor` representation of the `fallbackColor`.
+        public var fallbackUIColor: UIColor { UIColor(fallbackColor) }
+    #endif
 
     /// The format of the color (ARGB or RGBA).
     public let colorFormat: SnappThemingColorFormat
