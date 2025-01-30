@@ -14,8 +14,8 @@ total_lines=0
 covered_lines=0
 count=0
 
-# Loop through each file's line count data
-for lines_data in $FILES_LINE_COUNTS; do
+# Loop through each file's line count data (FILES_LINE_COUNTS)
+for lines_data in $(echo "$FILES_LINE_COUNTS" | jq -c '.'); do
   # Extract total and covered lines for each file
   total=$(echo "$lines_data" | jq '.count')
   covered=$(echo "$lines_data" | jq '.covered')
