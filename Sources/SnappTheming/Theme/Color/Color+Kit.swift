@@ -1,11 +1,9 @@
 import SwiftUI
 
-#if canImport(AppKit)
-    import AppKit
-#endif
-
 #if canImport(UIKit)
     import UIKit
+#elseif canImport(AppKit)
+    import AppKit
 #endif
 
 extension Color {
@@ -42,9 +40,7 @@ extension Color {
                     }))
             #endif
         }
-    #endif
-
-    #if canImport(AppKit)
+    #elseif canImport(AppKit)
         init(light: NSColor, dark: NSColor) {
             self.init(
                 nsColor: NSColor(

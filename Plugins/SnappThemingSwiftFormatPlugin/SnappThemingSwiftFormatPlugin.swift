@@ -10,7 +10,7 @@ import PackagePlugin
 
 /// A Swift Package Manager build tool plugin to run SwiftFormat during the build process.
 @main
-struct SwiftFormatPlugin: BuildToolPlugin {
+struct SnappThemingSwiftFormatPlugin: BuildToolPlugin {
     /// Creates build commands for the plugin.
     /// - Parameters:
     ///   - context: The plugin context providing details like the package directory.
@@ -19,7 +19,7 @@ struct SwiftFormatPlugin: BuildToolPlugin {
     /// - Throws: `PluginError` if the script is not found.
     func createBuildCommands(context: PluginContext, target: Target) throws -> [Command] {
         // Define the path to your script
-        let scriptPath = context.package.directoryURL.appending(path: "Plugins/SwiftFormatPlugin/swift-format-script.sh").path
+        let scriptPath = context.package.directoryURL.appending(path: "Plugins/SnappThemingSwiftFormatPlugin/swift-format-script.sh").path
         let configurationPath = context.package.directoryURL.absoluteString
 
         // Validate that the script exists
@@ -30,7 +30,7 @@ struct SwiftFormatPlugin: BuildToolPlugin {
         // Return a build command to run your script
         return [
             .buildCommand(
-                displayName: "Running SwiftFormatPlugin",
+                displayName: "Running SnappThemingSwiftFormatPlugin",
                 executable: URL(filePath: "/bin/bash"),
                 arguments: [scriptPath, configurationPath],
                 environment: [:],

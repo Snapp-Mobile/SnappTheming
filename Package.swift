@@ -27,7 +27,7 @@ let package = Package(
         .target(
             name: "SnappTheming",
             plugins: [
-                .plugin(name: "SwiftFormatPlugin")
+                .plugin(name: "SnappThemingSwiftFormatPlugin")
             ]),
         .testTarget(
             name: "SnappThemingTests",
@@ -40,6 +40,6 @@ let package = Package(
             ]
         ),
         .target(name: "SnappThemingSwiftUIHelpers"),
-        .plugin(name: "SwiftFormatPlugin", capability: .buildTool(), path: "Plugins/SwiftFormatPlugin"),
+        .plugin(name: "SnappThemingSwiftFormatPlugin", capability: .buildTool(), path: "Plugins/SnappThemingSwiftFormatPlugin"),
     ]
 )

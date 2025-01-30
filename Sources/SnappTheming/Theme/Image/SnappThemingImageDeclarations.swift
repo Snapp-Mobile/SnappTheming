@@ -9,6 +9,13 @@ import Foundation
 import OSLog
 import SwiftUI
 
+#if canImport(UIKit)
+    import UIKit
+#endif
+#if canImport(AppKit)
+    import AppKit
+#endif
+
 public typealias SnappThemingImageDeclarations = SnappThemingDeclarations<
     SnappThemingDataURI,
     SnappThemingImageConfiguration
@@ -42,21 +49,25 @@ where DeclaredValue == SnappThemingDataURI, Configuration == SnappThemingImageCo
     /// - Parameter keyPath: The key path used to identify the desired image.
     /// - Returns: The resolved image, or the fallback image if the resolution fails.
     public subscript(dynamicMember keyPath: String) -> Image {
-        guard let representation: DeclaredValue = self[dynamicMember: keyPath] else {
+        guard
+            let representation: DeclaredValue = self[dynamicMember: keyPath]
+        else {
             os_log(.error, "Error resolving image with name: %@.", keyPath)
             return configuration.fallbackImage
         }
 
+        let cachedData = configuration.imagesManager.object(for: keyPath, of: representation) ?? representation.data
         #if canImport(UIKit)
-            let cachedImage = configuration.imagesManager.object(for: keyPath, of: representation)
-
-            let uiImage: UIImage? =
-                cachedImage ?? configuration.imagesManager.image(from: representation.data, of: representation.type)
-
-            if let uiImage {
-                configuration.imagesManager.setObject(uiImage, for: keyPath)
+            if let uiImage = configuration.imagesManager.image(from: cachedData, of: representation.type) {
+                configuration.imagesManager.setObject(representation.data, for: keyPath)
                 configuration.imagesManager.store(representation, for: keyPath)
                 return Image(uiImage: uiImage)
+            }
+        #elseif canImport(AppKit)
+            if let nsImage = configuration.imagesManager.image(from: cachedData, of: representation.type) {
+                configuration.imagesManager.setObject(representation.data, for: keyPath)
+                configuration.imagesManager.store(representation, for: keyPath)
+                return Image(nsImage: nsImage)
             }
         #endif
 
