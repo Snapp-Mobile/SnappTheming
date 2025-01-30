@@ -38,6 +38,6 @@ average_coverage_with_percentage="${average_coverage_rounded}%"
 # Save to pr_coverage_summary.txt
 cat <<EOF > pr_coverage_summary.txt
 | ID | Name | Executable Lines | Coverage |
-|----|------|------------------|----------|
-| 0 | SnappTheming | $total_lines | $average_coverage_with_percentage |
+|----|------|-----------------:|---------:|
+| 0 | SnappTheming | $total_lines | **$average_coverage_with_percentage** |
 EOF
