@@ -2,11 +2,12 @@
 
 CODECOV_PATH=$(swift test --enable-code-coverage --show-codecov-path)
 
-echo "📄 Full Code Coverage JSON Output:"
-jq '.' "$CODECOV_PATH"
+#echo "📄 Full Code Coverage JSON Output:"
+#jq '.' "$CODECOV_PATH"
 
 # Extract all line coverage data for files containing 'SnappTheming/Sources'
 FILES_LINE_COUNTS=$(jq -r '.data[0].files[] | select(.filename | contains("SnappTheming/Sources")) | .summary.lines' "$CODECOV_PATH")
+echo $FILES_LINE_COUNTS
 
 # Initialize variables for total lines, covered lines, and count
 total_lines=0
