@@ -30,7 +30,9 @@ struct ButtonsViewer: View {
             }
         }
         .navigationTitle("Button Styles")
-        .navigationBarTitleDisplayMode(.inline)
+        #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
     }
 }
 

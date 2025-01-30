@@ -34,7 +34,9 @@ struct GradientsViewer: View {
             }
         }
         .navigationTitle("Gradients")
-        .navigationBarTitleDisplayMode(.inline)
+        #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
         .sheet(item: $selectedShape) { shape in
             ZStack {
                 Rectangle()

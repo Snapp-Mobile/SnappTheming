@@ -24,7 +24,9 @@ struct TypographyViewer: View {
             }
         }
         .navigationTitle("Typography")
-        .navigationBarTitleDisplayMode(.inline)
+        #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
     }
 }
 
