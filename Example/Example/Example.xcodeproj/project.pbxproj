@@ -10,11 +10,13 @@
 		53679CA12D3FA147002F2787 /* SnappTheming in Frameworks */ = {isa = PBXBuildFile; productRef = 53679CA02D3FA147002F2787 /* SnappTheming */; };
 		53679CA32D3FA147002F2787 /* SnappThemingSwiftUIHelpers in Frameworks */ = {isa = PBXBuildFile; productRef = 53679CA22D3FA147002F2787 /* SnappThemingSwiftUIHelpers */; };
 		53F240072D36753400264B36 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 53F240062D36753400264B36 /* Lottie */; };
+		CE06D8B22D4A671B00475178 /* NSImage+Decoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE06D8B12D4A671B00475178 /* NSImage+Decoding.swift */; };
 		CEF2CC1A2D4A685E0012251C /* SnappThemingSVGSupport in Frameworks */ = {isa = PBXBuildFile; productRef = CEF2CC192D4A685E0012251C /* SnappThemingSVGSupport */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		53F233062D31511E00264B36 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE06D8B12D4A671B00475178 /* NSImage+Decoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSImage+Decoding.swift"; path = "../../Sources/SnappTheming/Extensions/NSImage+Decoding.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -50,6 +52,7 @@
 		53F232FD2D31511E00264B36 = {
 			isa = PBXGroup;
 			children = (
+				CE06D8B12D4A671B00475178 /* NSImage+Decoding.swift */,
 				53F233082D31511E00264B36 /* Example */,
 				2DE9A3932D3525F000C5F3C1 /* Frameworks */,
 				53F233072D31511E00264B36 /* Products */,
@@ -170,6 +173,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE06D8B22D4A671B00475178 /* NSImage+Decoding.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
