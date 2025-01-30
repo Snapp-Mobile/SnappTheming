@@ -1,0 +1,90 @@
+#!/bin/bash
+
+CODECOV_PATH=$(swift test --enable-code-coverage --show-codecov-path)
+
+COVERAGE_FUNCTIONS_COVERED=$(jq '.data[0].totals.functions.covered' "$CODECOV_PATH")
+COVERAGE_FUNCTIONS_TOTAL=$(jq '.data[0].totals.functions.count' "$CODECOV_PATH")
+COVERAGE_FUNCTIONS_PERCENT=$(jq -r '.data[0].totals.functions.percent | (.*100 | floor / 100) | tostring' "$CODECOV_PATH")
+
+COVERAGE_INSTANTIATIONS_COVERED=$(jq '.data[0].totals.instantiations.covered' "$CODECOV_PATH")
+COVERAGE_INSTANTIATIONS_TOTAL=$(jq '.data[0].totals.instantiations.count' "$CODECOV_PATH")
+COVERAGE_INSTANTIATIONS_PERCENT=$(jq -r '.data[0].totals.instantiations.percent | (.*100 | floor / 100) | tostring' "$CODECOV_PATH")
+
+COVERAGE_LINES_COVERED=$(jq '.data[0].totals.lines.covered' "$CODECOV_PATH")
+COVERAGE_LINES_TOTAL=$(jq '.data[0].totals.lines.count' "$CODECOV_PATH")
+COVERAGE_LINES_PERCENT=$(jq -r '.data[0].totals.lines.percent | (.*100 | floor / 100) | tostring' "$CODECOV_PATH")
+
+COVERAGE_REGIONS_COVERED=$(jq '.data[0].totals.regions.covered' "$CODECOV_PATH")
+COVERAGE_REGIONS_TOTAL=$(jq '.data[0].totals.regions.count' "$CODECOV_PATH")
+COVERAGE_REGIONS_PERCENT=$(jq -r '.data[0].totals.regions.percent | (.*100 | floor / 100) | tostring' "$CODECOV_PATH")
+
+# Export variables to GitHub Actions
+{
+  echo "COVERAGE_FUNCTIONS_COVERED=$COVERAGE_FUNCTIONS_COVERED"
+  echo "COVERAGE_FUNCTIONS_TOTAL=$COVERAGE_FUNCTIONS_TOTAL"
+  echo "COVERAGE_FUNCTIONS_PERCENT=$COVERAGE_FUNCTIONS_PERCENT"
+  echo "COVERAGE_INSTANTIATIONS_COVERED=$COVERAGE_INSTANTIATIONS_COVERED"
+  echo "COVERAGE_INSTANTIATIONS_TOTAL=$COVERAGE_INSTANTIATIONS_TOTAL"
+  echo "COVERAGE_INSTANTIATIONS_PERCENT=$COVERAGE_INSTANTIATIONS_PERCENT"
+  echo "COVERAGE_LINES_COVERED=$COVERAGE_LINES_COVERED"
+  echo "COVERAGE_LINES_TOTAL=$COVERAGE_LINES_TOTAL"
+  echo "COVERAGE_LINES_PERCENT=$COVERAGE_LINES_PERCENT"
+  echo "COVERAGE_REGIONS_COVERED=$COVERAGE_REGIONS_COVERED"
+  echo "COVERAGE_REGIONS_TOTAL=$COVERAGE_REGIONS_TOTAL"
+  echo "COVERAGE_REGIONS_PERCENT=$COVERAGE_REGIONS_PERCENT"
+} >> "$GITHUB_ENV"
+
+# Save to pr_coverage_summary.txt
+cat <<EOF > pr_coverage_summary.txt
+| Metric           | Covered | Total | Coverage (%) |
+|-----------------|---------|-------|--------------|
+| **Functions**    | $COVERAGE_FUNCTIONS_COVERED  | $COVERAGE_FUNCTIONS_TOTAL  | $COVERAGE_FUNCTIONS_PERCENT%  |
+| **Instantiations** | $COVERAGE_INSTANTIATIONS_COVERED  | $COVERAGE_INSTANTIATIONS_TOTAL  | $COVERAGE_INSTANTIATIONS_PERCENT%  |
+| **Lines**        | $COVERAGE_LINES_COVERED  | $COVERAGE_LINES_TOTAL  | $COVERAGE_LINES_PERCENT%  |
+| **Regions**      | $COVERAGE_REGIONS_COVERED  | $COVERAGE_REGIONS_TOTAL  | $COVERAGE_REGIONS_PERCENT%  |
+
+- **Functions:**
+  - Covered: $COVERAGE_FUNCTIONS_COVERED
+  - Total: $COVERAGE_FUNCTIONS_TOTAL
+  - Coverage: $COVERAGE_FUNCTIONS_PERCENT%
+
+- **Instantiations:**
+  - Covered: $COVERAGE_INSTANTIATIONS_COVERED
+  - Total: $COVERAGE_INSTANTIATIONS_TOTAL
+  - Coverage: $COVERAGE_INSTANTIATIONS_PERCENT%
+
+- **Lines:**
+  - Covered: $COVERAGE_LINES_COVERED
+  - Total: $COVERAGE_LINES_TOTAL
+  - Coverage: $COVERAGE_LINES_PERCENT%
+
+- **Regions:**
+  - Covered: $COVERAGE_REGIONS_COVERED
+  - Total: $COVERAGE_REGIONS_TOTAL
+  - Coverage: $COVERAGE_REGIONS_PERCENT%
+
+- **Functions**: Covered: $COVERAGE_FUNCTIONS_COVERED / $COVERAGE_FUNCTIONS_TOTAL ($COVERAGE_FUNCTIONS_PERCENT%)
+- **Instantiations**: Covered: $COVERAGE_INSTANTIATIONS_COVERED / $COVERAGE_INSTANTIATIONS_TOTAL ($COVERAGE_INSTANTIATIONS_PERCENT%)
+- **Lines**: Covered: $COVERAGE_LINES_COVERED / $COVERAGE_LINES_TOTAL ($COVERAGE_LINES_PERCENT%)
+- **Regions**: Covered: $COVERAGE_REGIONS_COVERED / $COVERAGE_REGIONS_TOTAL ($COVERAGE_REGIONS_PERCENT%)
+
+For **Functions**, there are $COVERAGE_FUNCTIONS_TOTAL in total, with $COVERAGE_FUNCTIONS_COVERED covered, resulting in a coverage percentage of $COVERAGE_FUNCTIONS_PERCENT%.
+For **Instantiations**, $COVERAGE_INSTANTIATIONS_TOTAL total were tested, with $COVERAGE_INSTANTIATIONS_COVERED covered, yielding a coverage of $COVERAGE_INSTANTIATIONS_PERCENT%.
+The **Lines** coverage shows $COVERAGE_LINES_COVERED covered out of $COVERAGE_LINES_TOTAL, with a percentage of $COVERAGE_LINES_PERCENT%.
+Lastly, for **Regions**, $COVERAGE_REGIONS_COVERED out of $COVERAGE_REGIONS_TOTAL were covered, giving a coverage rate of $COVERAGE_REGIONS_PERCENT%.
+
+- **Functions:** **Covered:** $COVERAGE_FUNCTIONS_COVERED / $COVERAGE_FUNCTIONS_TOTAL, **Coverage:** $COVERAGE_FUNCTIONS_PERCENT%
+- **Instantiations:** **Covered:** $COVERAGE_INSTANTIATIONS_COVERED / $COVERAGE_INSTANTIATIONS_TOTAL, **Coverage:** $COVERAGE_INSTANTIATIONS_PERCENT%
+- **Lines:** **Covered:** $COVERAGE_LINES_COVERED / $COVERAGE_LINES_TOTAL, **Coverage:** $COVERAGE_LINES_PERCENT%
+- **Regions:** **Covered:** $COVERAGE_REGIONS_COVERED / $COVERAGE_REGIONS_TOTAL, **Coverage:** $COVERAGE_REGIONS_PERCENT%
+
+- **Functions:** $COVERAGE_FUNCTIONS_PERCENT% ![Progress](https://progress-bar.dev/$COVERAGE_FUNCTIONS_PERCENT/?scale=100&title=Functions)
+- **Instantiations:** $COVERAGE_INSTANTIATIONS_PERCENT% ![Progress](https://progress-bar.dev/$COVERAGE_INSTANTIATIONS_PERCENT/?scale=100&title=Instantiations)
+- **Lines:** $COVERAGE_LINES_PERCENT% ![Progress](https://progress-bar.dev/$COVERAGE_LINES_PERCENT/?scale=100&title=Lines)
+- **Regions:** $COVERAGE_REGIONS_PERCENT% ![Progress](https://progress-bar.dev/$COVERAGE_REGIONS_PERCENT/?scale=100&title=Regions)
+
+- **Functions:** $COVERAGE_FUNCTIONS_COVERED of $COVERAGE_FUNCTIONS_TOTAL covered ($COVERAGE_FUNCTIONS_PERCENT% coverage)
+- **Instantiations:** $COVERAGE_INSTANTIATIONS_COVERED of $COVERAGE_INSTANTIATIONS_TOTAL covered ($COVERAGE_INSTANTIATIONS_PERCENT% coverage)
+- **Lines:** $COVERAGE_LINES_COVERED of $COVERAGE_LINES_TOTAL covered ($COVERAGE_LINES_PERCENT% coverage)
+- **Regions:** $COVERAGE_REGIONS_COVERED of $COVERAGE_REGIONS_TOTAL covered ($COVERAGE_REGIONS_PERCENT% coverage)
+EOF
