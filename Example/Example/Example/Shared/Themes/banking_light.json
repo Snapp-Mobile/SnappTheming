@@ -1,0 +1,21 @@
+{
+    "colors": {
+        "baseWhite": "#FFFFFF",
+        "baseBlack": "#000000"
+    },
+    "metrics": {
+        "small": 4,
+        "xSmall": 2,
+        "medium": 8,
+        "large": 16,
+        "xLarge": 12,
+        "xxLarge": 24
+    },
+    "gradients": {},
+    "typography": {},
+    "shapes": {},
+    "animations": {},
+    "fonts": {},
+    "buttonStyles": {},
+    "images": {}
+}

@@ -151,7 +151,7 @@ struct MainView: View {
                     .tag(Tab.json)
 
                     NavigationStack {
-                        AccountsView()
+                        AccountsView(declaration: declaration)
                     }
                     .tabItem { Tab.banking.label }
                     .tag(Tab.banking)
