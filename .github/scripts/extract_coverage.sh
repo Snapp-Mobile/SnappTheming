@@ -3,19 +3,27 @@
 CODECOV_PATH=$(swift test --enable-code-coverage --show-codecov-path)
 
 echo "📄 Full Code Coverage JSON Output:"
-jq '.' "$CODECOV_PATH"
+#jq '.' "$CODECOV_PATH"
 
-# Extract all line percentages for files containing 'SnappTheming/Sources'
-LINES_PERCENT=$(jq -r '.data[0].files[] | select(.filename | contains("SnappTheming/Sources")) | .summary.lines.percent' "$CODECOV_PATH")
+# Extract file names and their corresponding line coverage percentages for files containing 'SnappTheming/Sources'
+FILES_AND_PERCENTAGES=$(jq -r '.data[0].files[] | select(.filename | contains("SnappTheming/Sources")) | "\(.filename): \(.summary.lines.percent)"' "$CODECOV_PATH")
 
 # Initialize sum and count variables
 sum=0
 count=0
 
-# Loop through each line coverage percentage and calculate sum and count
-for percent in $LINES_PERCENT; do
-  sum=$(echo "$sum + $percent" | bc)  # Add the current percentage to sum
-  count=$((count + 1))  # Increment the count
+# Loop through each file and percentage, calculate sum and count
+for file_and_percent in "$FILES_AND_PERCENTAGES"; do
+  # Split the line into filename and percentage
+  filename=$(echo "$file_and_percent" | cut -d':' -f1)
+  percentage=$(echo "$file_and_percent" | cut -d':' -f2)
+
+  # Add the percentage to sum
+  sum=$(echo "$sum + $percentage" | bc)
+  count=$((count + 1))  # Increment count
+
+  # Output the file name and its line coverage percentage
+  echo "File: $filename - Line coverage: $percentage%"
 done
 
 # Calculate average
@@ -26,7 +34,6 @@ else
 fi
 
 # Output the results
-echo "$LINES_PERCENT"
 echo "Average line coverage for files containing 'SnappTheming/Sources': $average%"
 
 COVERAGE_FUNCTIONS_COVERED=$(jq '.data[0].totals.functions.covered' "$CODECOV_PATH")
