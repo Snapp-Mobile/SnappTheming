@@ -13,12 +13,19 @@ TARGET_NAMES=$(jq -r '.data[0].files[] | select(.filename | contains("Tests.deri
 # Initialize a counter for the IDs
 id=1
 
+# Initialize the content to be saved in the summary file
+summary_content="| ID | Name           | Source Files | Lines        | Coverage                                  |\n"
+summary_content+="|----|----------------|--------------|--------------|-------------------------------------------|\n"
+
 # Loop through each target name and calculate line coverage for its files
 for target in $TARGET_NAMES; do
   echo "Processing coverage for target: $target"
 
+  # Adjust the target name to get the part before "PackageTests"
+  target_name=$(echo "$target" | sed 's/\(.*\)PackageTests/\1/')
+
   # Extract line coverage data for the specific target's Sources directory
-  FILES_LINE_COUNTS=$(jq -r --arg target "$target" '.data[0].files[] | select(.filename | contains($target + "/Sources")) | .summary.lines' "$CODECOV_PATH")
+  FILES_LINE_COUNTS=$(jq -r --arg target_name "$target_name" '.data[0].files[] | select(.filename | contains($target_name + "/Sources")) | .summary.lines' "$CODECOV_PATH")
 
   # Initialize variables for total lines, covered lines, and count
   total_lines=0
@@ -50,17 +57,16 @@ for target in $TARGET_NAMES; do
   # Generate coverage badge URL
   badge_url="![](https://geps.dev/progress/${average_coverage_rounded})"
 
-  # Save to pr_coverage_summary.txt, with incremented ID
-  cat <<EOF >> pr_coverage_summary.txt
-| ID | Name           | Source Files | Lines        | Coverage                                  |
-|----|----------------|--------------|--------------|-------------------------------------------|
-| $id  | $target        | $count       | ($covered_lines/$total_lines) | $badge_url |
-EOF
+  # Append the results for the current target to the summary_content variable
+  summary_content+="| $id  | $target_name        | $count       | ($covered_lines/$total_lines) | $badge_url |\n"
 
   # Increment the ID for the next target
   id=$((id + 1))
 
-  echo "Coverage summary for target '$target' saved to pr_coverage_summary.txt"
+  echo "Coverage summary for target '$target_name' saved to summary content"
 done
+
+# Save all the collected content to pr_coverage_summary.txt
+echo -e "$summary_content" > pr_coverage_summary.txt
 
 echo "Coverage summary generation complete."
