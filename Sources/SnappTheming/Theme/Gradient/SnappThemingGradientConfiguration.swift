@@ -11,5 +11,10 @@ import SwiftUI
 /// Configuration for resolving gradients in the theming system.
 public struct SnappThemingGradientConfiguration {
     /// The fallback color to use when a specific gradient cannot be resolved.
-    public let fallbackShapeStyle: Color
+    public let fallbackColor: Color
+
+    // TODO: add fallback for each gradient configuration
+
+    let metrics: SnappThemingMetricDeclarations
+    let colors: SnappThemingColorDeclarations
 }

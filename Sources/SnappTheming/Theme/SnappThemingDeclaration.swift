@@ -74,7 +74,6 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
         self.images = .init(cache: imageCache, configuration: parserConfiguration)
         self.colors = .init(cache: colorCache, configuration: parserConfiguration)
         self.interactiveColors = .init(cache: interactiveColorsCache, configuration: parserConfiguration)
-        self.gradients = .init(cache: gradientsCache, configuration: parserConfiguration)
         self.shapes = .init(cache: shapeInformation, configuration: parserConfiguration)
         self.metrics = .init(cache: metricsCache, configuration: parserConfiguration)
         self.fonts = .init(cache: fontsCache, configuration: parserConfiguration)
@@ -87,6 +86,12 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
             typographyCache.map(\.values)?.compactMap(typography.resolver.resolve(_:)).map(\.font) ?? []
         self.fontInformation = (baseFonts + typographyFonts).compactMap(\.value)
 
+        self.gradients = SnappThemingGradientDeclarations(
+            cache: gradientsCache,
+            metrics: metrics,
+            colors: colors,
+            configuration: parserConfiguration
+        )
         self.buttonStyles = .init(
             cache: buttonStylesCache,
             configuration: parserConfiguration,

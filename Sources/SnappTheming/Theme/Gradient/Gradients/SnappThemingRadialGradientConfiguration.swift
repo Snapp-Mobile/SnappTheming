@@ -32,7 +32,7 @@ public struct SnappThemingRadialGradientConfiguration: Sendable {
 
 extension SnappThemingRadialGradientConfiguration: SnappThemingGradientProviding {
     /// Creates a radial gradient shape style using the configuration properties.
-    public var shapeStyle: some ShapeStyle {
+    public func shapeStyleUsing(_ configuration: SnappThemingGradientConfiguration) -> RadialGradient {
         RadialGradient(
             colors: colors,
             center: center,
