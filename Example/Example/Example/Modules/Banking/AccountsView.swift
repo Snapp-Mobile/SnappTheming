@@ -33,7 +33,7 @@ struct AccountsView: View {
                         Label("More", icon: declaration.images.table)
                     }
                 }
-                .buttonStyle(.actionButton)
+                .buttonStyle(.actionButton(declaration))
             }
             .padding([.horizontal, .top], declaration.metrics.medium)
             .padding(.bottom, declaration.metrics.large)
