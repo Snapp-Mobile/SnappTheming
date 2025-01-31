@@ -19,6 +19,8 @@
         "large": 24,
         "xlarge": 36,
         "xxlarge": 48,
+        "iconSize": 24,
+        "buttonSize": 64,
         "creditCardAspectRatio": 1.81,
         "creditCardLogoSize": 40,
         "creditCardNetworkLogoSize": 42,
