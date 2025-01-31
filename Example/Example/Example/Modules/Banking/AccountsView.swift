@@ -9,48 +9,34 @@ import SnappTheming
 import SwiftUI
 
 struct AccountsView: View {
-    var declaration: SnappThemingDeclaration
+    let declaration: SnappThemingDeclaration
 
     var body: some View {
         VStack(spacing: 0) {
-            VStack(spacing: 24) {
-                CreditCardView()
-                    .padding([.horizontal, .top], 16)
+            VStack(spacing: declaration.metrics.xlarge) {
+                CreditCardView(declaration: declaration)
 
                 ActionsContainer {
                     Button(action: {}) {
-                        Label("Top up", systemImage: "creditcard")
+                        Label("Top up", icon: declaration.images.payment)
                     }
 
                     Button(action: {}) {
-                        Label("Pay", systemImage: "banknote")
+                        Label("Pay", icon: declaration.images.receipt)
                     }
 
                     Button(action: {}) {
-                        Label("Send", systemImage: "paperplane")
+                        Label("Send", icon: declaration.images.send)
                     }
 
                     Button(action: {}) {
-                        Label(
-                            "More",
-                            systemImage: "tablecells.badge.ellipsis")
+                        Label("More", icon: declaration.images.table)
                     }
                 }
                 .buttonStyle(.actionButton)
-                .padding(.horizontal, 16)
-
-                HStack {
-                    Text("Recent Transactions")
-                        .font(.title2)
-                    Spacer()
-                    Button {
-                    } label: {
-                        Image(systemName: "magnifyingglass")
-                    }
-
-                }
-                .padding([.horizontal, .bottom], 16)
             }
+            .padding([.horizontal, .top], declaration.metrics.medium)
+            .padding(.bottom, declaration.metrics.large)
             .background(
                 UnevenRoundedRectangle(
                     topLeadingRadius: 0,
@@ -59,26 +45,24 @@ struct AccountsView: View {
                     topTrailingRadius: 0,
                     style: .continuous
                 )
-                .fill(Color.white)
+                .fill(declaration.colors.surfaceSecondary)
                 .ignoresSafeArea(.all)
             )
             .shadow(color: Color.black.opacity(0.15), radius: 5)
-            .zIndex(2)
 
-            TransactionsView()
-                .padding(.top, 16)
-                .zIndex(1)
+            TransactionsView(declaration: declaration)
         }
-        .background(Color.black.opacity(0.01))
+        .background(declaration.colors.surfacePrimary)
         .navigationTitle("My accounts")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button(action: {}) {
-                    Image(systemName: "slider.horizontal.3")
+                    declaration.images.alert
                 }
             }
         }
+        .tint(declaration.colors.primary)
     }
 }
 
