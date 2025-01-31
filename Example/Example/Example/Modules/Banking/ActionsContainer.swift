@@ -14,7 +14,7 @@ struct ActionsContainer<Content: View>: View {
     }
     @ViewBuilder var content: Content
     var body: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 0) {
             ForEach(
                 sections: content,
                 content: { section in
