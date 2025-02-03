@@ -31,8 +31,8 @@ extension SnappThemingLinearGradientRepresentation: SnappThemingGradientProvidin
         guard resolvedColors.count == colors.count else {
             return SnappThemingLinearGradientConfiguration(
                 colors: [configuration.fallbackColor],
-                startPoint: startPoint.value,
-                endPoint: endPoint.value
+                startPoint: configuration.fallbackUnitPoint,
+                endPoint: configuration.fallbackUnitPoint
             )
         }
 

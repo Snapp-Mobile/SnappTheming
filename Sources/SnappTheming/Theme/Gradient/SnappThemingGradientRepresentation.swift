@@ -58,7 +58,7 @@ public struct SnappThemingGradientRepresentation: Codable {
         let container = try decoder.singleValueContainer()
         if let linear = try? container.decode(SnappThemingLinearGradientRepresentation.self) {
             self.configuration = linear
-        } else if let radial = try? container.decode(SnappThemingRadialGradientConfiguration.self) {
+        } else if let radial = try? container.decode(SnappThemingRadialGradientRepresentation.self) {
             self.configuration = radial
         } else if let angular = try? container.decode(SnappThemingAngularGradientRepresentation.self) {
             self.configuration = angular

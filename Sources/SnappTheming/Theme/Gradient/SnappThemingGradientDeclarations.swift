@@ -33,8 +33,12 @@ where
             rootKey: .gradients,
             configuration: Configuration(
                 fallbackColor: configuration.fallbackColor,
+                fallbackAngle: configuration.fallbackGradientAngle,
+                fallbackUnitPoint: configuration.fallbackGradientUnitPoint,
+                fallbackRadius: configuration.fallbackGradientRadius,
                 metrics: metrics,
-                colors: colors
+                colors: colors,
+                colorFormat: configuration.colorFormat
             )
         )
     }

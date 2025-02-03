@@ -58,6 +58,12 @@ public struct SnappThemingParserConfiguration: Sendable {
     /// The fallback lottie animation data to apply when no specific data for lottie animation provided.
     public let fallbackLottieAnimationData: Data
 
+    public let fallbackGradientAngle: Angle
+
+    public let fallbackGradientUnitPoint: UnitPoint
+
+    public let fallbackGradientRadius: Double
+
     /// Initializes a new configuration with optional values. Defaults are provided for each property.
     public init(
         colorFormat: SnappThemingColorFormat = .rgba,
@@ -72,7 +78,10 @@ public struct SnappThemingParserConfiguration: Sendable {
         fallbackTypographySize: CGFloat = 0.0,
         themeCacheRootURL: URL? = nil,
         themeName: String = "default",
-        fallbackLottieAnimationData: Data = .init()
+        fallbackLottieAnimationData: Data = Data(),
+        fallbackGradientAngle: Angle = Angle(degrees: 0.0),
+        fallbackGradientUnitPoint: UnitPoint = .center,
+        fallbackGradientRadius: Double = 0
     ) {
         self.colorFormat = colorFormat
         self.encodeFonts = encodeFonts
@@ -87,6 +96,9 @@ public struct SnappThemingParserConfiguration: Sendable {
         self.themeCacheRootURL = themeCacheRootURL
         self.themeName = themeName
         self.fallbackLottieAnimationData = fallbackLottieAnimationData
+        self.fallbackGradientAngle = fallbackGradientAngle
+        self.fallbackGradientUnitPoint = fallbackGradientUnitPoint
+        self.fallbackGradientRadius = fallbackGradientRadius
     }
 }
 

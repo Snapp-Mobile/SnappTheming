@@ -11,8 +11,8 @@ import SwiftUI
 public struct SnappThemingAngularGradientRepresentation {
     public let colors: [SnappThemingToken<SnappThemingColorRepresentation>]
     public let center: SnappThemingUnitPointWrapper
-    public let startAngle: Double
-    public let endAngle: Double
+    public let startAngle: SnappThemingToken<Double>
+    public let endAngle: SnappThemingToken<Double>
 }
 
 extension SnappThemingAngularGradientRepresentation: SnappThemingGradientProviding {
@@ -29,14 +29,17 @@ extension SnappThemingAngularGradientRepresentation: SnappThemingGradientProvidi
 
     public func resolve(using configuration: SnappThemingGradientConfiguration) -> SnappThemingAngularGradientConfiguration {
         let resolvedColors = colors.compactMap {
-            configuration.colors.resolver.resolve($0)?.color(using: .rgba)
+            configuration.colors.resolver.resolve($0)?.color(using: configuration.colorFormat)
         }
-        guard resolvedColors.count == colors.count else {
+        guard resolvedColors.count == colors.count,
+            let startAngle = configuration.metrics.resolver.resolve(startAngle),
+            let endAngle = configuration.metrics.resolver.resolve(endAngle)
+        else {
             return SnappThemingAngularGradientConfiguration(
                 colors: [configuration.fallbackColor],
-                center: center.value,
-                startAngle: Angle(degrees: startAngle),
-                endAngle: Angle(degrees: endAngle)
+                center: configuration.fallbackUnitPoint,
+                startAngle: configuration.fallbackAngle,
+                endAngle: configuration.fallbackAngle
             )
         }
 

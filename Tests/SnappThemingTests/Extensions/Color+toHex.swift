@@ -16,7 +16,6 @@ import SwiftUI
 extension Color {
     /// Converts a `Color` instance to a hexadecimal string representation.
     ///
-    /// - Parameter includeAlpha: If `true`, includes the alpha value in the hex string (e.g., `#RRGGBBAA`).
     /// - Returns: A string representing the color in hex format.
     func toHex() -> String? {
         #if canImport(UIKit)

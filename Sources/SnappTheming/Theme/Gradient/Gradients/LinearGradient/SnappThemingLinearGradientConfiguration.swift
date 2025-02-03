@@ -20,16 +20,4 @@ public struct SnappThemingLinearGradientConfiguration: Sendable {
 
     /// The ending point of the linear gradient.
     public let endPoint: UnitPoint
-
-    enum CodingKeys: CodingKey {
-        case colors, startPoint, endPoint
-    }
-
-    public init(
-        colors: [Color], startPoint: UnitPoint, endPoint: UnitPoint
-    ) {
-        self.colors = colors
-        self.startPoint = startPoint
-        self.endPoint = endPoint
-    }
 }
