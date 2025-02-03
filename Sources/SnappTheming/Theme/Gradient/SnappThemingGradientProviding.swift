@@ -23,11 +23,12 @@ public protocol SnappThemingGradientProviding: Codable {
     /// The shape style to be applied to the shape.
     ///
     /// - Returns: The shape style that is applied to the shape (e.g., a `LinearGradient`, `RadialGradient`, `Color`, etc.).
-    var shapeStyle: S { get }
+    // TODO: update documentation
+    func shapeStyleUsing(_ configuration: SnappThemingGradientConfiguration) -> S
 }
 
 struct SnappThemingClearShapeStyleConfiguration: SnappThemingGradientProviding {
-    var shapeStyle: some ShapeStyle {
+    func shapeStyleUsing(_ configuration: SnappThemingGradientConfiguration) -> Color {
         Color.clear
     }
 }
