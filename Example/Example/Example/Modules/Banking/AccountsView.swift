@@ -9,34 +9,34 @@ import SnappTheming
 import SwiftUI
 
 struct AccountsView: View {
-    let declaration: SnappThemingDeclaration
+    @Environment(Theme.self) private var theme
 
     var body: some View {
         VStack(spacing: 0) {
-            VStack(spacing: declaration.metrics.xlarge) {
-                CreditCardView(declaration: declaration)
+            VStack(spacing: theme.metrics.xlarge) {
+                CreditCardView()
 
                 ActionsContainer {
                     Button(action: {}) {
-                        Label("Top up", icon: declaration.images.payment)
+                        Label("Top up", icon: theme.images.payment)
                     }
 
                     Button(action: {}) {
-                        Label("Pay", icon: declaration.images.receipt)
+                        Label("Pay", icon: theme.images.receipt)
                     }
 
                     Button(action: {}) {
-                        Label("Send", icon: declaration.images.send)
+                        Label("Send", icon: theme.images.send)
                     }
 
                     Button(action: {}) {
-                        Label("More", icon: declaration.images.table)
+                        Label("More", icon: theme.images.table)
                     }
                 }
-                .buttonStyle(.actionButton(declaration))
+                .buttonStyle(.actionButton)
             }
-            .padding([.horizontal, .top], declaration.metrics.medium)
-            .padding(.bottom, declaration.metrics.large)
+            .padding([.horizontal, .top], theme.metrics.medium)
+            .padding(.bottom, theme.metrics.large)
             .background(
                 UnevenRoundedRectangle(
                     topLeadingRadius: 0,
@@ -45,28 +45,29 @@ struct AccountsView: View {
                     topTrailingRadius: 0,
                     style: .continuous
                 )
-                .fill(declaration.colors.surfaceSecondary)
+                .fill(theme.colors.surfaceSecondary)
                 .ignoresSafeArea(.all)
             )
 
-            TransactionsView(declaration: declaration)
+            TransactionsView()
         }
-        .background(declaration.colors.surfacePrimary)
+        .background(theme.colors.surfacePrimary)
         .navigationTitle("My accounts")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button(action: {}) {
-                    declaration.images.alert
+                    theme.images.alert
                 }
             }
         }
-        .tint(declaration.colors.primary)
+        .tint(theme.colors.primary)
     }
 }
 
-#Preview {
+#Preview("Light") {
     NavigationStack {
-        AccountsView(declaration: .bankingLight)
+        AccountsView()
+            .environment(Theme(.light))
     }
 }

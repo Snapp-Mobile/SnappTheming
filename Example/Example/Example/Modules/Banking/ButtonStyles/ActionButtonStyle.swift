@@ -10,36 +10,26 @@ import SnappTheming
 import SwiftUI
 
 struct ActionButtonStyle: ButtonStyle {
-    private let declaration: SnappThemingDeclaration
-
-    init(declaration: SnappThemingDeclaration) {
-        self.declaration = declaration
-    }
-
     func makeBody(configuration: Configuration) -> some View {
         configuration.label.labelStyle(
-            ActionButtonLabelStyle(
-                declaration: declaration, isPressed: configuration.isPressed))
+            ActionButtonLabelStyle(isPressed: configuration.isPressed))
     }
 
     private struct ActionButtonLabelStyle: LabelStyle {
-        private let declaration: SnappThemingDeclaration
-
-        @Environment(\.isEnabled)
-        private var isEnabled
         private let isPressed: Bool
+        @Environment(\.isEnabled) private var isEnabled
+        @Environment(Theme.self) private var theme
 
-        init(declaration: SnappThemingDeclaration, isPressed: Bool) {
-            self.declaration = declaration
+        init(isPressed: Bool) {
             self.isPressed = isPressed
         }
 
         func makeBody(configuration: Configuration) -> some View {
-            let style: SnappThemingButtonStyleResolver = declaration
+            let style: SnappThemingButtonStyleResolver = theme
                 .buttonStyles.action
-            let iconSize = declaration.metrics.iconSize
-            let buttonSize = declaration.metrics.buttonSize
-            VStack(spacing: declaration.metrics.small) {
+            let iconSize = theme.metrics.iconSize
+            let buttonSize = theme.metrics.buttonSize
+            VStack(spacing: theme.metrics.small) {
                 ZStack {
                     configuration.icon
                         .frame(width: iconSize, height: iconSize)
@@ -52,10 +42,10 @@ struct ActionButtonStyle: ButtonStyle {
                 )
                 .clipShape(style.shape.value)
                 .shadow(
-                    color: declaration.colors.shadow,
-                    radius: declaration.metrics.shadowRadius,
-                    x: declaration.metrics.shadowXOffset,
-                    y: declaration.metrics.shadowYOffset)
+                    color: theme.colors.shadow,
+                    radius: theme.metrics.shadowRadius,
+                    x: theme.metrics.shadowXOffset,
+                    y: theme.metrics.shadowYOffset)
 
                 configuration.title
                     .font(style.typography.font)
@@ -75,8 +65,8 @@ extension SnappThemingInteractiveColor {
 }
 
 extension ButtonStyle where Self == ActionButtonStyle {
-    static func actionButton(_ declaration: SnappThemingDeclaration) -> Self {
-        .init(declaration: declaration)
+    static var actionButton: Self {
+        .init()
     }
 }
 
@@ -89,6 +79,6 @@ extension ButtonStyle where Self == ActionButtonStyle {
                 Image(systemName: "xmark")
             }
         }
-        .buttonStyle(.actionButton(.bankingLight))
+        .buttonStyle(.actionButton)
     }
 }

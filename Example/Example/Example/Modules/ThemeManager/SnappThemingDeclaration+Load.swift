@@ -1,21 +1,21 @@
 //
-//  PreviewTheme.swift
+//  SnappThemingDeclaration+Load.swift
 //  Example
 //
-//  Created by Volodymyr Voiko on 30.01.2025.
+//  Created by Volodymyr Voiko on 03.02.2025.
 //
 
 import OSLog
 import SnappTheming
 
 extension SnappThemingDeclaration {
-    static func empty(using configuration: SnappThemingParserConfiguration)
+    fileprivate static func empty(using configuration: SnappThemingParserConfiguration)
         -> SnappThemingDeclaration
     {
         SnappThemingDeclaration(using: configuration)
     }
 
-    static func preview(
+    static func load(
         json: String,
         using configuration: SnappThemingParserConfiguration = .default
     ) -> SnappThemingDeclaration {
@@ -37,7 +37,7 @@ extension SnappThemingDeclaration {
         }
     }
 
-    static func preview(
+    static func load(
         filename: String,
         using configuration: SnappThemingParserConfiguration = .default
     ) -> SnappThemingDeclaration {
@@ -54,7 +54,7 @@ extension SnappThemingDeclaration {
         do {
             let jsonData = try Data(contentsOf: fileURL)
             let jsonString = String(data: jsonData, encoding: .utf8) ?? "{}"
-            return .preview(json: jsonString, using: configuration)
+            return .load(json: jsonString, using: configuration)
         } catch {
             os_log(
                 .error,
@@ -64,7 +64,5 @@ extension SnappThemingDeclaration {
         }
     }
 
-    static let sample: SnappThemingDeclaration = .preview(json: sampleJSON)
-    static let bankingLight: SnappThemingDeclaration = .preview(
-        filename: "banking_light")
+    static let sample: SnappThemingDeclaration = .load(json: sampleJSON)
 }

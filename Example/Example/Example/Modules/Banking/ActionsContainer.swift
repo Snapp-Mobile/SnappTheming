@@ -44,5 +44,5 @@ struct ActionsContainer<Content: View>: View {
             Label("Title 3", systemImage: "xmark")
         }
     }
-    .buttonStyle(.actionButton(.bankingLight))
+    .buttonStyle(.actionButton)
 }
