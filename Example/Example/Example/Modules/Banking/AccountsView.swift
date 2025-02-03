@@ -48,7 +48,6 @@ struct AccountsView: View {
                 .fill(declaration.colors.surfaceSecondary)
                 .ignoresSafeArea(.all)
             )
-            .shadow(color: Color.black.opacity(0.15), radius: 5)
 
             TransactionsView(declaration: declaration)
         }

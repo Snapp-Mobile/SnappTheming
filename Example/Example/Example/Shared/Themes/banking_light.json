@@ -7,9 +7,11 @@
         "textColorPrimary": "$colors/baseBlack",
         "textColorPrimaryInverted": "$colors/baseWhite",
         "textColorSecondary": "$colors/baseGray",
+        "shadow": "#B2B7C780",
         "baseWhite": "#FFFFFF",
         "baseBlack": "#000000",
-        "baseGray": "#91949F"
+        "baseGray": "#91949F",
+        "clear": "#00000000"
     },
     "metrics": {
         "xsmall": 4,
@@ -24,7 +26,10 @@
         "creditCardAspectRatio": 1.81,
         "creditCardLogoSize": 40,
         "creditCardNetworkLogoSize": 42,
-        "transactionIconSize": 40
+        "transactionIconSize": 40,
+        "shadowRadius": 12,
+        "shadowXOffset": 0,
+        "shadowYOffset": 4
     },
     "fonts": {
         "Inter-Bold": {
@@ -63,6 +68,24 @@
         "body": {
             "font": "$fonts/regular",
             "fontSize": 14
+        }
+    },
+    "shapes": {
+        "circle": {
+            "type": "circle"
+        }
+    },
+    "buttonStyles": {
+        "action": {
+            "surfaceColor": {
+                "normal": "$colors/surfacePrimary",
+                "pressed": "$colors/surfaceSecondary"
+            },
+            "textColor": "$colors/textColorPrimary",
+            "borderColor": "$colors/clear",
+            "borderWidth": 0,
+            "shape": "$shapes/circle",
+            "typography": "$typography/subheadline"
         }
     },
     "images": {
