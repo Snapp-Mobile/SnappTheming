@@ -9,8 +9,6 @@ import Foundation
 import SnappTheming
 import SwiftUI
 
-// TODO: Create button style in theme
-
 struct ActionButtonStyle: ButtonStyle {
     private let declaration: SnappThemingDeclaration
 
@@ -19,39 +17,60 @@ struct ActionButtonStyle: ButtonStyle {
     }
 
     func makeBody(configuration: Configuration) -> some View {
-        configuration.label.labelStyle(.actionButton(declaration))
-    }
-}
-
-struct ActionButtonLabelStyle: LabelStyle {
-    private let declaration: SnappThemingDeclaration
-
-    init(declaration: SnappThemingDeclaration) {
-        self.declaration = declaration
+        configuration.label.labelStyle(
+            ActionButtonLabelStyle(
+                declaration: declaration, isPressed: configuration.isPressed))
     }
 
-    func makeBody(configuration: Configuration) -> some View {
-        let iconSize = declaration.metrics.iconSize
-        let buttonSize = declaration.metrics.buttonSize
-        VStack(spacing: declaration.metrics.small) {
-            ZStack {
-                configuration.icon
-                    .frame(width: iconSize, height: iconSize)
+    private struct ActionButtonLabelStyle: LabelStyle {
+        private let declaration: SnappThemingDeclaration
+
+        @Environment(\.isEnabled)
+        private var isEnabled
+        private let isPressed: Bool
+
+        init(declaration: SnappThemingDeclaration, isPressed: Bool) {
+            self.declaration = declaration
+            self.isPressed = isPressed
+        }
+
+        func makeBody(configuration: Configuration) -> some View {
+            let style: SnappThemingButtonStyleResolver = declaration
+                .buttonStyles.action
+            let iconSize = declaration.metrics.iconSize
+            let buttonSize = declaration.metrics.buttonSize
+            VStack(spacing: declaration.metrics.small) {
+                ZStack {
+                    configuration.icon
+                        .frame(width: iconSize, height: iconSize)
+                }
+                .frame(width: buttonSize, height: buttonSize)
+                .background(
+                    style.surfaceColor.color(
+                        isPressed: isPressed,
+                        isEnabled: isEnabled)
+                )
+                .clipShape(style.shape.value)
+                .shadow(
+                    color: declaration.colors.shadow,
+                    radius: declaration.metrics.shadowRadius,
+                    x: declaration.metrics.shadowXOffset,
+                    y: declaration.metrics.shadowYOffset)
+
+                configuration.title
+                    .font(style.typography.font)
+                    .foregroundStyle(
+                        style.textColor.color(
+                            isPressed: isPressed, isEnabled: isEnabled))
             }
-            .frame(width: buttonSize, height: buttonSize)
-            .background(Circle().fill(declaration.colors.surfacePrimary))
-            .shadow(color: .gray.opacity(0.1), radius: 12, x: 0, y: 4)
-
-            configuration.title
-                .font(declaration.typography.body)
-                .foregroundStyle(declaration.colors.textColorPrimary)
         }
     }
 }
 
-extension LabelStyle where Self == ActionButtonLabelStyle {
-    static func actionButton(_ declaration: SnappThemingDeclaration) -> Self {
-        .init(declaration: declaration)
+extension SnappThemingInteractiveColor {
+    fileprivate func color(isPressed: Bool, isEnabled: Bool) -> Color {
+        guard isEnabled else { return disabled }
+        return isPressed ? pressed : normal
     }
 }
 

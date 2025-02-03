@@ -48,7 +48,9 @@ struct CreditCardView: View {
         }
         .frame(maxWidth: .infinity)
         .aspectRatio(declaration.metrics.creditCardAspectRatio, contentMode: .fill)
-        .shadow(radius: declaration.metrics.medium)
+        .shadow(
+            color: declaration.colors.shadow,
+            radius: declaration.metrics.shadowRadius)
     }
 }
 
