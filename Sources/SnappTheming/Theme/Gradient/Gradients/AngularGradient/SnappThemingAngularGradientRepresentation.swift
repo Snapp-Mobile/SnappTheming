@@ -7,16 +7,29 @@
 
 import SwiftUI
 
-// TODO: add documentation
+/// Representation of an angular gradient.
 public struct SnappThemingAngularGradientRepresentation {
+    /// The colors used in the gradient, represented as theming tokens.
     public let colors: [SnappThemingToken<SnappThemingColorRepresentation>]
+
+    /// The center point of the gradient.
     public let center: SnappThemingUnitPointWrapper
+
+    /// The starting angle of the gradient, represented as a theming token.
     public let startAngle: SnappThemingToken<Double>
+
+    /// The ending angle of the gradient, represented as a theming token.
     public let endAngle: SnappThemingToken<Double>
 }
 
 extension SnappThemingAngularGradientRepresentation: SnappThemingGradientProviding {
-    /// Creates an Angular Gradient shape style using the configuration properties.
+    /// Creates an `AngularGradient` using the configuration properties.
+    ///
+    /// This method resolves the angular gradient representation using the given
+    /// `SnappThemingGradientConfiguration` and returns a SwiftUI `AngularGradient` instance that can be applied to a shape.
+    ///
+    /// - Parameter configuration: The gradient configuration used to resolve colors, angles, and positioning.
+    /// - Returns: An `AngularGradient` based on the resolved configuration.
     public func shapeStyleUsing(_ configuration: SnappThemingGradientConfiguration) -> AngularGradient {
         let angularGradientRepresentation = resolve(using: configuration)
         return AngularGradient(
@@ -27,6 +40,13 @@ extension SnappThemingAngularGradientRepresentation: SnappThemingGradientProvidi
         )
     }
 
+    /// Resolves the gradient representation using the given configuration.
+    ///
+    /// This method attempts to resolve the colors and angles based on the provided
+    /// `SnappThemingGradientConfiguration`. If resolution fails, it falls back to default values from the configuration.
+    ///
+    /// - Parameter configuration: The configuration used to resolve the gradient properties.
+    /// - Returns: A `SnappThemingAngularGradientConfiguration` containing the resolved properties.
     public func resolve(using configuration: SnappThemingGradientConfiguration) -> SnappThemingAngularGradientConfiguration {
         let resolvedColors = colors.compactMap {
             configuration.colors.resolver.resolve($0)?.color(using: configuration.colorFormat)

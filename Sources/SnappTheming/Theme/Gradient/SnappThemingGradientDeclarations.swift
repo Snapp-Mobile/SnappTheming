@@ -17,11 +17,6 @@ where
     DeclaredValue == SnappThemingGradientRepresentation,
     Configuration == SnappThemingGradientConfiguration
 {
-    /// Initializes the declarations for resolving shape styles in the theming system.
-    ///
-    /// - Parameters:
-    ///   - cache: An optional cache of theming tokens for shape styles.
-    ///   - configuration: The parser configuration, defaulting to `.default`.
     public init(
         cache: [String: SnappThemingToken<DeclaredValue>]?,
         metrics: SnappThemingMetricDeclarations,
