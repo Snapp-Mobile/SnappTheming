@@ -9,51 +9,52 @@ import SnappTheming
 import SwiftUI
 
 struct CreditCardView: View {
-    let declaration: SnappThemingDeclaration
+    @Environment(Theme.self) private var theme
 
     var body: some View {
-        VStack(alignment: .leading, spacing: declaration.metrics.medium) {
+        VStack(alignment: .leading, spacing: theme.metrics.medium) {
             HStack(alignment: .center) {
                 Image("snapp_themeing_logo")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: declaration.metrics.creditCardLogoSize)
+                    .frame(width: theme.metrics.creditCardLogoSize)
                 Text("Snapp")
-                    .font(declaration.typography.title)
+                    .font(theme.typography.title)
 
                 Spacer()
 
                 Text(3120.7, format: .currency(code: "EUR").precision(.fractionLength(1)))
-                    .font(declaration.typography.largeTitle)
+                    .font(theme.typography.largeTitle)
             }
 
             Spacer()
 
             HStack(alignment: .bottom) {
                 Text("•••• 2381")
-                    .font(declaration.typography.subheadline)
+                    .font(theme.typography.subheadline)
                 Spacer()
                 Image("mastercard_logo")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(maxHeight: declaration.metrics.creditCardNetworkLogoSize)
+                    .frame(maxHeight: theme.metrics.creditCardNetworkLogoSize)
             }
         }
-        .foregroundStyle(declaration.colors.textColorPrimaryInverted)
-        .padding(declaration.metrics.medium)
+        .foregroundStyle(theme.colors.textColorPrimaryInverted)
+        .padding(theme.metrics.medium)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(declaration.colors.creditCard)
-        .clipShape(declaration.shapes.creditCard)
+        .background(theme.colors.creditCard)
+        .clipShape(theme.shapes.creditCard)
         .frame(maxWidth: .infinity)
-        .aspectRatio(declaration.metrics.creditCardAspectRatio, contentMode: .fill)
+        .aspectRatio(theme.metrics.creditCardAspectRatio, contentMode: .fill)
         .shadow(
-            color: declaration.colors.shadow,
-            radius: declaration.metrics.shadowRadius)
+            color: theme.colors.shadow,
+            radius: theme.metrics.shadowRadius)
     }
 }
 
 #Preview {
-    CreditCardView(declaration: .bankingLight)
+    CreditCardView()
+        .environment(Theme(.light))
         .frame(width: 315, height: 174)
         .padding()
 }

@@ -35,6 +35,7 @@ struct ExampleApp: App {
     var body: some Scene {
         WindowGroup {
             MainView(json: json, configuration: configuration)
+                .environment(Theme())
         }
     }
 }

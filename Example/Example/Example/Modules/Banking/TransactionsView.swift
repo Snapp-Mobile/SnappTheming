@@ -9,33 +9,34 @@ import SnappTheming
 import SwiftUI
 
 struct TransactionsView: View {
-    let declaration: SnappThemingDeclaration
+    @Environment(Theme.self) private var theme
 
     var body: some View {
         VStack(spacing: 0) {
             HStack {
                 Text("Recent Transactions")
-                    .font(declaration.typography.title)
+                    .font(theme.typography.title)
                 Spacer()
                 Button {
                 } label: {
-                    declaration.images.search
+                    theme.images.search
                 }
             }
-            .padding(declaration.metrics.medium)
-            .background(declaration.colors.surfacePrimary)
+            .padding(theme.metrics.medium)
+            .background(theme.colors.surfacePrimary)
 
             Divider()
 
             ScrollView {
-                ForEach(Transaction.allCases) {
-                    TransactionItemView(declaration: declaration, transaction: $0)
-                }
+                ForEach(
+                    Transaction.allCases,
+                    content: TransactionItemView.init(transaction:))
             }
         }
     }
 }
 
 #Preview {
-    TransactionsView(declaration: .bankingLight)
+    TransactionsView()
+        .environment(Theme(.light))
 }

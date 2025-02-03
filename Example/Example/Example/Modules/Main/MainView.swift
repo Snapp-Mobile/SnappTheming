@@ -151,8 +151,7 @@ struct MainView: View {
                     .tag(Tab.json)
 
                     NavigationStack {
-                        // TODO: Replace with proper theme
-                        AccountsView(declaration: .bankingLight)
+                        AccountsView()
                     }
                     .tabItem { Tab.banking.label }
                     .tag(Tab.banking)

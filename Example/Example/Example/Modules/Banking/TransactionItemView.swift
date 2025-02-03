@@ -9,12 +9,12 @@ import SnappTheming
 import SwiftUI
 
 struct TransactionItemView: View {
-    let declaration: SnappThemingDeclaration
+    @Environment(Theme.self) private var theme
     let transaction: Transaction
 
     var body: some View {
-        HStack(spacing: declaration.metrics.medium) {
-            let imageSize: CGFloat = declaration.metrics.transactionIconSize
+        HStack(spacing: theme.metrics.medium) {
+            let imageSize: CGFloat = theme.metrics.transactionIconSize
             ZStack {
                 Image(transaction.identity.image)
                     .resizable()
@@ -22,38 +22,39 @@ struct TransactionItemView: View {
                     .frame(width: imageSize, height: imageSize)
             }
             .frame(width: imageSize, height: imageSize)
-            .background(declaration.colors.baseBlack)
+            .background(theme.colors.baseBlack)
             .clipShape(Circle())
 
-            VStack(alignment: .leading, spacing: declaration.metrics.xsmall) {
+            VStack(alignment: .leading, spacing: theme.metrics.xsmall) {
                 HStack {
                     Text(transaction.identity.name)
                     Spacer()
                     Text(transaction.amount, format: .currency(code: "EUR"))
                 }
-                .font(declaration.typography.headline)
-                .foregroundStyle(declaration.colors.textColorPrimary)
+                .font(theme.typography.headline)
+                .foregroundStyle(theme.colors.textColorPrimary)
 
                 HStack {
                     Text(transaction.category.rawValue)
                     Spacer()
-                    Text(transaction.date, format: .relative(presentation: .named))
+                    Text(
+                        transaction.date,
+                        format: .relative(presentation: .named))
                 }
-                .font(declaration.typography.subheadline)
-                .foregroundStyle(declaration.colors.textColorSecondary)
+                .font(theme.typography.subheadline)
+                .foregroundStyle(theme.colors.textColorSecondary)
             }
         }
-        .padding(.horizontal, declaration.metrics.medium)
-        .padding(.vertical, declaration.metrics.small)
+        .padding(.horizontal, theme.metrics.medium)
+        .padding(.vertical, theme.metrics.small)
     }
 }
 
 #Preview {
     VStack(spacing: 0) {
-        ForEach(Transaction.allCases) {
-            TransactionItemView(
-                declaration: .bankingLight,
-                transaction: $0)
-        }
+        ForEach(
+            Transaction.allCases,
+            content: TransactionItemView.init(transaction:))
     }
+    .environment(Theme(.light))
 }
