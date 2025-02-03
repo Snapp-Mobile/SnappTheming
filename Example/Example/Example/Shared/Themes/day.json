@@ -27,6 +27,8 @@
         "stateError": "#E94E4A",
         "stateWarm": "#E94E4A",
         "stateCold": "#20B0FF",
+        "stateChargingStart": "#4DA8E9",
+        "stateChargingEnd": "#4DE97B",
         "stateCharging": "#14B575",
         "borderSubtle": "#FFFFFF0F",
         "borderSubtleAlt": "#FFFFFF0F",
@@ -45,8 +47,8 @@
     "gradients": {
         "progress": {
             "colors": [
-                "#4FFEAA",
-                "#54FACF"
+                "$colors/stateChargingStart",
+                "$colors/stateChargingEnd"
             ],
             "startPoint": "leading",
             "endPoint": "trailing"
