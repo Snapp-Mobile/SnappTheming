@@ -42,10 +42,8 @@ struct CreditCardView: View {
         .foregroundStyle(declaration.colors.textColorPrimaryInverted)
         .padding(declaration.metrics.medium)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background {
-            RoundedRectangle(cornerRadius: declaration.metrics.medium)
-                .fill(declaration.colors.baseBlack)
-        }
+        .background(declaration.colors.creditCard)
+        .clipShape(declaration.shapes.creditCard)
         .frame(maxWidth: .infinity)
         .aspectRatio(declaration.metrics.creditCardAspectRatio, contentMode: .fill)
         .shadow(

@@ -7,6 +7,7 @@
         "textColorPrimary": "$colors/baseBlack",
         "textColorPrimaryInverted": "$colors/baseWhite",
         "textColorSecondary": "$colors/baseGray",
+        "creditCard": "$colors/baseBlack",
         "shadow": "#B2B7C780",
         "baseWhite": "#FFFFFF",
         "baseBlack": "#000000",
@@ -73,6 +74,12 @@
     "shapes": {
         "circle": {
             "type": "circle"
+        },
+        "creditCard": {
+            "type": "roundedRectangle",
+            "value": {
+                "cornerRadius": 16
+            }
         }
     },
     "buttonStyles": {
