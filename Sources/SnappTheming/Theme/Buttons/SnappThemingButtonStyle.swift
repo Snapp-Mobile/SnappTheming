@@ -67,7 +67,7 @@ public struct SnappThemingButtonStyle: ButtonStyle {
     /// - Parameter configuration: The configuration object containing the button's label and state.
     /// - Returns: A view representing the button with applied styles.
     public func makeBody(configuration: Configuration) -> some View {
-        let shape = shape.value
+        let shape = shape.shape
         configuration.label
             .font(font)
             .foregroundStyle(textColor.value(for: configuration, isEnabled: isEnabled))

@@ -64,19 +64,7 @@ where
             let borderColor = configuration.interactiveColors.resolver.resolve(representation.borderColor)?.resolver(
                 colorFormat: configuration.colorFormat, colors: configuration.colors
             ).interactiveColor,
-            let shape = configuration.shapes
-                .resolver.resolve(representation.shape)?
-                .shapeType
-                .resolve(
-                    using: SnappThemingShapeConfiguration(
-                        fallbackShape: configuration.fallbackShape,
-                        fallbackCornerRadius: configuration.fallbackShape.cornerRadius,
-                        fallbackRoundedCornerStyle: .circular,
-                        fallbackCornerRadii: .init(),
-                        themeConfiguration: configuration.themeConfiguration,
-                        metrics: configuration.metrics
-                    )
-                ),
+            let shape = configuration.shapes.resolver.resolve(representation.shape),
             let typography = configuration.typographies.resolver.resolve(representation.typography),
             let font = configuration.fonts.resolver.resolve(typography.font),
             let fontSize = configuration.metrics.resolver.resolve(typography.fontSize)
@@ -95,7 +83,7 @@ where
             textColor: textColor,
             borderColor: borderColor,
             borderWidth: borderWidth,
-            shape: shape,
+            shape: configuration.shapes.configuration.resolve(shape),
             typography: .init(font.resolver, fontSize: fontSize.cgFloat)
         )
     }

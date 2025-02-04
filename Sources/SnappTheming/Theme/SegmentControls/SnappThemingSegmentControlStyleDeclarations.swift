@@ -67,18 +67,7 @@ where
                 .resolve(representation.borderColor)?
                 .resolver(colorFormat: configuration.colorFormat, colors: configuration.colors)
                 .interactiveColor,
-            let shape = configuration.shapes.resolver
-                .resolve(representation.shape)?.shapeType
-                .resolve(
-                    using: SnappThemingShapeConfiguration(
-                        fallbackShape: configuration.fallbackShape,
-                        fallbackCornerRadius: configuration.fallbackShape.cornerRadius,
-                        fallbackRoundedCornerStyle: .circular,
-                        fallbackCornerRadii: .init(),
-                        themeConfiguration: configuration.themeConfiguration,
-                        metrics: configuration.metrics
-                    )
-                ),
+            let shape = configuration.shapes.resolver.resolve(representation.shape),
             let selectedButtonStyle = configuration.buttonStyles.resolver
                 .resolve(representation.selectedButtonStyle)?
                 .resolver(using: configuration),
@@ -104,7 +93,7 @@ where
             borderColor: borderColor,
             borderWidth: borderWidth,
             innerPadding: padding,
-            shape: shape
+            shape: configuration.shapes.configuration.resolve(shape)
         )
     }
 }
