@@ -2,12 +2,12 @@
     "colors": {
         "primary": "#452BE9",
         "secondary": "#7EABDE",
-        "surfacePrimary": "$colors/baseWhite",
-        "surfaceSecondary": "#F4F5FA",
-        "textColorPrimary": "$colors/baseBlack",
+        "surfacePrimary": "$colors/baseBlack",
+        "surfaceSecondary": "#1E1E1E",
+        "textColorPrimary": "$colors/baseWhite",
         "textColorPrimaryInverted": "$colors/baseWhite",
         "textColorSecondary": "$colors/baseGray",
-        "shadow": "#B2B7C780",
+        "shadow": "#B2B7C740",
         "baseWhite": "#FFFFFF",
         "baseBlack": "#000000",
         "baseGray": "#91949F",
@@ -37,9 +37,9 @@
         "creditCardLogoSize": 40,
         "creditCardNetworkLogoSize": 42,
         "transactionIconSize": 40,
-        "shadowRadius": 12,
+        "shadowRadius": 6,
         "shadowXOffset": 0,
-        "shadowYOffset": 4
+        "shadowYOffset": 2
     },
     "fonts": {
         "Inter-Bold": {
