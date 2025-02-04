@@ -6,35 +6,19 @@
 //
 
 import SnappTheming
+import SnappThemingSVGSupport
 import SwiftUI
-
-#if !os(visionOS)
-    import SnappThemingSVGSupport
-#endif
 
 @main
 struct ExampleApp: App {
-    var json: String = sampleJSON
-    let configuration: SnappThemingParserConfiguration
-
     init() {
-        guard let themeJSON = AvailableTheme.night.json else {
-            fatalError("Couldn't find the theme JSON")
-        }
-
-        #if !os(visionOS)
-            // Do this for turning the SVG processor on
-            SnappThemingImageProcessorsRegistry.shared.register(.svg)
-        #endif
-
-        self.configuration = AvailableTheme.night.configuration
-
-        self.json = themeJSON
+        // Do this for turning the SVG processor on
+        SnappThemingImageProcessorsRegistry.shared.register(.svg)
     }
 
     var body: some Scene {
         WindowGroup {
-            MainView(json: json, configuration: configuration)
+            MainView()
                 .environment(Theme())
         }
     }

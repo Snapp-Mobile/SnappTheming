@@ -19,44 +19,32 @@ struct ColorView: View {
 }
 
 struct ColorsViewer: View {
-    let declarations: SnappThemingColorDeclarations
-    @FocusState var focusedKey: String?
+    @Environment(Theme.self) private var theme
 
     var body: some View {
         List {
             Section {
-                ForEach(declarations.keys, id: \.self) { key in
-                    let color: Color = declarations[dynamicMember: key]
-                    LabeledContent(
-                        content: {
-                            HStack {
-                                ColorView(color: color)
-                                    .environment(\.colorScheme, .light)
-                                    .scaleEffect(focusedKey == key ? 1.2 : 1.0)
-                                ColorView(color: color)
-                                    .environment(\.colorScheme, .dark)
-                                    .scaleEffect(focusedKey == key ? 1.2 : 1.0)
-                            }
-                        },
-                        label: {
-                            Text(key)
-                                .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
+                ForEach(theme.colors.keys, id: \.self) { key in
+                    let color: Color = theme.colors[dynamicMember: key]
+                    LabeledContent(key) {
+                        HStack {
+                            ColorView(color: color)
+                                .environment(\.colorScheme, .light)
+                            ColorView(color: color)
+                                .environment(\.colorScheme, .dark)
                         }
-                    )
-                    .focusable(true)
-                    .focused($focusedKey, equals: key)
+                    }
                 }
             }
         }
         .navigationTitle("Colors")
-        #if os(iOS) || targetEnvironment(macCatalyst)
-            .navigationBarTitleDisplayMode(.inline)
-        #endif
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 #Preview {
     NavigationView {
-        ColorsViewer(declarations: SnappThemingDeclaration.preview.colors)
+        ColorsViewer()
+            .environment(Theme(.default))
     }
 }

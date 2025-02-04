@@ -9,31 +9,27 @@ import SnappTheming
 import SwiftUI
 
 struct FontsViewer: View {
-    let declarations: SnappThemingFontDeclarations
-    @FocusState var focusedKey: String?
+    @Environment(Theme.self) private var theme
 
     var body: some View {
         List {
             Section {
-                ForEach(declarations.keys, id: \.self) { key in
-                    let resolver: SnappThemingFontResolver = declarations[dynamicMember: key]
+                ForEach(theme.fonts.keys, id: \.self) { key in
+                    let resolver: SnappThemingFontResolver = theme.fonts[dynamicMember: key]
                     Text(key)
                         .font(resolver.font(size: 14.0))
-                        .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
-                        .focusable(true)
-                        .focused($focusedKey, equals: key)
+                        .foregroundStyle(.primary)
                 }
             }
         }
         .navigationTitle("Fonts")
-        #if os(iOS) || targetEnvironment(macCatalyst)
-            .navigationBarTitleDisplayMode(.inline)
-        #endif
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 #Preview {
     NavigationView {
-        FontsViewer(declarations: SnappThemingDeclaration.preview.fonts)
+        FontsViewer()
+            .environment(Theme(.default))
     }
 }
