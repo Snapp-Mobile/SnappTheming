@@ -10,18 +10,18 @@ import SnappThemingSwiftUIHelpers
 import SwiftUI
 
 struct ButtonsViewer: View {
-    let declarations: SnappThemingButtonStyleDeclarations
+    @Environment(Theme.self) private var theme
 
     var body: some View {
         List {
             Section {
-                ForEach(declarations.keys, id: \.self) { key in
+                ForEach(theme.buttonStyles.keys, id: \.self) { key in
                     LabeledContent(key) {
                         Button {
                         } label: {
                             Image(systemName: "gearshape")
                         }
-                        .buttonStyle(declarations[dynamicMember: key])
+                        .buttonStyle(theme.buttonStyles[dynamicMember: key])
                         .frame(minWidth: (key == "primaryCritical" || key == "primaryBrand") ? 128 : 64, minHeight: 64)
                     }
                 }
@@ -36,6 +36,7 @@ struct ButtonsViewer: View {
 
 #Preview {
     NavigationView {
-        ButtonsViewer(declarations: SnappThemingDeclaration.preview.buttonStyles)
+        ButtonsViewer()
+            .environment(Theme(.default))
     }
 }

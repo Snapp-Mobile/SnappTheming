@@ -11,14 +11,14 @@ import SnappThemingSwiftUIHelpers
 import SwiftUI
 
 struct AnimationsViewer: View {
-    let declarations: SnappThemingAnimationDeclarations
+    @Environment(Theme.self) private var theme
 
     var body: some View {
         List {
             Section {
-                ForEach(declarations.keys, id: \.self) { key in
+                ForEach(theme.animations.keys, id: \.self) { key in
                     LabeledContent(key) {
-                        LottieView(animation: try? .from(data: declarations.lego.data))
+                        LottieView(animation: try? .from(data: theme.animations.lego.data))
                             .playing(loopMode: .loop)
                             .frame(height: 300)
                     }
@@ -28,4 +28,9 @@ struct AnimationsViewer: View {
         .navigationTitle("Animations")
         .navigationBarTitleDisplayMode(.inline)
     }
+}
+
+#Preview {
+    AnimationsViewer()
+        .environment(Theme(.default))
 }

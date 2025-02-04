@@ -9,13 +9,13 @@ import SnappTheming
 import SwiftUI
 
 struct TypographyViewer: View {
-    let declarations: SnappThemingTypographyDeclarations
+    @Environment(Theme.self) private var theme
 
     var body: some View {
         List {
             Section {
-                ForEach(declarations.keys, id: \.self) { key in
-                    let font: Font = declarations[dynamicMember: key]
+                ForEach(theme.typography.keys, id: \.self) { key in
+                    let font: Font = theme.typography[dynamicMember: key]
                     Text(key)
                         .lineLimit(1)
                         .font(font)
@@ -30,6 +30,7 @@ struct TypographyViewer: View {
 
 #Preview {
     NavigationView {
-        TypographyViewer(declarations: SnappThemingDeclaration.preview.typography)
+        TypographyViewer()
+            .environment(Theme(.default))
     }
 }

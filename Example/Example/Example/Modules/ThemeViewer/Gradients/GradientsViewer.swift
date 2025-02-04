@@ -16,18 +16,18 @@ struct NamedGradient: Identifiable {
 }
 
 struct GradientsViewer: View {
-    let declarations: SnappThemingGradientDeclarations
+    @Environment(Theme.self) private var theme
     @State var selectedShape: NamedGradient?
 
     var body: some View {
         List {
             Section {
-                ForEach(declarations.keys, id: \.self) { key in
+                ForEach(theme.gradients.keys, id: \.self) { key in
                     LabeledContent(key) {
                         Button {
-                            selectedShape = .init(name: key, shape: AnyShapeStyle(declarations[dynamicMember: key]))
+                            selectedShape = .init(name: key, shape: AnyShapeStyle(theme.gradients[dynamicMember: key]))
                         } label: {
-                            GradientView(style: declarations[dynamicMember: key])
+                            GradientView(style: theme.gradients[dynamicMember: key])
                         }
                     }
                 }
@@ -49,6 +49,7 @@ struct GradientsViewer: View {
 
 #Preview {
     NavigationView {
-        ColorsViewer(declarations: SnappThemingDeclaration.preview.colors)
+        ColorsViewer()
+            .environment(Theme(.default))
     }
 }

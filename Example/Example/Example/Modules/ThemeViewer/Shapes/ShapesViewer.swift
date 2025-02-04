@@ -9,15 +9,15 @@ import SnappTheming
 import SwiftUI
 
 struct ShapesViewer: View {
-    let declarations: SnappThemingShapeDeclarations
+    @Environment(Theme.self) private var theme
     @State var states: [String: Bool] = [:]
 
     var body: some View {
         List {
             Section {
-                ForEach(declarations.keys, id: \.self) { key in
+                ForEach(theme.shapes.keys, id: \.self) { key in
                     LabeledContent(key) {
-                        declarations[dynamicMember: key]
+                        theme.shapes[dynamicMember: key]
                             .stroke(Color.accentColor)
                             .frame(maxWidth: 80, minHeight: 30)
                             .padding(.vertical, 4)
@@ -32,6 +32,7 @@ struct ShapesViewer: View {
 
 #Preview {
     NavigationView {
-        ShapesViewer(declarations: SnappThemingDeclaration.preview.shapes)
+        ShapesViewer()
+            .environment(Theme(.default))
     }
 }

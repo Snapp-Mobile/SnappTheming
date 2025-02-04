@@ -19,13 +19,13 @@ struct ColorView: View {
 }
 
 struct ColorsViewer: View {
-    let declarations: SnappThemingColorDeclarations
+    @Environment(Theme.self) private var theme
 
     var body: some View {
         List {
             Section {
-                ForEach(declarations.keys, id: \.self) { key in
-                    let color: Color = declarations[dynamicMember: key]
+                ForEach(theme.colors.keys, id: \.self) { key in
+                    let color: Color = theme.colors[dynamicMember: key]
                     LabeledContent(key) {
                         HStack {
                             ColorView(color: color)
@@ -44,6 +44,7 @@ struct ColorsViewer: View {
 
 #Preview {
     NavigationView {
-        ColorsViewer(declarations: SnappThemingDeclaration.preview.colors)
+        ColorsViewer()
+            .environment(Theme(.default))
     }
 }

@@ -9,14 +9,14 @@ import SnappTheming
 import SwiftUI
 
 struct ImagesViewer: View {
-    let declarations: SnappThemingImageDeclarations
+    @Environment(Theme.self) private var theme
     @State var selectedImage: NamedImage?
 
     var body: some View {
         List {
             Section {
-                ForEach(declarations.keys, id: \.self) { key in
-                    let image: Image = declarations[dynamicMember: key]
+                ForEach(theme.images.keys, id: \.self) { key in
+                    let image: Image = theme.images[dynamicMember: key]
                     LabeledContent(
                         key,
                         content: {
@@ -43,6 +43,7 @@ struct ImagesViewer: View {
 
 #Preview {
     NavigationView {
-        ImagesViewer(declarations: SnappThemingDeclaration.preview.images)
+        ImagesViewer()
+            .environment(Theme(.default))
     }
 }
