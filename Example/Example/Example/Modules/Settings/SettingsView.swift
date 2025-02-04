@@ -24,6 +24,7 @@ struct SettingsView: View {
                     Picker(selection: $theme.source) {
                         ForEach(theme.availableSources) { source in
                             Text(source.description)
+                                .tag(source)
                         }
                     } label: {
                         Text("Theme")
