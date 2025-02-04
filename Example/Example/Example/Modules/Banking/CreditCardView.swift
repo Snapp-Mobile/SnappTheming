@@ -5,7 +5,9 @@
 //  Created by Volodymyr Voiko on 29.01.2025.
 //
 
+import Lottie
 import SnappTheming
+import SnappThemingSwiftUIHelpers
 import SwiftUI
 
 struct CreditCardView: View {
@@ -23,24 +25,33 @@ struct CreditCardView: View {
 
                 Spacer()
 
-                Text(3120.7, format: .currency(code: "EUR").precision(.fractionLength(1)))
-                    .font(theme.typography.largeTitle)
+                Text(
+                    3120.7,
+                    format: .currency(code: "EUR").precision(.fractionLength(1))
+                )
+                .font(theme.typography.largeTitle)
             }
+            .padding(.top, theme.metrics.medium)
 
             Spacer()
 
             HStack(alignment: .bottom) {
                 Text("•••• 2381")
                     .font(theme.typography.subheadline)
+                    .padding(.bottom, theme.metrics.medium)
                 Spacer()
-                Image("mastercard_logo")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxHeight: theme.metrics.creditCardNetworkLogoSize)
+                LottieView(
+                    animation: try? .from(data: theme.animations.visa.data)
+                )
+                .playing()
+                .playing(loopMode: .loop)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(maxHeight: theme.metrics.creditCardNetworkLogoSize)
             }
         }
         .foregroundStyle(theme.colors.textColorPrimaryInverted)
-        .padding(theme.metrics.medium)
+        .padding([.horizontal], theme.metrics.medium)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(theme.gradients.creditCardSurface)
         .clipShape(theme.shapes.creditCard)
