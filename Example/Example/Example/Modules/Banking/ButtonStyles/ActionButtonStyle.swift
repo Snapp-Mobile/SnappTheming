@@ -49,10 +49,10 @@ struct ActionButtonStyle: ButtonStyle {
 
                 configuration.title
                     .font(style.typography.font)
-                    .foregroundStyle(
-                        style.textColor.color(
-                            isPressed: isPressed, isEnabled: isEnabled))
             }
+            .foregroundStyle(
+                style.textColor.color(
+                    isPressed: isPressed, isEnabled: isEnabled))
         }
     }
 }

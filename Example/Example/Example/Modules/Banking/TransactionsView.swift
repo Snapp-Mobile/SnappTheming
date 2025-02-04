@@ -16,6 +16,7 @@ struct TransactionsView: View {
             HStack {
                 Text("Recent Transactions")
                     .font(theme.typography.title)
+                    .foregroundStyle(theme.colors.textColorPrimary)
                 Spacer()
                 Button {
                 } label: {
@@ -23,7 +24,6 @@ struct TransactionsView: View {
                 }
             }
             .padding(theme.metrics.medium)
-            .background(theme.colors.surfacePrimary)
 
             Divider()
 
