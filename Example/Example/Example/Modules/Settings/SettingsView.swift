@@ -38,6 +38,8 @@ struct SettingsView: View {
                     NavigationLink("JSON", value: SettingsDestination.json)
                 }
             }
+            .background(theme.colors.surfacePrimary)
+            .foregroundStyle(theme.colors.textColorPrimary)
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: SettingsDestination.self) {
