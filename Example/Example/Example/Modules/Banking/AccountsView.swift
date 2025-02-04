@@ -46,8 +46,8 @@ struct AccountsView: View {
 
                 TransactionsView()
             }
+            .background(theme.colors.surfacePrimary)
         }
-        .background(theme.colors.surfacePrimary)
         .navigationTitle("My accounts")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
