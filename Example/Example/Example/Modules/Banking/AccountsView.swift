@@ -39,15 +39,9 @@ struct AccountsView: View {
                 .padding([.horizontal, .top], theme.metrics.medium)
                 .padding(.bottom, theme.metrics.large)
                 .background(
-                    UnevenRoundedRectangle(
-                        topLeadingRadius: 0,
-                        bottomLeadingRadius: 16,
-                        bottomTrailingRadius: 16,
-                        topTrailingRadius: 0,
-                        style: .continuous
-                    )
-                    .fill(theme.colors.surfaceSecondary)
-                    .ignoresSafeArea(.all)
+                    theme.shapes.creditCardSurface
+                        .fill(theme.colors.surfaceSecondary)
+                        .ignoresSafeArea(.all)
                 )
 
                 TransactionsView()
