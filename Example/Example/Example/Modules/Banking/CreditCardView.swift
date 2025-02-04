@@ -42,7 +42,7 @@ struct CreditCardView: View {
         .foregroundStyle(theme.colors.textColorPrimaryInverted)
         .padding(theme.metrics.medium)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(theme.colors.creditCard)
+        .background(theme.gradients.creditCardSurface)
         .clipShape(theme.shapes.creditCard)
         .frame(maxWidth: .infinity)
         .aspectRatio(theme.metrics.creditCardAspectRatio, contentMode: .fill)

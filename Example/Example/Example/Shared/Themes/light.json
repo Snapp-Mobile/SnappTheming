@@ -14,6 +14,16 @@
         "baseGray": "#91949F",
         "clear": "#00000000"
     },
+    "gradients": {
+        "creditCardSurface": {
+            "colors": [
+                "#121416",
+                "#353A40"
+            ],
+            "startPoint": "bottomLeading",
+            "endPoint": "topTrailing"
+        }
+    },
     "metrics": {
         "xsmall": 4,
         "xxsmall": 2,
