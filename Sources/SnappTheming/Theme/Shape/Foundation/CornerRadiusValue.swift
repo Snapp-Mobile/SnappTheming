@@ -9,6 +9,11 @@ import Foundation
 import SwiftUI
 
 struct CornerRadiusValue {
+    internal init(cornerRadius: SnappThemingToken<Double>, styleValue: RoundedCornerStyleValue) {
+        self.cornerRadius = cornerRadius
+        self.styleValue = styleValue
+    }
+
     internal let cornerRadius: SnappThemingToken<Double>
     private let styleValue: RoundedCornerStyleValue
 

@@ -9,21 +9,12 @@ import Foundation
 import SwiftUI
 
 struct UnevenRoundedRectangleValue {
-    private let cornerRadiiValue: CornerRadiiValue
+    internal let cornerRadiiValue: CornerRadiiValue
     private let styleValue: RoundedCornerStyleValue
 
     enum CodingKeys: String, CodingKey {
         case styleValue = "style"
         case cornerRadiiValue = "cornerRadii"
-    }
-
-    internal var cornerRadii: RectangleCornerRadii {
-        RectangleCornerRadii(
-            topLeading: cornerRadiiValue.topLeading,
-            bottomLeading: cornerRadiiValue.bottomLeading,
-            bottomTrailing: cornerRadiiValue.bottomTrailing,
-            topTrailing: cornerRadiiValue.topTrailing
-        )
     }
 
     internal var roundedCornerStyle: RoundedCornerStyle {

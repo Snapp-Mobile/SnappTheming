@@ -85,6 +85,7 @@ public struct SnappThemingSegmentControlStyleConfiguration {
             fallbackShape: fallbackShape,
             fallbackCornerRadius: themeConfiguration.fallbackCornerRadius,
             fallbackRoundedCornerStyle: themeConfiguration.fallbackRoundedCornerStyle,
+            fallbackCornerRadii: themeConfiguration.fallbackCornerRadii,
             themeConfiguration: themeConfiguration,
             metrics: metrics
         )

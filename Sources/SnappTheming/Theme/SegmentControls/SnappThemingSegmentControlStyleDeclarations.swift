@@ -74,6 +74,7 @@ where
                         fallbackShape: configuration.fallbackShape,
                         fallbackCornerRadius: configuration.fallbackShape.cornerRadius,
                         fallbackRoundedCornerStyle: .circular,
+                        fallbackCornerRadii: .init(),
                         themeConfiguration: configuration.themeConfiguration,
                         metrics: configuration.metrics
                     )

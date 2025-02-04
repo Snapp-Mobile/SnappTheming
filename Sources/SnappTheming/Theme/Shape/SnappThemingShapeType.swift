@@ -16,7 +16,9 @@ enum SnappThemingShapeTypeRepresentation {
     case unevenRoundedRectangle(UnevenRoundedRectangleValue)
 
     // TODO: Resolving function have to go declarations
-    func resolve(using configuration: SnappThemingShapeConfiguration) -> SnappThemingShapeType {
+    func resolve(using configuration: SnappThemingShapeConfiguration)
+        -> SnappThemingShapeType
+    {
         switch self {
         case .circle: return .circle
         case .rectangle: return .rectangle
@@ -24,7 +26,10 @@ enum SnappThemingShapeTypeRepresentation {
         case .capsule(let styleValue):
             return .capsule(styleValue.roundedCornerStyle)
         case .roundedRectangleWithRadius(let cornerRadiusValue):
-            guard let resolvedCornerRadius = configuration.metrics.resolver.resolve(cornerRadiusValue.cornerRadius) else {
+            guard
+                let resolvedCornerRadius = configuration.metrics.resolver
+                    .resolve(cornerRadiusValue.cornerRadius)
+            else {
                 os_log(.debug, "Failed to resolve corner radius")
                 return .roundedRectangleWithRadius(
                     configuration.fallbackCornerRadius,
@@ -36,13 +41,51 @@ enum SnappThemingShapeTypeRepresentation {
                 cornerRadiusValue.roundedCornerStyle
             )
         case .roundedRectangleWithSize(let cornerSizeValue):
+            guard
+                let width = configuration.metrics.resolver.resolve(
+                    cornerSizeValue.width),
+                let height = configuration.metrics.resolver.resolve(
+                    cornerSizeValue.height)
+            else {
+                os_log(.debug, "Failed to resolve corner size")
+                return .roundedRectangleWithSize(
+                    CGSize(
+                        width: configuration.fallbackCornerRadius,
+                        height: configuration.fallbackCornerRadius),
+                    configuration.fallbackRoundedCornerStyle
+                )
+            }
             return .roundedRectangleWithSize(
-                cornerSizeValue.cornerSize,
+                CGSize.init(width: width, height: height),
                 cornerSizeValue.roundedCornerStyle
             )
         case .unevenRoundedRectangle(let value):
+            guard
+                let topLeading = configuration.metrics.resolver.resolve(
+                    value.cornerRadiiValue.topLeading),
+                let bottomLeading = configuration.metrics.resolver.resolve(
+                    value.cornerRadiiValue.bottomLeading),
+                let topTrailing = configuration.metrics.resolver.resolve(
+                    value.cornerRadiiValue.topTrailing),
+                let bottomTrailing = configuration.metrics.resolver.resolve(
+                    value.cornerRadiiValue.bottomTrailing)
+            else {
+                os_log(.debug, "Failed to resolve corner radii")
+                return .unevenRoundedRectangle(
+                    configuration.fallbackCornerRadii,
+                    configuration.fallbackRoundedCornerStyle
+                )
+            }
+            var cornerRadii: RectangleCornerRadii {
+                RectangleCornerRadii(
+                    topLeading: topLeading,
+                    bottomLeading: bottomLeading,
+                    bottomTrailing: bottomTrailing,
+                    topTrailing: topTrailing
+                )
+            }
             return .unevenRoundedRectangle(
-                value.cornerRadii,
+                cornerRadii,
                 value.roundedCornerStyle
             )
         }
@@ -63,7 +106,8 @@ public enum SnappThemingShapeType: Sendable, Equatable {
     case capsule(RoundedCornerStyle = .continuous)
     case roundedRectangleWithRadius(CGFloat, RoundedCornerStyle = .continuous)
     case roundedRectangleWithSize(CGSize, RoundedCornerStyle = .continuous)
-    case unevenRoundedRectangle(RectangleCornerRadii, RoundedCornerStyle = .continuous)
+    case unevenRoundedRectangle(
+        RectangleCornerRadii, RoundedCornerStyle = .continuous)
 
     /// Provides the shape representation of the button style.
     /// This will return the appropriate `Shape` (e.g., `Circle`, `Rectangle`, `Capsule`).

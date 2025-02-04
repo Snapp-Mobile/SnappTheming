@@ -55,10 +55,8 @@ struct SegmentControlStyleTests {
            "shapes": {
                "roundedRectangle": {
                    "type": "roundedRectangle",
-                   "value": {
-                       "cornerRadius": 12,
-                       "style": "circular"
-                   }
+                   "cornerRadius": 12,
+                   "style": "circular"
                }
            },
            "typography": {

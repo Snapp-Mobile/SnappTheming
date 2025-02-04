@@ -73,6 +73,8 @@ public struct SnappThemingParserConfiguration: Sendable {
     /// The fallback corner style (e.g., continuous or circular) to apply when no specific style is provided.
     public let fallbackRoundedCornerStyle: RoundedCornerStyle
 
+    public let fallbackCornerRadii: RectangleCornerRadii
+
     /// Initializes a new configuration with optional values. Defaults are provided for each property.
     public init(
         colorFormat: SnappThemingColorFormat = .rgba,
@@ -92,7 +94,8 @@ public struct SnappThemingParserConfiguration: Sendable {
         fallbackGradientUnitPoint: UnitPoint = .center,
         fallbackGradientRadius: Double = 0,
         fallbackCornerRadius: Double = 0,
-        fallbackRoundedCornerStyle: RoundedCornerStyle = .circular
+        fallbackRoundedCornerStyle: RoundedCornerStyle = .circular,
+        fallbackCornerRadii: RectangleCornerRadii = .init()
     ) {
         self.colorFormat = colorFormat
         self.encodeFonts = encodeFonts
@@ -112,6 +115,7 @@ public struct SnappThemingParserConfiguration: Sendable {
         self.fallbackGradientRadius = fallbackGradientRadius
         self.fallbackCornerRadius = fallbackCornerRadius
         self.fallbackRoundedCornerStyle = fallbackRoundedCornerStyle
+        self.fallbackCornerRadii = fallbackCornerRadii
     }
 }
 

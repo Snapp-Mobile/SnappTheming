@@ -31,6 +31,7 @@ where
                 fallbackShape: configuration.fallbackButtonStyle.shape,
                 fallbackCornerRadius: configuration.fallbackCornerRadius,
                 fallbackRoundedCornerStyle: configuration.fallbackRoundedCornerStyle,
+                fallbackCornerRadii: configuration.fallbackCornerRadii,
                 themeConfiguration: configuration,
                 metrics: metrics
             )

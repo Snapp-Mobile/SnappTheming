@@ -96,15 +96,11 @@ struct ShapeTests {
                 "shapes": {
                     "circularCapsule": {
                         "type": "capsule",
-                        "value": {
-                            "style": "circular"
-                        }
+                        "style": "circular"
                     },
                     "continuousCapsule": {
                         "type": "capsule",
-                        "value": {
-                            "style": "continuous"
-                        }
+                        "style": "continuous"
                     }
                 }
             }
@@ -136,35 +132,27 @@ struct ShapeTests {
             """
             {
                 "metrics": {
-                    "medium": 12 
+                    "medium": 12
                 },
                 "shapes": {
                     "roundedRectangle": {
                         "type": "roundedRectangle",
-                        "value": {
-                            "cornerRadius": "$metrics/medium",
-                            "style": "circular"
-                        }
+                        "cornerRadius": "$metrics/medium",
+                        "style": "circular"
                     },
                     "roundedRectangleNoStyle": {
                         "type": "roundedRectangle",
-                        "value": {
-                            "cornerRadius": "$metrics/medium"
-                        }
+                        "cornerRadius": "$metrics/medium"
                     },
                     "roundedRectangleAlt": {
                         "type": "roundedRectangle",
-                        "value": {
-                            "cornerRadius": 24,
-                            "style": "continuous"
-                        }
+                        "cornerRadius": 24,
+                        "style": "continuous"
                     },
                     "roundedRectangleAltWithWrongAlias": {
                         "type": "roundedRectangle",
-                        "value": {
-                            "cornerRadius": "$metrics/mediYm",
-                            "style": "continuous"
-                        }
+                        "cornerRadius": "$metrics/mediYm",
+                        "style": "continuous"
                     }
                 }
             }
@@ -208,26 +196,25 @@ struct ShapeTests {
         let json =
             """
             {
+                "metrics": {
+                    "sideWidth": 15
+                },
                 "shapes": {
                     "roundedRectangle": {
                         "type": "roundedRectangle",
-                        "value": {
-                            "cornerSize": {
-                                "width": 15,
-                                "height": 30
-                            },
-                            "style": "circular"
-                        }
+                        "cornerSize": {
+                            "width": "$metrics/sideWidth",
+                            "height": 30
+                        },
+                        "style": "circular"
                     },
                     "roundedRectangleAlt": {
                         "type": "roundedRectangle",
-                        "value": {
-                            "cornerSize": {
-                                "width": 30,
-                                "height": 60
-                            },
-                            "style": "continuous"
-                        }
+                        "cornerSize": {
+                            "width": 30,
+                            "height": 60
+                        },
+                        "style": "continuous"
                     }
                 }
             }
@@ -274,27 +261,23 @@ struct ShapeTests {
                 "shapes": {
                     "funkyRect": {
                         "type": "unevenRoundedRectangle",
-                        "value": {
-                            "cornerRadii": {
-                                "topLeading": 0,
-                                "bottomLeading": 20,
-                                "bottomTrailing": 0,
-                                "topTrailing": 20
-                            },
-                            "style": "circular"
-                        }
+                        "cornerRadii": {
+                            "topLeading": 10,
+                            "bottomLeading": 20,
+                            "bottomTrailing": 30,
+                            "topTrailing": 40
+                        },
+                        "style": "circular"
                     },
                     "funkyRectAlt": {
                         "type": "unevenRoundedRectangle",
-                        "value": {
-                            "cornerRadii": {
-                                "topLeading": 20,
-                                "bottomLeading": 0,
-                                "bottomTrailing": 20,
-                                "topTrailing": 0
-                            },
-                            "style": "continuous"
-                        }
+                        "cornerRadii": {
+                            "topLeading": 50,
+                            "bottomLeading": 60,
+                            "bottomTrailing": 70,
+                            "topTrailing": 80
+                        },
+                        "style": "continuous"
                     },
                 }
             }
@@ -314,23 +297,53 @@ struct ShapeTests {
             .unevenRoundedRectangle(let radiiSecond, let styleSecond)
         ):
             #expect(
-                firstShape.cornerRadius == 0,
-                "Default unevenRoundedRectangle shape corner radius should be equal to topLeading(0)"
+                firstShape.cornerRadius == 10,
+                "Default unevenRoundedRectangle shape corner radius should be equal to topLeading(10)"
             )
             #expect(
-                secondShape.cornerRadius == 20,
-                "Default unevenRoundedRectangle shape corner radius should be to topLeading(20)"
+                secondShape.cornerRadius == 50,
+                "Default unevenRoundedRectangle shape corner radius should be to topLeading(50)"
             )
-            #expect(radiiFirst.topLeading == 0.0, "First uneven rectangle top leading radius should be 0.0")
-            #expect(radiiFirst.bottomLeading == 20.0, "First uneven rectangle bottom leading radius should be 20.0")
-            #expect(radiiFirst.bottomTrailing == 0.0, "First uneven rectangle bottom trailing radius should be 0.0")
-            #expect(radiiFirst.topTrailing == 20.0, "First uneven rectangle top trailing radius should be 20.0")
-            #expect(styleFirst == .circular, "First uneven rectangle rounded corner style should be circular")
-            #expect(radiiSecond.topLeading == 20.0, "Second uneven rectangle top leading radius should be 20.0")
-            #expect(radiiSecond.bottomLeading == 0.0, "Second uneven rectangle bottom leading radius should be 0.0")
-            #expect(radiiSecond.bottomTrailing == 20.0, "Second uneven rectangle bottom trailing radius should be 20.0")
-            #expect(radiiSecond.topTrailing == 0.0, "Second uneven rectangle top trailing radius should be 0.0")
-            #expect(styleSecond == .continuous, "Second uneven rectangle rounded corner style should be continuous")
+            #expect(
+                radiiFirst.topLeading == 10.0,
+                "First uneven rectangle top leading radius should be 10.0"
+            )
+            #expect(
+                radiiFirst.bottomLeading == 20.0,
+                "First uneven rectangle bottom leading radius should be 20.0"
+            )
+            #expect(
+                radiiFirst.bottomTrailing == 30.0,
+                "First uneven rectangle bottom trailing radius should be 30.0"
+            )
+            #expect(
+                radiiFirst.topTrailing == 40.0,
+                "First uneven rectangle top trailing radius should be 40.0"
+            )
+            #expect(
+                styleFirst == .circular,
+                "First uneven rectangle rounded corner style should be circular"
+            )
+            #expect(
+                radiiSecond.topLeading == 50.0,
+                "Second uneven rectangle top leading radius should be 50.0"
+            )
+            #expect(
+                radiiSecond.bottomLeading == 60.0,
+                "Second uneven rectangle bottom leading radius should be 60.0"
+            )
+            #expect(
+                radiiSecond.bottomTrailing == 70.0,
+                "Second uneven rectangle bottom trailing radius should be 70.0"
+            )
+            #expect(
+                radiiSecond.topTrailing == 80.0,
+                "Second uneven rectangle top trailing radius should be 80.0"
+            )
+            #expect(
+                styleSecond == .continuous,
+                "Second uneven rectangle rounded corner style should be continuous"
+            )
         default:
             throw ShapeParserError.invalidShapeType
         }

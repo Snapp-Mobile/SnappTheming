@@ -22,6 +22,8 @@ public struct SnappThemingShapeConfiguration {
     /// The rounded corner style used when applicable.
     public let fallbackRoundedCornerStyle: RoundedCornerStyle
 
+    public let fallbackCornerRadii: RectangleCornerRadii
+
     let themeConfiguration: SnappThemingParserConfiguration
     let metrics: SnappThemingMetricDeclarations
 }

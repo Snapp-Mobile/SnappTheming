@@ -16,7 +16,7 @@ public struct SnappThemingShapeRepresentation: Codable {
     let shapeType: SnappThemingShapeTypeRepresentation
 
     enum CodingKeys: String, CodingKey {
-        case type, value
+        case type
     }
 
     /// Decodes a `SnappThemingShapeRepresentation` from a decoder.
@@ -32,20 +32,18 @@ public struct SnappThemingShapeRepresentation: Codable {
         case .rectangle: shapeType = .rectangle
         case .ellipse: shapeType = .ellipse
         case .capsule:
-            let styleValue = try container.decode(StyleValue.self, forKey: .value)
-            shapeType = .capsule(styleValue)
+            shapeType = .capsule(try StyleValue(from: decoder))
         case .roundedRectangle:
-            if let radiusValue = try? container.decodeIfPresent(CornerRadiusValue.self, forKey: .value) {
-                shapeType = .roundedRectangleWithRadius(radiusValue)
-            } else if let sizeValue = try? container.decodeIfPresent(CornerSizeValue.self, forKey: .value) {
-                shapeType = .roundedRectangleWithSize(sizeValue)
+            if let cornerRadiusValue = try? CornerRadiusValue(from: decoder) {
+                shapeType = .roundedRectangleWithRadius(cornerRadiusValue)
+            } else if let cornerSizeValue = try? CornerSizeValue(from: decoder) {
+                shapeType = .roundedRectangleWithSize(cornerSizeValue)
             } else {
                 // Fallbacks to rectangle
                 shapeType = .rectangle
             }
         case .unevenRoundedRectangle:
-            let radiiValue = try container.decode(UnevenRoundedRectangleValue.self, forKey: .value)
-            shapeType = .unevenRoundedRectangle(radiiValue)
+            shapeType = .unevenRoundedRectangle(try UnevenRoundedRectangleValue(from: decoder))
         }
     }
 
@@ -61,13 +59,13 @@ public struct SnappThemingShapeRepresentation: Codable {
         switch shapeType {
         case .circle, .rectangle, .ellipse: break
         case .capsule(let style):
-            try container.encode(style, forKey: .value)
+            try style.encode(to: encoder)
         case .roundedRectangleWithRadius(let radiusValue):
-            try container.encode(radiusValue, forKey: .value)
+            try radiusValue.encode(to: encoder)
         case .roundedRectangleWithSize(let sizeValue):
-            try container.encode(sizeValue, forKey: .value)
+            try sizeValue.encode(to: encoder)
         case .unevenRoundedRectangle(let radiiValue):
-            try container.encode(radiiValue, forKey: .value)
+            try radiiValue.encode(to: encoder)
         }
     }
 }
