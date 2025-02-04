@@ -8,37 +8,34 @@
 import Foundation
 import OSLog
 import SnappTheming
+import SwiftUI
 
 @Observable
 @dynamicMemberLookup
 final class Theme {
     private static let themeSourceFileNameKey = "theme_filename"
 
-    struct Source: RawRepresentable, Identifiable, Hashable,
-        CustomStringConvertible, ExpressibleByStringLiteral
-    {
-        let filename: String
+    enum Source: String, Identifiable, Hashable, CustomStringConvertible {
+        static let `default`: Self = .light
 
-        var description: String { filename.capitalized }
-        var rawValue: String { filename }
-        var id: String { filename }
+        case light
+        case dark
 
-        init(filename: String) {
-            self.filename = filename
-        }
-
-        init(rawValue value: String) {
-            self.init(filename: value)
-        }
-
-        init(stringLiteral value: StringLiteralType) {
-            self.init(rawValue: value)
+        var id: String { rawValue }
+        var description: String { rawValue.capitalized }
+        var filename: String { rawValue }
+        var colorScheme: ColorScheme {
+            switch self {
+            case .light: .light
+            case .dark: .dark
+            }
         }
     }
 
     var source: Source {
         didSet {
             _declaration = nil
+            UserDefaults.standard.set(source.rawValue, forKey: Self.themeSourceFileNameKey)
         }
     }
 
@@ -85,10 +82,6 @@ final class Theme {
         self.init(source ?? .default)
     }
 
-    func change(_ source: Source) {
-        self.source = source
-    }
-
     subscript<Value>(
         dynamicMember keyPath: KeyPath<SnappThemingDeclaration, Value>
     ) -> Value {
@@ -100,13 +93,6 @@ extension Theme.Source {
     fileprivate func loadDeclaration() -> SnappThemingDeclaration {
         .load(filename: filename, using: .init(themeName: filename))
     }
-}
-
-extension Theme.Source {
-    static let `default`: Self = .light
-
-    static let light: Self = "light"
-    static let dark: Self = "dark"
 }
 
 extension Theme.Source: CaseIterable {

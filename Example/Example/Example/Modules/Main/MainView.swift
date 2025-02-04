@@ -51,6 +51,7 @@ struct MainView: View {
             }
         }
         .tint(theme.colors.primary)
+        .colorScheme(theme.source.colorScheme)
     }
 
     @ViewBuilder
@@ -67,12 +68,9 @@ struct MainView: View {
 #Preview("Light") {
     MainView()
         .environment(Theme(.light))
-        .preferredColorScheme(.light)
 }
 
 #Preview("Dark") {
     MainView()
-        // TODO: Add dark theme json.
-        .environment(Theme(.light))
-        .preferredColorScheme(.dark)
+        .environment(Theme(.dark))
 }
