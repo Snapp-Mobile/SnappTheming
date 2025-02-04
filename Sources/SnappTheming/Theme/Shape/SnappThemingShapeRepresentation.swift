@@ -13,7 +13,7 @@ import SwiftUI
 /// from JSON for theming purposes.
 public struct SnappThemingShapeRepresentation: Codable {
     /// The button style shape type (e.g., circle, rectangle, capsule).
-    public let shapeType: SnappThemingShapeType
+    let shapeType: SnappThemingShapeTypeRepresentation
 
     enum CodingKeys: String, CodingKey {
         case type, value
@@ -33,18 +33,19 @@ public struct SnappThemingShapeRepresentation: Codable {
         case .ellipse: shapeType = .ellipse
         case .capsule:
             let styleValue = try container.decode(StyleValue.self, forKey: .value)
-            shapeType = .capsule(styleValue.style.style)
+            shapeType = .capsule(styleValue)
         case .roundedRectangle:
             if let radiusValue = try? container.decodeIfPresent(CornerRadiusValue.self, forKey: .value) {
-                shapeType = .roundedRectangleWithRadius(radiusValue.cornerRadius, radiusValue.styleValue.style)
+                shapeType = .roundedRectangleWithRadius(radiusValue)
             } else if let sizeValue = try? container.decodeIfPresent(CornerSizeValue.self, forKey: .value) {
-                shapeType = .roundedRectangleWithSize(sizeValue.cornerSize, sizeValue.styleValue.style)
+                shapeType = .roundedRectangleWithSize(sizeValue)
             } else {
+                // Fallbacks to rectangle
                 shapeType = .rectangle
             }
         case .unevenRoundedRectangle:
             let radiiValue = try container.decode(UnevenRoundedRectangleValue.self, forKey: .value)
-            shapeType = .unevenRoundedRectangle(radiiValue.cornerRadii, radiiValue.styleValue.style)
+            shapeType = .unevenRoundedRectangle(radiiValue)
         }
     }
 
@@ -60,26 +61,13 @@ public struct SnappThemingShapeRepresentation: Codable {
         switch shapeType {
         case .circle, .rectangle, .ellipse: break
         case .capsule(let style):
-            try container.encode(StyleValue(style), forKey: .value)
-        case .roundedRectangleWithRadius(let radius, let style):
-            try container.encode(
-                CornerRadiusValue(cornerRadius: radius, styleValue: RoundedCornerStyleValue(style: style)),
-                forKey: .value)
-        case .roundedRectangleWithSize(let size, let style):
-            try container.encode(
-                CornerSizeValue(cornerSize: size, styleValue: RoundedCornerStyleValue(style: style)), forKey: .value)
-        case .unevenRoundedRectangle(let radii, let style):
-            try container.encode(
-                UnevenRoundedRectangleValue(
-                    cornerRadiiValue: CornerRadiiValue(rawValue: radii),
-                    styleValue: RoundedCornerStyleValue(style: style)), forKey: .value)
+            try container.encode(style, forKey: .value)
+        case .roundedRectangleWithRadius(let radiusValue):
+            try container.encode(radiusValue, forKey: .value)
+        case .roundedRectangleWithSize(let sizeValue):
+            try container.encode(sizeValue, forKey: .value)
+        case .unevenRoundedRectangle(let radiiValue):
+            try container.encode(radiiValue, forKey: .value)
         }
-    }
-
-    /// Resolves the button style shape and returns a resolver object for further theming logic.
-    ///
-    /// - Returns: A `SnappThemingShapeResolver` instance that resolves the button's shape style.
-    func resolver() -> SnappThemingShapeResolver {
-        SnappThemingShapeResolver(shapeType: shapeType)
     }
 }

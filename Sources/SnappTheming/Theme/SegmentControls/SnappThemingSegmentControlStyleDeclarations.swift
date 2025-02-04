@@ -67,7 +67,17 @@ where
                 .resolve(representation.borderColor)?
                 .resolver(colorFormat: configuration.colorFormat, colors: configuration.colors)
                 .interactiveColor,
-            let shape = configuration.shapes.resolver.resolve(representation.shape)?.resolver().shapeType,
+            let shape = configuration.shapes.resolver
+                .resolve(representation.shape)?.shapeType
+                .resolve(
+                    using: SnappThemingShapeConfiguration(
+                        fallbackShape: configuration.fallbackShape,
+                        fallbackCornerRadius: configuration.fallbackShape.cornerRadius,
+                        fallbackRoundedCornerStyle: .circular,
+                        themeConfiguration: configuration.themeConfiguration,
+                        metrics: configuration.metrics
+                    )
+                ),
             let selectedButtonStyle = configuration.buttonStyles.resolver
                 .resolve(representation.selectedButtonStyle)?
                 .resolver(using: configuration),

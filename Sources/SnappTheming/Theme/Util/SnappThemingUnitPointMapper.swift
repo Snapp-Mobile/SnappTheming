@@ -60,7 +60,7 @@ enum SnappThemingUnitPointMapper {
         case "bottomLeading": self = .bottomLeading
         case "bottomTrailing": self = .bottomTrailing
         default:
-            os_log("%@ is not supported. Center will be used.", rawValue)
+            os_log(.debug, "%@ is not supported. Center will be used.", rawValue)
             self = .center
         }
     }

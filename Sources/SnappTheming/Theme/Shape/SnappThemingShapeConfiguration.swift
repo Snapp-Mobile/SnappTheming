@@ -13,9 +13,15 @@ import SwiftUI
 /// This struct defines the fallback shape for a button style, providing a default
 /// shape configuration in case a specific shape is not available.
 public struct SnappThemingShapeConfiguration {
-    /// The fallback button shape type to use when no specific shape is defined.
+    /// The fallback shape type to use when no specific shape is provided.
     public let fallbackShape: SnappThemingShapeType
 
-    /// The configuration used for parsing and applying theming.
+    /// The default corner radius applied when the shape supports rounded corners.
+    public let fallbackCornerRadius: Double
+
+    /// The rounded corner style used when applicable.
+    public let fallbackRoundedCornerStyle: RoundedCornerStyle
+
     let themeConfiguration: SnappThemingParserConfiguration
+    let metrics: SnappThemingMetricDeclarations
 }

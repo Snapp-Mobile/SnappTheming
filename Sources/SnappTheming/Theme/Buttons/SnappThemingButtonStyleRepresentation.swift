@@ -102,8 +102,8 @@ extension SnappThemingButtonStyleRepresentation {
             let resolvedBorderWidth = configuration.metrics.resolver.resolve(borderWidth),
             let resolvedShape = configuration.shapes.resolver
                 .resolve(shape)?
-                .resolver()
-                .shapeType,
+                .shapeType
+                .resolve(using: configuration.shapeConfiguration),
             let resolvedTypography = configuration.typographies.resolver.resolve(typography),
             let resolvedFont = configuration.fonts.resolver.resolve(resolvedTypography.font),
             let resolvedFontSize = configuration.metrics.resolver.resolve(resolvedTypography.fontSize)

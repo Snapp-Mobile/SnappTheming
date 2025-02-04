@@ -6,21 +6,26 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct CornerRadiusValue {
-    let cornerRadius: CGFloat
-    let styleValue: RoundedCornerStyleValue
+    internal let cornerRadius: SnappThemingToken<Double>
+    private let styleValue: RoundedCornerStyleValue
 
     enum CodingKeys: String, CodingKey {
         case cornerRadius
         case styleValue = "style"
+    }
+
+    internal var roundedCornerStyle: RoundedCornerStyle {
+        styleValue.style
     }
 }
 
 extension CornerRadiusValue: Codable {
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.cornerRadius = try container.decode(CGFloat.self, forKey: .cornerRadius)
+        self.cornerRadius = try container.decode(SnappThemingToken<Double>.self, forKey: .cornerRadius)
         self.styleValue =
             try container.decodeIfPresent(RoundedCornerStyleValue.self, forKey: .styleValue) ?? .continuous
     }

@@ -5,7 +5,49 @@
 //  Created by Oleksii Kolomiiets on 12.12.2024.
 //
 
+import OSLog
 import SwiftUI
+
+enum SnappThemingShapeTypeRepresentation {
+    case circle, rectangle, ellipse
+    case capsule(StyleValue = StyleValue(.circular))
+    case roundedRectangleWithRadius(CornerRadiusValue)
+    case roundedRectangleWithSize(CornerSizeValue)
+    case unevenRoundedRectangle(UnevenRoundedRectangleValue)
+
+    // TODO: Resolving function have to go declarations
+    func resolve(using configuration: SnappThemingShapeConfiguration) -> SnappThemingShapeType {
+        switch self {
+        case .circle: return .circle
+        case .rectangle: return .rectangle
+        case .ellipse: return .ellipse
+        case .capsule(let styleValue):
+            return .capsule(styleValue.roundedCornerStyle)
+        case .roundedRectangleWithRadius(let cornerRadiusValue):
+            guard let resolvedCornerRadius = configuration.metrics.resolver.resolve(cornerRadiusValue.cornerRadius) else {
+                os_log(.debug, "Failed to resolve corner radius")
+                return .roundedRectangleWithRadius(
+                    configuration.fallbackCornerRadius,
+                    configuration.fallbackRoundedCornerStyle
+                )
+            }
+            return .roundedRectangleWithRadius(
+                resolvedCornerRadius,
+                cornerRadiusValue.roundedCornerStyle
+            )
+        case .roundedRectangleWithSize(let cornerSizeValue):
+            return .roundedRectangleWithSize(
+                cornerSizeValue.cornerSize,
+                cornerSizeValue.roundedCornerStyle
+            )
+        case .unevenRoundedRectangle(let value):
+            return .unevenRoundedRectangle(
+                value.cornerRadii,
+                value.roundedCornerStyle
+            )
+        }
+    }
+}
 
 /// Represents the different types of button styles that can be applied in the theming system.
 ///

@@ -15,7 +15,7 @@ enum SnappThemingButtonStyleShapeType: String, Codable {
     case roundedRectangle
     case unevenRoundedRectangle
 
-    init(_ rawValue: SnappThemingShapeType) {
+    init(_ rawValue: SnappThemingShapeTypeRepresentation) {
         switch rawValue {
         case .circle: self = .circle
         case .rectangle: self = .rectangle

@@ -63,7 +63,7 @@ public struct SnappThemingGradientRepresentation: Codable {
         } else if let angular = try? container.decode(SnappThemingAngularGradientRepresentation.self) {
             self.configuration = angular
         } else {
-            os_log("Not supported gradient type found in %@. Defaulting to clear gradient", container.codingPath)
+            os_log(.debug, "Not supported gradient type found in %@. Defaulting to clear gradient", container.codingPath)
             self.configuration = SnappThemingClearShapeStyleConfiguration()
         }
     }

@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct CornerSizeValue {
-    let cornerSize: CGSize
-    let styleValue: RoundedCornerStyleValue
+    internal let cornerSize: CGSize
+    private let styleValue: RoundedCornerStyleValue
 
     enum CodingKeys: String, CodingKey {
         case cornerSize
@@ -18,6 +19,10 @@ struct CornerSizeValue {
 
     enum CornerSizeCodingKeys: String, CodingKey {
         case width, height
+    }
+
+    internal var roundedCornerStyle: RoundedCornerStyle {
+        styleValue.style
     }
 }
 

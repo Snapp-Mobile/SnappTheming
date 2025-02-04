@@ -21,6 +21,7 @@ where
 {
     public init(
         cache: [String: SnappThemingToken<DeclaredValue>]?,
+        metrics: SnappThemingMetricDeclarations,
         configuration: SnappThemingParserConfiguration = .default
     ) {
         self.init(
@@ -28,7 +29,10 @@ where
             rootKey: .shapes,
             configuration: Configuration(
                 fallbackShape: configuration.fallbackButtonStyle.shape,
-                themeConfiguration: configuration
+                fallbackCornerRadius: configuration.fallbackCornerRadius,
+                fallbackRoundedCornerStyle: configuration.fallbackRoundedCornerStyle,
+                themeConfiguration: configuration,
+                metrics: metrics
             )
         )
     }
@@ -36,7 +40,7 @@ where
     @ShapeBuilder
     public subscript(dynamicMember keyPath: String) -> some Shape {
         if let representation: DeclaredValue = cache[keyPath]?.value {
-            representation.resolver().shapeType.value
+            representation.shapeType.resolve(using: configuration).styleShape
         } else {
             configuration.fallbackShape.styleShape
         }
