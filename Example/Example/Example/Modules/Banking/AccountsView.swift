@@ -65,3 +65,8 @@ struct AccountsView: View {
     AccountsView()
         .environment(Theme(.light))
 }
+
+#Preview("Dark") {
+    AccountsView()
+        .environment(Theme(.dark))
+}

@@ -106,10 +106,11 @@ extension Theme.Source {
     static let `default`: Self = .light
 
     static let light: Self = "light"
+    static let dark: Self = "dark"
 }
 
 extension Theme.Source: CaseIterable {
-    static let allCases: [Theme.Source] = [.light]
+    static let allCases: [Theme.Source] = [.light, .dark]
 }
 
 extension SnappThemingDeclaration {
