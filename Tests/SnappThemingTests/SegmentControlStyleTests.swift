@@ -116,10 +116,6 @@ struct SegmentControlStyleTests {
                 != segmentControlStyleFallbackConfiguration.fallbackInnerPadding
         )
         #expect(innerPadding == 8)
-
-        let shape = segmentControlStyle.shape
-        #expect(shape != segmentControlStyleFallbackConfiguration.fallbackShape)
-        #expect(shape.cornerRadius == 12)
     }
 
     @Test(arguments: [
@@ -206,8 +202,5 @@ struct SegmentControlStyleTests {
             innerPadding
                 == segmentControlStyleFallbackConfiguration.fallbackInnerPadding
         )
-
-        let shape = segmentControlStyle.shape
-        #expect(shape == segmentControlStyleFallbackConfiguration.fallbackShape)
     }
 }

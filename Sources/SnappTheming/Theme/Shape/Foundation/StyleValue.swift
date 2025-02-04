@@ -9,10 +9,10 @@ import Foundation
 import SwiftUI
 
 struct StyleValue {
-    private let value: RoundedCornerStyleValue
+    private let _value: RoundedCornerStyleValue
 
-    internal var roundedCornerStyle: RoundedCornerStyle {
-        value.style
+    internal var value: RoundedCornerStyle {
+        _value.style
     }
 
     enum CodingKeys: String, CodingKey {
@@ -23,13 +23,10 @@ struct StyleValue {
 extension StyleValue: Codable {
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.value = try container.decodeIfPresent(RoundedCornerStyleValue.self, forKey: .value) ?? .continuous
+        self._value = try container.decodeIfPresent(RoundedCornerStyleValue.self, forKey: .value) ?? .continuous
     }
-    init(_ rawValue: RoundedCornerStyle) {
-        switch rawValue {
-        case .continuous: self = .init(value: .continuous)
-        case .circular: self = .init(value: .circular)
-        @unknown default: self = .init(value: .continuous)
-        }
+    func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(_value, forKey: .value)
     }
 }

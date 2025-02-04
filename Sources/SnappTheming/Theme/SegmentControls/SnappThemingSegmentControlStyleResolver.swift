@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 /// A resolver structure that holds resolved values for the segment control style such as button styles, colors, border width, and shape.
 public struct SnappThemingSegmentControlStyleResolver {
@@ -28,5 +29,5 @@ public struct SnappThemingSegmentControlStyleResolver {
     public let innerPadding: Double
 
     /// The resolved shape type for the segment control buttons.
-    public let shape: SnappThemingShapeType
+    public let shape: any Shape
 }

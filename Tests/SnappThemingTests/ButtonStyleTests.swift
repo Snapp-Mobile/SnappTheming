@@ -29,21 +29,13 @@ struct ButtonStyleTests {
         let declaration = try SnappThemingParser.parse(from: json, using: configuration)
         let _: SnappThemingButtonStyleRepresentation = try #require(declaration.buttonStyles.primary)
         let buttonStyleResolver: SnappThemingButtonStyleResolver = declaration.buttonStyles.primary
-        let buttonStyle: some ButtonStyle = declaration.buttonStyles.primary
         let borderWidth = buttonStyleResolver.borderWidth
-        let shape = buttonStyleResolver.shape
         let typography = buttonStyleResolver.typography
-        #expect(buttonStyle is SnappThemingButtonStyle)
         #expect(
             borderWidth != configuration.fallbackButtonStyle.borderWidth,
             "Parsed button style border width should not match the fallback border width."
         )
         #expect(borderWidth == 1.0, "Parsed button style border width should be equal to 1.")
-        #expect(
-            shape != configuration.fallbackButtonStyle.shape,
-            "Parsed button style shape should not match the fallback shape."
-        )
-        #expect(shape == .circle, "Parsed button style shape should be equal to circle.")
 
         #if canImport(UIKit)
             #expect(

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 import SwiftUI
 
 /// Manages button shape tokens, defining the appearance of button outlines, such as circular, rounded rectangle, or custom shapes.
@@ -40,11 +41,11 @@ where
 
     @ShapeBuilder
     public subscript(dynamicMember keyPath: String) -> some Shape {
-        if let representation: DeclaredValue = cache[keyPath]?.value {
-            representation.shapeType.resolve(using: configuration).styleShape
+        if let shapeRepresentation: DeclaredValue = self[dynamicMember: keyPath] {
+            shapeRepresentation.resolver(configuration: configuration)
         } else {
-            configuration.fallbackShape.styleShape
+            // can't log here because ShapeBuilder is @resultBuilder
+            Rectangle()
         }
     }
-
 }

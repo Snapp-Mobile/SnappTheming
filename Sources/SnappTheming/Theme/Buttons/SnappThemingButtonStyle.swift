@@ -15,7 +15,7 @@ import SwiftUI
 ///
 /// - Note: This button style is designed to work seamlessly with the theming system,
 ///   allowing buttons to reflect the current theme's design system in a consistent manner.
-public struct SnappThemingButtonStyle: ButtonStyle {
+public struct SnappThemingButtonStyle<S: Shape>: ButtonStyle {
     /// The current state of the button, indicating if it is enabled.
     @Environment(\.isEnabled) private var isEnabled
 
@@ -32,7 +32,7 @@ public struct SnappThemingButtonStyle: ButtonStyle {
     public let borderWidth: Double
 
     /// The shape type applied to the button (e.g., rounded, square).
-    public let shape: SnappThemingShapeType
+    public let shape: S
 
     /// The font used for the button's label.
     public let font: Font
@@ -51,7 +51,7 @@ public struct SnappThemingButtonStyle: ButtonStyle {
         textColor: SnappThemingInteractiveColor,
         borderColor: SnappThemingInteractiveColor,
         borderWidth: Double,
-        shape: SnappThemingShapeType,
+        shape: S,
         font: Font
     ) {
         self.surfaceColor = surfaceColor
@@ -67,7 +67,6 @@ public struct SnappThemingButtonStyle: ButtonStyle {
     /// - Parameter configuration: The configuration object containing the button's label and state.
     /// - Returns: A view representing the button with applied styles.
     public func makeBody(configuration: Configuration) -> some View {
-        let shape = shape.value
         configuration.label
             .font(font)
             .foregroundStyle(textColor.value(for: configuration, isEnabled: isEnabled))

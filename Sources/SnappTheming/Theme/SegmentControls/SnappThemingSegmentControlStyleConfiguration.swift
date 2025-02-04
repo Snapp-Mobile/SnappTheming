@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 /// A configuration structure for defining the style of a segment control in the SnappTheming system.
 public struct SnappThemingSegmentControlStyleConfiguration {
@@ -24,7 +25,7 @@ public struct SnappThemingSegmentControlStyleConfiguration {
     public let fallbackInnerPadding: Double
 
     /// The fallback shape style for the segment control.
-    public let fallbackShape: SnappThemingShapeType
+    public let fallbackShape: any Shape
 
     /// The fallback button style for the selected segment control.
     public let fallbackSelectedSegmentButtonStyle: SnappThemingButtonStyleResolver
@@ -52,7 +53,7 @@ public struct SnappThemingSegmentControlStyleConfiguration {
         fallbackBorderColor: SnappThemingInteractiveColor,
         fallbackBorderWidth: Double,
         fallbackInnerPadding: Double,
-        fallbackShape: SnappThemingShapeType,
+        fallbackShape: any Shape,
         fallbackSelectedSegmentButtonStyle: SnappThemingButtonStyleResolver,
         fallbackNormalSegmentButtonStyle: SnappThemingButtonStyleResolver,
         metrics: SnappThemingMetricDeclarations,

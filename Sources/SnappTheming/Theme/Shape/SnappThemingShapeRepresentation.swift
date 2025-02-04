@@ -5,6 +5,7 @@
 //  Created by Oleksii Kolomiiets on 12.12.2024.
 //
 
+import OSLog
 import SwiftUI
 
 /// A representation of a button's style shape in the SnappTheming framework.
@@ -15,57 +16,103 @@ public struct SnappThemingShapeRepresentation: Codable {
     /// The button style shape type (e.g., circle, rectangle, capsule).
     let shapeType: SnappThemingShapeTypeRepresentation
 
-    enum CodingKeys: String, CodingKey {
-        case type
-    }
-
-    /// Decodes a `SnappThemingShapeRepresentation` from a decoder.
-    ///
-    /// - Parameter decoder: The decoder used to decode the data.
-    /// - Throws: A decoding error if the data is invalid or not formatted as expected.
     public init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let tokenType = try container.decode(SnappThemingButtonStyleShapeType.self, forKey: .type)
+        self.shapeType = try SnappThemingShapeTypeRepresentation(from: decoder)
+    }
 
-        switch tokenType {
-        case .circle: shapeType = .circle
-        case .rectangle: shapeType = .rectangle
-        case .ellipse: shapeType = .ellipse
-        case .capsule:
-            shapeType = .capsule(try StyleValue(from: decoder))
-        case .roundedRectangle:
-            if let cornerRadiusValue = try? CornerRadiusValue(from: decoder) {
-                shapeType = .roundedRectangleWithRadius(cornerRadiusValue)
-            } else if let cornerSizeValue = try? CornerSizeValue(from: decoder) {
-                shapeType = .roundedRectangleWithSize(cornerSizeValue)
-            } else {
-                // Fallbacks to rectangle
-                shapeType = .rectangle
-            }
-        case .unevenRoundedRectangle:
-            shapeType = .unevenRoundedRectangle(try UnevenRoundedRectangleValue(from: decoder))
+    /// Resolves the interactive color information into an interactive color resolver, which provides resolved colors for the various states.
+    ///
+    /// - Parameters:
+    ///   - colorFormat: The color format to use (e.g., ARGB, RGBA).
+    ///   - colors: The color declarations used to resolve the color tokens.
+    /// - Returns: A `SnappThemingInteractiveColorResolver` that provides the resolved interactive colors.
+    @ShapeBuilder public func resolver(
+        configuration: SnappThemingShapeConfiguration
+    ) -> some Shape {
+        switch shapeType {
+        case .circle:
+            Circle()
+        case .rectangle:
+            Rectangle()
+        case .ellipse:
+            Ellipse()
+        case .capsule(let cornerStyle):
+            Capsule(style: cornerStyle.value)
+        case .roundedRectangleWithRadius(let cornerRadius):
+            roundedRectangleWithRadius(cornerRadiusValue: cornerRadius, configuration)
+        case .roundedRectangleWithSize(let size):
+            roundedRectangleWithSize(size, configuration)
+        case .unevenRoundedRectangle(let radii):
+            unevenRoundedRectangle(radii, configuration)
         }
     }
 
-    /// Encodes a `SnappThemingShapeRepresentation` into an encoder.
-    ///
-    /// - Parameter encoder: The encoder used to encode the data.
-    /// - Throws: An encoding error if the data cannot be encoded.
-    public func encode(to encoder: any Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        let tokenType = SnappThemingButtonStyleShapeType(shapeType)
-        try container.encode(tokenType.rawValue, forKey: .type)
-
-        switch shapeType {
-        case .circle, .rectangle, .ellipse: break
-        case .capsule(let style):
-            try style.encode(to: encoder)
-        case .roundedRectangleWithRadius(let radiusValue):
-            try radiusValue.encode(to: encoder)
-        case .roundedRectangleWithSize(let sizeValue):
-            try sizeValue.encode(to: encoder)
-        case .unevenRoundedRectangle(let radiiValue):
-            try radiiValue.encode(to: encoder)
+    private func roundedRectangleWithRadius(
+        cornerRadiusValue: CornerRadiusValue,
+        _ configuration: SnappThemingShapeConfiguration
+    ) -> RoundedRectangle {
+        guard
+            let resolvedCornerRadius = configuration.metrics.resolver
+                .resolve(cornerRadiusValue.token)
+        else {
+            os_log(.debug, "Failed to resolve corner radius: %@", "\(cornerRadiusValue.token)")
+            return RoundedRectangle(
+                cornerRadius: configuration.fallbackCornerRadius, style: configuration.fallbackRoundedCornerStyle
+            )
         }
+        return RoundedRectangle(
+            cornerRadius: resolvedCornerRadius, style: cornerRadiusValue.roundedCornerStyle
+        )
+    }
+
+    private func roundedRectangleWithSize(
+        _ sizeToken: CornerSizeValue,
+        _ configuration: SnappThemingShapeConfiguration
+    ) -> RoundedRectangle {
+        guard let width = configuration.metrics.resolver.resolve(sizeToken.width),
+            let height = configuration.metrics.resolver.resolve(sizeToken.height)
+        else {
+            os_log(.debug, "Failed to resolve corner size: w-%@, h-%@", "\(sizeToken.width)", "\(sizeToken.height)")
+            return RoundedRectangle(
+                cornerSize: CGSize(width: configuration.fallbackCornerRadius, height: configuration.fallbackCornerRadius),
+                style: configuration.fallbackRoundedCornerStyle
+            )
+        }
+        return RoundedRectangle(
+            cornerSize: CGSize(width: width, height: height),
+            style: sizeToken.roundedCornerStyle
+        )
+    }
+
+    private func unevenRoundedRectangle(
+        _ uneven: UnevenRoundedRectangleValue,
+        _ configuration: SnappThemingShapeConfiguration
+    ) -> UnevenRoundedRectangle {
+        guard
+            let topLeading = configuration.metrics.resolver.resolve(
+                uneven.cornerRadiiValue.topLeading),
+            let bottomLeading = configuration.metrics.resolver.resolve(
+                uneven.cornerRadiiValue.bottomLeading),
+            let topTrailing = configuration.metrics.resolver.resolve(
+                uneven.cornerRadiiValue.topTrailing),
+            let bottomTrailing = configuration.metrics.resolver.resolve(
+                uneven.cornerRadiiValue.bottomTrailing)
+        else {
+            os_log(.debug, "Failed to resolve corner radii: %@", "\(uneven.cornerRadiiValue)")
+            return UnevenRoundedRectangle(
+                cornerRadii: configuration.fallbackCornerRadii, style: configuration.fallbackRoundedCornerStyle
+            )
+        }
+        var cornerRadii: RectangleCornerRadii {
+            RectangleCornerRadii(
+                topLeading: topLeading,
+                bottomLeading: bottomLeading,
+                bottomTrailing: bottomTrailing,
+                topTrailing: topTrailing
+            )
+        }
+        return UnevenRoundedRectangle(
+            cornerRadii: cornerRadii, style: uneven.roundedCornerStyle
+        )
     }
 }

@@ -37,6 +37,8 @@ where
                 fallbackBorderColor: configuration.fallbackButtonStyle.borderColor,
                 fallbackBorderWidth: configuration.fallbackButtonStyle.borderWidth,
                 fallbackShape: configuration.fallbackButtonStyle.shape,
+                fallbackCornerRadius: configuration.fallbackCornerRadius,
+                shapeConfiguration: shapes.configuration,
                 fallbackTypography: configuration.fallbackButtonStyle.typography,
                 colorFormat: configuration.colorFormat,
                 metrics: metrics,
@@ -66,17 +68,7 @@ where
             ).interactiveColor,
             let shape = configuration.shapes
                 .resolver.resolve(representation.shape)?
-                .shapeType
-                .resolve(
-                    using: SnappThemingShapeConfiguration(
-                        fallbackShape: configuration.fallbackShape,
-                        fallbackCornerRadius: configuration.fallbackShape.cornerRadius,
-                        fallbackRoundedCornerStyle: .circular,
-                        fallbackCornerRadii: .init(),
-                        themeConfiguration: configuration.themeConfiguration,
-                        metrics: configuration.metrics
-                    )
-                ),
+                .resolver(configuration: configuration.shapeConfiguration),
             let typography = configuration.typographies.resolver.resolve(representation.typography),
             let font = configuration.fonts.resolver.resolve(typography.font),
             let fontSize = configuration.metrics.resolver.resolve(typography.fontSize)
@@ -108,7 +100,7 @@ where
             textColor: styleResolver.textColor,
             borderColor: styleResolver.borderColor,
             borderWidth: styleResolver.borderWidth,
-            shape: styleResolver.shape,
+            shape: AnyShape(styleResolver.shape),
             font: styleResolver.typography.font)
     }
 }
