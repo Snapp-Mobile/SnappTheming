@@ -174,6 +174,9 @@ struct MainView: View {
                                         )
                                     }
                                 }
+                            },
+                            label: {
+                                Image(systemName: "slider.horizontal.3")
                             })
                     }
                 #endif

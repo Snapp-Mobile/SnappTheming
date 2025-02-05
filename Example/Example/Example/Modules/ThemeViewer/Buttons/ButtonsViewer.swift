@@ -25,7 +25,9 @@ struct ButtonsViewer: View {
                             }
                             .buttonStyle(declarations[dynamicMember: key])
                             .frame(
-                                minWidth: (key == "primaryCritical" || key == "primaryBrand") ? 128 : 64, minHeight: 64)
+                                minWidth: (key == "primaryCritical" || key == "primaryBrand") ? 128 : 64,
+                                minHeight: 64
+                            )
                             .scaleEffect(focusedKey == key ? 1.2 : 1.0)
                         },
                         label: {
