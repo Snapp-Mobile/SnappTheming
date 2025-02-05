@@ -68,8 +68,8 @@ struct SliderStyleTests {
     func parseSliderStyleWithSuccess(json: String) throws {
         let configuration = SnappThemingParserConfiguration.default
 
-        let declaration = try SnappThemingParser.parse(
-            from: json, using: configuration)
+        let declaration = try SnappThemingParser.parse(from: json, using: configuration)
+        try compareEncoded(declaration, and: json)
         let _ = try #require(declaration.sliderStyle.cache["primary"]?.value)
         let sliderStyle: SnappThemingSliderStyleResolver = declaration
             .sliderStyle.primary

@@ -24,6 +24,9 @@ public struct SnappThemingColorConfiguration {
     #if canImport(UIKit)
         /// A `UIColor` representation of the `fallbackColor`.
         public var fallbackUIColor: UIColor { UIColor(fallbackColor) }
+    #elseif canImport(AppKit)
+        /// A `UIColor` representation of the `fallbackColor`.
+        public var fallbackNSColor: NSColor { .clear }
     #endif
 
     /// The format of the color (ARGB or RGBA).

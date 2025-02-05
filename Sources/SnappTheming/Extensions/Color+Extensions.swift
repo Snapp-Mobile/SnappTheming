@@ -84,7 +84,38 @@ extension Color {
             opacity: cAlpha
         )
     }
+
+    init(light: Color, dark: Color) {
+        #if canImport(UIKit)
+            self.init(light: UIColor(light), dark: UIColor(dark))
+        #else
+            self.init(light: NSColor(light), dark: NSColor(dark))
+        #endif
+    }
+
     #if canImport(UIKit)
+        init(light: UIColor, dark: UIColor) {
+            #if os(watchOS)
+                // watchOS does not support light mode / dark mode
+                // Per Apple HIG, prefer dark-style interfaces
+                self.init(uiColor: dark)
+            #else
+                self.init(
+                    uiColor: UIColor(dynamicProvider: { traits in
+                        switch traits.userInterfaceStyle {
+                        case .light, .unspecified:
+                            return light
+
+                        case .dark:
+                            return dark
+
+                        @unknown default:
+                            assertionFailure("Unknown userInterfaceStyle: \(traits.userInterfaceStyle)")
+                            return light
+                        }
+                    }))
+            #endif
+        }
         /// Converts the `Color` instance into a `UIColor`.
         ///
         /// - Returns: A `UIColor` representation of the current `Color`. Returns `.clear` if the conversion fails.
@@ -94,6 +125,47 @@ extension Color {
                 return .clear
             }
             return UIColor(cgColor: cgColor)
+        }
+    #elseif canImport(AppKit)
+        init(light: NSColor, dark: NSColor) {
+            self.init(
+                nsColor: NSColor(
+                    name: nil,
+                    dynamicProvider: { appearance in
+                        switch appearance.name {
+                        case .aqua,
+                            .vibrantLight,
+                            .accessibilityHighContrastAqua,
+                            .accessibilityHighContrastVibrantLight:
+                            return light
+
+                        case .darkAqua,
+                            .vibrantDark,
+                            .accessibilityHighContrastDarkAqua,
+                            .accessibilityHighContrastVibrantDark:
+                            return dark
+
+                        default:
+                            assertionFailure("Unknown appearance: \(appearance.name)")
+                            return light
+                        }
+                    }
+                )
+            )
+        }
+
+        /// Extracts the resolved light and dark colors from a `Color` instance.
+        /// - Returns: A tuple containing the resolved light mode (`.aqua`) and dark mode (`.darkAqua`) colors as `NSColor`.
+        func resolvedNSColors() -> (light: NSColor, dark: NSColor) {
+            let nsColor = NSColor(self)  // Convert SwiftUI `Color` to `NSColor`
+
+            let lightColor = nsColor.resolvedColor(with: .aqua).usingColorSpace(.sRGB)
+            let darkColor = nsColor.resolvedColor(with: .darkAqua).usingColorSpace(.sRGB)
+
+            if lightColor == nil { os_log(.error, "Failed to resolve light color. Falling back to original color.") }
+            if darkColor == nil { os_log(.error, "Failed to resolve dark color. Falling back to original color.") }
+
+            return (light: lightColor ?? nsColor, dark: darkColor ?? nsColor)
         }
     #endif
 }

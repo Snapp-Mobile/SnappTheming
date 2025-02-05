@@ -30,6 +30,7 @@ struct ShapeTests {
             """
 
         let declaration = try SnappThemingParser.parse(from: json)
+        try compareEncoded(declaration, and: json)
         let shapeRepresentation: SnappThemingShapeRepresentation = try #require(declaration.shapes.rect)
         let resolvedShape = declaration.shapes.configuration.resolve(shapeRepresentation)
         let _ = resolvedShape.shape
@@ -56,6 +57,7 @@ struct ShapeTests {
             """
 
         let declaration = try SnappThemingParser.parse(from: json)
+        try compareEncoded(declaration, and: json)
         let shapeRepresentation: SnappThemingShapeRepresentation = try #require(declaration.shapes.ellipse)
         let resolvedShape = declaration.shapes.configuration.resolve(shapeRepresentation)
         let _ = resolvedShape.shape
@@ -82,6 +84,7 @@ struct ShapeTests {
             """
 
         let declaration = try SnappThemingParser.parse(from: json)
+        try compareEncoded(declaration, and: json)
         let shapeRepresentation: SnappThemingShapeRepresentation = try #require(declaration.shapes.circle)
         let resolvedShape = declaration.shapes.configuration.resolve(shapeRepresentation)
         let _ = resolvedShape.shape
@@ -113,6 +116,7 @@ struct ShapeTests {
             """
 
         let declaration = try SnappThemingParser.parse(from: json)
+        try compareEncoded(declaration, and: json)
         let circularCapsuleShapeRepresentation: SnappThemingShapeRepresentation = try #require(
             declaration.shapes.circularCapsule)
         let continuousCapsuleShapeRepresentation: SnappThemingShapeRepresentation = try #require(
