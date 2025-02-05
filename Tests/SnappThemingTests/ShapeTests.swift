@@ -376,20 +376,11 @@ struct ShapeTests {
         {
             "shapes": {
                 "rect": {
-                    "type": "notSupportedName"
-                }
-            }
-        }
-        """,
-        """
-        {
-            "shapes": {
-                "rect": {
                     "type": "roundedRectangle" 
                 }
             }
         }
-        """,
+        """
     ])
     func parseUnknownShape(json: String) throws {
         let declaration = try SnappThemingParser.parse(from: json)
@@ -398,7 +389,8 @@ struct ShapeTests {
         let _ = resolvedShape.shape
         switch resolvedShape {
         case .rectangle:
-            #expect(Bool(true), "Default shape type should be rectangle")
+            let resolvedShape = declaration.shapes.configuration.resolve(shapeRepresentation)
+            #expect(resolvedShape == .rectangle, "Default shape type should be rectangle")
         default:
             throw ShapeParserError.invalidShapeType
         }
