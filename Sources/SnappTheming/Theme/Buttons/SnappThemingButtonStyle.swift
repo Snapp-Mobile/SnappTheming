@@ -61,7 +61,7 @@ public struct SnappThemingButtonStyle: ButtonStyle {
         self.shape = shape
         self.font = font
     }
-    
+
     /// Creates the body of the button using the specified configuration.
     ///
     /// - Parameter configuration: The configuration object containing the button's label and state.
