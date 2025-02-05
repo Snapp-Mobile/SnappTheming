@@ -5,11 +5,14 @@
 //  Created by Ilian Konchev on 21.11.24.
 //
 
-import Lottie
 import OSLog
 import SnappTheming
 import SnappThemingSwiftUIHelpers
 import SwiftUI
+
+#if !os(watchOS)
+    import Lottie
+#endif
 
 struct ThemedView: View {
     var declaration: SnappThemingDeclaration
@@ -39,9 +42,11 @@ struct ThemedView: View {
                 .frame(width: 200, height: 200)
                 .padding()
 
-            LottieView.init(animation: try? .from(data: declaration.animations.lego.data))
-                .playing()
-                .frame(width: 100, height: 100)
+            #if !os(watchOS)
+                LottieView.init(animation: try? .from(data: declaration.animations.lego.data))
+                    .playing()
+                    .frame(width: 100, height: 100)
+            #endif
 
             Text("Title typography")
                 .font(declaration.typography.titleLarge)
@@ -76,22 +81,24 @@ struct ThemedView: View {
                 }
                 .buttonStyle(declaration.buttonStyles.primary, selected: declaration.buttonStyles.primarySelected)
                 .selected(isSelected)
-                .simultaneousGesture(
-                    DragGesture(minimumDistance: 0)
-                        .onChanged { _ in
-                            if !isPressed {
-                                isPressed = true
-                                print("Button pressed")
+                #if !os(tvOS)
+                    .simultaneousGesture(
+                        DragGesture(minimumDistance: 0)
+                            .onChanged { _ in
+                                if !isPressed {
+                                    isPressed = true
+                                    print("Button pressed")
+                                }
                             }
-                        }
-                        .onEnded { _ in
-                            if isPressed {
-                                isSelected.toggle()
-                                isPressed = false
-                                print("Button released")
+                            .onEnded { _ in
+                                if isPressed {
+                                    isSelected.toggle()
+                                    isPressed = false
+                                    print("Button released")
+                                }
                             }
-                        }
-                )
+                    )
+                #endif
 
                 Button {
                     Task {

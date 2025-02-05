@@ -34,7 +34,7 @@ struct GradientsViewer: View {
             }
         }
         .navigationTitle("Gradients")
-        #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
+        #if os(iOS) || targetEnvironment(macCatalyst)
             .navigationBarTitleDisplayMode(.inline)
         #endif
         .sheet(item: $selectedShape) { shape in

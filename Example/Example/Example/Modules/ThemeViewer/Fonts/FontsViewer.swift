@@ -23,7 +23,7 @@ struct FontsViewer: View {
             }
         }
         .navigationTitle("Fonts")
-        #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
+        #if os(iOS) || targetEnvironment(macCatalyst)
             .navigationBarTitleDisplayMode(.inline)
         #endif
     }

@@ -34,7 +34,7 @@ struct ImagesViewer: View {
             }
         }
         .navigationTitle("Images")
-        #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
+        #if os(iOS) || targetEnvironment(macCatalyst)
             .navigationBarTitleDisplayMode(.inline)
         #endif
         .sheet(item: $selectedImage) {

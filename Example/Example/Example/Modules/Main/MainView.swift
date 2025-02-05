@@ -97,12 +97,14 @@ struct MainView: View {
                             .tabItem { Tab.preview.label }
                             .tag(Tab.preview)
 
-                        TextEditor(text: .constant(encoded))
-                            .font(.system(size: 12.0, design: .monospaced))
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .padding()
-                            .tabItem { Tab.json.label }
-                            .tag(Tab.json)
+                        #if !os(tvOS) && !os(watchOS)
+                            TextEditor(text: .constant(encoded))
+                                .font(.system(size: 12.0, design: .monospaced))
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                .padding()
+                                .tabItem { Tab.json.label }
+                                .tag(Tab.json)
+                        #endif
                     }
                     .navigationTitle(selectedTab.title)
                 } else {
@@ -129,30 +131,44 @@ struct MainView: View {
                     case .shapes:
                         ShapesViewer(declarations: declaration.shapes)
                     case .animations:
-                        AnimationsViewer(declarations: declaration.animations)
+                        #if !os(watchOS)
+                            AnimationsViewer(declarations: declaration.animations)
+                        #else
+                            Text("Lottie animations are not supported on watchOS (for now)")
+                        #endif
+                    #if os(tvOS) || os(watchOS)
+                        case .themePicker:
+                            ThemePickerView(
+                                currentThemeName: configuration?.themeName
+                            ) { theme in
+                                changeTheme(to: theme)
+                            }
+                    #endif
                     }
                 } else {
                     EmptyView()
                 }
             }
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Menu(
-                        content: {
-                            ForEach(AvailableTheme.allCases) { theme in
-                                Button {
-                                    changeTheme(to: theme)
-                                } label: {
-                                    Label(
-                                        theme.description,
-                                        systemImage: theme.configuration.themeName == configuration?.themeName ?? ""
-                                            ? "paintbrush.fill" : "paintbrush"
-                                    )
+            #if !os(tvOS) && !os(watchOS)
+                .toolbar {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Menu(
+                            content: {
+                                ForEach(AvailableTheme.allCases) { theme in
+                                    Button {
+                                        changeTheme(to: theme)
+                                    } label: {
+                                        Label(
+                                            theme.description,
+                                            systemImage: theme.configuration.themeName == configuration?.themeName ?? ""
+                                                ? "paintbrush.fill" : "paintbrush"
+                                        )
+                                    }
                                 }
-                            }
-                        }, label: { Image(systemName: "slider.horizontal.3") })
+                            }, label: { Image(systemName: "slider.horizontal.3") })
+                    }
                 }
-            }
+            #endif
         }
         .tint(declaration?.colors.textLink)
     }

@@ -26,7 +26,7 @@ struct ShapesViewer: View {
             }
         }
         .navigationTitle("Shapes")
-        #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
+        #if os(iOS) || targetEnvironment(macCatalyst)
             .navigationBarTitleDisplayMode(.inline)
         #endif
     }
