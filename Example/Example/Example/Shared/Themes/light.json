@@ -11,7 +11,9 @@
         "baseWhite": "#FFFFFF",
         "baseBlack": "#000000",
         "baseGray": "#91949F",
-        "clear": "#00000000"
+        "clear": "#00000000",
+        "red": "#FE433A",
+        "green": "#37C65D"
     },
     "gradients": {
         "creditCardSurface": {
