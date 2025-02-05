@@ -18,18 +18,28 @@ struct NamedGradient: Identifiable {
 struct GradientsViewer: View {
     let declarations: SnappThemingGradientDeclarations
     @State var selectedShape: NamedGradient?
+    @FocusState var focusedKey: String?
 
     var body: some View {
         List {
             Section {
                 ForEach(declarations.keys, id: \.self) { key in
-                    LabeledContent(key) {
-                        Button {
-                            selectedShape = .init(name: key, shape: AnyShapeStyle(declarations[dynamicMember: key]))
-                        } label: {
-                            GradientView(style: declarations[dynamicMember: key])
+                    LabeledContent(
+                        content: {
+                            Button {
+                                selectedShape = .init(name: key, shape: AnyShapeStyle(declarations[dynamicMember: key]))
+                            } label: {
+                                GradientView(style: declarations[dynamicMember: key])
+                            }
+                            .scaleEffect(focusedKey == key ? 1.2 : 1.0)
+                        },
+                        label: {
+                            Text(key)
+                                .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
                         }
-                    }
+                    )
+                    .focusable(true)
+                    .focused($focusedKey, equals: key)
                 }
             }
         }

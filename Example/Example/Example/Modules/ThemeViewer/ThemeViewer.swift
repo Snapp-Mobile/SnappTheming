@@ -10,9 +10,6 @@ import SwiftUI
 
 enum ThemeDestination: String, Hashable, CaseIterable {
     case animations, buttons, colors, fonts, images, metrics, shapes, typography, gradients
-    #if os(tvOS) || os(watchOS)
-        case themePicker
-    #endif
 }
 
 struct ThemeViewer: View {

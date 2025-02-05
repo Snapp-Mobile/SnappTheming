@@ -10,18 +10,27 @@ import SwiftUI
 
 struct ShapesViewer: View {
     let declarations: SnappThemingShapeDeclarations
+    @FocusState var focusedKey: String?
     @State var states: [String: Bool] = [:]
 
     var body: some View {
         List {
             Section {
                 ForEach(declarations.keys, id: \.self) { key in
-                    LabeledContent(key) {
-                        declarations[dynamicMember: key]
-                            .stroke(Color.accentColor)
-                            .frame(maxWidth: 80, minHeight: 30)
-                            .padding(.vertical, 4)
-                    }
+                    LabeledContent(
+                        content: {
+                            declarations[dynamicMember: key]
+                                .stroke(focusedKey == key ? Color.accentColor : .primary)
+                                .frame(maxWidth: 80, minHeight: 30)
+                                .padding(.vertical, 4)
+                        },
+                        label: {
+                            Text(key)
+                                .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
+                        }
+                    )
+                    .focusable(true)
+                    .focused($focusedKey, equals: key)
                 }
             }
         }
