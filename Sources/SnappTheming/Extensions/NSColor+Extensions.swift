@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  NSColor+Extension.swift
 //  SnappTheming
 //
 //  Created by Oleksii Kolomiiets on 05.02.2025.
