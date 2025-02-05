@@ -43,6 +43,7 @@ struct MainView: View {
     @State var encoded: String = ""
     @State var destinations = [ThemeDestination]()
     @State var selectedTab: Tab = .tokens
+    @State var showsThemeSwitcher: Bool = false
 
     init(json: String, configuration: SnappThemingParserConfiguration) {
         do {
@@ -97,13 +98,18 @@ struct MainView: View {
                             .tabItem { Tab.preview.label }
                             .tag(Tab.preview)
 
-                        TextEditor(text: .constant(encoded))
-                            .font(.system(size: 12.0, design: .monospaced))
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .padding()
-                            .tabItem { Tab.json.label }
-                            .tag(Tab.json)
+                        #if !os(tvOS) && !os(watchOS)
+                            TextEditor(text: .constant(encoded))
+                                .font(.system(size: 12.0, design: .monospaced))
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                .padding()
+                                .tabItem { Tab.json.label }
+                                .tag(Tab.json)
+                        #endif
                     }
+                    #if os(tvOS)
+                        .tabViewStyle(.sidebarAdaptable)
+                    #endif
                     .navigationTitle(selectedTab.title)
                 } else {
                     Text("Theme declaration is invalid.")
@@ -129,28 +135,65 @@ struct MainView: View {
                     case .shapes:
                         ShapesViewer(declarations: declaration.shapes)
                     case .animations:
-                        AnimationsViewer(declarations: declaration.animations)
+                        #if !os(watchOS)
+                            AnimationsViewer(declarations: declaration.animations)
+                        #else
+                            Text("Lottie animations are not supported on watchOS (for now)")
+                        #endif
                     }
                 } else {
                     EmptyView()
                 }
             }
             .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Menu(
-                        content: {
-                            ForEach(AvailableTheme.allCases) { theme in
-                                Button {
-                                    changeTheme(to: theme)
-                                } label: {
-                                    Label(
-                                        theme.description,
-                                        systemImage: theme.configuration.themeName == configuration?.themeName ?? ""
-                                            ? "paintbrush.fill" : "paintbrush"
-                                    )
-                                }
+                #if os(watchOS) || os(tvOS)
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(
+                            action: {
+                                showsThemeSwitcher = true
+                            },
+                            label: {
+                                Image(systemName: "slider.horizontal.3")
+                                    .focusable()
                             }
-                        }, label: { Image(systemName: "slider.horizontal.3") })
+                        )
+                        .buttonStyle(.plain)
+                    }
+                #else
+                    ToolbarItem(placement: .confirmationAction) {
+                        Menu(
+                            content: {
+                                ForEach(AvailableTheme.allCases) { theme in
+                                    Button {
+                                        changeTheme(to: theme)
+                                    } label: {
+                                        Label(
+                                            theme.description,
+                                            systemImage: theme.configuration.themeName == configuration?.themeName ?? ""
+                                                ? "paintbrush.fill" : "paintbrush"
+                                        )
+                                    }
+                                }
+                            },
+                            label: {
+                                Image(systemName: "slider.horizontal.3")
+                            })
+                    }
+                #endif
+            }
+            .confirmationDialog("Pick a theme", isPresented: $showsThemeSwitcher) {
+                ForEach(AvailableTheme.allCases) { theme in
+                    Button(
+                        action: {
+                            changeTheme(to: theme)
+                        },
+                        label: {
+                            Label(
+                                theme.description,
+                                systemImage: theme.configuration.themeName == configuration?.themeName ?? ""
+                                    ? "paintbrush.fill" : "paintbrush"
+                            )
+                        })
                 }
             }
         }

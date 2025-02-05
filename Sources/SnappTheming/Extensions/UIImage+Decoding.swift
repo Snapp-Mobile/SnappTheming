@@ -4,7 +4,7 @@
 //
 //  Created by Volodymyr Voiko on 04.12.2024.
 //
-#if canImport(UIKit)
+#if canImport(UIKit) && !os(watchOS)
     import PDFKit
     import UIKit
     import UniformTypeIdentifiers

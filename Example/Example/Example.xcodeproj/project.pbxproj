@@ -10,17 +10,89 @@
 		53679CA12D3FA147002F2787 /* SnappTheming in Frameworks */ = {isa = PBXBuildFile; productRef = 53679CA02D3FA147002F2787 /* SnappTheming */; };
 		53679CA32D3FA147002F2787 /* SnappThemingSwiftUIHelpers in Frameworks */ = {isa = PBXBuildFile; productRef = 53679CA22D3FA147002F2787 /* SnappThemingSwiftUIHelpers */; };
 		53F240072D36753400264B36 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 53F240062D36753400264B36 /* Lottie */; };
-		CEF2CC1A2D4A685E0012251C /* SnappThemingSVGSupport in Frameworks */ = {isa = PBXBuildFile; productRef = CEF2CC192D4A685E0012251C /* SnappThemingSVGSupport */; };
+		CEF2CC1A2D4A685E0012251C /* SnappThemingSVGSupport in Frameworks */ = {isa = PBXBuildFile; platformFilters = (ios, macos, tvos, ); productRef = CEF2CC192D4A685E0012251C /* SnappThemingSVGSupport */; };
+		CEF2CEEE2D53630A0012251C /* ExampleWatchOSApp Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = CEF2CEED2D53630A0012251C /* ExampleWatchOSApp Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CEF2CF252D5363E00012251C /* SnappTheming in Frameworks */ = {isa = PBXBuildFile; productRef = CEF2CF242D5363E00012251C /* SnappTheming */; };
+		CEF2CF272D5363E00012251C /* SnappThemingSwiftUIHelpers in Frameworks */ = {isa = PBXBuildFile; productRef = CEF2CF262D5363E00012251C /* SnappThemingSwiftUIHelpers */; };
+		CEF2CF432D5369890012251C /* SnappThemingSVGSupport in Frameworks */ = {isa = PBXBuildFile; platformFilters = (ios, macos, tvos, ); productRef = CEF2CF422D5369890012251C /* SnappThemingSVGSupport */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CEF2CEEF2D53630A0012251C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53F232FE2D31511E00264B36 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CEF2CEEC2D53630A0012251C;
+			remoteInfo = "ExampleWatchOSApp Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CEF2CF142D53630C0012251C /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				CEF2CEEE2D53630A0012251C /* ExampleWatchOSApp Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		53F233062D31511E00264B36 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEF2CEE82D53630A0012251C /* ExampleWatchOSApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleWatchOSApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEF2CEED2D53630A0012251C /* ExampleWatchOSApp Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ExampleWatchOSApp Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		CEF2CF1F2D5363360012251C /* Exceptions for "Example" folder in "ExampleWatchOSApp Watch App" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+				Modules/Main/MainView.swift,
+				Modules/Themed/Progress.swift,
+				Modules/Themed/ThemedView.swift,
+				Modules/ThemeViewer/Animations/AnimationsViewer.swift,
+				Modules/ThemeViewer/Buttons/ButtonsViewer.swift,
+				Modules/ThemeViewer/Colors/ColorsViewer.swift,
+				Modules/ThemeViewer/Fonts/FontsViewer.swift,
+				Modules/ThemeViewer/Gradients/GradientsViewer.swift,
+				Modules/ThemeViewer/Gradients/GradientView.swift,
+				Modules/ThemeViewer/Images/ImagesViewer.swift,
+				Modules/ThemeViewer/Images/ImageViewer.swift,
+				Modules/ThemeViewer/Metrics/MetricsViewer.swift,
+				Modules/ThemeViewer/Shapes/ShapesViewer.swift,
+				"Modules/ThemeViewer/ThemeDeclaration+Preview.swift",
+				Modules/ThemeViewer/ThemeViewer.swift,
+				Modules/ThemeViewer/Typography/TypographyViewer.swift,
+				Shared/JSON/BoldBlockFontString.swift,
+				Shared/JSON/BoldFontString.swift,
+				Shared/JSON/MediumFontString.swift,
+				Shared/JSON/RegularFontString.swift,
+				Shared/JSON/SampleJSON.swift,
+				Shared/Themes/AvailableTheme.swift,
+				Shared/Themes/day.json,
+				Shared/Themes/night.json,
+			);
+			target = CEF2CEEC2D53630A0012251C /* ExampleWatchOSApp Watch App */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		53F233082D31511E00264B36 /* Example */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CEF2CF1F2D5363360012251C /* Exceptions for "Example" folder in "ExampleWatchOSApp Watch App" target */,
+			);
 			path = Example;
+			sourceTree = "<group>";
+		};
+		CEF2CEF12D53630A0012251C /* ExampleWatchOSApp Watch App */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "ExampleWatchOSApp Watch App";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -30,10 +102,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEF2CF432D5369890012251C /* SnappThemingSVGSupport in Frameworks */,
 				53F240072D36753400264B36 /* Lottie in Frameworks */,
 				CEF2CC1A2D4A685E0012251C /* SnappThemingSVGSupport in Frameworks */,
 				53679CA12D3FA147002F2787 /* SnappTheming in Frameworks */,
 				53679CA32D3FA147002F2787 /* SnappThemingSwiftUIHelpers in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEF2CEEA2D53630A0012251C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEF2CF252D5363E00012251C /* SnappTheming in Frameworks */,
+				CEF2CF272D5363E00012251C /* SnappThemingSwiftUIHelpers in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				53F233082D31511E00264B36 /* Example */,
+				CEF2CEF12D53630A0012251C /* ExampleWatchOSApp Watch App */,
 				2DE9A3932D3525F000C5F3C1 /* Frameworks */,
 				53F233072D31511E00264B36 /* Products */,
 			);
@@ -60,6 +143,8 @@
 			isa = PBXGroup;
 			children = (
 				53F233062D31511E00264B36 /* Example.app */,
+				CEF2CEE82D53630A0012251C /* ExampleWatchOSApp.app */,
+				CEF2CEED2D53630A0012251C /* ExampleWatchOSApp Watch App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -89,9 +174,53 @@
 				53679CA02D3FA147002F2787 /* SnappTheming */,
 				53679CA22D3FA147002F2787 /* SnappThemingSwiftUIHelpers */,
 				CEF2CC192D4A685E0012251C /* SnappThemingSVGSupport */,
+				CEF2CF422D5369890012251C /* SnappThemingSVGSupport */,
 			);
 			productName = Example;
 			productReference = 53F233062D31511E00264B36 /* Example.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CEF2CEE72D53630A0012251C /* ExampleWatchOSApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CEF2CF152D53630C0012251C /* Build configuration list for PBXNativeTarget "ExampleWatchOSApp" */;
+			buildPhases = (
+				CEF2CEE62D53630A0012251C /* Resources */,
+				CEF2CF142D53630C0012251C /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CEF2CEF02D53630A0012251C /* PBXTargetDependency */,
+			);
+			name = ExampleWatchOSApp;
+			packageProductDependencies = (
+			);
+			productName = ExampleWatchOSApp;
+			productReference = CEF2CEE82D53630A0012251C /* ExampleWatchOSApp.app */;
+			productType = "com.apple.product-type.application.watchapp2-container";
+		};
+		CEF2CEEC2D53630A0012251C /* ExampleWatchOSApp Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CEF2CF112D53630C0012251C /* Build configuration list for PBXNativeTarget "ExampleWatchOSApp Watch App" */;
+			buildPhases = (
+				CEF2CEE92D53630A0012251C /* Sources */,
+				CEF2CEEA2D53630A0012251C /* Frameworks */,
+				CEF2CEEB2D53630A0012251C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				CEF2CEF12D53630A0012251C /* ExampleWatchOSApp Watch App */,
+			);
+			name = "ExampleWatchOSApp Watch App";
+			packageProductDependencies = (
+				CEF2CF242D5363E00012251C /* SnappTheming */,
+				CEF2CF262D5363E00012251C /* SnappThemingSwiftUIHelpers */,
+			);
+			productName = "ExampleWatchOSApp Watch App";
+			productReference = CEF2CEED2D53630A0012251C /* ExampleWatchOSApp Watch App.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -105,6 +234,12 @@
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					53F233052D31511E00264B36 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					CEF2CEE72D53630A0012251C = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					CEF2CEEC2D53630A0012251C = {
 						CreatedOnToolsVersion = 16.2;
 					};
 				};
@@ -121,7 +256,7 @@
 			packageReferences = (
 				53F240032D3674F900264B36 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				53679C9F2D3FA147002F2787 /* XCLocalSwiftPackageReference "../../../SnappTheming" */,
-				CEF2CC1C2D4A68FC0012251C /* XCRemoteSwiftPackageReference "SnappThemingSVGSupport" */,
+				CEF2CF412D5369890012251C /* XCRemoteSwiftPackageReference "SnappThemingSVGSupport" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 53F233072D31511E00264B36 /* Products */;
@@ -129,12 +264,28 @@
 			projectRoot = "";
 			targets = (
 				53F233052D31511E00264B36 /* Example */,
+				CEF2CEE72D53630A0012251C /* ExampleWatchOSApp */,
+				CEF2CEEC2D53630A0012251C /* ExampleWatchOSApp Watch App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		53F233042D31511E00264B36 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEF2CEE62D53630A0012251C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEF2CEEB2D53630A0012251C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -173,7 +324,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CEF2CEE92D53630A0012251C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CEF2CEF02D53630A0012251C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CEF2CEEC2D53630A0012251C /* ExampleWatchOSApp Watch App */;
+			targetProxy = CEF2CEEF2D53630A0012251C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		53F233122D31512000264B36 /* Debug */ = {
@@ -299,6 +465,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=xros*]" = visionOSAppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -321,12 +488,15 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.snappmobile.io.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = NO;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3,7";
+				TVOS_DEPLOYMENT_TARGET = 18.0;
+				XROS_DEPLOYMENT_TARGET = 1.0;
 			};
 			name = Debug;
 		};
@@ -334,6 +504,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=xros*]" = visionOSAppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -356,12 +527,103 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.snappmobile.io.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = NO;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3,7";
+				TVOS_DEPLOYMENT_TARGET = 18.0;
+				XROS_DEPLOYMENT_TARGET = 1.0;
+			};
+			name = Release;
+		};
+		CEF2CF122D53630C0012251C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ExampleWatchOSApp Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = 5KLV3M3ZXD;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = ExampleWatchOSApp;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKWatchOnly = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.snappautomotive.Example.ExampleWatchOSApp.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Debug;
+		};
+		CEF2CF132D53630C0012251C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ExampleWatchOSApp Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = 5KLV3M3ZXD;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = ExampleWatchOSApp;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKWatchOnly = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.snappautomotive.Example.ExampleWatchOSApp.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Release;
+		};
+		CEF2CF162D53630C0012251C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5KLV3M3ZXD;
+				INFOPLIST_KEY_CFBundleDisplayName = ExampleWatchOSApp;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.snappautomotive.Example.ExampleWatchOSApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		CEF2CF172D53630C0012251C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5KLV3M3ZXD;
+				INFOPLIST_KEY_CFBundleDisplayName = ExampleWatchOSApp;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.snappautomotive.Example.ExampleWatchOSApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -386,6 +648,24 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		CEF2CF112D53630C0012251C /* Build configuration list for PBXNativeTarget "ExampleWatchOSApp Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEF2CF122D53630C0012251C /* Debug */,
+				CEF2CF132D53630C0012251C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CEF2CF152D53630C0012251C /* Build configuration list for PBXNativeTarget "ExampleWatchOSApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEF2CF162D53630C0012251C /* Debug */,
+				CEF2CF172D53630C0012251C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
@@ -404,9 +684,9 @@
 				minimumVersion = 4.5.0;
 			};
 		};
-		CEF2CC1C2D4A68FC0012251C /* XCRemoteSwiftPackageReference "SnappThemingSVGSupport" */ = {
+		CEF2CF412D5369890012251C /* XCRemoteSwiftPackageReference "SnappThemingSVGSupport" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Snapp-Mobile/SnappThemingSVGSupport.git";
+			repositoryURL = "https://github.com/Snapp-Mobile/SnappThemingSVGSupport";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.0.2;
@@ -430,6 +710,21 @@
 		};
 		CEF2CC192D4A685E0012251C /* SnappThemingSVGSupport */ = {
 			isa = XCSwiftPackageProductDependency;
+			productName = SnappThemingSVGSupport;
+		};
+		CEF2CF242D5363E00012251C /* SnappTheming */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 53679C9F2D3FA147002F2787 /* XCLocalSwiftPackageReference "../../../SnappTheming" */;
+			productName = SnappTheming;
+		};
+		CEF2CF262D5363E00012251C /* SnappThemingSwiftUIHelpers */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 53679C9F2D3FA147002F2787 /* XCLocalSwiftPackageReference "../../../SnappTheming" */;
+			productName = SnappThemingSwiftUIHelpers;
+		};
+		CEF2CF422D5369890012251C /* SnappThemingSVGSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CEF2CF412D5369890012251C /* XCRemoteSwiftPackageReference "SnappThemingSVGSupport" */;
 			productName = SnappThemingSVGSupport;
 		};
 /* End XCSwiftPackageProductDependency section */

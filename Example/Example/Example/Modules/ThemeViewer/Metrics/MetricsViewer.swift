@@ -33,6 +33,7 @@ struct CornerRadiusMetricView: View {
 
 struct MetricsViewer: View {
     let declarations: SnappThemingMetricDeclarations
+    @FocusState var focusedKey: String?
 
     var body: some View {
         List {
@@ -42,10 +43,11 @@ struct MetricsViewer: View {
 
             section("Corner radius") { metric in
                 CornerRadiusMetricView(metric: metric)
+
             }
         }
         .navigationTitle("Metrics")
-        #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
+        #if os(iOS) || targetEnvironment(macCatalyst)
             .navigationBarTitleDisplayMode(.inline)
         #endif
     }
@@ -59,12 +61,17 @@ struct MetricsViewer: View {
                         Text(key)
                             .font(.body)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                            .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
+
                         Text(String(describing: metric))
                             .font(.caption)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                            .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
                     }
                     content(metric)
                 }
+                .focusable(true)
+                .focused($focusedKey, equals: key)
             }
         }
     }

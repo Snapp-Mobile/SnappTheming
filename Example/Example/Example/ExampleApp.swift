@@ -6,8 +6,11 @@
 //
 
 import SnappTheming
-import SnappThemingSVGSupport
 import SwiftUI
+
+#if !os(visionOS)
+    import SnappThemingSVGSupport
+#endif
 
 @main
 struct ExampleApp: App {
@@ -19,8 +22,10 @@ struct ExampleApp: App {
             fatalError("Couldn't find the theme JSON")
         }
 
-        // Do this for turning the SVG processor on
-        SnappThemingImageProcessorsRegistry.shared.register(.svg)
+        #if !os(visionOS)
+            // Do this for turning the SVG processor on
+            SnappThemingImageProcessorsRegistry.shared.register(.svg)
+        #endif
 
         self.configuration = AvailableTheme.night.configuration
 

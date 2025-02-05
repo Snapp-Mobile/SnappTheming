@@ -25,12 +25,16 @@ public struct SnappThemingDynamicColor: Codable {
         public func uiColor(using colorFormat: SnappThemingColorFormat)
             -> UIColor
         {
-            return UIColor { (traits) -> UIColor in
-                // Return one of two colors depending on light or dark mode
-                return traits.userInterfaceStyle == .dark
-                    ? UIColor(hex: dark, format: colorFormat)
-                    : UIColor(hex: light, format: colorFormat)
-            }
+            #if !os(watchOS)
+                return UIColor { (traits) -> UIColor in
+                    // Return one of two colors depending on light or dark mode
+                    return traits.userInterfaceStyle == .dark
+                        ? UIColor(hex: dark, format: colorFormat)
+                        : UIColor(hex: light, format: colorFormat)
+                }
+            #else
+                return UIColor(hex: dark, format: colorFormat)
+            #endif
         }
     #endif
 

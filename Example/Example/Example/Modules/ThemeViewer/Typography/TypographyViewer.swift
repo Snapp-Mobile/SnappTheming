@@ -10,6 +10,7 @@ import SwiftUI
 
 struct TypographyViewer: View {
     let declarations: SnappThemingTypographyDeclarations
+    @FocusState var focusedKey: String?
 
     var body: some View {
         List {
@@ -19,12 +20,14 @@ struct TypographyViewer: View {
                     Text(key)
                         .lineLimit(1)
                         .font(font)
-                        .foregroundStyle(.primary)
+                        .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
+                        .focusable(true)
+                        .focused($focusedKey, equals: key)
                 }
             }
         }
         .navigationTitle("Typography")
-        #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
+        #if os(iOS) || targetEnvironment(macCatalyst)
             .navigationBarTitleDisplayMode(.inline)
         #endif
     }

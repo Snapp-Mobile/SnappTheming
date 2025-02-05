@@ -20,25 +20,36 @@ struct ColorView: View {
 
 struct ColorsViewer: View {
     let declarations: SnappThemingColorDeclarations
+    @FocusState var focusedKey: String?
 
     var body: some View {
         List {
             Section {
                 ForEach(declarations.keys, id: \.self) { key in
                     let color: Color = declarations[dynamicMember: key]
-                    LabeledContent(key) {
-                        HStack {
-                            ColorView(color: color)
-                                .environment(\.colorScheme, .light)
-                            ColorView(color: color)
-                                .environment(\.colorScheme, .dark)
+                    LabeledContent(
+                        content: {
+                            HStack {
+                                ColorView(color: color)
+                                    .environment(\.colorScheme, .light)
+                                    .scaleEffect(focusedKey == key ? 1.2 : 1.0)
+                                ColorView(color: color)
+                                    .environment(\.colorScheme, .dark)
+                                    .scaleEffect(focusedKey == key ? 1.2 : 1.0)
+                            }
+                        },
+                        label: {
+                            Text(key)
+                                .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
                         }
-                    }
+                    )
+                    .focusable(true)
+                    .focused($focusedKey, equals: key)
                 }
             }
         }
         .navigationTitle("Colors")
-        #if os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)
+        #if os(iOS) || targetEnvironment(macCatalyst)
             .navigationBarTitleDisplayMode(.inline)
         #endif
     }

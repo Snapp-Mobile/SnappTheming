@@ -115,11 +115,15 @@ public final class SnappThemingImageManagerDefault: SnappThemingImageManager {
 
             switch type {
             case .pdf:
-                guard let pdfImage = UIImage.pdf(data: data) else {
-                    os_log(.error, "Failed to process PDF data into an image. DataURI: %@.", dataURI)
+                #if !os(watchOS)
+                    guard let pdfImage = UIImage.pdf(data: data) else {
+                        os_log(.error, "Failed to process PDF data into an image. DataURI: %@.", dataURI)
+                        return nil
+                    }
+                    return pdfImage
+                #else
                     return nil
-                }
-                return pdfImage
+                #endif
 
             case .png, .jpeg:
                 guard let image = UIImage(data: data) else {
