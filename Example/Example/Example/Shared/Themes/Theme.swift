@@ -159,8 +159,7 @@ extension SnappThemingDeclaration {
 
     static let sample: SnappThemingDeclaration = .load(json: sampleJSON)
 
-    func encoded(using configuration: SnappThemingParserConfiguration) -> String
-    {
+    func encoded(using configuration: SnappThemingParserConfiguration) -> String {
         do {
             let encodedOutput = try SnappThemingParser.encode(
                 self, using: configuration)
