@@ -18,8 +18,11 @@
     "gradients": {
         "creditCardSurface": {
             "colors": [
-                "#121416",
-                "#353A40"
+                "#1C1C1E",
+                "#2C2C2E",
+                "#3A3A3C",
+                "#2C2C2E",
+                "#1C1C1E"
             ],
             "startPoint": "bottomLeading",
             "endPoint": "topTrailing"
@@ -37,7 +40,7 @@
         "buttonSize": 64,
         "creditCardAspectRatio": 1.81,
         "creditCardLogoSize": 40,
-        "creditCardNetworkLogoSize": 42,
+        "creditCardNetworkLogoSize": 60,
         "transactionIconSize": 40,
         "shadowRadius": 12,
         "shadowXOffset": 0,
