@@ -13,8 +13,6 @@ import SwiftUI
 @Observable
 @dynamicMemberLookup
 final class Theme {
-    private static let themeSourceFileNameKey = "theme_filename"
-
     enum Source: String, Identifiable, Hashable, CustomStringConvertible {
         static let `default`: Self = .light
 
@@ -35,7 +33,6 @@ final class Theme {
     var source: Source {
         didSet {
             _declaration = nil
-            UserDefaults.standard.set(source.rawValue, forKey: Self.themeSourceFileNameKey)
         }
     }
 
@@ -72,14 +69,6 @@ final class Theme {
 
     init(_ source: Source) {
         self.source = source
-    }
-
-    convenience init() {
-        let source =
-            UserDefaults.standard
-            .string(forKey: Self.themeSourceFileNameKey)
-            .map(Source.init(rawValue:)) ?? nil
-        self.init(source ?? .default)
     }
 
     subscript<Value>(
