@@ -28,7 +28,7 @@ public struct SnappThemingButtonStyleResolver: Sendable {
     public let borderWidth: Double
 
     /// The shape type of the button, e.g., rounded, rectangle.
-    public let shape: any Shape
+    public let shape: SnappThemingShapeType
 
     /// The typography configuration for the button's text.
     public let typography: SnappThemingTypographyResolver
@@ -44,7 +44,7 @@ public struct SnappThemingButtonStyleResolver: Sendable {
             textColor: .clear,
             borderColor: .clear,
             borderWidth: 0.0,
-            shape: .rect,
+            shape: .rectangle,
             typography: SnappThemingTypographyResolver(
                 SnappThemingFontResolver(
                     fontName: "SFProText"

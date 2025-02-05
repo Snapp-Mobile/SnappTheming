@@ -15,7 +15,7 @@ import SwiftUI
 ///
 /// - Note: This button style is designed to work seamlessly with the theming system,
 ///   allowing buttons to reflect the current theme's design system in a consistent manner.
-public struct SnappThemingButtonStyle<S: Shape>: ButtonStyle {
+public struct SnappThemingButtonStyle: ButtonStyle {
     /// The current state of the button, indicating if it is enabled.
     @Environment(\.isEnabled) private var isEnabled
 
@@ -32,7 +32,7 @@ public struct SnappThemingButtonStyle<S: Shape>: ButtonStyle {
     public let borderWidth: Double
 
     /// The shape type applied to the button (e.g., rounded, square).
-    public let shape: S
+    public let shapeType: SnappThemingShapeType
 
     /// The font used for the button's label.
     public let font: Font
@@ -51,14 +51,14 @@ public struct SnappThemingButtonStyle<S: Shape>: ButtonStyle {
         textColor: SnappThemingInteractiveColor,
         borderColor: SnappThemingInteractiveColor,
         borderWidth: Double,
-        shape: S,
+        shapeType: SnappThemingShapeType,
         font: Font
     ) {
         self.surfaceColor = surfaceColor
         self.textColor = textColor
         self.borderColor = borderColor
         self.borderWidth = borderWidth
-        self.shape = shape
+        self.shapeType = shapeType
         self.font = font
     }
 
@@ -71,8 +71,8 @@ public struct SnappThemingButtonStyle<S: Shape>: ButtonStyle {
             .font(font)
             .foregroundStyle(textColor.value(for: configuration, isEnabled: isEnabled))
             .padding()
-            .background(shape.fill(surfaceColor.value(for: configuration, isEnabled: isEnabled)))
-            .overlay(shape.stroke(borderColor.value(for: configuration, isEnabled: isEnabled), lineWidth: borderWidth))
+            .background(shapeType.shape.fill(surfaceColor.value(for: configuration, isEnabled: isEnabled)))
+            .overlay(shapeType.shape.stroke(borderColor.value(for: configuration, isEnabled: isEnabled), lineWidth: borderWidth))
     }
 }
 

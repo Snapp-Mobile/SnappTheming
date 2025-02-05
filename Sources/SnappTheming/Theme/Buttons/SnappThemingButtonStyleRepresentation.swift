@@ -100,9 +100,7 @@ extension SnappThemingButtonStyleRepresentation {
                 .resolver(colorFormat: configuration.colorFormat, colors: configuration.colors)
                 .interactiveColor,
             let resolvedBorderWidth = configuration.metrics.resolver.resolve(borderWidth),
-            let resolvedShape = configuration.shapes.resolver
-                .resolve(shape)?
-                .resolver(configuration: configuration.shapeConfiguration),
+            let shapeRepresentation = configuration.shapes.resolver.resolve(shape),
             let resolvedTypography = configuration.typographies.resolver.resolve(typography),
             let resolvedFont = configuration.fonts.resolver.resolve(resolvedTypography.font),
             let resolvedFontSize = configuration.metrics.resolver.resolve(resolvedTypography.fontSize)
@@ -115,9 +113,8 @@ extension SnappThemingButtonStyleRepresentation {
             textColor: resolvedTextColor,
             borderColor: resolvedBorderColor,
             borderWidth: resolvedBorderWidth,
-            shape: resolvedShape,
+            shape: configuration.shapes.configuration.resolve(shapeRepresentation),
             typography: SnappThemingTypographyResolver(resolvedFont.resolver, fontSize: resolvedFontSize.cgFloat)
-
         )
     }
 }

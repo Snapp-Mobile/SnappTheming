@@ -49,3 +49,6 @@ extension SnappThemingToken {
         }
     }
 }
+
+extension SnappThemingToken: Sendable where Value: Sendable {}
+extension SnappThemingToken: Equatable where Value: Equatable {}

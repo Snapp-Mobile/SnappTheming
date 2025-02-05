@@ -28,7 +28,7 @@ public struct SnappThemingButtonStyleConfiguration {
     public let fallbackBorderWidth: Double
 
     /// The default shape for the button.
-    public let fallbackShape: any Shape
+    public let fallbackShape: SnappThemingShapeType
 
     /// The default corner radius.
     public let fallbackCornerRadius: Double

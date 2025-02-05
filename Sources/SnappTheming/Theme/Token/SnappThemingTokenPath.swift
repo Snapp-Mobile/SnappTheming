@@ -10,7 +10,7 @@
 /// This path includes a `component` and a `name`, and is prefixed with `$` to indicate it's a reference.
 ///
 /// Example path: `"$component/name"`.
-public struct SnappThemingTokenPath: Codable, Equatable {
+public struct SnappThemingTokenPath: Codable, Equatable, Sendable {
     private static let prefix = "$"
     private static let separator = "/"
 

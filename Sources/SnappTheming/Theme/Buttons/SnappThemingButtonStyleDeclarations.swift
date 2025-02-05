@@ -66,9 +66,7 @@ where
             let borderColor = configuration.interactiveColors.resolver.resolve(representation.borderColor)?.resolver(
                 colorFormat: configuration.colorFormat, colors: configuration.colors
             ).interactiveColor,
-            let shape = configuration.shapes
-                .resolver.resolve(representation.shape)?
-                .resolver(configuration: configuration.shapeConfiguration),
+            let shapeRepresentation = configuration.shapes.resolver.resolve(representation.shape),
             let typography = configuration.typographies.resolver.resolve(representation.typography),
             let font = configuration.fonts.resolver.resolve(typography.font),
             let fontSize = configuration.metrics.resolver.resolve(typography.fontSize)
@@ -82,12 +80,14 @@ where
                 typography: configuration.fallbackTypography
             )
         }
+
+        let resolvedShapeType = configuration.shapes.configuration.resolve(shapeRepresentation)
         return SnappThemingButtonStyleResolver(
             surfaceColor: surfaceColor,
             textColor: textColor,
             borderColor: borderColor,
             borderWidth: borderWidth,
-            shape: shape,
+            shape: resolvedShapeType,
             typography: .init(font.resolver, fontSize: fontSize.cgFloat)
         )
     }
@@ -100,7 +100,7 @@ where
             textColor: styleResolver.textColor,
             borderColor: styleResolver.borderColor,
             borderWidth: styleResolver.borderWidth,
-            shape: AnyShape(styleResolver.shape),
+            shapeType: styleResolver.shape,
             font: styleResolver.typography.font)
     }
 }

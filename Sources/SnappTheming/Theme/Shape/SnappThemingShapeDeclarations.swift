@@ -41,11 +41,15 @@ where
 
     @ShapeBuilder
     public subscript(dynamicMember keyPath: String) -> some Shape {
-        if let shapeRepresentation: DeclaredValue = self[dynamicMember: keyPath] {
-            shapeRepresentation.resolver(configuration: configuration)
+        let shapeRepresentation: SnappThemingShapeType = self[dynamicMember: keyPath]
+        shapeRepresentation.shape
+    }
+
+    public subscript(dynamicMember keyPath: String) -> SnappThemingShapeType {
+        if let representation: DeclaredValue = cache[keyPath]?.value {
+            configuration.resolve(representation)
         } else {
-            // can't log here because ShapeBuilder is @resultBuilder
-            Rectangle()
+            configuration.fallbackShape
         }
     }
 }
