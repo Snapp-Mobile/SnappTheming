@@ -32,7 +32,7 @@ public struct SnappThemingButtonStyle: ButtonStyle {
     public let borderWidth: Double
 
     /// The shape type applied to the button (e.g., rounded, square).
-    public let shape: SnappThemingShapeType
+    public let shapeType: SnappThemingShapeType
 
     /// The font used for the button's label.
     public let font: Font
@@ -51,29 +51,28 @@ public struct SnappThemingButtonStyle: ButtonStyle {
         textColor: SnappThemingInteractiveColor,
         borderColor: SnappThemingInteractiveColor,
         borderWidth: Double,
-        shape: SnappThemingShapeType,
+        shapeType: SnappThemingShapeType,
         font: Font
     ) {
         self.surfaceColor = surfaceColor
         self.textColor = textColor
         self.borderColor = borderColor
         self.borderWidth = borderWidth
-        self.shape = shape
+        self.shapeType = shapeType
         self.font = font
     }
-    
+
     /// Creates the body of the button using the specified configuration.
     ///
     /// - Parameter configuration: The configuration object containing the button's label and state.
     /// - Returns: A view representing the button with applied styles.
     public func makeBody(configuration: Configuration) -> some View {
-        let shape = shape.value
         configuration.label
             .font(font)
             .foregroundStyle(textColor.value(for: configuration, isEnabled: isEnabled))
             .padding()
-            .background(shape.fill(surfaceColor.value(for: configuration, isEnabled: isEnabled)))
-            .overlay(shape.stroke(borderColor.value(for: configuration, isEnabled: isEnabled), lineWidth: borderWidth))
+            .background(shapeType.shape.fill(surfaceColor.value(for: configuration, isEnabled: isEnabled)))
+            .overlay(shapeType.shape.stroke(borderColor.value(for: configuration, isEnabled: isEnabled), lineWidth: borderWidth))
     }
 }
 

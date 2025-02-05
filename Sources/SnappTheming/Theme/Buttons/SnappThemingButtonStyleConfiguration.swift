@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 /// A configuration object for defining button styles within the SnappTheming framework.
 ///
@@ -26,8 +27,14 @@ public struct SnappThemingButtonStyleConfiguration {
     /// The default border width for the button.
     public let fallbackBorderWidth: Double
 
-    /// The default shape type for the button.
+    /// The default shape for the button.
     public let fallbackShape: SnappThemingShapeType
+
+    /// The default corner radius.
+    public let fallbackCornerRadius: Double
+
+    /// The default shape configuration.
+    public let shapeConfiguration: SnappThemingShapeConfiguration
 
     /// The default typography resolver for button text.
     public let fallbackTypography: SnappThemingTypographyResolver

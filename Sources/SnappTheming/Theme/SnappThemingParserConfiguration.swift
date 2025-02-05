@@ -55,14 +55,25 @@ public struct SnappThemingParserConfiguration: Sendable {
     /// The name of the theme, used to identify different themes.
     public let themeName: String
 
-    /// The fallback lottie animation data to apply when no specific data for lottie animation provided.
+    /// The fallback Lottie animation data to use when no specific animation data is provided.
     public let fallbackLottieAnimationData: Data
 
+    /// The fallback angle for gradients when no specific angle is defined.
     public let fallbackGradientAngle: Angle
 
+    /// The fallback unit point for gradient positioning when no specific point is defined.
     public let fallbackGradientUnitPoint: UnitPoint
 
+    /// The fallback radius for radial gradients when no specific radius is provided.
     public let fallbackGradientRadius: Double
+
+    /// The fallback corner radius to apply when no specific value is provided.
+    public let fallbackCornerRadius: Double
+
+    /// The fallback corner style (e.g., continuous or circular) to apply when no specific style is provided.
+    public let fallbackRoundedCornerStyle: RoundedCornerStyle
+
+    public let fallbackCornerRadii: RectangleCornerRadii
 
     /// Initializes a new configuration with optional values. Defaults are provided for each property.
     public init(
@@ -81,7 +92,10 @@ public struct SnappThemingParserConfiguration: Sendable {
         fallbackLottieAnimationData: Data = Data(),
         fallbackGradientAngle: Angle = Angle(degrees: 0.0),
         fallbackGradientUnitPoint: UnitPoint = .center,
-        fallbackGradientRadius: Double = 0
+        fallbackGradientRadius: Double = 0,
+        fallbackCornerRadius: Double = 0,
+        fallbackRoundedCornerStyle: RoundedCornerStyle = .circular,
+        fallbackCornerRadii: RectangleCornerRadii = .init()
     ) {
         self.colorFormat = colorFormat
         self.encodeFonts = encodeFonts
@@ -99,6 +113,9 @@ public struct SnappThemingParserConfiguration: Sendable {
         self.fallbackGradientAngle = fallbackGradientAngle
         self.fallbackGradientUnitPoint = fallbackGradientUnitPoint
         self.fallbackGradientRadius = fallbackGradientRadius
+        self.fallbackCornerRadius = fallbackCornerRadius
+        self.fallbackRoundedCornerStyle = fallbackRoundedCornerStyle
+        self.fallbackCornerRadii = fallbackCornerRadii
     }
 }
 

@@ -44,8 +44,8 @@ import Testing
             #expect(imageData.type == .png)
             #expect(image != fallbackImage)
             let representation = try #require(
-                imageManager.cache.object(forKey: "basket"))
-            #expect(representation.cgImage != fallbackUIImage.cgImage)
+                imageManager.cache.object(forKey: "basket") as? Data)
+            #expect(UIImage(data: representation)?.cgImage != fallbackUIImage.cgImage)
         }
 
         @Test

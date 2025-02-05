@@ -151,22 +151,18 @@
     "shapes": {
         "roundedRectangle": {
             "type": "roundedRectangle",
-            "value": {
-                "cornerRadius": 12
-            }
+            "cornerRadius": 12
         },
         "rect": {
             "type": "rectangle"
         },
         "roundedRectangleAlt": {
             "type": "roundedRectangle",
-            "value": {
-                "cornerSize": {
-                    "width": 15,
-                    "height": 30
-                },
-                "style": "circular"
-            }
+            "cornerSize": {
+                "width": 15,
+                "height": 30
+            },
+            "style": "circular"
         },
         "ellipse": {
             "type": "ellipse"
@@ -176,21 +172,17 @@
         },
         "capsule": {
             "type": "capsule",
-            "value": {
-                "style": "circular"
-            }
+            "style": "circular"
         },
         "fancyRect": {
             "type": "unevenRoundedRectangle",
-            "value": {
-                "cornerRadii": {
-                    "topLeading": 0,
-                    "bottomLeading": 20,
-                    "bottomTrailing": 0,
-                    "topTrailing": 20
-                },
-                "style": "circular"
-            }
+            "cornerRadii": {
+                "topLeading": 0,
+                "bottomLeading": 20,
+                "bottomTrailing": 0,
+                "topTrailing": 20
+            },
+            "style": "circular"
         }
     },
     "animations": {
