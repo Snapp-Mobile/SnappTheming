@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftUI
 
 /// A resolver structure that holds resolved values for the segment control style such as button styles, colors, border width, and shape.
 public struct SnappThemingSegmentControlStyleResolver {

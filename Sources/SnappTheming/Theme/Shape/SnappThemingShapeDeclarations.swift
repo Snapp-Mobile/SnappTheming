@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import OSLog
 import SwiftUI
 
 /// Manages button shape tokens, defining the appearance of button outlines, such as circular, rounded rectangle, or custom shapes.

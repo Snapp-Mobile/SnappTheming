@@ -19,31 +19,31 @@ public enum SnappThemingShapeRepresentation: Codable, Sendable {
         case type
     }
 
+    enum ShapeType: String, Codable {
+        case circle, rectangle, ellipse, capsule, roundedRectangle, unevenRoundedRectangle
+    }
+
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let tokenType = try container.decode(String.self, forKey: .type)
+        let tokenType = try container.decode(ShapeType.self, forKey: .type)
 
         switch tokenType {
-        case "circle": self = .circle
-        case "rectangle": self = .rectangle
-        case "ellipse": self = .ellipse
-        case "capsule":
+        case .circle: self = .circle
+        case .rectangle: self = .rectangle
+        case .ellipse: self = .ellipse
+        case .capsule:
             self = .capsule(try CapsuleRepresentation(from: decoder))
-        case "roundedRectangle":
+        case .roundedRectangle:
             if let cornerRadiusValue = try? RoundedRectangleWithRadius(from: decoder) {
                 self = .roundedRectangleWithRadius(cornerRadiusValue)
             } else if let cornerSizeValue = try? RoundedRectangleWithSize(from: decoder) {
                 self = .roundedRectangleWithSize(cornerSizeValue)
             } else {
-                os_log(.debug, "Unknown roundedRectangle: %@. Defaulting to Rectangle", tokenType)
+                os_log(.debug, "Unknown roundedRectangle: %@. Defaulting to Rectangle", tokenType.rawValue)
                 self = .rectangle
             }
-        case "unevenRoundedRectangle":
+        case .unevenRoundedRectangle:
             self = .unevenRoundedRectangle(try UnevenRoundedRectangleRepresentation(from: decoder))
-
-        default:
-            os_log(.debug, "Unknown shape type: %@. Defaulting to Rectangle", tokenType)
-            self = .rectangle
         }
     }
 

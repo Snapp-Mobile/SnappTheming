@@ -35,7 +35,8 @@ struct ShapeTests {
         let _ = resolvedShape.shape
         switch resolvedShape {
         case .rectangle:
-            #expect(Bool(true), "Expected shape should be rectangle")
+            let resolvedShape = declaration.shapes.configuration.resolve(shapeRepresentation)
+            #expect(resolvedShape == .rectangle)
         default:
             throw ShapeParserError.invalidShapeType
         }
@@ -60,7 +61,8 @@ struct ShapeTests {
         let _ = resolvedShape.shape
         switch resolvedShape {
         case .ellipse:
-            #expect(Bool(true), "Expected shape should be ellipse")
+            let resolvedShape = declaration.shapes.configuration.resolve(shapeRepresentation)
+            #expect(resolvedShape == .ellipse)
         default:
             throw ShapeParserError.invalidShapeType
         }
@@ -85,7 +87,8 @@ struct ShapeTests {
         let _ = resolvedShape.shape
         switch resolvedShape {
         case .circle:
-            #expect(Bool(true), "Expected shape should be circle")
+            let resolvedShape = declaration.shapes.configuration.resolve(shapeRepresentation)
+            #expect(resolvedShape == .circle)
         default:
             throw ShapeParserError.invalidShapeType
         }

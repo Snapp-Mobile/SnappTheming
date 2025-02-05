@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftUI
 
 /// A configuration structure for defining the style of a segment control in the SnappTheming system.
 public struct SnappThemingSegmentControlStyleConfiguration {
