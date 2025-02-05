@@ -13,6 +13,7 @@ enum SettingsDestination: Hashable {
 }
 
 struct SettingsView: View {
+    @Environment(SettingsManager.self) private var manager
     @Environment(Theme.self) private var theme
     @State private var path = NavigationPath()
 
@@ -20,11 +21,11 @@ struct SettingsView: View {
         NavigationStack(path: $path) {
             List {
                 Section("General") {
-                    @Bindable var theme = theme
-                    Picker(selection: $theme.source) {
-                        ForEach(theme.availableSources) { source in
-                            Text(source.description)
-                                .tag(source)
+                    @Bindable var manager = manager
+                    Picker(selection: $manager.theme) {
+                        ForEach(SettingsManager.ThemeSetting.allCases, id: \.description) { setting in
+                            Text(setting.description)
+                                .tag(setting)
                         }
                     } label: {
                         Text("Theme")

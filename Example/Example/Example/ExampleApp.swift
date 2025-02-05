@@ -8,6 +8,7 @@
 import SnappTheming
 import SnappThemingSVGSupport
 import SwiftUI
+import OSLog
 
 @main
 struct ExampleApp: App {
@@ -19,7 +20,7 @@ struct ExampleApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
-                .environment(Theme())
+                .themed()
         }
     }
 }
