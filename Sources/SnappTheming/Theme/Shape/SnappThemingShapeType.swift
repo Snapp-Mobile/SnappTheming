@@ -7,19 +7,34 @@
 
 import SwiftUI
 
+/// Represents different types of shapes that can be used in theming.
 public enum SnappThemingShapeType: Equatable, Sendable {
-    case circle, rectangle, ellipse
+    /// A perfect circle shape.
+    case circle
+    /// A standard rectangular shape.
+    case rectangle
+    /// An ellipse shape, which can be stretched in one or both directions.
+    case ellipse
+    /// A capsule shape, with fully rounded ends.
+    /// - Parameter style: The corner style of the capsule.
     case capsule(RoundedCornerStyle)
+    /// A rounded rectangle with a specified corner radius.
+    /// - Parameters:
+    ///   - radius: The corner radius for the rectangle.
+    ///   - style: The corner style of the rectangle.
     case roundedRectangleWithRadius(CGFloat, RoundedCornerStyle)
+    /// A rounded rectangle with specific corner sizes.
+    /// - Parameters:
+    ///   - size: The size of the corners for the rectangle.
+    ///   - style: The corner style of the rectangle.
     case roundedRectangleWithSize(CGSize, RoundedCornerStyle)
+    /// A rectangle with unevenly rounded corners.
+    /// - Parameters:
+    ///   - radii: The different corner radii for each corner.
+    ///   - style: The corner style of the rectangle.
     case unevenRoundedRectangle(RectangleCornerRadii, RoundedCornerStyle)
 
-    /// Resolves the interactive color information into an interactive color resolver, which provides resolved colors for the various states.
-    ///
-    /// - Parameters:
-    ///   - colorFormat: The color format to use (e.g., ARGB, RGBA).
-    ///   - colors: The color declarations used to resolve the color tokens.
-    /// - Returns: A `SnappThemingInteractiveColorResolver` that provides the resolved interactive colors.
+    /// Generates the corresponding SwiftUI `Shape` representation based on the selected shape type.
     @ShapeBuilder public var shape: some Shape {
         switch self {
         case .circle:
