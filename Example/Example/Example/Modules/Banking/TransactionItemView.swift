@@ -28,11 +28,15 @@ struct TransactionItemView: View {
             VStack(alignment: .leading, spacing: theme.metrics.xsmall) {
                 HStack {
                     Text(transaction.identity.name)
+                        .foregroundStyle(theme.colors.textColorPrimary)
                     Spacer()
                     Text(transaction.amount, format: .currency(code: "EUR"))
+                        .foregroundStyle(
+                            transaction.amount < 0
+                                ? theme.colors.red : theme.colors.green
+                        )
                 }
                 .font(theme.typography.headline)
-                .foregroundStyle(theme.colors.textColorPrimary)
 
                 HStack {
                     Text(transaction.category.rawValue)
@@ -47,14 +51,24 @@ struct TransactionItemView: View {
         }
         .padding(.horizontal, theme.metrics.medium)
         .padding(.vertical, theme.metrics.small)
+        .background(theme.colors.surfacePrimary)
     }
 }
 
-#Preview {
+#Preview("Light") {
     VStack(spacing: 0) {
         ForEach(
             Transaction.allCases,
             content: TransactionItemView.init(transaction:))
     }
     .environment(Theme(.light))
+}
+
+#Preview("Dark") {
+    VStack(spacing: 0) {
+        ForEach(
+            Transaction.allCases,
+            content: TransactionItemView.init(transaction:))
+    }
+    .environment(Theme(.dark))
 }
