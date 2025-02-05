@@ -2,16 +2,17 @@
     "colors": {
         "primary": "#452BE9",
         "secondary": "#7EABDE",
-        "surfacePrimary": "$colors/baseBlack",
-        "surfaceSecondary": "#1E1E1E",
+        "surfacePrimary": "$colors/systemGray6",
+        "surfaceSecondary": "$colors/baseBlack",
         "textColorPrimary": "$colors/baseWhite",
         "textColorPrimaryInverted": "$colors/baseWhite",
         "textColorSecondary": "$colors/baseGray",
-        "shadow": "#B2B7C740",
+        "shadow": "#B2B7C710",
         "baseWhite": "#FFFFFF",
         "baseBlack": "#000000",
         "baseGray": "#91949F",
-        "clear": "#00000000"
+        "clear": "#00000000",
+        "systemGray6": "#1C1C1E"
     },
     "gradients": {
         "creditCardSurface": {
