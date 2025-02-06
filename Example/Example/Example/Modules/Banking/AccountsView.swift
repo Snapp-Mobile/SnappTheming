@@ -17,24 +17,29 @@ struct AccountsView: View {
                 VStack(spacing: theme.metrics.xlarge) {
                     CreditCardView()
 
-//                    ActionsContainer {
-//                        Button(action: {}) {
-//                            Label("Top up", icon: theme.images.payment)
-//                        }
-//
-//                        Button(action: {}) {
-//                            Label("Pay", icon: theme.images.receipt)
-//                        }
-//
-//                        Button(action: {}) {
-//                            Label("Send", icon: theme.images.send)
-//                        }
-//
-//                        Button(action: {}) {
-//                            Label("More", icon: theme.images.table)
-//                        }
-//                    }
-//                    .buttonStyle(.actionButton)
+                    // TODO: Fix for watchOS
+                    // Note: ActionsContainer has been implemented using custom containers API.
+                    // Feel free to convert it to old approach with introducing ActionType enum for each button and just user regular ForEach instead of subviews check.
+                    #if os(iOS)
+                        ActionsContainer {
+                            Button(action: {}) {
+                                Label("Top up", icon: theme.images.payment)
+                            }
+
+                            Button(action: {}) {
+                                Label("Pay", icon: theme.images.receipt)
+                            }
+
+                            Button(action: {}) {
+                                Label("Send", icon: theme.images.send)
+                            }
+
+                            Button(action: {}) {
+                                Label("More", icon: theme.images.table)
+                            }
+                        }
+                        .buttonStyle(.actionButton)
+                    #endif
                 }
                 .padding([.horizontal, .top], theme.metrics.medium)
                 .padding(.bottom, theme.metrics.large)
@@ -62,11 +67,15 @@ struct AccountsView: View {
 }
 
 #Preview("Light") {
-    AccountsView()
-        .environment(Theme(.light))
+    NavigationStack {
+        AccountsView()
+    }
+    .environment(Theme(.light))
 }
 
 #Preview("Dark") {
-    AccountsView()
-        .environment(Theme(.dark))
+    NavigationStack {
+        AccountsView()
+    }
+    .environment(Theme(.dark))
 }
