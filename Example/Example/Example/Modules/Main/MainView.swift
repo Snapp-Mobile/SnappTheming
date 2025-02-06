@@ -51,6 +51,9 @@ struct MainView: View {
                     .tag(tab)
             }
         }
+        #if os(tvOS)
+            .tabViewStyle(.sidebarAdaptable)
+        #endif
         .tint(theme.colors.primary)
         .colorScheme(theme.source.colorScheme)
     }

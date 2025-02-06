@@ -24,12 +24,16 @@ struct GradientsViewer: View {
         List {
             Section {
                 ForEach(theme.gradients.keys, id: \.self) { key in
-                    LabeledContent(key) {
+                    LabeledContent {
                         Button {
                             selectedShape = .init(name: key, shape: AnyShapeStyle(theme.gradients[dynamicMember: key]))
                         } label: {
                             GradientView(style: theme.gradients[dynamicMember: key])
                         }
+                        .scaleEffect(focusedKey == key ? 1.2 : 1.0)
+                    } label: {
+                        Text(key)
+                            .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
                     }
                     .focusable(true)
                     .focused($focusedKey, equals: key)

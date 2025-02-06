@@ -17,14 +17,20 @@ struct ButtonsViewer: View {
         List {
             Section {
                 ForEach(theme.buttonStyles.keys, id: \.self) { key in
-                    LabeledContent(key) {
+                    LabeledContent {
                         Button {
                         } label: {
                             Image(systemName: "gearshape")
                         }
                         .buttonStyle(theme.buttonStyles[dynamicMember: key])
                         .frame(
-                            minWidth: (key == "primaryCritical" || key == "primaryBrand") ? 128 : 64, minHeight: 64)
+                            minWidth: 64,
+                            minHeight: 64
+                        )
+                        .scaleEffect(focusedKey == key ? 1.2 : 1.0)
+                    } label: {
+                        Text(key)
+                            .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
                     }
                     .focusable(true)
                     .focused($focusedKey, equals: key)

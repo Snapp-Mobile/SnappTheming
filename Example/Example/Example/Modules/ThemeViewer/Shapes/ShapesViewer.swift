@@ -17,11 +17,18 @@ struct ShapesViewer: View {
         List {
             Section {
                 ForEach(theme.shapes.keys, id: \.self) { key in
-                    LabeledContent(key) {
+                    LabeledContent {
                         theme.shapes[dynamicMember: key]
-                            .stroke(Color.accentColor)
+                            .stroke(
+                                focusedKey == key ? Color.accentColor : .primary
+                            )
                             .frame(maxWidth: 80, minHeight: 30)
                             .padding(.vertical, 4)
+                    } label: {
+                        Text(key)
+                            .foregroundStyle(
+                                focusedKey == key ? Color.accentColor : .primary
+                            )
                     }
                     .focusable(true)
                     .focused($focusedKey, equals: key)

@@ -11,27 +11,23 @@
     import SwiftUI
 
     struct AnimationsViewer: View {
-        @FocusState var focusedKey: String?
-
         @Environment(Theme.self) private var theme
+        @FocusState private var focusedKey: String?
 
         var body: some View {
             List {
                 Section {
                     ForEach(theme.animations.keys, id: \.self) { key in
-                        LabeledContent(key) {
-                            LottieView(animation: try? .from(data: theme.animations.lego.data))
+                        LabeledContent {
+                            LottieView(animation: try? .from(data: theme.animations[dynamicMember: key].data))
                                 .playing(loopMode: .loop)
-                                .frame(height: 300)
+                                .frame(height: 300, alignment: .trailing)
+                        } label: {
+                            Text(key)
+                                .foregroundStyle(focusedKey == key ? Color.teal : .primary)
                         }
-						.focusable(true)
-                        .focused($focusedKey, equals: key)
                     }
                 }
-                .navigationTitle("Animations")
-                #if os(iOS) || targetEnvironment(macCatalyst)
-                    .navigationBarTitleDisplayMode(.inline)
-                #endif
             }
             .navigationTitle("Animations")
             #if os(iOS) || targetEnvironment(macCatalyst)

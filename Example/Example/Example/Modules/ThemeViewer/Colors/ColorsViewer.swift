@@ -20,21 +20,25 @@ struct ColorView: View {
 
 struct ColorsViewer: View {
     @Environment(Theme.self) private var theme
-    @FocusState var focusedKey: String?
+    @FocusState private var focusedKey: String?
 
     var body: some View {
         List {
             Section {
                 ForEach(theme.colors.keys, id: \.self) { key in
                     let color: Color = theme.colors[dynamicMember: key]
-                    LabeledContent(key) {
+                    LabeledContent {
                         HStack {
                             ColorView(color: color)
                                 .environment(\.colorScheme, .light)
+                                .scaleEffect(focusedKey == key ? 1.2 : 1.0)
                             ColorView(color: color)
                                 .environment(\.colorScheme, .dark)
-
+                                .scaleEffect(focusedKey == key ? 1.2 : 1.0)
                         }
+                    } label: {
+                        Text(key)
+                            .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
                     }
                     .focusable(true)
                     .focused($focusedKey, equals: key)
