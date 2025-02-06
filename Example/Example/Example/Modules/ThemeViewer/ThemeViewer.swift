@@ -48,6 +48,8 @@ struct ThemeViewer: View {
             case .animations:
                 #if !os(watchOS)
                     AnimationsViewer()
+                #else
+                    Text("Lottie animations are not supported on watchOS (for now)")
                 #endif
             }
         }
