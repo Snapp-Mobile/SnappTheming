@@ -24,6 +24,8 @@
                                 .playing(loopMode: .loop)
                                 .frame(height: 300)
                         }
+						.focusable(true)
+                        .focused($focusedKey, equals: key)
                     }
                 }
                 .navigationTitle("Animations")
@@ -31,6 +33,10 @@
                     .navigationBarTitleDisplayMode(.inline)
                 #endif
             }
+            .navigationTitle("Animations")
+            #if os(iOS) || targetEnvironment(macCatalyst)
+                .navigationBarTitleDisplayMode(.inline)
+            #endif
         }
     }
 
