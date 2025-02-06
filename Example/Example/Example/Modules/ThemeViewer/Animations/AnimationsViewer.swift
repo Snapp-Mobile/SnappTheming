@@ -11,26 +11,21 @@
     import SwiftUI
 
     struct AnimationsViewer: View {
-        let declarations: SnappThemingAnimationDeclarations
-        @FocusState var focusedKey: String?
+        @Environment(Theme.self) private var theme
+        @FocusState private var focusedKey: String?
 
         var body: some View {
             List {
                 Section {
-                    ForEach(declarations.keys, id: \.self) { key in
-                        LabeledContent(
-                            content: {
-                                LottieView(animation: try? .from(data: declarations.lego.data))
-                                    .playing(loopMode: .loop)
-                                    .frame(height: 300, alignment: .trailing)
-                            },
-                            label: {
-                                Text(key)
-                                    .foregroundStyle(focusedKey == key ? Color.teal : .primary)
-                            }
-                        )
-                        .focusable(true)
-                        .focused($focusedKey, equals: key)
+                    ForEach(theme.animations.keys, id: \.self) { key in
+                        LabeledContent {
+                            LottieView(animation: try? .from(data: theme.animations[dynamicMember: key].data))
+                                .playing(loopMode: .loop)
+                                .frame(height: 300, alignment: .trailing)
+                        } label: {
+                            Text(key)
+                                .foregroundStyle(focusedKey == key ? Color.teal : .primary)
+                        }
                     }
                 }
             }
@@ -39,5 +34,10 @@
                 .navigationBarTitleDisplayMode(.inline)
             #endif
         }
+    }
+
+    #Preview {
+        AnimationsViewer()
+            .environment(Theme(.default))
     }
 #endif

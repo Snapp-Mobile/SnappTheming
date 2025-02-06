@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Netflix_Symbol_PMS.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

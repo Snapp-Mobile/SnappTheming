@@ -10,31 +10,28 @@ import SnappThemingSwiftUIHelpers
 import SwiftUI
 
 struct ButtonsViewer: View {
-    let declarations: SnappThemingButtonStyleDeclarations
+    @Environment(Theme.self) private var theme
     @FocusState var focusedKey: String?
 
     var body: some View {
         List {
             Section {
-                ForEach(declarations.keys, id: \.self) { key in
-                    LabeledContent(
-                        content: {
-                            Button {
-                            } label: {
-                                Image(systemName: "gearshape")
-                            }
-                            .buttonStyle(declarations[dynamicMember: key])
-                            .frame(
-                                minWidth: (key == "primaryCritical" || key == "primaryBrand") ? 128 : 64,
-                                minHeight: 64
-                            )
-                            .scaleEffect(focusedKey == key ? 1.2 : 1.0)
-                        },
-                        label: {
-                            Text(key)
-                                .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
+                ForEach(theme.buttonStyles.keys, id: \.self) { key in
+                    LabeledContent {
+                        Button {
+                        } label: {
+                            Image(systemName: "gearshape")
                         }
-                    )
+                        .buttonStyle(theme.buttonStyles[dynamicMember: key])
+                        .frame(
+                            minWidth: 64,
+                            minHeight: 64
+                        )
+                        .scaleEffect(focusedKey == key ? 1.2 : 1.0)
+                    } label: {
+                        Text(key)
+                            .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
+                    }
                     .focusable(true)
                     .focused($focusedKey, equals: key)
                 }
@@ -51,6 +48,7 @@ struct ButtonsViewer: View {
 
 #Preview {
     NavigationView {
-        ButtonsViewer(declarations: SnappThemingDeclaration.preview.buttonStyles)
+        ButtonsViewer()
+            .environment(Theme(.default))
     }
 }

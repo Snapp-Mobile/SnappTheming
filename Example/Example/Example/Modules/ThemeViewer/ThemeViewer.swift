@@ -13,7 +13,7 @@ enum ThemeDestination: String, Hashable, CaseIterable {
 }
 
 struct ThemeViewer: View {
-    var declaration: SnappThemingDeclaration
+    @Environment(Theme.self) private var theme
 
     var body: some View {
         List {
@@ -26,9 +26,37 @@ struct ThemeViewer: View {
             }
         }
         .navigationTitle("Tokens")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(for: ThemeDestination.self) { destination in
+            switch destination {
+            case .buttons:
+                ButtonsViewer()
+            case .colors:
+                ColorsViewer()
+            case .fonts:
+                FontsViewer()
+            case .images:
+                ImagesViewer()
+            case .metrics:
+                MetricsViewer()
+            case .typography:
+                TypographyViewer()
+            case .gradients:
+                GradientsViewer()
+            case .shapes:
+                ShapesViewer()
+            case .animations:
+                #if !os(watchOS)
+                    AnimationsViewer()
+                #else
+                    Text("Lottie animations are not supported on watchOS (for now)")
+                #endif
+            }
+        }
     }
 }
 
 #Preview {
-    ThemeViewer(declaration: .preview)
+    ThemeViewer()
+        .environment(Theme(.default))
 }

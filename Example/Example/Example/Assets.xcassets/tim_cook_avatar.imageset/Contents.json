@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "tim_cook_avatar.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

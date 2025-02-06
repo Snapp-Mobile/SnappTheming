@@ -9,14 +9,14 @@ import SnappTheming
 import SwiftUI
 
 struct FontsViewer: View {
-    let declarations: SnappThemingFontDeclarations
+    @Environment(Theme.self) private var theme
     @FocusState var focusedKey: String?
 
     var body: some View {
         List {
             Section {
-                ForEach(declarations.keys, id: \.self) { key in
-                    let resolver: SnappThemingFontResolver = declarations[dynamicMember: key]
+                ForEach(theme.fonts.keys, id: \.self) { key in
+                    let resolver: SnappThemingFontResolver = theme.fonts[dynamicMember: key]
                     Text(key)
                         .font(resolver.font(size: 14.0))
                         .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
@@ -34,6 +34,7 @@ struct FontsViewer: View {
 
 #Preview {
     NavigationView {
-        FontsViewer(declarations: SnappThemingDeclaration.preview.fonts)
+        FontsViewer()
+            .environment(Theme(.default))
     }
 }

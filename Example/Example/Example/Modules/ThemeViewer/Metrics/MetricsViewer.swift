@@ -32,7 +32,7 @@ struct CornerRadiusMetricView: View {
 }
 
 struct MetricsViewer: View {
-    let declarations: SnappThemingMetricDeclarations
+    @Environment(Theme.self) private var theme
     @FocusState var focusedKey: String?
 
     var body: some View {
@@ -54,9 +54,9 @@ struct MetricsViewer: View {
 
     func section<V>(_ title: String, content: @escaping (CGFloat) -> V) -> some View where V: View {
         Section(title) {
-            ForEach(declarations.keys, id: \.self) { key in
+            ForEach(theme.metrics.keys, id: \.self) { key in
                 HStack {
-                    let metric: CGFloat = declarations[dynamicMember: key]
+                    let metric: CGFloat = theme.metrics[dynamicMember: key]
                     VStack {
                         Text(key)
                             .font(.body)
@@ -79,6 +79,7 @@ struct MetricsViewer: View {
 
 #Preview {
     NavigationView {
-        MetricsViewer(declarations: SnappThemingDeclaration.preview.metrics)
+        MetricsViewer()
+            .environment(Theme(.default))
     }
 }
