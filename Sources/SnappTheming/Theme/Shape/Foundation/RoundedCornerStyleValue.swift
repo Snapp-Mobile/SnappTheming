@@ -9,9 +9,16 @@ import Foundation
 import SwiftUI
 
 extension SnappThemingShapeRepresentation {
+    /// Represents the style of rounded corners for a shape.
+    ///
+    /// This enum provides a mapping between raw string values and SwiftUI's `RoundedCornerStyle`.
     enum RoundedCornerStyleValue: String, Codable {
-        case circular, continuous
+        /// A circular corner style.
+        case circular
+        /// A continuous corner style.
+        case continuous
 
+        /// Converts `RoundedCornerStyleValue` into SwiftUI's `RoundedCornerStyle`.
         var roundedCornerStyle: RoundedCornerStyle {
             switch self {
             case .circular:

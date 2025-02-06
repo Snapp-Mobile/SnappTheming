@@ -8,11 +8,22 @@
 import OSLog
 import SwiftUI
 
+/// Represents different shape configurations that can be used in theming.
+/// This enum supports standard shapes as well as customizable rounded shapes.
 public enum SnappThemingShapeRepresentation: Codable, Sendable {
-    case circle, rectangle, ellipse
+    /// A perfect circle shape.
+    case circle
+    /// A standard rectangle shape.
+    case rectangle
+    /// An ellipse shape.
+    case ellipse
+    /// A capsule shape with specific styling.
     case capsule(CapsuleRepresentation)
+    /// A rounded rectangle with a uniform corner radius.
     case roundedRectangleWithRadius(RoundedRectangleWithRadius)
+    /// A rounded rectangle where each corner can have a different size.
     case roundedRectangleWithSize(RoundedRectangleWithSize)
+    /// A rounded rectangle where each corner can have a unique radius.
     case unevenRoundedRectangle(UnevenRoundedRectangleRepresentation)
 
     enum CodingKeys: String, CodingKey {
@@ -23,6 +34,10 @@ public enum SnappThemingShapeRepresentation: Codable, Sendable {
         case circle, rectangle, ellipse, capsule, roundedRectangle, unevenRoundedRectangle
     }
 
+    /// Initializes a `SnappThemingShapeRepresentation` from a decoder.
+    ///
+    /// - Parameter decoder: The decoder to read data from.
+    /// - Throws: A decoding error if the data is corrupted or in an unexpected format.
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let tokenType = try container.decode(ShapeType.self, forKey: .type)
@@ -55,20 +70,20 @@ public enum SnappThemingShapeRepresentation: Codable, Sendable {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
         switch self {
-        case .circle: try container.encode("circle", forKey: .type)
-        case .rectangle: try container.encode("rectangle", forKey: .type)
-        case .ellipse: try container.encode("ellipse", forKey: .type)
+        case .circle: try container.encode(ShapeType.circle, forKey: .type)
+        case .rectangle: try container.encode(ShapeType.rectangle, forKey: .type)
+        case .ellipse: try container.encode(ShapeType.ellipse, forKey: .type)
         case .capsule(let style):
-            try container.encode("capsule", forKey: .type)
+            try container.encode(ShapeType.capsule, forKey: .type)
             try style.encode(to: encoder)
         case .roundedRectangleWithRadius(let radiusValue):
-            try container.encode("roundedRectangleWithRadius", forKey: .type)
+            try container.encode(ShapeType.roundedRectangle, forKey: .type)
             try radiusValue.encode(to: encoder)
         case .roundedRectangleWithSize(let sizeValue):
-            try container.encode("roundedRectangleWithSize", forKey: .type)
+            try container.encode(ShapeType.roundedRectangle, forKey: .type)
             try sizeValue.encode(to: encoder)
         case .unevenRoundedRectangle(let radiiValue):
-            try container.encode("unevenRoundedRectangle", forKey: .type)
+            try container.encode(ShapeType.unevenRoundedRectangle, forKey: .type)
             try radiiValue.encode(to: encoder)
         }
     }
