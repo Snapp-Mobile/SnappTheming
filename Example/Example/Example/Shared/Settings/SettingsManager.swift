@@ -84,7 +84,7 @@ extension UserDefaults {
         }
         set {
             if let filename = newValue?.filename {
-                set(newValue?.rawValue, forKey: Self.themeSourceFilenameKey)
+                set(filename, forKey: Self.themeSourceFilenameKey)
             } else {
                 removeObject(forKey: Self.themeSourceFilenameKey)
             }
