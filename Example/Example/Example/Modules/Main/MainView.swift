@@ -72,11 +72,11 @@ struct MainView: View {
 #Preview("Light") {
     MainView()
         .themed()
-        .preferredColorScheme(.light)
+        .environment(\.settingsStorage, .preview(.light))
 }
 
 #Preview("Dark") {
     MainView()
         .themed()
-        .preferredColorScheme(.dark)
+        .environment(\.settingsStorage, .preview(.dark))
 }

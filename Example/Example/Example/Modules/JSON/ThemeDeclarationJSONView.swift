@@ -24,7 +24,8 @@
     #Preview {
         NavigationView {
             ThemeDeclarationJSONView()
-                .environment(Theme(.default))
+                .themed()
+                .environment(\.settingsStorage, .preview(.default))
         }
     }
 #endif

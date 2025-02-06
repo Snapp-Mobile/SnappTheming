@@ -70,12 +70,14 @@ struct AccountsView: View {
     NavigationStack {
         AccountsView()
     }
-    .environment(Theme(.light))
+    .themed()
+    .environment(\.settingsStorage, .preview(.light))
 }
 
 #Preview("Dark") {
     NavigationStack {
         AccountsView()
     }
-    .environment(Theme(.dark))
+    .themed()
+    .environment(\.settingsStorage, .preview(.dark))
 }

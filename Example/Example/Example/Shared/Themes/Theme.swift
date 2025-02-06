@@ -13,7 +13,7 @@ import SwiftUI
 @Observable
 @dynamicMemberLookup
 final class Theme {
-    enum Source: String, Identifiable, Hashable, CustomStringConvertible {
+    enum Source: String, Identifiable, Hashable, CustomStringConvertible, CaseIterable {
         static let `default`: Self = .light
 
         case light
@@ -82,10 +82,6 @@ extension Theme.Source {
     fileprivate func loadDeclaration() -> SnappThemingDeclaration {
         .load(filename: filename, using: .init(themeName: filename))
     }
-}
-
-extension Theme.Source: CaseIterable {
-    static let allCases: [Theme.Source] = [.light, .dark]
 }
 
 extension SnappThemingDeclaration {
