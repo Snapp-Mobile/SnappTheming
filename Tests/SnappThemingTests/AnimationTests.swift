@@ -30,6 +30,7 @@ struct AnimationTests {
         )
 
         let declaration = try SnappThemingParser.parse(from: json, using: configuration)
+        try compareEncoded(declaration, and: json)
 
         let animationRepresentation: SnappThemingAnimationRepresentation = try #require(declaration.animations.lego)
         let animationValue: SnappThemingAnimationRepresentation.SnappThemingAnimationValue = declaration.animations.lego
@@ -56,6 +57,7 @@ struct AnimationTests {
         )
 
         let declaration = try SnappThemingParser.parse(from: json, using: configuration)
+        try compareEncoded(declaration, and: json)
 
         let animationRepresentation: SnappThemingAnimationRepresentation? = declaration.animations.ball
         let animationValue: SnappThemingAnimationRepresentation.SnappThemingAnimationValue = declaration.animations.ball

@@ -71,8 +71,7 @@ struct SegmentControlStyleTests {
     func parseSegmentControlStyleWithSuccess(json: String) throws {
         let configuration = SnappThemingParserConfiguration.default
 
-        let declaration = try SnappThemingParser.parse(
-            from: json, using: configuration)
+        let declaration = try SnappThemingParser.parse(from: json, using: configuration)
         let _ = try #require(
             declaration.segmentControlStyle.cache["primary"]?.value)
         #expect(declaration.segmentControlStyle.cache.count == 1)
@@ -158,8 +157,7 @@ struct SegmentControlStyleTests {
     func parseSegmentControlStyleWithWrongAliases(json: String) throws {
         let configuration = SnappThemingParserConfiguration.default
 
-        let declaration = try SnappThemingParser.parse(
-            from: json, using: configuration)
+        let declaration = try SnappThemingParser.parse(from: json, using: configuration)
         let _ = try #require(declaration.segmentControlStyle.cache["primary"])
         #expect(declaration.segmentControlStyle.cache.count == 1)
 

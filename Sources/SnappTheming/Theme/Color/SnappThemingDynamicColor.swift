@@ -10,6 +10,8 @@ import SwiftUI
 
 #if canImport(UIKit)
     import UIKit
+#elseif canImport(AppKit)
+    import AppKit
 #endif
 
 /// A struct representing a dynamic color that adapts to system traits (light/dark mode).
@@ -35,6 +37,38 @@ public struct SnappThemingDynamicColor: Codable {
             #else
                 return UIColor(hex: dark, format: colorFormat)
             #endif
+        }
+    #elseif canImport(AppKit)
+        /// Returns an `NSColor` that dynamically adapts to the system's appearance (light or dark mode).
+        ///
+        /// - Parameter colorFormat: The format of the color (e.g., RGB, RGBA).
+        /// - Returns: A dynamically resolving `NSColor` that changes based on the system's appearance.
+        public func nsColor(using colorFormat: SnappThemingColorFormat) -> NSColor {
+            NSColor(
+                name: nil,
+                dynamicProvider: { appearance in
+                    switch appearance.name {
+                    case .aqua,
+                        .vibrantLight,
+                        .accessibilityHighContrastAqua,
+                        .accessibilityHighContrastVibrantLight:
+                        // Returns the light mode variant of the color
+                        return NSColor(Color(hex: light, format: colorFormat))
+
+                    case .darkAqua,
+                        .vibrantDark,
+                        .accessibilityHighContrastDarkAqua,
+                        .accessibilityHighContrastVibrantDark:
+                        // Returns the dark mode variant of the color
+                        return NSColor(Color(hex: dark, format: colorFormat))
+
+                    default:
+                        // Returns the dark mode variant of the color
+                        assertionFailure("Unknown appearance: \(appearance.name)")
+                        return NSColor(Color(hex: light, format: colorFormat))
+                    }
+                }
+            )
         }
     #endif
 

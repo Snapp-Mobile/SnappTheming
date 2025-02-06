@@ -45,4 +45,6 @@ public struct SnappThemingSegmentControlStyleRepresentation: Codable {
                 SnappThemingToken<SnappThemingInteractiveColorInformation>.self, forKey: .borderColor)
         }
     }
+
+    // TODO: Proper encode function needs to be added
 }

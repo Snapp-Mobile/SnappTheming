@@ -62,5 +62,14 @@ extension SnappThemingColorRepresentation {
                 UIColor(hex: hexValue, format: format)
             }
         }
+    #elseif canImport(AppKit)
+        func nsColor(using format: SnappThemingColorFormat) -> NSColor {
+            switch self {
+            case .dynamic(let dynamicColor):
+                dynamicColor.nsColor(using: format)
+            case .hex(let hexValue):
+                NSColor.fromHex(hexValue, using: format) ?? .black
+            }
+        }
     #endif
 }

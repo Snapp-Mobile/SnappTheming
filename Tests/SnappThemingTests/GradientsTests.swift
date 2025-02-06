@@ -15,6 +15,7 @@ struct GradientsTests {
     @Test(arguments: linearGradients)
     func parseHorizontalLinearGradient(json: String) throws {
         let declaration = try SnappThemingParser.parse(from: json)
+        try compareEncoded(declaration, and: json)
 
         let horizontalLinearGradientRepresentation = try #require(
             declaration.gradients.horizontalLinearGradient)
@@ -65,6 +66,7 @@ struct GradientsTests {
     @Test(arguments: horizontalLinearGradientsWithBrokenAliases)
     func parseHorizontalLinearGradientWithBrokenAliases(json: String) throws {
         let declaration = try SnappThemingParser.parse(from: json)
+        try compareEncoded(declaration, and: json)
         let fallbackConfiguration = declaration.gradients.configuration
         let gradientRepresentation = try #require(declaration.gradients.horizontalLinearGradient)
         let _: any ShapeStyle = declaration.gradients.horizontalLinearGradient
@@ -80,10 +82,11 @@ struct GradientsTests {
         #expect(resolvedConfiguration.colors[0].toHex() == fallbackConfiguration.fallbackColor.toHex())
     }
 
-    @Test(arguments: radialGradoients)
+    @Test(arguments: radialGradients)
     func parseRadialGradient(json: String) throws {
         typealias Radial = SnappThemingRadialGradientRepresentation
         let declaration = try SnappThemingParser.parse(from: json)
+        try compareEncoded(declaration, and: json)
         let gradientRepresentation = try #require(declaration.gradients.radialGradient)
         let _: any ShapeStyle = declaration.gradients.radialGradient
         let configuration = try #require(gradientRepresentation.configuration as? Radial)
@@ -99,6 +102,7 @@ struct GradientsTests {
     @Test(arguments: angularGradients)
     func parseAngularGradient(json: String) throws {
         let declaration = try SnappThemingParser.parse(from: json)
+        try compareEncoded(declaration, and: json)
         let gradientRepresentation = try #require(declaration.gradients.angularGradient)
         let _: any ShapeStyle = declaration.gradients.angularGradient
         let configuration = try #require(
@@ -121,6 +125,7 @@ struct GradientsTests {
     @Test(arguments: angularGradientsWithBrokenAliases)
     func parseAngularGradientWithBadAliases(json: String) throws {
         let declaration = try SnappThemingParser.parse(from: json)
+        try compareEncoded(declaration, and: json)
         let _: any ShapeStyle = declaration.gradients.angularGradient
         let fallbackConfiguration = declaration.gradients.configuration
         let gradientRepresentation = try #require(declaration.gradients.angularGradient)
@@ -334,7 +339,7 @@ private let angularGradientsWithBrokenAliases = [
     """
 ]
 
-private let radialGradoients = [
+private let radialGradients = [
     """
     {
         "gradients": {
