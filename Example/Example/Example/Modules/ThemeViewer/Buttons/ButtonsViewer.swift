@@ -11,6 +11,7 @@ import SwiftUI
 
 struct ButtonsViewer: View {
     @Environment(Theme.self) private var theme
+    @FocusState var focusedKey: String?
 
     var body: some View {
         List {
@@ -22,15 +23,20 @@ struct ButtonsViewer: View {
                             Image(systemName: "gearshape")
                         }
                         .buttonStyle(theme.buttonStyles[dynamicMember: key])
-                        .frame(minWidth: (key == "primaryCritical" || key == "primaryBrand") ? 128 : 64, minHeight: 64)
+                        .frame(
+                            minWidth: (key == "primaryCritical" || key == "primaryBrand") ? 128 : 64, minHeight: 64)
                     }
+                    .focusable(true)
+                    .focused($focusedKey, equals: key)
                 }
             } footer: {
                 Text("Tap on a button to toggle between its normal and selected state")
             }
         }
         .navigationTitle("Button Styles")
-        .navigationBarTitleDisplayMode(.inline)
+        #if os(iOS) || targetEnvironment(macCatalyst)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
     }
 }
 

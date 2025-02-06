@@ -7,9 +7,10 @@
 
 import SwiftUI
 import Testing
-import UIKit
-
 @testable import SnappTheming
+#if canImport(UIKit)
+    import UIKit
+#endif
 
 @Suite
 struct ToggleStyleTests {
@@ -42,8 +43,8 @@ struct ToggleStyleTests {
     func parseToggleStyleWithSuccess(json: String) throws {
         let configuration = SnappThemingParserConfiguration.default
 
-        let declaration = try SnappThemingParser.parse(
-            from: json, using: configuration)
+        let declaration = try SnappThemingParser.parse(from: json, using: configuration)
+        try compareEncoded(declaration, and: json)
         let _ = try #require(declaration.toggleStyle.cache["primary"]?.value)
         let toggleStyle: SnappThemingToggleStyleResolver = declaration.toggleStyle.primary
         let toggleStyleFallbackConfiguration = declaration.toggleStyle.configuration

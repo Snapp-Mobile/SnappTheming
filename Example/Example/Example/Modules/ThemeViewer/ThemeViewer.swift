@@ -46,7 +46,9 @@ struct ThemeViewer: View {
             case .shapes:
                 ShapesViewer()
             case .animations:
-                AnimationsViewer()
+                #if !os(watchOS)
+                    AnimationsViewer()
+                #endif
             }
         }
     }

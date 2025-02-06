@@ -1,50 +1,64 @@
 //
-//  SnappThemingShapeRepresentation.swift
+//  SnappThemingShapeType.swift
 //  SnappTheming
 //
 //  Created by Oleksii Kolomiiets on 12.12.2024.
 //
 
+import OSLog
 import SwiftUI
 
-/// A representation of a button's style shape in the SnappTheming framework.
-///
-/// This struct defines various button shape types and supports encoding and decoding
-/// from JSON for theming purposes.
-public struct SnappThemingShapeRepresentation: Codable {
-    /// The button style shape type (e.g., circle, rectangle, capsule).
-    public let shapeType: SnappThemingShapeType
+/// Represents different shape configurations that can be used in theming.
+/// This enum supports standard shapes as well as customizable rounded shapes.
+public enum SnappThemingShapeRepresentation: Codable, Sendable {
+    /// A perfect circle shape.
+    case circle
+    /// A standard rectangle shape.
+    case rectangle
+    /// An ellipse shape.
+    case ellipse
+    /// A capsule shape with specific styling.
+    case capsule(CapsuleRepresentation)
+    /// A rounded rectangle with a uniform corner radius.
+    case roundedRectangleWithRadius(RoundedRectangleWithRadius)
+    /// A rounded rectangle where each corner can have a different size.
+    case roundedRectangleWithSize(RoundedRectangleWithSize)
+    /// A rounded rectangle where each corner can have a unique radius.
+    case unevenRoundedRectangle(UnevenRoundedRectangleRepresentation)
 
     enum CodingKeys: String, CodingKey {
-        case type, value
+        case type
     }
 
-    /// Decodes a `SnappThemingShapeRepresentation` from a decoder.
+    enum ShapeType: String, Codable {
+        case circle, rectangle, ellipse, capsule, roundedRectangle, unevenRoundedRectangle
+    }
+
+    /// Initializes a `SnappThemingShapeRepresentation` from a decoder.
     ///
-    /// - Parameter decoder: The decoder used to decode the data.
-    /// - Throws: A decoding error if the data is invalid or not formatted as expected.
+    /// - Parameter decoder: The decoder to read data from.
+    /// - Throws: A decoding error if the data is corrupted or in an unexpected format.
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let tokenType = try container.decode(SnappThemingButtonStyleShapeType.self, forKey: .type)
+        let tokenType = try container.decode(ShapeType.self, forKey: .type)
 
         switch tokenType {
-        case .circle: shapeType = .circle
-        case .rectangle: shapeType = .rectangle
-        case .ellipse: shapeType = .ellipse
+        case .circle: self = .circle
+        case .rectangle: self = .rectangle
+        case .ellipse: self = .ellipse
         case .capsule:
-            let styleValue = try container.decode(StyleValue.self, forKey: .value)
-            shapeType = .capsule(styleValue.style.style)
+            self = .capsule(try CapsuleRepresentation(from: decoder))
         case .roundedRectangle:
-            if let radiusValue = try? container.decodeIfPresent(CornerRadiusValue.self, forKey: .value) {
-                shapeType = .roundedRectangleWithRadius(radiusValue.cornerRadius, radiusValue.styleValue.style)
-            } else if let sizeValue = try? container.decodeIfPresent(CornerSizeValue.self, forKey: .value) {
-                shapeType = .roundedRectangleWithSize(sizeValue.cornerSize, sizeValue.styleValue.style)
+            if let cornerRadiusValue = try? RoundedRectangleWithRadius(from: decoder) {
+                self = .roundedRectangleWithRadius(cornerRadiusValue)
+            } else if let cornerSizeValue = try? RoundedRectangleWithSize(from: decoder) {
+                self = .roundedRectangleWithSize(cornerSizeValue)
             } else {
-                shapeType = .rectangle
+                os_log(.debug, "Unknown roundedRectangle: %@. Defaulting to Rectangle", tokenType.rawValue)
+                self = .rectangle
             }
         case .unevenRoundedRectangle:
-            let radiiValue = try container.decode(UnevenRoundedRectangleValue.self, forKey: .value)
-            shapeType = .unevenRoundedRectangle(radiiValue.cornerRadii, radiiValue.styleValue.style)
+            self = .unevenRoundedRectangle(try UnevenRoundedRectangleRepresentation(from: decoder))
         }
     }
 
@@ -54,32 +68,23 @@ public struct SnappThemingShapeRepresentation: Codable {
     /// - Throws: An encoding error if the data cannot be encoded.
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        let tokenType = SnappThemingButtonStyleShapeType(shapeType)
-        try container.encode(tokenType.rawValue, forKey: .type)
 
-        switch shapeType {
-        case .circle, .rectangle, .ellipse: break
+        switch self {
+        case .circle: try container.encode(ShapeType.circle, forKey: .type)
+        case .rectangle: try container.encode(ShapeType.rectangle, forKey: .type)
+        case .ellipse: try container.encode(ShapeType.ellipse, forKey: .type)
         case .capsule(let style):
-            try container.encode(StyleValue(style), forKey: .value)
-        case .roundedRectangleWithRadius(let radius, let style):
-            try container.encode(
-                CornerRadiusValue(cornerRadius: radius, styleValue: RoundedCornerStyleValue(style: style)),
-                forKey: .value)
-        case .roundedRectangleWithSize(let size, let style):
-            try container.encode(
-                CornerSizeValue(cornerSize: size, styleValue: RoundedCornerStyleValue(style: style)), forKey: .value)
-        case .unevenRoundedRectangle(let radii, let style):
-            try container.encode(
-                UnevenRoundedRectangleValue(
-                    cornerRadiiValue: CornerRadiiValue(rawValue: radii),
-                    styleValue: RoundedCornerStyleValue(style: style)), forKey: .value)
+            try container.encode(ShapeType.capsule, forKey: .type)
+            try style.encode(to: encoder)
+        case .roundedRectangleWithRadius(let radiusValue):
+            try container.encode(ShapeType.roundedRectangle, forKey: .type)
+            try radiusValue.encode(to: encoder)
+        case .roundedRectangleWithSize(let sizeValue):
+            try container.encode(ShapeType.roundedRectangle, forKey: .type)
+            try sizeValue.encode(to: encoder)
+        case .unevenRoundedRectangle(let radiiValue):
+            try container.encode(ShapeType.unevenRoundedRectangle, forKey: .type)
+            try radiiValue.encode(to: encoder)
         }
-    }
-
-    /// Resolves the button style shape and returns a resolver object for further theming logic.
-    ///
-    /// - Returns: A `SnappThemingShapeResolver` instance that resolves the button's shape style.
-    func resolver() -> SnappThemingShapeResolver {
-        SnappThemingShapeResolver(shapeType: shapeType)
     }
 }

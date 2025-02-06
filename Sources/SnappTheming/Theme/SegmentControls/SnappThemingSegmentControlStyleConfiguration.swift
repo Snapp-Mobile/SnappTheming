@@ -44,6 +44,7 @@ public struct SnappThemingSegmentControlStyleConfiguration {
     let interactiveColors: SnappThemingInteractiveColorDeclarations
     let typographies: SnappThemingTypographyDeclarations
     let buttonStyles: SnappThemingButtonStyleDeclarations
+    let shapeConfiguration: SnappThemingShapeConfiguration
     let themeConfiguration: SnappThemingParserConfiguration
 
     internal init(
@@ -80,5 +81,13 @@ public struct SnappThemingSegmentControlStyleConfiguration {
         self.colorFormat = colorFormat
         self.themeConfiguration = themeConfiguration
         self.fallbackInnerPadding = fallbackInnerPadding
+        self.shapeConfiguration = SnappThemingShapeConfiguration(
+            fallbackShape: fallbackShape,
+            fallbackCornerRadius: themeConfiguration.fallbackCornerRadius,
+            fallbackRoundedCornerStyle: themeConfiguration.fallbackRoundedCornerStyle,
+            fallbackCornerRadii: themeConfiguration.fallbackCornerRadii,
+            themeConfiguration: themeConfiguration,
+            metrics: metrics
+        )
     }
 }

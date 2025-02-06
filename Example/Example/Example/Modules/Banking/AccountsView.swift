@@ -17,24 +17,24 @@ struct AccountsView: View {
                 VStack(spacing: theme.metrics.xlarge) {
                     CreditCardView()
 
-                    ActionsContainer {
-                        Button(action: {}) {
-                            Label("Top up", icon: theme.images.payment)
-                        }
-
-                        Button(action: {}) {
-                            Label("Pay", icon: theme.images.receipt)
-                        }
-
-                        Button(action: {}) {
-                            Label("Send", icon: theme.images.send)
-                        }
-
-                        Button(action: {}) {
-                            Label("More", icon: theme.images.table)
-                        }
-                    }
-                    .buttonStyle(.actionButton)
+//                    ActionsContainer {
+//                        Button(action: {}) {
+//                            Label("Top up", icon: theme.images.payment)
+//                        }
+//
+//                        Button(action: {}) {
+//                            Label("Pay", icon: theme.images.receipt)
+//                        }
+//
+//                        Button(action: {}) {
+//                            Label("Send", icon: theme.images.send)
+//                        }
+//
+//                        Button(action: {}) {
+//                            Label("More", icon: theme.images.table)
+//                        }
+//                    }
+//                    .buttonStyle(.actionButton)
                 }
                 .padding([.horizontal, .top], theme.metrics.medium)
                 .padding(.bottom, theme.metrics.large)

@@ -7,7 +7,9 @@
 
 import Foundation
 import SwiftUI
-import UIKit
+#if canImport(UIKit)
+    import UIKit
+#endif
 
 /// A representation of color in the SnappTheming framework.
 public enum SnappThemingColorRepresentation: Codable {
@@ -51,12 +53,23 @@ extension SnappThemingColorRepresentation {
         }
     }
 
-    func uiColor(using format: SnappThemingColorFormat) -> UIColor {
-        switch self {
-        case .dynamic(let dynamicColor):
-            dynamicColor.uiColor(using: format)
-        case .hex(let hexValue):
-            UIColor(hex: hexValue, format: format)
+    #if canImport(UIKit)
+        func uiColor(using format: SnappThemingColorFormat) -> UIColor {
+            switch self {
+            case .dynamic(let dynamicColor):
+                dynamicColor.uiColor(using: format)
+            case .hex(let hexValue):
+                UIColor(hex: hexValue, format: format)
+            }
         }
-    }
+    #elseif canImport(AppKit)
+        func nsColor(using format: SnappThemingColorFormat) -> NSColor {
+            switch self {
+            case .dynamic(let dynamicColor):
+                dynamicColor.nsColor(using: format)
+            case .hex(let hexValue):
+                NSColor.fromHex(hexValue, using: format) ?? .black
+            }
+        }
+    #endif
 }

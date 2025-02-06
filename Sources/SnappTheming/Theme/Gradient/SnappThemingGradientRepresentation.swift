@@ -56,14 +56,14 @@ public struct SnappThemingGradientRepresentation: Codable {
     /// If no supported gradient type is found, a default clear style is used without throwing an error.
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let linear = try? container.decode(SnappThemingLinearGradientConfiguration.self) {
+        if let linear = try? container.decode(SnappThemingLinearGradientRepresentation.self) {
             self.configuration = linear
-        } else if let radial = try? container.decode(SnappThemingRadialGradientConfiguration.self) {
+        } else if let radial = try? container.decode(SnappThemingRadialGradientRepresentation.self) {
             self.configuration = radial
-        } else if let angular = try? container.decode(SnappThemingAngularGradientConfiguration.self) {
+        } else if let angular = try? container.decode(SnappThemingAngularGradientRepresentation.self) {
             self.configuration = angular
         } else {
-            os_log("Not supported gradient type found in %@. Defaulting to clear gradient", container.codingPath)
+            os_log(.debug, "Not supported gradient type found in %@. Defaulting to clear gradient", container.codingPath)
             self.configuration = SnappThemingClearShapeStyleConfiguration()
         }
     }

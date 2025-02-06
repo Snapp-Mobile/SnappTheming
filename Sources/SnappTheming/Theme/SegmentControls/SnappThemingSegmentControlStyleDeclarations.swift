@@ -67,7 +67,8 @@ where
                 .resolve(representation.borderColor)?
                 .resolver(colorFormat: configuration.colorFormat, colors: configuration.colors)
                 .interactiveColor,
-            let shape = configuration.shapes.resolver.resolve(representation.shape)?.resolver().shapeType,
+            let shapeRepresentation = configuration.shapes.resolver
+                .resolve(representation.shape),
             let selectedButtonStyle = configuration.buttonStyles.resolver
                 .resolve(representation.selectedButtonStyle)?
                 .resolver(using: configuration),
@@ -86,6 +87,7 @@ where
             )
         }
 
+        let shapeType = configuration.shapes.configuration.resolve(shapeRepresentation)
         return SnappThemingSegmentControlStyleResolver(
             selectedButtonStyle: selectedButtonStyle,
             normalButtonStyle: normalButtonStyle,
@@ -93,7 +95,7 @@ where
             borderColor: borderColor,
             borderWidth: borderWidth,
             innerPadding: padding,
-            shape: shape
+            shape: shapeType
         )
     }
 }

@@ -30,7 +30,9 @@ struct SettingsView: View {
                     } label: {
                         Text("Theme")
                     }
-                    .pickerStyle(.menu)
+                    #if !os(watchOS)
+                        .pickerStyle(.menu)
+                    #endif
 
                 }
 
@@ -43,13 +45,14 @@ struct SettingsView: View {
             .foregroundStyle(theme.colors.textColorPrimary)
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationDestination(for: SettingsDestination.self) {
-                destination in
+            .navigationDestination(for: SettingsDestination.self) { destination in
                 switch destination {
                 case .tokens:
                     ThemeViewer()
                 case .json:
-                    ThemeDeclarationJSONView()
+                    #if !os(watchOS)
+                        ThemeDeclarationJSONView()
+                    #endif
                 }
             }
         }

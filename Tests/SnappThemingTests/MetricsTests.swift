@@ -5,10 +5,12 @@
 //  Created by Ilian Konchev on 13.01.25.
 //
 
+import Foundation
 import Testing
-import UIKit
-
 @testable import SnappTheming
+#if canImport(UIKit)
+    import UIKit
+#endif
 
 @Suite
 struct MetricsTests {
@@ -26,6 +28,7 @@ struct MetricsTests {
             """
 
         let declaration = try SnappThemingParser.parse(from: json)
+        try compareEncoded(declaration, and: json)
         let smallDouble: Double = declaration.metrics.small
         let mediumCGFloat: CGFloat = declaration.metrics.medium
         #expect(smallDouble == 4.0)
