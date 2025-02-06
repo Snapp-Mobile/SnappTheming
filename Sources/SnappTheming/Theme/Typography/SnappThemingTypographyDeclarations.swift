@@ -7,7 +7,9 @@
 
 import Foundation
 import SwiftUI
-import UIKit
+#if canImport(UIKit)
+    import UIKit
+#endif
 
 public typealias SnappThemingTypographyDeclarations = SnappThemingDeclarations<
     SnappThemingTypographyRepresentation,
@@ -47,10 +49,12 @@ where
         return SnappThemingTypographyResolver(font.resolver, fontSize: fontSize.cgFloat)
     }
 
-    public subscript(dynamicMember keyPath: String) -> UIFont {
-        let resolver: SnappThemingTypographyResolver = self[dynamicMember: keyPath]
-        return resolver.uiFont
-    }
+    #if canImport(UIKit)
+        public subscript(dynamicMember keyPath: String) -> UIFont {
+            let resolver: SnappThemingTypographyResolver = self[dynamicMember: keyPath]
+            return resolver.uiFont
+        }
+    #endif
 
     public subscript(dynamicMember keyPath: String) -> Font {
         let resolver: SnappThemingTypographyResolver = self[dynamicMember: keyPath]

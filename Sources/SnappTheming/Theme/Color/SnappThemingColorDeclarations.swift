@@ -6,8 +6,12 @@
 //
 
 import Foundation
+import OSLog
 import SwiftUI
-import UIKit
+
+#if canImport(UIKit)
+    import UIKit
+#endif
 
 public typealias SnappThemingColorDeclarations = SnappThemingDeclarations<
     SnappThemingColorRepresentation,
@@ -40,25 +44,41 @@ where
         )
     }
 
-    /// Accesses a color by its dynamic key path, returning a `Color` value.
+    /// Retrieves a `Color` value using a dynamic key path.
     ///
     /// - Parameter keyPath: The key path of the color to fetch.
-    /// - Returns: The corresponding color value if found, or the `fallbackColor` if not found.
+    /// - Returns: The corresponding `Color` value if found, or the fallback color if not found.
     public subscript(dynamicMember keyPath: String) -> Color {
         guard let representation: DeclaredValue = self[dynamicMember: keyPath] else {
+            os_log(.error, "Failed to lookup Color for dynamic member '%{public}@", keyPath)
             return configuration.fallbackColor
         }
         return representation.color(using: configuration.colorFormat)
     }
 
-    /// Accesses a color by its dynamic key path, returning a `UIColor` value.
-    ///
-    /// - Parameter keyPath: The key path of the color to fetch.
-    /// - Returns: The corresponding `UIColor` value if found, or `.clear` if not found.
-    public subscript(dynamicMember keyPath: String) -> UIColor {
-        guard let representation: DeclaredValue = self[dynamicMember: keyPath] else {
-            return configuration.fallbackUIColor
+    #if canImport(UIKit)
+        /// Retrieves a `UIColor` value using a dynamic key path.
+        ///
+        /// - Parameter keyPath: The key path of the color to fetch.
+        /// - Returns: The corresponding `UIColor` value if found, or the fallback color if not found.
+        public subscript(dynamicMember keyPath: String) -> UIColor {
+            guard let representation: DeclaredValue = self[dynamicMember: keyPath] else {
+                os_log(.error, "Failed to lookup UIColor for dynamic member '%{public}@'", keyPath)
+                return configuration.fallbackUIColor
+            }
+            return representation.uiColor(using: configuration.colorFormat)
         }
-        return representation.uiColor(using: configuration.colorFormat)
-    }
+    #elseif canImport(AppKit)
+        /// Retrieves an `NSColor` value using a dynamic key path.
+        ///
+        /// - Parameter keyPath: The key path of the color to fetch.
+        /// - Returns: The corresponding `NSColor` value if found, or the fallback color if not found.
+        public subscript(dynamicMember keyPath: String) -> NSColor {
+            guard let representation: DeclaredValue = self[dynamicMember: keyPath] else {
+                os_log(.error, "Failed to lookup NSColor for dynamic member '%{public}@'", keyPath)
+                return configuration.fallbackNSColor
+            }
+            return representation.nsColor(using: configuration.colorFormat)
+        }
+    #endif
 }

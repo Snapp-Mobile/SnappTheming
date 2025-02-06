@@ -20,7 +20,7 @@ struct ImageViewer: View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 namedImage.image
                     .resizable()
@@ -37,7 +37,9 @@ struct ImageViewer: View {
                     }
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
+            #if os(iOS) || targetEnvironment(macCatalyst)
+                .navigationBarTitleDisplayMode(.inline)
+            #endif
             .navigationTitle(namedImage.name)
         }
     }

@@ -16,7 +16,7 @@ class MockJSONData {
         }
 
         guard let jsonData = try? Data(contentsOf: url) else {
-            os_log("JSON should be readable")
+            os_log(.debug, "JSON should be readable")
             return ""
         }
 

@@ -74,8 +74,6 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
         self.images = .init(cache: imageCache, configuration: parserConfiguration)
         self.colors = .init(cache: colorCache, configuration: parserConfiguration)
         self.interactiveColors = .init(cache: interactiveColorsCache, configuration: parserConfiguration)
-        self.gradients = .init(cache: gradientsCache, configuration: parserConfiguration)
-        self.shapes = .init(cache: shapeInformation, configuration: parserConfiguration)
         self.metrics = .init(cache: metricsCache, configuration: parserConfiguration)
         self.fonts = .init(cache: fontsCache, configuration: parserConfiguration)
         self.typography = .init(
@@ -87,6 +85,18 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
             typographyCache.map(\.values)?.compactMap(typography.resolver.resolve(_:)).map(\.font) ?? []
         self.fontInformation = (baseFonts + typographyFonts).compactMap(\.value)
 
+        self.shapes = SnappThemingShapeDeclarations(
+            cache: shapeInformation,
+            metrics: metrics,
+            configuration: parserConfiguration
+        )
+
+        self.gradients = SnappThemingGradientDeclarations(
+            cache: gradientsCache,
+            metrics: metrics,
+            colors: colors,
+            configuration: parserConfiguration
+        )
         self.buttonStyles = .init(
             cache: buttonStylesCache,
             configuration: parserConfiguration,
@@ -216,20 +226,43 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
         if parserConfiguration.encodeImages {
             try container.encode(images.cache, forKey: .images)
         }
-        try container.encode(colors.cache, forKey: .colors)
-        try container.encode(metrics.cache, forKey: .metrics)
+        if !colors.cache.isEmpty {
+            try container.encode(colors.cache, forKey: .colors)
+        }
+        if !metrics.cache.isEmpty {
+            try container.encode(metrics.cache, forKey: .metrics)
+        }
         if parserConfiguration.encodeFonts {
             try container.encode(fonts.cache, forKey: .fonts)
         }
-        try container.encode(typography.cache, forKey: .typography)
-        try container.encode(gradients.cache, forKey: .gradients)
-        try container.encode(buttonStyles.cache, forKey: .buttonStyles)
-        try container.encode(interactiveColors.cache, forKey: .interactiveColors)
-        try container.encode(shapes.cache, forKey: .shapes)
-        try container.encode(segmentControlStyle.cache, forKey: .segmentControlStyle)
-        try container.encode(sliderStyle.cache, forKey: .sliderStyle)
-        try container.encode(toggleStyle.cache, forKey: .toggleStyle)
-        try container.encode(animations.cache, forKey: .animations)
+        if !typography.cache.isEmpty {
+            try container.encode(typography.cache, forKey: .typography)
+
+        }
+        if !gradients.cache.isEmpty {
+            try container.encode(gradients.cache, forKey: .gradients)
+        }
+        if !buttonStyles.cache.isEmpty {
+            try container.encode(buttonStyles.cache, forKey: .buttonStyles)
+        }
+        if !interactiveColors.cache.isEmpty {
+            try container.encode(interactiveColors.cache, forKey: .interactiveColors)
+        }
+        if !shapes.cache.isEmpty {
+            try container.encode(shapes.cache, forKey: .shapes)
+        }
+        if !segmentControlStyle.cache.isEmpty {
+            try container.encode(segmentControlStyle.cache, forKey: .segmentControlStyle)
+        }
+        if !sliderStyle.cache.isEmpty {
+            try container.encode(sliderStyle.cache, forKey: .sliderStyle)
+        }
+        if !toggleStyle.cache.isEmpty {
+            try container.encode(toggleStyle.cache, forKey: .toggleStyle)
+        }
+        if !animations.cache.isEmpty {
+            try container.encode(animations.cache, forKey: .animations)
+        }
     }
 }
 

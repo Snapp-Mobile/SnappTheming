@@ -20,6 +20,7 @@ struct ColorView: View {
 
 struct ColorsViewer: View {
     @Environment(Theme.self) private var theme
+    @FocusState var focusedKey: String?
 
     var body: some View {
         List {
@@ -32,13 +33,18 @@ struct ColorsViewer: View {
                                 .environment(\.colorScheme, .light)
                             ColorView(color: color)
                                 .environment(\.colorScheme, .dark)
+
                         }
                     }
+                    .focusable(true)
+                    .focused($focusedKey, equals: key)
                 }
             }
         }
         .navigationTitle("Colors")
-        .navigationBarTitleDisplayMode(.inline)
+        #if os(iOS) || targetEnvironment(macCatalyst)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
     }
 }
 

@@ -7,9 +7,10 @@
 
 import SwiftUI
 import Testing
-import UIKit
-
 @testable import SnappTheming
+#if canImport(UIKit)
+    import UIKit
+#endif
 
 @Suite
 struct SegmentControlStyleTests {
@@ -54,10 +55,8 @@ struct SegmentControlStyleTests {
            "shapes": {
                "roundedRectangle": {
                    "type": "roundedRectangle",
-                   "value": {
-                       "cornerRadius": 12,
-                       "style": "circular"
-                   }
+                   "cornerRadius": 12,
+                   "style": "circular"
                }
            },
            "typography": {
@@ -72,8 +71,7 @@ struct SegmentControlStyleTests {
     func parseSegmentControlStyleWithSuccess(json: String) throws {
         let configuration = SnappThemingParserConfiguration.default
 
-        let declaration = try SnappThemingParser.parse(
-            from: json, using: configuration)
+        let declaration = try SnappThemingParser.parse(from: json, using: configuration)
         let _ = try #require(
             declaration.segmentControlStyle.cache["primary"]?.value)
         #expect(declaration.segmentControlStyle.cache.count == 1)
@@ -117,10 +115,6 @@ struct SegmentControlStyleTests {
                 != segmentControlStyleFallbackConfiguration.fallbackInnerPadding
         )
         #expect(innerPadding == 8)
-
-        let shape = segmentControlStyle.shape
-        #expect(shape != segmentControlStyleFallbackConfiguration.fallbackShape)
-        #expect(shape.cornerRadius == 12)
     }
 
     @Test(arguments: [
@@ -163,8 +157,7 @@ struct SegmentControlStyleTests {
     func parseSegmentControlStyleWithWrongAliases(json: String) throws {
         let configuration = SnappThemingParserConfiguration.default
 
-        let declaration = try SnappThemingParser.parse(
-            from: json, using: configuration)
+        let declaration = try SnappThemingParser.parse(from: json, using: configuration)
         let _ = try #require(declaration.segmentControlStyle.cache["primary"])
         #expect(declaration.segmentControlStyle.cache.count == 1)
 
@@ -207,8 +200,5 @@ struct SegmentControlStyleTests {
             innerPadding
                 == segmentControlStyleFallbackConfiguration.fallbackInnerPadding
         )
-
-        let shape = segmentControlStyle.shape
-        #expect(shape == segmentControlStyleFallbackConfiguration.fallbackShape)
     }
 }

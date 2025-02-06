@@ -13,7 +13,7 @@ private struct ThemedModifier: ViewModifier {
     func body(content: Content) -> some View {
         let settingsManager = SettingsManager(currentColorScheme: colorSchema)
         let theme = Theme(settingsManager.themeSource)
-        
+
         content
             .environment(settingsManager)
             .environment(theme)

@@ -20,14 +20,19 @@ public protocol SnappThemingGradientProviding: Codable {
     /// custom shape style.
     associatedtype S: ShapeStyle
 
-    /// The shape style to be applied to the shape.
+    /// Returns a shape style based on the given theming configuration.
     ///
-    /// - Returns: The shape style that is applied to the shape (e.g., a `LinearGradient`, `RadialGradient`, `Color`, etc.).
-    var shapeStyle: S { get }
+    /// This method applies a style to a shape using the provided `SnappThemingGradientConfiguration`.
+    /// The returned style could be a `LinearGradient`, `RadialGradient`, `Color`, or another
+    /// `ShapeStyle`, depending on the configuration.
+    ///
+    /// - Parameter configuration: The gradient configuration defining the appearance of the shape style.
+    /// - Returns: A `ShapeStyle` object that can be applied to a shape.
+    func shapeStyleUsing(_ configuration: SnappThemingGradientConfiguration) -> S
 }
 
 struct SnappThemingClearShapeStyleConfiguration: SnappThemingGradientProviding {
-    var shapeStyle: some ShapeStyle {
+    func shapeStyleUsing(_ configuration: SnappThemingGradientConfiguration) -> Color {
         Color.clear
     }
 }

@@ -6,10 +6,12 @@
 //
 
 import Testing
-import UIKit
 import UniformTypeIdentifiers
-
 @testable import SnappTheming
+
+#if canImport(UIKit)
+    import UIKit
+#endif
 
 @Suite
 struct FontsTests {
@@ -32,7 +34,9 @@ struct FontsTests {
 
     @Test
     func useFallbackFont() throws {
-        let declaration = try SnappThemingParser.parse(from: "{}")
+        let json = "{}"
+        let declaration = try SnappThemingParser.parse(from: json)
+        try compareEncoded(declaration, and: json)
         let fontInformation: SnappThemingFontInformation? = declaration.fonts[dynamicMember: "Roboto-Regular"]
         let fontResolver: SnappThemingFontResolver = declaration.fonts[dynamicMember: "Roboto-Regular"]
 
