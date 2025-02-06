@@ -38,24 +38,28 @@ struct MainView: View {
     @Environment(Theme.self) private var theme
 
     var body: some View {
-        TabView(selection: $selectedTab) {
-            ForEach(Tab.allCases) { tab in
-                tabContent(tab)
-                    .tabItem {
-                        Label {
-                            Text(tab.title)
-                        } icon: {
-                            theme.images[dynamicMember: tab.imageName]
-                        }
-                    }
-                    .tag(tab)
+        NavigationStack {
+            TabView(selection: $selectedTab) {
+                ForEach(Tab.allCases) { tab in
+                    tabContent(tab)
+                        #if !os(watchOS)
+                            .tabItem {
+                                Label {
+                                    Text(tab.title)
+                                } icon: {
+                                    theme.images[dynamicMember: tab.imageName]
+                                }
+                            }
+                        #endif
+                        .tag(tab)
+                }
             }
+            #if os(tvOS)
+                .tabViewStyle(.sidebarAdaptable)
+            #endif
+            .tint(theme.colors.primary)
+            .colorScheme(theme.source.colorScheme)
         }
-        #if os(tvOS)
-            .tabViewStyle(.sidebarAdaptable)
-        #endif
-        .tint(theme.colors.primary)
-        .colorScheme(theme.source.colorScheme)
     }
 
     @ViewBuilder

@@ -17,21 +17,23 @@ struct TransactionsView: View {
                 Text("Recent Transactions")
                     .font(theme.typography.title)
                     .foregroundStyle(theme.colors.textColorPrimary)
-                Spacer()
-                Button {
-                } label: {
-                    theme.images.search
-                }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+
+                #if !os(watchOS)
+                    Spacer()
+                    Button {
+                    } label: {
+                        theme.images.search
+                    }
+                #endif
             }
             .padding(theme.metrics.medium)
 
             Divider()
 
-            ScrollView {
-                ForEach(
-                    Transaction.allCases,
-                    content: TransactionItemView.init(transaction:))
-            }
+            ForEach(Transaction.allCases, content: TransactionItemView.init(transaction:))
         }
     }
 }

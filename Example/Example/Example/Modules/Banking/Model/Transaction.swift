@@ -16,7 +16,7 @@ struct Transaction: Identifiable {
     }
 
     struct Identity {
-        static let timCook = Self(name: "Tim Cook", image: "tim_cook_avatar")
+        static let timCook = Self(name: "Tim C.", image: "tim_cook_avatar")
         static let netflix = Self(name: "Netflix", image: "netflix_logo")
         static let lidl = Self(name: "Lidl", image: "lidl_logo")
         static let apple = Self(name: "Apple", image: "apple_logo")

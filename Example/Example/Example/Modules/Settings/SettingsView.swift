@@ -20,31 +20,34 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack(path: $path) {
             List {
-                Section("General") {
-                    @Bindable var manager = manager
-                    Picker(selection: $manager.theme) {
-                        ForEach(SettingsManager.ThemeSetting.allCases, id: \.description) { setting in
-                            Text(setting.description)
-                                .tag(setting)
+                #if !os(watchOS)
+                    Section("General") {
+                        @Bindable var manager = manager
+                        Picker(selection: $manager.theme) {
+                            ForEach(SettingsManager.ThemeSetting.allCases, id: \.description) { setting in
+                                Text(setting.description)
+                                    .tag(setting)
+                            }
+                        } label: {
+                            Text("Theme")
                         }
-                    } label: {
-                        Text("Theme")
-                    }
-                    #if !os(watchOS)
                         .pickerStyle(.menu)
-                    #endif
-
-                }
+                    }
+                #endif
 
                 Section("Theme") {
                     NavigationLink("Tokens", value: SettingsDestination.tokens)
-                    NavigationLink("JSON", value: SettingsDestination.json)
+                    #if !os(watchOS)
+                        NavigationLink("JSON", value: SettingsDestination.json)
+                    #endif
                 }
             }
             .background(theme.colors.surfacePrimary)
             .foregroundStyle(theme.colors.textColorPrimary)
             .navigationTitle("Settings")
-            .navigationBarTitleDisplayMode(.inline)
+            #if os(iOS) || targetEnvironment(macCatalyst)
+                .navigationBarTitleDisplayMode(.inline)
+            #endif
             .navigationDestination(for: SettingsDestination.self) { destination in
                 switch destination {
                 case .tokens:
