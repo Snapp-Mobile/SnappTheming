@@ -10,6 +10,19 @@ import SwiftUI
 
 @Observable
 final class SettingsManager {
+    struct Storage {
+        let getCurrentThemeSource: () -> Theme.Source?
+        let setCurrentThemeSource: (Theme.Source?) -> Void
+
+        init(
+            getCurrentThemeSource: @escaping () -> Theme.Source?,
+            setCurrentThemeSource: @escaping (Theme.Source?) -> Void
+        ) {
+            self.getCurrentThemeSource = getCurrentThemeSource
+            self.setCurrentThemeSource = setCurrentThemeSource
+        }
+    }
+
     enum ThemeSetting: Hashable, CustomStringConvertible, CaseIterable {
         static let allCases: [ThemeSetting] = [.system] + Theme.Source.allCases.map(Self.specific(_:))
 
@@ -37,7 +50,7 @@ final class SettingsManager {
 
     var theme: ThemeSetting {
         didSet {
-            defaults.currentThemeSource = theme.source
+            storage.setCurrentThemeSource(theme.source)
             updateThemeSource()
         }
     }
@@ -48,15 +61,17 @@ final class SettingsManager {
         }
     }
 
-    private let defaults: UserDefaults = .standard
+    private let storage: Storage
 
     private(set) var themeSource: Theme.Source
 
-    init(currentColorScheme: ColorScheme) {
-        let theme = ThemeSetting(source: defaults.currentThemeSource)
+    init(storage: Storage, fallbackColorSchema: ColorScheme = .light) {
+        let theme = ThemeSetting(source: storage.getCurrentThemeSource())
+        let colorSchema = theme.source?.colorScheme ?? fallbackColorSchema
+        self.storage = storage
         self.theme = theme
-        self.currentColorScheme = currentColorScheme
-        self.themeSource = theme.source ?? currentColorScheme.themeSource
+        self.currentColorScheme = colorSchema
+        self.themeSource = theme.source ?? colorSchema.themeSource
     }
 
     private func updateThemeSource() {
@@ -74,21 +89,34 @@ extension ColorScheme {
     }
 }
 
-extension UserDefaults {
+extension SettingsManager.Storage {
     private static let themeSourceFilenameKey = "theme_filename"
 
-    fileprivate var currentThemeSource: Theme.Source? {
-        get {
-            string(forKey: Self.themeSourceFilenameKey).map(
-                Theme.Source.init(rawValue:)) ?? nil
-        }
-        set {
+    static func userDefaults(_ defaults: UserDefaults = .standard) -> Self {
+        Self {
+            defaults.string(forKey: Self.themeSourceFilenameKey)
+                .map(Theme.Source.init(rawValue:)) ?? nil
+        } setCurrentThemeSource: { newValue in
             if let filename = newValue?.filename {
-                set(filename, forKey: Self.themeSourceFilenameKey)
+                defaults.set(filename, forKey: Self.themeSourceFilenameKey)
             } else {
-                removeObject(forKey: Self.themeSourceFilenameKey)
+                defaults.removeObject(forKey: Self.themeSourceFilenameKey)
             }
-
         }
     }
+
+    static func preview(_ initialThemeSource: Theme.Source? = nil) -> Self {
+        var currentThemeSource: Theme.Source? = initialThemeSource
+        return Self {
+            currentThemeSource
+        } setCurrentThemeSource: {
+            currentThemeSource = $0
+        }
+    }
+
+    static let preview: Self = preview()
+}
+
+extension EnvironmentValues {
+    @Entry var settingsStorage: SettingsManager.Storage = .userDefaults()
 }

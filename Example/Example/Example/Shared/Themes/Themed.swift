@@ -9,12 +9,14 @@ import SwiftUI
 
 private struct ThemedModifier: ViewModifier {
     @Environment(\.colorScheme) var colorSchema
+    @Environment(\.settingsStorage) var storage
 
     func body(content: Content) -> some View {
-        let settingsManager = SettingsManager(currentColorScheme: colorSchema)
+        let settingsManager = SettingsManager(storage: storage, fallbackColorSchema: colorSchema)
         let theme = Theme(settingsManager.themeSource)
 
         content
+            .colorScheme(settingsManager.themeSource.colorScheme)
             .environment(settingsManager)
             .environment(theme)
             .onChange(of: settingsManager.themeSource, initial: true) { (_, newThemeSource) in
