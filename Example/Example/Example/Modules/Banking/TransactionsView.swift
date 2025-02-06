@@ -40,5 +40,6 @@ struct TransactionsView: View {
 
 #Preview {
     TransactionsView()
-        .environment(Theme(.light))
+        .themed()
+        .environment(\.settingsStorage, .preview(.default))
 }

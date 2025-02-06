@@ -66,7 +66,8 @@ struct TransactionItemView: View {
             Transaction.allCases,
             content: TransactionItemView.init(transaction:))
     }
-    .environment(Theme(.light))
+    .themed()
+    .environment(\.settingsStorage, .preview(.light))
 }
 
 #Preview("Dark") {
@@ -75,5 +76,6 @@ struct TransactionItemView: View {
             Transaction.allCases,
             content: TransactionItemView.init(transaction:))
     }
-    .environment(Theme(.dark))
+    .themed()
+    .environment(\.settingsStorage, .preview(.light))
 }

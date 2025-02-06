@@ -65,5 +65,5 @@ struct SettingsView: View {
 #Preview {
     SettingsView()
         .themed()
-        .preferredColorScheme(Theme.Source.default.colorScheme)
+        .environment(\.settingsStorage, .preview(.light))
 }
