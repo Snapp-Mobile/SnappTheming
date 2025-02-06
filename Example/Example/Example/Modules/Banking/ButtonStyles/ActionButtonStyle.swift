@@ -40,7 +40,7 @@ struct ActionButtonStyle: ButtonStyle {
                         isPressed: isPressed,
                         isEnabled: isEnabled)
                 )
-                .clipShape(style.shape.value)
+                .clipShape(style.shape.shape)
                 .shadow(
                     color: theme.colors.shadow,
                     radius: theme.metrics.shadowRadius,

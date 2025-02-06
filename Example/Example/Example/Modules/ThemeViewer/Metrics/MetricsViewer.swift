@@ -33,6 +33,7 @@ struct CornerRadiusMetricView: View {
 
 struct MetricsViewer: View {
     @Environment(Theme.self) private var theme
+    @FocusState var focusedKey: String?
 
     var body: some View {
         List {
@@ -42,10 +43,13 @@ struct MetricsViewer: View {
 
             section("Corner radius") { metric in
                 CornerRadiusMetricView(metric: metric)
+
             }
         }
         .navigationTitle("Metrics")
-        .navigationBarTitleDisplayMode(.inline)
+        #if os(iOS) || targetEnvironment(macCatalyst)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
     }
 
     func section<V>(_ title: String, content: @escaping (CGFloat) -> V) -> some View where V: View {
@@ -57,12 +61,17 @@ struct MetricsViewer: View {
                         Text(key)
                             .font(.body)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                            .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
+
                         Text(String(describing: metric))
                             .font(.caption)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                            .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
                     }
                     content(metric)
                 }
+                .focusable(true)
+                .focused($focusedKey, equals: key)
             }
         }
     }

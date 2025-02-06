@@ -52,7 +52,16 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Assets.xcassets,
+				Modules/Banking/AccountsView.swift,
+				Modules/Banking/ActionsContainer.swift,
+				Modules/Banking/ButtonStyles/ActionButtonStyle.swift,
+				Modules/Banking/CreditCardView.swift,
+				Modules/Banking/Model/Transaction.swift,
+				Modules/Banking/TransactionItemView.swift,
+				Modules/Banking/TransactionsView.swift,
+				Modules/JSON/ThemeDeclarationJSONView.swift,
 				Modules/Main/MainView.swift,
+				Modules/Settings/SettingsView.swift,
 				Modules/Themed/Progress.swift,
 				Modules/Themed/ThemedView.swift,
 				Modules/ThemeViewer/Animations/AnimationsViewer.swift,
@@ -73,9 +82,13 @@
 				Shared/JSON/MediumFontString.swift,
 				Shared/JSON/RegularFontString.swift,
 				Shared/JSON/SampleJSON.swift,
-				Shared/Themes/AvailableTheme.swift,
+				Shared/Settings/SettingsManager.swift,
+				Shared/Themes/dark.json,
 				Shared/Themes/day.json,
+				Shared/Themes/light.json,
 				Shared/Themes/night.json,
+				Shared/Themes/Theme.swift,
+				Shared/Themes/Themed.swift,
 			);
 			target = CEF2CEEC2D53630A0012251C /* ExampleWatchOSApp Watch App */;
 		};

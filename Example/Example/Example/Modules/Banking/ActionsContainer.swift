@@ -12,7 +12,9 @@ struct ActionsContainer<Content: View>: View {
         let index: Int
         let subview: Subview
     }
+
     @ViewBuilder var content: Content
+
     var body: some View {
         HStack(spacing: 0) {
             ForEach(

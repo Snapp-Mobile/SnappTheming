@@ -5,16 +5,21 @@
 //  Created by Ilian Konchev on 21.11.24.
 //
 
-import SnappTheming
-import SnappThemingSVGSupport
-import SwiftUI
 import OSLog
+import SnappTheming
+import SwiftUI
+
+#if !os(visionOS)
+    import SnappThemingSVGSupport
+#endif
 
 @main
 struct ExampleApp: App {
     init() {
-        // Do this for turning the SVG processor on
-        SnappThemingImageProcessorsRegistry.shared.register(.svg)
+        #if !os(visionOS)
+            // Do this for turning the SVG processor on
+            SnappThemingImageProcessorsRegistry.shared.register(.svg)
+        #endif
     }
 
     var body: some Scene {

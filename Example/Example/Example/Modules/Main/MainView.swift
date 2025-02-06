@@ -33,6 +33,7 @@ enum Tab: String, Hashable, Identifiable, CaseIterable {
 struct MainView: View {
     @State var destinations = [ThemeDestination]()
     @State var selectedTab: Tab = .accounts
+    @State var showsThemeSwitcher: Bool = false
 
     @Environment(Theme.self) private var theme
 

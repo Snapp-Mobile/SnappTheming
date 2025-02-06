@@ -5,10 +5,13 @@
 //  Created by Volodymyr Voiko on 29.01.2025.
 //
 
-import Lottie
 import SnappTheming
 import SnappThemingSwiftUIHelpers
 import SwiftUI
+
+#if !os(watchOS)
+    import Lottie
+#endif
 
 struct CreditCardView: View {
     @Environment(Theme.self) private var theme
@@ -40,14 +43,16 @@ struct CreditCardView: View {
                     .font(theme.typography.subheadline)
                     .padding(.bottom, theme.metrics.medium)
                 Spacer()
-                LottieView(
-                    animation: try? .from(data: theme.animations.visa.data)
-                )
-                .playing()
-                .playing(loopMode: .loop)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(maxHeight: theme.metrics.creditCardNetworkLogoSize)
+                #if !os(watchOS)
+                    LottieView(
+                        animation: try? .from(data: theme.animations.visa.data)
+                    )
+                    .playing()
+                    .playing(loopMode: .loop)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxHeight: theme.metrics.creditCardNetworkLogoSize)
+                #endif
             }
         }
         .foregroundStyle(theme.colors.textColorPrimaryInverted)

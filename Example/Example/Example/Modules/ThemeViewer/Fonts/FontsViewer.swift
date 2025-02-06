@@ -10,6 +10,7 @@ import SwiftUI
 
 struct FontsViewer: View {
     @Environment(Theme.self) private var theme
+    @FocusState var focusedKey: String?
 
     var body: some View {
         List {
@@ -18,12 +19,16 @@ struct FontsViewer: View {
                     let resolver: SnappThemingFontResolver = theme.fonts[dynamicMember: key]
                     Text(key)
                         .font(resolver.font(size: 14.0))
-                        .foregroundStyle(.primary)
+                        .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
+                        .focusable(true)
+                        .focused($focusedKey, equals: key)
                 }
             }
         }
         .navigationTitle("Fonts")
-        .navigationBarTitleDisplayMode(.inline)
+        #if os(iOS) || targetEnvironment(macCatalyst)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
     }
 }
 

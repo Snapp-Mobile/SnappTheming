@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ShapesViewer: View {
     @Environment(Theme.self) private var theme
+    @FocusState var focusedKey: String?
     @State var states: [String: Bool] = [:]
 
     var body: some View {
@@ -22,11 +23,15 @@ struct ShapesViewer: View {
                             .frame(maxWidth: 80, minHeight: 30)
                             .padding(.vertical, 4)
                     }
+                    .focusable(true)
+                    .focused($focusedKey, equals: key)
                 }
             }
         }
         .navigationTitle("Shapes")
-        .navigationBarTitleDisplayMode(.inline)
+        #if os(iOS) || targetEnvironment(macCatalyst)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
     }
 }
 

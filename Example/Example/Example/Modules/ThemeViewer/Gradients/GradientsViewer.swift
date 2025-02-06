@@ -18,6 +18,7 @@ struct NamedGradient: Identifiable {
 struct GradientsViewer: View {
     @Environment(Theme.self) private var theme
     @State var selectedShape: NamedGradient?
+    @FocusState var focusedKey: String?
 
     var body: some View {
         List {
@@ -30,11 +31,15 @@ struct GradientsViewer: View {
                             GradientView(style: theme.gradients[dynamicMember: key])
                         }
                     }
+                    .focusable(true)
+                    .focused($focusedKey, equals: key)
                 }
             }
         }
         .navigationTitle("Gradients")
-        .navigationBarTitleDisplayMode(.inline)
+        #if os(iOS) || targetEnvironment(macCatalyst)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
         .sheet(item: $selectedShape) { shape in
             ZStack {
                 Rectangle()
