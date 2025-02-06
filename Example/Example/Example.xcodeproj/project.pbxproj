@@ -62,8 +62,6 @@
 				Modules/JSON/ThemeDeclarationJSONView.swift,
 				Modules/Main/MainView.swift,
 				Modules/Settings/SettingsView.swift,
-				Modules/Themed/Progress.swift,
-				Modules/Themed/ThemedView.swift,
 				Modules/ThemeViewer/Animations/AnimationsViewer.swift,
 				Modules/ThemeViewer/Buttons/ButtonsViewer.swift,
 				Modules/ThemeViewer/Colors/ColorsViewer.swift,
