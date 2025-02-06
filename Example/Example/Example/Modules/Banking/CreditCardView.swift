@@ -81,3 +81,10 @@ struct CreditCardView: View {
         .themed()
         .environment(\.settingsStorage, .preview(.dark))
 }
+
+#Preview("Colorful") {
+    CreditCardView()
+        .frame(width: 315, height: 174)
+        .themed()
+        .environment(\.settingsStorage, .preview(.colorful))
+}

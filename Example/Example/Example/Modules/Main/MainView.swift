@@ -80,3 +80,9 @@ struct MainView: View {
         .themed()
         .environment(\.settingsStorage, .preview(.dark))
 }
+
+#Preview("Colorful") {
+    MainView()
+        .themed()
+        .environment(\.settingsStorage, .preview(.colorful))
+}

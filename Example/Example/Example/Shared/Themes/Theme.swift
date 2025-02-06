@@ -18,13 +18,14 @@ final class Theme {
 
         case light
         case dark
+        case colorful
 
         var id: String { rawValue }
         var description: String { rawValue.capitalized }
         var filename: String { rawValue }
         var colorScheme: ColorScheme {
             switch self {
-            case .light: .light
+            case .light, .colorful: .light
             case .dark: .dark
             }
         }
