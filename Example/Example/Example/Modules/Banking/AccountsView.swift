@@ -10,6 +10,7 @@ import SwiftUI
 
 struct AccountsView: View {
     @Environment(Theme.self) private var theme
+    @Environment(SettingsManager.self) private var manager
 
     var body: some View {
         NavigationStack {
@@ -34,7 +35,7 @@ struct AccountsView: View {
                                 Label("Send", icon: theme.images.send)
                             }
 
-                            Button(action: {}) {
+                            Button(action: manager.toggleTheme) {
                                 Label("More", icon: theme.images.table)
                             }
                         }
@@ -63,6 +64,17 @@ struct AccountsView: View {
             }
         }
         .tint(theme.colors.primary)
+    }
+}
+
+extension SettingsManager {
+    fileprivate func toggleTheme() {
+        let currentThemeIndex =
+            Theme.Source.allCases.firstIndex(of: themeSource)
+            ?? Theme.Source.allCases.startIndex
+        let nextThemeIndex = (currentThemeIndex + 1) % Theme.Source.allCases.count
+        let nextTheme = Theme.Source.allCases[nextThemeIndex]
+        theme = .specific(nextTheme)
     }
 }
 
