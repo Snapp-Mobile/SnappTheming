@@ -53,7 +53,7 @@ struct SettingsView: View {
                 case .tokens:
                     ThemeViewer()
                 case .json:
-                    #if !os(watchOS)
+                    #if os(iOS) || targetEnvironment(macCatalyst)
                         ThemeDeclarationJSONView()
                     #endif
                 }

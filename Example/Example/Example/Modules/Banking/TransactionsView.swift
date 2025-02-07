@@ -26,6 +26,10 @@ struct TransactionsView: View {
                     Button {
                     } label: {
                         theme.images.search
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .scaledToFit()
                     }
                 #endif
             }
