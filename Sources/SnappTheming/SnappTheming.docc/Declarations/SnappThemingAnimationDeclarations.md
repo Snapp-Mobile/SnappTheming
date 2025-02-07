@@ -1,12 +1,12 @@
 # ``SnappThemingAnimationDeclarations``
 
-A type alias for theming animation declarations, mapping animations to their representations and configurations.
+Manages the animation declarations, ensuring that animations are mapped to their corresponding representations and configurations.
 
 ## Overview
 
-Animations can be added as base64-encoded entities under the root-level `animations` property.
+Animations can be added as base64-encoded entities at the root-level `animations` property.
 
-Below is an example of Lottie animation declaration (the base64-encoded string is shortened for readability):
+Below is an example of Lottie animation declaration (the base64-encoded string has been shortened for readability):
 
 ```json
 {
@@ -18,3 +18,10 @@ Below is an example of Lottie animation declaration (the base64-encoded string i
     }
 }
 ```
+
+### Animations support martix
+
+format|iOS|iPadOs|tvOS|watchOS|visionOS|
+---|:-:|:-:|:-:|:-:|:-:|
+Lottie|✅|✅|✅|❌|✅|
+

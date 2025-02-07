@@ -1,12 +1,12 @@
 # ``SnappThemingShapeDeclarations``
 
-Handles numeric tokens, such as spacing, corner radius, border widths. Useful for creating a consistent design language with reusable measurements.
+Manages shape declaration tokens, including spacing, corner radius, and border widths. This functionality facilitates the creation of a consistent design language with reusable measurements.
 
 ## Overview
 
-Shape declarations can be used to provide the foundation for background layers or button styles. Because of that, we consider them foundation objects.
+Shape declarations serve as the foundation for background layers or button styles, making them considered fundamental objects.
 
-Supported are a number of objects, as follows:
+Supported objects include:
 
 - [Rectangle](<doc:Rectangle>)
 - [Ellipse](<doc:Ellipse>)

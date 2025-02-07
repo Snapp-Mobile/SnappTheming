@@ -17,3 +17,14 @@ Below is an example of a valid image declaration (the base64-encoded string is s
 ```
 
 > The library provides support for JPEG, PNG and PDF assets out of the box. Additional support for SVG assets (using [`SGVKit`](https://github.com/SVGKit/SVGKit)) is available through the [`SnappThemingSVGSupport`](http://ios-theming.snappmobile.io/documentation/snappthemingsvgsupport/) package.
+
+### Image format support matrix
+
+Below is a matrix of supported image formats per platform:
+
+format|iOS|iPadOs|tvOS|watchOS|visionOS|
+---|:-:|:-:|:-:|:-:|:-:|
+JPEG|✅|✅|✅|✅|✅|
+PNG|✅|✅|✅|✅|✅|
+PDF|✅|✅|✅|❌|✅|
+SVG|✅|✅|✅|❌|❌|

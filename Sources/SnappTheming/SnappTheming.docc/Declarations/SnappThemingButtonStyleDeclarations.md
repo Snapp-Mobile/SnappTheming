@@ -1,6 +1,6 @@
 # ``SnappThemingButtonStyleDeclarations``
 
-Manages button style tokens, including properties like surface and text colors, border widths and color, shape and typography for various button states.
+Manages button styles, including properties such as surface and text colors, border widths and colors, shapes, and typography for various button states.
 
 ## Overview
 

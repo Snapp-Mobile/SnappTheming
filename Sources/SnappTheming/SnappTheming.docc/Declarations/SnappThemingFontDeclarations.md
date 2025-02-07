@@ -1,14 +1,14 @@
 # ``SnappThemingFontDeclarations``
 
-Manages font tokens, such as font families and sizes. Enables consistent typography across the app by centralizing font definitions.
+Manages font tokens, including font families and sizes. Enables consistent typography across the application by centralizing font definitions.
 
 ## Overview
 
-The framework adds support for custom fonts. Fonts can be added as annotated object entities under the root-level `fonts` property.
+The framework provides support for custom fonts. Fonts can be added as annotated object entities under the root-level `fonts` property.
 
 The annotation should contain the PostScript font name and the actual base64-encoded font data.
 
-Below is an example of a valid font declaration (the base64-encoded string is shortened for readability):
+The following is an example of a valid font declaration (the base64-encoded string has been shortened for brevity):
 
 ```json
 {
@@ -21,7 +21,7 @@ Below is an example of a valid font declaration (the base64-encoded string is sh
 }
 ```
 
-Make sure that you deregister the old theme fonts and register thew new ones when loading the theme (or when starting the app). Here's an example on how to do that:
+Ensure that you deregister the old theme fonts and register the new ones when switching the themes (or when starting the application). Here is an example of how to do that:
 
 ```swift
 do {
