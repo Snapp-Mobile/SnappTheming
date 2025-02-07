@@ -1,12 +1,12 @@
 # ``SnappThemingMetricDeclarations``
 
-Handles numeric tokens, such as spacing, corner radius, border widths. Useful for creating a consistent design language with reusable measurements.
+Manages numerical tokens, including spacing, corner radius, and border widths. This functionality facilitates the creation of a consistent design language with reusable measurements.
 
 ## Overview
 
-Metrics are defined using decimal or floating point values added as child properties of the root-level `metrics` property. 
+Metrics are defined using decimal or floating-point values that are added as child properties of the root-level `metrics` property.
 
-Below is an example of the supported annotations
+Below is an example of the supported annotations:
 
 ```json
 {

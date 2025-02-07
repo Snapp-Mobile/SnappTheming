@@ -1,10 +1,10 @@
 # ``SnappThemingColorDeclarations``
 
-Responsible for managing and resolving color tokens. This includes static colors and dynamic system colors, supporting light/dark mode.
+Responsible for managing and resolving color tokens, including static colors and dynamic system colors, with support for light/dark mode.
 
 ## Overview
 
-Colors can be listed as a child properties of the root-level `colors` property as follows
+Colors can be declared as child properties of the root-level `colors` property, as follows:
 
 ```json
 {
@@ -27,7 +27,7 @@ The framework supports HEX-ecoded RGB, RGBA and ARGB notations. All of the follo
 }
 ```
 
-Some themes may need to support the system dark mode. In that case you can use the following annotation (again - HEX, RGBA and ARGB annotations are all supported here):
+Certain themes may require support for the system dark mode. In such cases, you can utilize the following annotation (again, HEX, RGBA, and ARGB colors are all supported here):
 
 ```json
 {
@@ -40,7 +40,7 @@ Some themes may need to support the system dark mode. In that case you can use t
 }
 ```
 
-Mixing the color declaration style is also supported.  The following is a valid construct:
+The mixing of color declaration styles is also supported. The following is a valid construct:
 
 ```json
 {
@@ -58,4 +58,4 @@ Mixing the color declaration style is also supported.  The following is a valid 
 
 ### Providing hints on the color format to the parser
 
-For the most part decoding the colors correctly should work out out of the box. The parser can deal with different HEX-driven color styles. Both `#FFF` and `#FFFFFF` annotations will be recognized and supported out of the box. The parser defaults to recognizing RGBA color annotations as well (e.g: `#FFFFFF0A`). In case you need to support ARGB, make sure to provide the correct value to the ``SnappThemingParserConfiguration/colorFormat`` property of ``SnappThemingParserConfiguration`` (see ``SnappThemingColorFormat`` for the list of supported values)
+In general, decoding colors correctly should be automatic. The parser can handle various HEX-driven color declarations. Both `#FFF` and `#FFFFFF` annotations will be recognized and supported by default. The parser also defaults to recognizing RGBA color annotations (e.g., `#FFFFFF0A`). If you need to support ARGB, please provide the correct value to the ``SnappThemingParserConfiguration/colorFormat`` property of ``SnappThemingParserConfiguration`` (see ``SnappThemingColorFormat`` for the list of supported values).
