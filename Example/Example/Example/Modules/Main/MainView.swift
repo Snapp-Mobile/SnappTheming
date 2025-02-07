@@ -41,13 +41,15 @@ struct MainView: View {
         TabView(selection: $selectedTab) {
             ForEach(Tab.allCases) { tab in
                 tabContent(tab)
-                    .tabItem {
-                        Label {
-                            Text(tab.title)
-                        } icon: {
-                            theme.images[dynamicMember: tab.imageName]
+                    #if !os(watchOS)
+                        .tabItem {
+                            Label {
+                                Text(tab.title)
+                            } icon: {
+                                theme.images[dynamicMember: tab.imageName]
+                            }
                         }
-                    }
+                    #endif
                     .tag(tab)
             }
         }

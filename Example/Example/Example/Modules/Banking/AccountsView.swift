@@ -12,16 +12,29 @@ struct AccountsView: View {
     @Environment(Theme.self) private var theme
     @Environment(SettingsManager.self) private var manager
 
+    #if os(watchOS)
+        @State var showDialog: Bool = false
+    #endif
+
     var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
+            ScrollView {
                 VStack(spacing: theme.metrics.xlarge) {
                     CreditCardView()
-
-                    // TODO: Fix for watchOS
-                    // Note: ActionsContainer has been implemented using custom containers API.
-                    // Feel free to convert it to old approach with introducing ActionType enum for each button and just user regular ForEach instead of subviews check.
-                    #if os(iOS)
+                        #if os(watchOS)
+                            .overlay(alignment: .bottomTrailing) {
+                                Button {
+                                    showDialog = true
+                                } label: {
+                                    Image(systemName: "info.circle")
+                                    .foregroundStyle(theme.colors.primary)
+                                    .padding(.trailing, theme.metrics.medium)
+                                    .padding(.bottom, theme.metrics.small)
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        #endif
+                    #if !os(watchOS)
                         ActionsContainer {
                             Button(action: {}) {
                                 Label("Top up", icon: theme.images.payment)
@@ -35,35 +48,73 @@ struct AccountsView: View {
                                 Label("Send", icon: theme.images.send)
                             }
 
-                            Button(action: manager.toggleTheme) {
+                            Button(action: {}) {
                                 Label("More", icon: theme.images.table)
                             }
                         }
                         .buttonStyle(.actionButton)
                     #endif
                 }
-                .padding([.horizontal, .top], theme.metrics.medium)
-                .padding(.bottom, theme.metrics.large)
-                .background(
-                    theme.shapes.creditCardSurface
+                #if !os(watchOS)
+                    .padding([.horizontal, .top], theme.metrics.medium)
+                    .padding(.bottom, theme.metrics.large)
+                    .background(alignment: .center) {
+                        theme.shapes.creditCardSurface
                         .fill(theme.colors.surfaceSecondary)
-                        .ignoresSafeArea(.all)
-                )
+                        .ignoresSafeArea()
+                    }
+                #endif
 
                 TransactionsView()
             }
             .background(theme.colors.surfacePrimary)
-        }
-        .navigationTitle("My accounts")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .automatic) {
-                Button(action: {}) {
-                    theme.images.alert
+            .tint(theme.colors.primary)
+            .navigationTitle("My accounts")
+            #if os(iOS) || targetEnvironment(macCatalyst)
+                .navigationBarTitleDisplayMode(.inline)
+            #endif
+            #if os(watchOS)
+                .sheet(isPresented: $showDialog) {
+                    VStack {
+                        HStack {
+                            Button(action: {}) {
+                                Label {
+                                    Text("Top up")
+                                } icon: {
+                                    theme.images.payment
+                                }
+                            }
+
+                            Button(action: {}) {
+                                Label {
+                                    Text("Pay")
+                                } icon: {
+                                    theme.images.receipt
+                                }
+                            }
+                        }
+
+                        HStack {
+                            Button(action: {}) {
+                                Label {
+                                    Text("Send")
+                                } icon: {
+                                    theme.images.send
+                                }
+                            }
+
+                            Button(action: {}) {
+                                Label {
+                                    Text("More")
+                                } icon: {
+                                    theme.images.table
+                                }
+                            }
+                        }
+                    }
                 }
-            }
+            #endif
         }
-        .tint(theme.colors.primary)
     }
 }
 

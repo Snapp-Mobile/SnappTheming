@@ -55,6 +55,8 @@
 				Modules/Banking/AccountsView.swift,
 				Modules/Banking/ActionsContainer.swift,
 				Modules/Banking/ButtonStyles/ActionButtonStyle.swift,
+				Modules/Banking/CreditCardFooterView.swift,
+				Modules/Banking/CreditCardHeaderView.swift,
 				Modules/Banking/CreditCardView.swift,
 				Modules/Banking/Model/Transaction.swift,
 				Modules/Banking/TransactionItemView.swift,

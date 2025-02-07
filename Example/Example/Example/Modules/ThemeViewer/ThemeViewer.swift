@@ -9,7 +9,10 @@ import SnappTheming
 import SwiftUI
 
 enum ThemeDestination: String, Hashable, CaseIterable {
-    case animations, buttons, colors, fonts, images, metrics, shapes, typography, gradients
+    #if !os(watchOS)
+        case animations
+    #endif
+    case buttons, colors, fonts, images, metrics, shapes, typography, gradients
 }
 
 struct ThemeViewer: View {
@@ -45,12 +48,10 @@ struct ThemeViewer: View {
                 GradientsViewer()
             case .shapes:
                 ShapesViewer()
-            case .animations:
-                #if !os(watchOS)
+            #if !os(watchOS)
+                case .animations:
                     AnimationsViewer()
-                #else
-                    Text("Lottie animations are not supported on watchOS (for now)")
-                #endif
+            #endif
             }
         }
     }

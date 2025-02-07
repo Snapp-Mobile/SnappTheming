@@ -29,9 +29,11 @@ struct ColorsViewer: View {
                     let color: Color = theme.colors[dynamicMember: key]
                     LabeledContent {
                         HStack {
-                            ColorView(color: color)
-                                .environment(\.colorScheme, .light)
-                                .scaleEffect(focusedKey == key ? 1.2 : 1.0)
+                            #if !os(watchOS)
+                                ColorView(color: color)
+                                    .environment(\.colorScheme, .light)
+                                    .scaleEffect(focusedKey == key ? 1.2 : 1.0)
+                            #endif
                             ColorView(color: color)
                                 .environment(\.colorScheme, .dark)
                                 .scaleEffect(focusedKey == key ? 1.2 : 1.0)

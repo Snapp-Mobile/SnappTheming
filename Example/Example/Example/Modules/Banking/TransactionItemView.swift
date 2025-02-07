@@ -26,30 +26,35 @@ struct TransactionItemView: View {
             .clipShape(Circle())
 
             VStack(alignment: .leading, spacing: theme.metrics.xsmall) {
-                HStack {
+                HStack(alignment: .firstTextBaseline) {
                     Text(transaction.identity.name)
                         .foregroundStyle(theme.colors.textColorPrimary)
                     Spacer()
                     Text(transaction.amount, format: .currency(code: "EUR"))
                         .foregroundStyle(
-                            transaction.amount < 0
-                                ? theme.colors.red : theme.colors.green
+                            transaction.amount < 0 ? theme.colors.red : theme.colors.green
                         )
+                        .minimumScaleFactor(0.5)
+                        .lineLimit(1)
                 }
                 .font(theme.typography.headline)
 
-                HStack {
+                HStack(alignment: .firstTextBaseline) {
                     Text(transaction.category.rawValue)
                     Spacer()
-                    Text(
-                        transaction.date,
-                        format: .relative(presentation: .named))
+                    Text(transaction.date, format: .relative(presentation: .named))
                 }
+                .minimumScaleFactor(0.5)
+                .lineLimit(1)
                 .font(theme.typography.subheadline)
                 .foregroundStyle(theme.colors.textColorSecondary)
             }
         }
-        .padding(.horizontal, theme.metrics.medium)
+        #if !os(watchOS)
+            .padding(.horizontal, theme.metrics.medium)
+        #else
+            .padding(.horizontal, theme.metrics.small)
+        #endif
         .padding(.vertical, theme.metrics.small)
         .background(theme.colors.surfacePrimary)
     }
