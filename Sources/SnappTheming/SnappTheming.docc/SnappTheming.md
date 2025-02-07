@@ -1,6 +1,6 @@
 # ``SnappTheming``
 
-Framework for constructing design themes from JSON declarations.
+Framework for parsing design theme declarations from JSON.
 
 ## Overview
 
@@ -12,14 +12,13 @@ Framework for constructing design themes from JSON declarations.
 
 ### Key Features:
 
-- JSON-based Theme Management: Easily manage and configure themes using JSON files, allowing for flexible theming without modifying source code.
-- Gradient Support: Supports linear, radial, and angular gradients to enhance UI elements with rich, dynamic backgrounds.
-- Shape Styling: Define and apply reusable shape styles, including colors and gradients, to various UI components, including buttons, backgrounds, and custom shapes.
-- Font Management: Automatically register and unregister custom fonts, with easy integration of different font types.
-- Extensibility: The framework is designed to be modular, enabling the addition of new theming elements as needed.
+- **JSON-Driven Themes:** Seamlessly manage and configure themes using JSON files, enabling flexible theming without the need to modify source code.
+- **Gradient Support:** Enables the application of linear, radial, and angular gradients to create visually appealing and dynamic backgrounds for UI elements.
+- **Shape Styling:** Define and apply reusable shape styles, including colors and gradients, to various UI components, such as buttons, backgrounds, and custom shapes.
+- **Font Management:** Automatically register and unregister custom fonts, seamlessly integrating various font types.
 
 ### Benefits:
 
-- Consistency: Ensures a uniform and customizable design system across all screens and components in your app.
-- Efficiency: Reduce the need for hardcoded styling by decoupling design values from code.
-- Flexibility: Supports dynamic theming, making it possible to switch themes or update design values without requiring app updates.
+- **Consistency:** Ensures a uniform and customizable design system across all screens and components in your application.
+- **Efficiency:** De-couple design values from code by eliminating the necessity for hardcoded styling.
+- **Flexibility:** Supports dynamic theme switching, enabling users to adjust design values without necessitating app updates.

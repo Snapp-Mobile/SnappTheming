@@ -1,10 +1,10 @@
 # ``SnappThemingGradientDeclarations``
 
-Manages gradient tokens, including support for linear, radial, and angular gradients, enabling the creation of dynamic and visually appealing shape backgrounds.
+Manages gradient tokens, supporting linear, radial, and angular gradients. This enables the creation of dynamic and visually appealing shape backgrounds.
 
 ## Overview
 
-Gradients can be declared as described below. Supported are three gradient types - [angular](<doc:Angular-Gradient>), [linear](<doc:Linear-Gradient>), and [radial](<doc:Radial-Gradient>)
+Gradients can be declared as follows. Three gradient types are supported: [angular](<doc:Angular-Gradient>), [linear](<doc:Linear-Gradient>), and [radial](<doc:Radial-Gradient>).
 
 ### Angular Gradient
 

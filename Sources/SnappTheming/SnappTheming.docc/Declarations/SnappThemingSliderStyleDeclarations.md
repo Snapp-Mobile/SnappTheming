@@ -1,6 +1,6 @@
 # ``SnappThemingSliderStyleDeclarations``
 
-Handles slider style tokens, managing properties like track colors, tick mark styles for sliders used in the UI.
+Manages slider-style tokens, including track colors and tick mark styles for sliders utilized in the user interface.
 
 ## Overview
 
