@@ -29,7 +29,9 @@ struct ThemeViewer: View {
             }
         }
         .navigationTitle("Tokens")
-        .navigationBarTitleDisplayMode(.inline)
+        #if os(iOS) || targetEnvironment(macCatalyst)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
         .navigationDestination(for: ThemeDestination.self) { destination in
             switch destination {
             case .buttons:
