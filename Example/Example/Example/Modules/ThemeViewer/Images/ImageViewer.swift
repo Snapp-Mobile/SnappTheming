@@ -15,17 +15,19 @@ struct NamedImage: Identifiable {
 }
 
 struct ImageViewer: View {
-    let namedImage: NamedImage
-
     @Environment(\.dismiss) var dismiss
+    @Environment(Theme.self) private var theme
+
+    let namedImage: NamedImage
 
     var body: some View {
         NavigationStack {
             ZStack {
                 namedImage.image
+                    .renderingMode(.template)
                     .resizable()
                     .scaledToFit()
-                    .foregroundStyle(Color.accentColor)
+                    .foregroundStyle(theme.colors.primary)
             }
             .padding()
             .toolbar {

@@ -36,21 +36,8 @@ struct AccountsView: View {
                         #endif
                     #if !os(watchOS)
                         ActionsContainer {
-                            Button(action: {}) {
-                                Label("Top up", icon: theme.images.payment)
-                            }
-
-                            Button(action: {}) {
-                                Label("Pay", icon: theme.images.receipt)
-                            }
-
-                            Button(action: {}) {
-                                Label("Send", icon: theme.images.send)
-                            }
-
-                            Button(action: {}) {
-                                Label("More", icon: theme.images.table)
-                            }
+                            topUpAndPayButtons()
+                            sendAndMoreButtons()
                         }
                         .buttonStyle(.actionButton)
                     #endif
@@ -76,45 +63,65 @@ struct AccountsView: View {
             #if os(watchOS)
                 .sheet(isPresented: $showDialog) {
                     VStack {
-                        HStack {
-                            Button(action: {}) {
-                                Label {
-                                    Text("Top up")
-                                } icon: {
-                                    theme.images.payment
-                                }
-                            }
-
-                            Button(action: {}) {
-                                Label {
-                                    Text("Pay")
-                                } icon: {
-                                    theme.images.receipt
-                                }
-                            }
-                        }
-
-                        HStack {
-                            Button(action: {}) {
-                                Label {
-                                    Text("Send")
-                                } icon: {
-                                    theme.images.send
-                                }
-                            }
-
-                            Button(action: {}) {
-                                Label {
-                                    Text("More")
-                                } icon: {
-                                    theme.images.table
-                                }
-                            }
-                        }
+                        HStack { topUpAndPayButtons() }
+                        HStack { sendAndMoreButtons() }
                     }
+                    .buttonStyle(.actionButton)
                 }
             #endif
         }
+    }
+
+    @ViewBuilder
+    private func topUpAndPayButtons() -> some View {
+        Button {
+        } label: {
+            Label {
+                Text("Top up")
+            } icon: {
+                fitAndTemplatedImageView(of: theme.images.payment)
+            }
+        }
+
+        Button {
+        } label: {
+            Label {
+                Text("Pay")
+            } icon: {
+                fitAndTemplatedImageView(of: theme.images.receipt)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func sendAndMoreButtons() -> some View {
+        Button {
+        } label: {
+            Label {
+                Text("Send")
+            } icon: {
+                fitAndTemplatedImageView(of: theme.images.send)
+            }
+        }
+
+        Button {
+            #if !os(watchOS)
+                manager.toggleTheme()
+            #endif
+        } label: {
+            Label {
+                Text("More")
+            } icon: {
+                fitAndTemplatedImageView(of: theme.images.table)
+            }
+        }
+    }
+
+    private func fitAndTemplatedImageView(of image: Image) -> some View {
+        image
+            .renderingMode(.template)
+            .resizable()
+            .scaledToFit()
     }
 }
 
