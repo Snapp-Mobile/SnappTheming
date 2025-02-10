@@ -17,47 +17,27 @@ enum ThemeDestination: String, Hashable, CaseIterable {
 
 struct ThemeViewer: View {
     @Environment(Theme.self) private var theme
+    @Binding var destination: ThemeDestination?
 
     var body: some View {
-        List {
+        List(selection: $destination) {
             Section {
-                ForEach(ThemeDestination.allCases, id: \.self) { destination in
+                ForEach(ThemeDestination.allCases, id: \.self) { td in
                     NavigationLink(value: destination) {
-                        Text(destination.rawValue.capitalized)
+                        Text(td.rawValue.capitalized)
                     }
                 }
             }
         }
+        .listStyle(.sidebar)
         .navigationTitle("Tokens")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(for: ThemeDestination.self) { destination in
-            switch destination {
-            case .buttons:
-                ButtonsViewer()
-            case .colors:
-                ColorsViewer()
-            case .fonts:
-                FontsViewer()
-            case .images:
-                ImagesViewer()
-            case .metrics:
-                MetricsViewer()
-            case .typography:
-                TypographyViewer()
-            case .gradients:
-                GradientsViewer()
-            case .shapes:
-                ShapesViewer()
-            #if !os(watchOS)
-                case .animations:
-                    AnimationsViewer()
-            #endif
-            }
-        }
+        #if os(iOS) || targetEnvironment(macCatalyst)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
     }
 }
 
 #Preview {
-    ThemeViewer()
+    ThemeViewer(destination: .constant(.buttons))
         .environment(Theme(.default))
 }

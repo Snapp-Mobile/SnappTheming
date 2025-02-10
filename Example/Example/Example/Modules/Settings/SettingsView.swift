@@ -16,8 +16,9 @@ struct SettingsView: View {
     @Environment(SettingsManager.self) private var manager
     @Environment(Theme.self) private var theme
     @State private var path = NavigationPath()
+    @State var destination: ThemeDestination?
 
-    var body: some View {
+    @ViewBuilder var navigation: some View {
         NavigationStack(path: $path) {
             List {
                 #if !os(watchOS)
@@ -51,7 +52,7 @@ struct SettingsView: View {
             .navigationDestination(for: SettingsDestination.self) { destination in
                 switch destination {
                 case .tokens:
-                    ThemeViewer()
+                    ThemeViewer(destination: $destination)
                 case .json:
                     #if !os(watchOS)
                         ThemeDeclarationJSONView()
@@ -60,10 +61,44 @@ struct SettingsView: View {
             }
         }
     }
+
+    var body: some View {
+        NavigationSplitView(
+            sidebar: {
+                navigation
+            },
+            detail: {
+                switch destination {
+                case .buttons:
+                    ButtonsViewer()
+                case .colors:
+                    ColorsViewer()
+                case .fonts:
+                    FontsViewer()
+                case .images:
+                    ImagesViewer()
+                case .metrics:
+                    MetricsViewer()
+                case .typography:
+                    TypographyViewer()
+                case .gradients:
+                    GradientsViewer()
+                case .shapes:
+                    ShapesViewer()
+                #if !os(watchOS)
+                    case .animations:
+                        AnimationsViewer()
+                #endif
+                case .none:
+                    Text("Pick something...")
+                }
+            }
+        )
+    }
 }
 
 #Preview {
-    SettingsView()
+    SettingsView(destination: .buttons)
         .themed()
         .environment(\.settingsStorage, .preview(.light))
 }

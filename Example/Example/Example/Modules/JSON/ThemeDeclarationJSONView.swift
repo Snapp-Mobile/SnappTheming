@@ -17,7 +17,9 @@
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding()
                 .navigationTitle("Theme JSON")
-                .navigationBarTitleDisplayMode(.inline)
+                #if os(iOS) || targetEnvironment(macCatalyst)
+                    .navigationBarTitleDisplayMode(.inline)
+                #endif
         }
     }
 
