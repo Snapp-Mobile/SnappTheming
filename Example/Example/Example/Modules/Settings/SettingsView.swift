@@ -78,8 +78,6 @@ struct SettingsView: View {
                     ThemeDeclarationJSONView()
             #endif
         #endif
-        default:
-            EmptyView()
         }
     }
 
@@ -99,22 +97,22 @@ struct SettingsView: View {
                 .navigationBarBackButtonHidden(false)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
-
-                        Menu(
-                            content: {
-                                ForEach(SettingsManager.ThemeSetting.allCases, id: \.description) { setting in
-                                    Button(
-                                        action: {
-                                            manager.theme = setting
-                                        },
-                                        label: {
-                                            Text(setting.description)
-                                        })
+                        Menu {
+                            ForEach(SettingsManager.ThemeSetting.allCases, id: \.description) { setting in
+                                Button {
+                                    manager.theme = setting
+                                } label: {
+                                    Text(setting.description)
                                 }
-                            },
-                            label: {
+                            }
+                        } label: {
+                            Label {
+                                Text("Theme: \(manager.theme.description)")
+                            } icon: {
                                 Image(systemName: "slider.horizontal.3")
-                            })
+                            }
+                            .foregroundStyle(theme.colors.textColorPrimary)
+                        }
                     }
                 }
             }

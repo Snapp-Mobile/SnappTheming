@@ -12,7 +12,10 @@ enum ThemeDestination: String, Hashable, CaseIterable {
     #if !os(watchOS)
         case animations
     #endif
-    case buttons, colors, fonts, gradients, images, metrics, shapes, typography, themeJSON
+    #if !os(tvOS) && !os(watchOS)
+        case themeJSON
+    #endif
+    case buttons, colors, fonts, gradients, images, metrics, shapes, typography
 }
 
 struct ThemeViewer: View {
@@ -24,11 +27,7 @@ struct ThemeViewer: View {
             Section {
                 ForEach(ThemeDestination.allCases, id: \.self) { td in
                     NavigationLink(value: destination) {
-                        if case td = .themeJSON {
-                            Text("Theme JSON")
-                        } else {
-                            Text(td.rawValue.capitalized)
-                        }
+                        Text(td.rawValue.capitalized)
                     }
                 }
             }

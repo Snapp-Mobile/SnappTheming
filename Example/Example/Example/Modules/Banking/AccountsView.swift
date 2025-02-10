@@ -78,39 +78,10 @@ struct AccountsView: View {
                 .sheet(isPresented: $showDialog) {
                     VStack {
                         HStack {
-                            Button(action: {}) {
-                                Label {
-                                    Text("Top up")
-                                } icon: {
-                                    theme.images.payment
-                                }
-                            }
-
-                            Button(action: {}) {
-                                Label {
-                                    Text("Pay")
-                                } icon: {
-                                    theme.images.receipt
-                                }
-                            }
+                            topUpAndPayButtons()
                         }
-
                         HStack {
-                            Button(action: {}) {
-                                Label {
-                                    Text("Send")
-                                } icon: {
-                                    theme.images.send
-                                }
-                            }
-
-                            Button(action: {}) {
-                                Label {
-                                    Text("More")
-                                } icon: {
-                                    theme.images.table
-                                }
-                            }
+                            sendAndMoreButtons()
                         }
                     }
                 }
