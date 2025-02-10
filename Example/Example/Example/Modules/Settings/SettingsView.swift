@@ -9,18 +9,18 @@ import SwiftUI
 
 enum SettingsDestination: Hashable {
     case tokens
-    case json
 }
 
 struct SettingsView: View {
     @Environment(SettingsManager.self) private var manager
     @Environment(Theme.self) private var theme
     @State private var path = NavigationPath()
-    @State var destination: ThemeDestination?
+    @State var destination: ThemeDestination = .animations
+    @State var settingsDestination: SettingsDestination = .tokens
 
     @ViewBuilder var navigation: some View {
         NavigationStack(path: $path) {
-            List {
+            List(selection: $settingsDestination) {
                 #if !os(watchOS)
                     Section("General") {
                         @Bindable var manager = manager
@@ -38,9 +38,6 @@ struct SettingsView: View {
 
                 Section("Theme") {
                     NavigationLink("Tokens", value: SettingsDestination.tokens)
-                    #if !os(watchOS)
-                        NavigationLink("JSON", value: SettingsDestination.json)
-                    #endif
                 }
             }
             .background(theme.colors.surfacePrimary)
@@ -49,16 +46,6 @@ struct SettingsView: View {
             #if os(iOS) || targetEnvironment(macCatalyst)
                 .navigationBarTitleDisplayMode(.inline)
             #endif
-            .navigationDestination(for: SettingsDestination.self) { destination in
-                switch destination {
-                case .tokens:
-                    ThemeViewer(destination: $destination)
-                case .json:
-                    #if !os(watchOS)
-                        ThemeDeclarationJSONView()
-                    #endif
-                }
-            }
         }
     }
 
@@ -66,6 +53,12 @@ struct SettingsView: View {
         NavigationSplitView(
             sidebar: {
                 navigation
+            },
+            content: {
+                switch settingsDestination {
+                case .tokens:
+                    ThemeViewer(destination: $destination)
+                }
             },
             detail: {
                 switch destination {
@@ -88,9 +81,9 @@ struct SettingsView: View {
                 #if !os(watchOS)
                     case .animations:
                         AnimationsViewer()
+                    case .themeJSON:
+                        ThemeDeclarationJSONView()
                 #endif
-                case .none:
-                    Text("Pick something...")
                 }
             }
         )
