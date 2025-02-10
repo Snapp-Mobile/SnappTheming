@@ -12,24 +12,21 @@ enum ThemeDestination: String, Hashable, CaseIterable {
     #if !os(watchOS)
         case animations
     #endif
+    case buttons, colors, fonts, gradients, images, metrics, shapes, typography
     #if !os(tvOS) && !os(watchOS)
         case themeJSON
     #endif
-    case buttons, colors, fonts, gradients, images, metrics, shapes, typography
 }
 
 struct ThemeViewer: View {
     @Environment(Theme.self) private var theme
-    @Binding var destination: ThemeDestination?
+    @Binding var selectedDestination: ThemeDestination?
 
     var body: some View {
-        List(selection: $destination) {
-            Section {
-                ForEach(ThemeDestination.allCases, id: \.self) { td in
-                    NavigationLink(value: destination) {
-                        Text(td.rawValue.capitalized)
-                    }
-                }
+        List(ThemeDestination.allCases, id: \.self, selection: $selectedDestination) { destination in
+            NavigationLink(value: destination) {
+                Text(destination.rawValue.capitalized)
+                    .foregroundStyle(theme.colors.textColorPrimary)
             }
         }
         .navigationTitle("Tokens")
@@ -38,9 +35,13 @@ struct ThemeViewer: View {
             .navigationBarTitleDisplayMode(.inline)
         #endif
     }
+
+    init(with selectedDestination: Binding<ThemeDestination?>) {
+        self._selectedDestination = selectedDestination
+    }
 }
 
 #Preview {
-    ThemeViewer(destination: .constant(.buttons))
+    ThemeViewer(with: .constant(.buttons))
         .environment(Theme(.default))
 }

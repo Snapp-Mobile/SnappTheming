@@ -15,8 +15,8 @@ struct SettingsView: View {
     @Environment(SettingsManager.self) private var manager
     @Environment(Theme.self) private var theme
     @State private var path = NavigationPath()
-    @State var destination: ThemeDestination? = .animations
-    @State var settingsDestination: SettingsDestination? = .tokens
+    @State var destination: ThemeDestination?
+    @State var settingsDestination: SettingsDestination?
     @State var columnVisibility: NavigationSplitViewVisibility = .all
     @State var preferredCompactColumn: NavigationSplitViewColumn = .sidebar
 
@@ -51,7 +51,7 @@ struct SettingsView: View {
     }
 
     @ViewBuilder
-    func detailsView(for destination: ThemeDestination) -> some View {
+    func detailsView(for destination: ThemeDestination?) -> some View {
         switch destination {
         case .buttons:
             ButtonsViewer()
@@ -72,12 +72,13 @@ struct SettingsView: View {
         #if !os(watchOS)
             case .animations:
                 AnimationsViewer()
-        #else
-            #if !os(tvOS)
-                case .themeJSON:
-                    ThemeDeclarationJSONView()
-            #endif
         #endif
+        #if !os(tvOS) && !os(watchOS)
+            case .themeJSON:
+                ThemeDeclarationJSONView()
+        #endif
+        default:
+            Text("Select a theme option")
         }
     }
 
@@ -129,7 +130,7 @@ struct SettingsView: View {
                 content: {
                     switch settingsDestination {
                     case .tokens:
-                        ThemeViewer(destination: $destination)
+                        ThemeViewer(with: $destination)
                     case .none:
                         EmptyView()
                     }
