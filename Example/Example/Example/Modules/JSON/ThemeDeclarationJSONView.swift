@@ -5,7 +5,7 @@
 //  Created by Volodymyr Voiko on 04.02.2025.
 //
 
-#if !os(watchOS)
+#if !os(watchOS) && !os(tvOS)
     import SwiftUI
 
     struct ThemeDeclarationJSONView: View {

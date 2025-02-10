@@ -17,7 +17,7 @@ enum ThemeDestination: String, Hashable, CaseIterable {
 
 struct ThemeViewer: View {
     @Environment(Theme.self) private var theme
-    @Binding var destination: ThemeDestination
+    @Binding var destination: ThemeDestination?
 
     var body: some View {
         List(selection: $destination) {
@@ -33,9 +33,9 @@ struct ThemeViewer: View {
                 }
             }
         }
-        .listStyle(.sidebar)
         .navigationTitle("Tokens")
         #if os(iOS) || targetEnvironment(macCatalyst)
+            .listStyle(.sidebar)
             .navigationBarTitleDisplayMode(.inline)
         #endif
     }

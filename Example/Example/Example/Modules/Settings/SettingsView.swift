@@ -15,8 +15,8 @@ struct SettingsView: View {
     @Environment(SettingsManager.self) private var manager
     @Environment(Theme.self) private var theme
     @State private var path = NavigationPath()
-    @State var destination: ThemeDestination = .animations
-    @State var settingsDestination: SettingsDestination = .tokens
+    @State var destination: ThemeDestination? = .animations
+    @State var settingsDestination: SettingsDestination? = .tokens
 
     @ViewBuilder var navigation: some View {
         NavigationStack(path: $path) {
@@ -58,6 +58,8 @@ struct SettingsView: View {
                 switch settingsDestination {
                 case .tokens:
                     ThemeViewer(destination: $destination)
+                case .none:
+                    EmptyView()
                 }
             },
             detail: {
@@ -78,12 +80,14 @@ struct SettingsView: View {
                     GradientsViewer()
                 case .shapes:
                     ShapesViewer()
-                #if !os(watchOS)
+                #if !os(watchOS) && !os(tvOS)
                     case .animations:
                         AnimationsViewer()
                     case .themeJSON:
                         ThemeDeclarationJSONView()
                 #endif
+                default:
+                    EmptyView()
                 }
             }
         )
