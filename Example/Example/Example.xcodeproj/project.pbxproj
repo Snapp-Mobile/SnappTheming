@@ -52,6 +52,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Assets.xcassets,
+				Modules/Banking/AccountsButton.swift,
 				Modules/Banking/AccountsView.swift,
 				Modules/Banking/ActionsContainer.swift,
 				Modules/Banking/ButtonStyles/ActionButtonStyle.swift,
