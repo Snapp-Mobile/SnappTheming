@@ -77,13 +77,10 @@ struct AccountsView: View {
             #if os(watchOS)
                 .sheet(isPresented: $showDialog) {
                     VStack {
-                        HStack {
-                            topUpAndPayButtons()
-                        }
-                        HStack {
-                            sendAndMoreButtons()
-                        }
+                        HStack { topUpAndPayButtons() }
+                        HStack { sendAndMoreButtons() }
                     }
+                    .buttonStyle(.actionButton)
                 }
             #endif
         }

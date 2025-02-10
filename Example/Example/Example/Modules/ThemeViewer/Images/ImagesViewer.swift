@@ -23,9 +23,11 @@ struct ImagesViewer: View {
                             selectedImage = .init(name: key, image: image)
                         } label: {
                             image
+                                .renderingMode(.template)
                                 .resizable()
                                 .frame(width: 24, height: 24)
                                 .scaledToFit()
+                                .foregroundStyle(theme.colors.primary)
                         }
                         .scaleEffect(focusedKey == key ? 1.2 : 1.0)
                     } label: {
