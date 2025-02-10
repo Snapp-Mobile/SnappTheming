@@ -17,81 +17,131 @@ struct SettingsView: View {
     @State private var path = NavigationPath()
     @State var destination: ThemeDestination? = .animations
     @State var settingsDestination: SettingsDestination? = .tokens
+    @State var columnVisibility: NavigationSplitViewVisibility = .all
+    @State var preferredCompactColumn: NavigationSplitViewColumn = .sidebar
 
     @ViewBuilder var navigation: some View {
-        NavigationStack(path: $path) {
-            List(selection: $settingsDestination) {
-                #if !os(watchOS)
-                    Section("General") {
-                        @Bindable var manager = manager
-                        Picker(selection: $manager.theme) {
-                            ForEach(SettingsManager.ThemeSetting.allCases, id: \.description) { setting in
-                                Text(setting.description)
-                                    .tag(setting)
-                            }
-                        } label: {
-                            Text("Theme")
+        List(selection: $settingsDestination) {
+            #if !os(watchOS)
+                Section("General") {
+                    @Bindable var manager = manager
+                    Picker(selection: $manager.theme) {
+                        ForEach(SettingsManager.ThemeSetting.allCases, id: \.description) { setting in
+                            Text(setting.description)
+                                .tag(setting)
                         }
-                        .pickerStyle(.menu)
+                    } label: {
+                        Text("Theme")
                     }
-                #endif
-
-                Section("Theme") {
-                    NavigationLink("Tokens", value: SettingsDestination.tokens)
+                    .pickerStyle(.menu)
                 }
-            }
-            .background(theme.colors.surfacePrimary)
-            .foregroundStyle(theme.colors.textColorPrimary)
-            .navigationTitle("Settings")
-            #if os(iOS) || targetEnvironment(macCatalyst)
-                .navigationBarTitleDisplayMode(.inline)
             #endif
+
+            Section("Theme") {
+                NavigationLink("Tokens", value: SettingsDestination.tokens)
+            }
+        }
+        .background(theme.colors.surfacePrimary)
+        .foregroundStyle(theme.colors.textColorPrimary)
+        .navigationTitle("Settings")
+        #if os(iOS) || targetEnvironment(macCatalyst)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
+
+    }
+
+    @ViewBuilder
+    func detailsView(for destination: ThemeDestination) -> some View {
+        switch destination {
+        case .buttons:
+            ButtonsViewer()
+        case .colors:
+            ColorsViewer()
+        case .fonts:
+            FontsViewer()
+        case .images:
+            ImagesViewer()
+        case .metrics:
+            MetricsViewer()
+        case .typography:
+            TypographyViewer()
+        case .gradients:
+            GradientsViewer()
+        case .shapes:
+            ShapesViewer()
+        #if !os(watchOS)
+            case .animations:
+                AnimationsViewer()
+        #else
+            #if !os(tvOS)
+                case .themeJSON:
+                    ThemeDeclarationJSONView()
+            #endif
+        #endif
+        default:
+            EmptyView()
         }
     }
 
-    var body: some View {
-        NavigationSplitView(
-            sidebar: {
-                navigation
-            },
-            content: {
-                switch settingsDestination {
-                case .tokens:
-                    ThemeViewer(destination: $destination)
-                case .none:
-                    EmptyView()
+    #if os(tvOS)
+        var body: some View {
+            NavigationStack(path: $path) {
+                List {
+                    ForEach(ThemeDestination.allCases, id: \.self) { td in
+                        NavigationLink(value: td) {
+                            Text(td.rawValue.capitalized)
+                        }
+                    }
                 }
-            },
-            detail: {
-                switch destination {
-                case .buttons:
-                    ButtonsViewer()
-                case .colors:
-                    ColorsViewer()
-                case .fonts:
-                    FontsViewer()
-                case .images:
-                    ImagesViewer()
-                case .metrics:
-                    MetricsViewer()
-                case .typography:
-                    TypographyViewer()
-                case .gradients:
-                    GradientsViewer()
-                case .shapes:
-                    ShapesViewer()
-                #if !os(watchOS) && !os(tvOS)
-                    case .animations:
-                        AnimationsViewer()
-                    case .themeJSON:
-                        ThemeDeclarationJSONView()
-                #endif
-                default:
-                    EmptyView()
+                .navigationDestination(for: ThemeDestination.self) { td in
+                    detailsView(for: td)
+                }
+                .navigationBarBackButtonHidden(false)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+
+                        Menu(
+                            content: {
+                                ForEach(SettingsManager.ThemeSetting.allCases, id: \.description) { setting in
+                                    Button(
+                                        action: {
+                                            manager.theme = setting
+                                        },
+                                        label: {
+                                            Text(setting.description)
+                                        })
+                                }
+                            },
+                            label: {
+                                Image(systemName: "slider.horizontal.3")
+                            })
+                    }
                 }
             }
-        )
-    }
+
+        }
+    #else
+        var body: some View {
+            NavigationSplitView(
+                columnVisibility: $columnVisibility,
+                preferredCompactColumn: $preferredCompactColumn,
+                sidebar: {
+                    navigation
+                },
+                content: {
+                    switch settingsDestination {
+                    case .tokens:
+                        ThemeViewer(destination: $destination)
+                    case .none:
+                        EmptyView()
+                    }
+                },
+                detail: {
+                    detailsView(for: destination)
+                }
+            )
+        }
+    #endif
 }
 
 #Preview {
