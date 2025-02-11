@@ -5,10 +5,12 @@
 //  Created by Volodymyr Voiko on 11.02.2025.
 //
 
-import SwiftUI
 import SnappTheming
+import SwiftUI
 
 struct ContentView: View {
+    let theme: SnappThemingDeclaration = .light
+
     var body: some View {
         EmptyView()
     }
