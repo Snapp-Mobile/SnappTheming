@@ -51,9 +51,13 @@ struct GradientsViewer: View {
                     RoundedRectangle(cornerRadius: 24)
                         .fill(shape.shape)
                     Text("\(shape.name)")
-                        .padding()
-                        .background(Color.black)
+                        #if !os(watchOS)
+                            .padding()
+                        #endif
+                        .background(theme.colors.textColorPrimaryInverted)
+                        .foregroundColor(theme.colors.textColorPrimary)
                 }
+                .aspectRatio(1, contentMode: .fit)
                 .padding()
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {

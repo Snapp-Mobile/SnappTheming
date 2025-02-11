@@ -20,7 +20,7 @@ struct CreditCardView: View {
 
             CreditCardFooterView()
         }
-        .foregroundStyle(theme.colors.textColorPrimaryInverted)
+        .foregroundStyle(theme.colors.baseWhite)
         #if !os(watchOS)
             .padding([.horizontal], theme.metrics.medium)
         #else

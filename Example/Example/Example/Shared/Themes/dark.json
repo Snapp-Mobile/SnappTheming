@@ -5,7 +5,7 @@
         "surfacePrimary": "$colors/systemGray6",
         "surfaceSecondary": "$colors/baseBlack",
         "textColorPrimary": "$colors/baseWhite",
-        "textColorPrimaryInverted": "$colors/baseWhite",
+        "textColorPrimaryInverted": "$colors/baseBlack",
         "textColorSecondary": "$colors/baseGray",
         "shadow": "#B2B7C710",
         "baseWhite": "#FFFFFF",
