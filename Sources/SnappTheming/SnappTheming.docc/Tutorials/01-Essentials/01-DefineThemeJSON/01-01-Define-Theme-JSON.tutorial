@@ -28,6 +28,16 @@
                 > Tip: You can customize parsing by providing a [configuration](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingparserconfiguration).
                 @Code(name: "LightTheme.swift", file: 01-01-01-code-003.swift)
             }
+
+            @Step {
+                Now, let's define a few colors that we want to use in our app. List them as child properties of the root-level `colors` property.
+                
+                > Tip: 
+                > The framework supports HEX-encoded RGB, RGBA, and ARGB notations. You can read more about color declarations in the [documentation](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingcolordeclarations).
+                
+                @Code(name: "LightTheme.swift", file: 01-01-01-code-004.swift)
+            }
+
         }
     }
 }
