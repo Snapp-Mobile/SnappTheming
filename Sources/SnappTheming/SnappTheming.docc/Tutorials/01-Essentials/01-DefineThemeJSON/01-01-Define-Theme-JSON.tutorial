@@ -21,6 +21,13 @@
                 Create a private [multiline string literal](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters/#Multiline-String-Literals) named `json` that represents an empty JSON object.
                 @Code(name: "LightTheme.swift", file: 01-01-01-code-002.swift)
             }
+
+            @Step {
+                Create an extension on [SnappThemingDeclaration](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingdeclaration) that includes a static property named `light`, and parse a theme declaration using the [SnappThemingParser](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingparser).[parse(from:using:)](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingparser/parse(from:using:)).
+
+                > Tip: You can customize parsing by providing a [configuration](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingparserconfiguration).
+                @Code(name: "LightTheme.swift", file: 01-01-01-code-003.swift)
+            }
         }
     }
 }
