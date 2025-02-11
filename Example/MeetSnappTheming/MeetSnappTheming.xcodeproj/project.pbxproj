@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		2DB8BCD52D5B811800449179 /* SnappTheming in Frameworks */ = {isa = PBXBuildFile; productRef = 2DB8BCD42D5B811800449179 /* SnappTheming */; };
+		2DB8BCD72D5B811800449179 /* SnappThemingSwiftUIHelpers in Frameworks */ = {isa = PBXBuildFile; productRef = 2DB8BCD62D5B811800449179 /* SnappThemingSwiftUIHelpers */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		2D9DEA152D5B793100C4AF12 /* MeetSnappTheming.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeetSnappTheming.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +28,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DB8BCD72D5B811800449179 /* SnappThemingSwiftUIHelpers in Frameworks */,
+				2DB8BCD52D5B811800449179 /* SnappTheming in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +72,8 @@
 			);
 			name = MeetSnappTheming;
 			packageProductDependencies = (
+				2DB8BCD42D5B811800449179 /* SnappTheming */,
+				2DB8BCD62D5B811800449179 /* SnappThemingSwiftUIHelpers */,
 			);
 			productName = MeetSnappTheming;
 			productReference = 2D9DEA152D5B793100C4AF12 /* MeetSnappTheming.app */;
@@ -94,6 +103,9 @@
 			);
 			mainGroup = 2D9DEA0C2D5B793100C4AF12;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				2DB8BCD32D5B811800449179 /* XCRemoteSwiftPackageReference "SnappTheming" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2D9DEA162D5B793100C4AF12 /* Products */;
 			projectDirPath = "";
@@ -324,6 +336,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2DB8BCD32D5B811800449179 /* XCRemoteSwiftPackageReference "SnappTheming" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Snapp-Mobile/SnappTheming";
+			requirement = {
+				kind = exactVersion;
+				version = 0.0.8;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2DB8BCD42D5B811800449179 /* SnappTheming */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2DB8BCD32D5B811800449179 /* XCRemoteSwiftPackageReference "SnappTheming" */;
+			productName = SnappTheming;
+		};
+		2DB8BCD62D5B811800449179 /* SnappThemingSwiftUIHelpers */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2DB8BCD32D5B811800449179 /* XCRemoteSwiftPackageReference "SnappTheming" */;
+			productName = SnappThemingSwiftUIHelpers;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2D9DEA0D2D5B793100C4AF12 /* Project object */;
 }

@@ -1,0 +1,23 @@
+@Tutorial(time: 20) {
+    @Intro(title: "Your first theme") {
+        Learn how to build a valid theme JSON, which types are supported and how to define them
+    }
+
+    @Section(title: "Create a light theme") {
+        @ContentAndMedia {
+            Theme declartion is a JSON that holds properties for various foundation types. You can read more about supported types in [JSON Schema](https://ios-theming.snappmobile.io/documentation/snapptheming/jsonschema) article. 
+        }
+
+        @Steps {
+            @Step {
+                Create a new Swift file named LightTheme.swift and import the SnappTheming.
+
+                > Note: Before importing the library you will need to depend on it by [adding it to your 
+                        Xcode project settings or SPM package](https://github.com/Snapp-Mobile/SnappTheming).
+                @Code(name: "LightTheme.swift", file: 01-01-01-code-001.swift)
+            }
+        }
+    }
+
+    
+}
