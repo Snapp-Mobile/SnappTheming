@@ -46,6 +46,13 @@
 
                 @Code(name: "LightTheme.swift", file: 01-01-01-code-005.swift)
             }
+           
+           @Step {
+               Since we have fonts in our theme, we will now add [typography declarations](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingtypographydeclarations) based on them. Let's add a `typography` property to our JSON root and include the typographies we want to use.
+
+               @Code(name: "LightTheme.swift", file: 01-01-01-code-006.swift)
+           }
+
         }
     }
 }
