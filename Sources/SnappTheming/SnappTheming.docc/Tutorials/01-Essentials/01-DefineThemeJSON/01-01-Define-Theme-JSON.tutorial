@@ -38,6 +38,14 @@
                 @Code(name: "LightTheme.swift", file: 01-01-01-code-004.swift)
             }
 
+            @Step {
+                It is time to add more styling to our app. Let's define the custom fonts we want to use in our example. We will use the elegant [Doto](https://fonts.google.com/specimen/Doto) font from Google's Fonts library.
+
+                > Note: In order to use fonts in your theme JSON declaration, you need to encode them as `Base64` before using them.  
+                > Read more about how to prepare a valid font declaration in the [documentation](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingfontdeclarations).
+
+                @Code(name: "LightTheme.swift", file: 01-01-01-code-005.swift)
+            }
         }
     }
 }
