@@ -76,8 +76,9 @@ struct AccountsView: View {
                     }
                     #if !os(tvOS) && !os(macOS)
                         .background(theme.colors.surfacePrimary)
+                    #else
+                        .focusSection()
                     #endif
-                    .focusSection()
                 }
             }
             .tint(theme.colors.primary)
