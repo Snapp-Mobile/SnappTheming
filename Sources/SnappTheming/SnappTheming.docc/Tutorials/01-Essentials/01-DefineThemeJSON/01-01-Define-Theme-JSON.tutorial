@@ -16,8 +16,11 @@
                         Xcode project settings or SPM package](https://github.com/Snapp-Mobile/SnappTheming).
                 @Code(name: "LightTheme.swift", file: 01-01-01-code-001.swift)
             }
+
+            @Step {
+                Create a private [multiline string literal](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters/#Multiline-String-Literals) named `json` that represents an empty JSON object.
+                @Code(name: "LightTheme.swift", file: 01-01-01-code-002.swift)
+            }
         }
     }
-
-    
 }
