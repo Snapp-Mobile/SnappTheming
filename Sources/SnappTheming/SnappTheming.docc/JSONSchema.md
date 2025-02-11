@@ -13,19 +13,10 @@ The object types have been categorized into two primary groups: foundation objec
 - [Colors](<doc:SnappThemingColorDeclarations>)
 - [Fonts](<doc:SnappThemingFontDeclarations>)
 - [Gradients](<doc:SnappThemingGradientDeclarations>)
-  - [Angular](<doc:SnappThemingGradientDeclarations#Angular-Gradient>) 
-  - [Linear](<doc:SnappThemingGradientDeclarations#Linear-Gradient>)
-  - [Radial](<doc:SnappThemingGradientDeclarations#Radial-Gradient>)
 - [Images](<doc:SnappThemingImageDeclarations>)
 - [Lottie Animations](<doc:SnappThemingAnimationDeclarations>)
 - [Metrics](<doc:SnappThemingMetricDeclarations>)
 - [Shapes](<doc:SnappThemingShapeDeclarations>)
-  - [Rectangle](<doc:SnappThemingShapeDeclarations#Rectangle>)
-  - [Ellipse](<doc:SnappThemingShapeDeclarations#Ellipse>)
-  - [Circle](<doc:SnappThemingShapeDeclarations#Circle>)
-  - [Capsule](<doc:SnappThemingShapeDeclarations#Capsule>)
-  - [Rounded rectangle](<doc:SnappThemingShapeDeclarations#Rounded-Rectangle>)
-  - [Uneven rouded rectangle](<doc:SnappThemingShapeDeclarations#Uneven-Rounded-Rectangle>)
 
 #### High-level objects
 
