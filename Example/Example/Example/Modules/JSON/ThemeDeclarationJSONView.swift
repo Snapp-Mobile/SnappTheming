@@ -5,7 +5,7 @@
 //  Created by Volodymyr Voiko on 04.02.2025.
 //
 
-#if os(iOS)
+#if !os(watchOS) && !os(tvOS)
     import SwiftUI
 
     struct ThemeDeclarationJSONView: View {
@@ -17,7 +17,9 @@
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding()
                 .navigationTitle("Theme JSON")
-                .navigationBarTitleDisplayMode(.inline)
+                #if os(iOS) || targetEnvironment(macCatalyst)
+                    .navigationBarTitleDisplayMode(.inline)
+                #endif
         }
     }
 

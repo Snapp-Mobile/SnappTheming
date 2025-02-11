@@ -27,7 +27,6 @@ struct CreditCardHeaderView: View {
                 Text("Snapp")
                     .font(theme.typography.title)
             }
-
         #else
             HStack(alignment: .center) {
                 Image("snapp_themeing_logo")

@@ -24,8 +24,10 @@
                                 .frame(height: 300, alignment: .trailing)
                         } label: {
                             Text(key)
-                                .foregroundStyle(focusedKey == key ? Color.teal : .primary)
+                                .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
                         }
+                        .focusable(true)
+                        .focused($focusedKey, equals: key)
                     }
                 }
             }

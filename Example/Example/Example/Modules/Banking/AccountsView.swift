@@ -16,45 +16,71 @@ struct AccountsView: View {
         @State var showDialog: Bool = false
     #endif
 
+    @ViewBuilder
+    var content: some View {
+        VStack(spacing: theme.metrics.xlarge) {
+            CreditCardView()
+                #if os(watchOS)
+                    .overlay(alignment: .bottomTrailing) {
+                        Button {
+                            showDialog = true
+                        } label: {
+                            Image(systemName: "info.circle")
+                            .foregroundStyle(theme.colors.primary)
+                            .padding(.trailing, theme.metrics.medium)
+                            .padding(.bottom, theme.metrics.small)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                #endif
+            #if !os(watchOS)
+                ActionsContainer {
+                    topUpAndPayButtons()
+                    sendAndMoreButtons()
+                }
+            #endif
+        }
+        #if !os(watchOS) && !os(tvOS) && !os(visionOS)
+            .padding([.horizontal, .top], theme.metrics.medium)
+            .padding(.bottom, theme.metrics.large)
+            .background(alignment: .center) {
+                theme.shapes.creditCardSurface
+                .fill(theme.colors.surfaceSecondary)
+                .ignoresSafeArea()
+            }
+        #else
+            #if os(tvOS) || os(visionOS)
+                .padding([.horizontal, .top], theme.metrics.medium)
+                .frame(maxWidth: 400)
+            #endif
+        #endif
+
+        TransactionsView()
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: theme.metrics.xlarge) {
-                    CreditCardView()
-                        #if os(watchOS)
-                            .overlay(alignment: .bottomTrailing) {
-                                Button {
-                                    showDialog = true
-                                } label: {
-                                    Image(systemName: "info.circle")
-                                    .foregroundStyle(theme.colors.primary)
-                                    .padding(.trailing, theme.metrics.medium)
-                                    .padding(.bottom, theme.metrics.small)
-                                }
-                                .buttonStyle(.plain)
-                            }
-                        #endif
-                    #if !os(watchOS)
-                        ActionsContainer {
-                            topUpAndPayButtons()
-                            sendAndMoreButtons()
-                        }
-                        .buttonStyle(.actionButton)
+                ViewThatFits {
+                    HStack(alignment: .top) {
+                        content
+                    }
+                    .padding(.horizontal)
+                    #if !os(tvOS) && !os(macOS) && !os(visionOS)
+                        .background(theme.colors.surfacePrimary)
+                    #endif
+
+                    VStack(spacing: 0) {
+                        content
+                    }
+                    #if !os(tvOS) && !os(macOS) && !os(visionOS)
+                        .background(theme.colors.surfacePrimary)
+                    #endif
+                    #if os(macOS) || os(tvOS)
+                        .focusSection()
                     #endif
                 }
-                #if !os(watchOS)
-                    .padding([.horizontal, .top], theme.metrics.medium)
-                    .padding(.bottom, theme.metrics.large)
-                    .background(alignment: .center) {
-                        theme.shapes.creditCardSurface
-                        .fill(theme.colors.surfaceSecondary)
-                        .ignoresSafeArea()
-                    }
-                #endif
-
-                TransactionsView()
             }
-            .background(theme.colors.surfacePrimary)
             .tint(theme.colors.primary)
             .navigationTitle("My accounts")
             #if os(iOS) || targetEnvironment(macCatalyst)
@@ -66,7 +92,6 @@ struct AccountsView: View {
                         HStack { topUpAndPayButtons() }
                         HStack { sendAndMoreButtons() }
                     }
-                    .buttonStyle(.actionButton)
                 }
             #endif
         }
@@ -74,54 +99,19 @@ struct AccountsView: View {
 
     @ViewBuilder
     private func topUpAndPayButtons() -> some View {
-        Button {
-        } label: {
-            Label {
-                Text("Top up")
-            } icon: {
-                fitAndTemplatedImageView(of: theme.images.payment)
-            }
-        }
-
-        Button {
-        } label: {
-            Label {
-                Text("Pay")
-            } icon: {
-                fitAndTemplatedImageView(of: theme.images.receipt)
-            }
-        }
+        AccountsButton(icon: theme.images.payment, title: "Top up")
+        AccountsButton(icon: theme.images.receipt, title: "Pay")
     }
 
     @ViewBuilder
     private func sendAndMoreButtons() -> some View {
-        Button {
-        } label: {
-            Label {
-                Text("Send")
-            } icon: {
-                fitAndTemplatedImageView(of: theme.images.send)
-            }
-        }
-
-        Button {
+        @Bindable var manager = manager
+        AccountsButton(icon: theme.images.send, title: "Send")
+        AccountsButton(icon: theme.images.table, title: "More") {
             #if !os(watchOS)
                 manager.toggleTheme()
             #endif
-        } label: {
-            Label {
-                Text("More")
-            } icon: {
-                fitAndTemplatedImageView(of: theme.images.table)
-            }
         }
-    }
-
-    private func fitAndTemplatedImageView(of image: Image) -> some View {
-        image
-            .renderingMode(.template)
-            .resizable()
-            .scaledToFit()
     }
 }
 

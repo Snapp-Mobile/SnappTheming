@@ -56,7 +56,9 @@ struct TransactionItemView: View {
             .padding(.horizontal, theme.metrics.small)
         #endif
         .padding(.vertical, theme.metrics.small)
-        .background(theme.colors.surfacePrimary)
+        #if !os(macOS) && !os(tvOS) && !os(visionOS)
+            .background(theme.colors.surfacePrimary)
+        #endif
     }
 }
 

@@ -20,16 +20,24 @@ struct CreditCardView: View {
 
             CreditCardFooterView()
         }
-        .foregroundStyle(theme.colors.textColorPrimaryInverted)
+        .foregroundStyle(theme.colors.baseWhite)
         #if !os(watchOS)
             .padding([.horizontal], theme.metrics.medium)
         #else
             .padding(theme.metrics.small)
         #endif
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        #if os(tvOS) || os(macOS) || os(visionOS)
+            .frame(maxWidth: 345, maxHeight: 190)
+        #else
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        #endif
         .background(theme.gradients.creditCardSurface)
         .clipShape(theme.shapes.creditCard)
-        .frame(maxWidth: .infinity)
+        #if os(tvOS) || os(macOS) || os(visionOS)
+            .frame(maxWidth: 385)
+        #else
+            .frame(maxWidth: .infinity)
+        #endif
         .aspectRatio(theme.metrics.creditCardAspectRatio, contentMode: .fill)
         .shadow(
             color: theme.colors.shadow,
