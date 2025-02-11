@@ -41,7 +41,7 @@ struct AccountsView: View {
                 .buttonStyle(.actionButton)
             #endif
         }
-        #if !os(watchOS)
+        #if !os(watchOS) && !os(tvOS)
             .padding([.horizontal, .top], theme.metrics.medium)
             .padding(.bottom, theme.metrics.large)
             .background(alignment: .center) {
@@ -49,6 +49,11 @@ struct AccountsView: View {
                 .fill(theme.colors.surfaceSecondary)
                 .ignoresSafeArea()
             }
+        #else
+            #if os(tvOS)
+                .padding([.horizontal, .top], theme.metrics.medium)
+                .frame(maxWidth: 400)
+            #endif
         #endif
 
         TransactionsView()
@@ -61,12 +66,18 @@ struct AccountsView: View {
                     HStack(alignment: .top) {
                         content
                     }
-                    .background(theme.colors.surfacePrimary)
+                    .padding(.horizontal)
+                    #if !os(tvOS) && !os(macOS)
+                        .background(theme.colors.surfacePrimary)
+                    #endif
 
                     VStack(spacing: 0) {
                         content
                     }
-                    .background(theme.colors.surfacePrimary)
+                    #if !os(tvOS) && !os(macOS)
+                        .background(theme.colors.surfacePrimary)
+                    #endif
+                    .focusSection()
                 }
             }
             .tint(theme.colors.primary)

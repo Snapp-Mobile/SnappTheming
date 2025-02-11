@@ -98,6 +98,7 @@ struct SettingsView: View {
                 .navigationBarBackButtonHidden(false)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
+                        @Bindable var manager = manager
                         Menu {
                             ForEach(SettingsManager.ThemeSetting.allCases, id: \.description) { setting in
                                 Button {
