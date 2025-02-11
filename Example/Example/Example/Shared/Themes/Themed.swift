@@ -23,11 +23,9 @@ private struct ThemedModifier: ViewModifier {
             .environment(theme)
             .onChange(of: settingsManager.themeSource, initial: true) { (_, newThemeSource) in
                 theme.source = newThemeSource
-                print("theme source changed", theme.source.description)
             }
             .onChange(of: colorSchema, initial: true) { (_, newColorSchema) in
                 settingsManager.currentColorScheme = newColorSchema
-                print("color scheme changed", newColorSchema)
             }
     }
 }
