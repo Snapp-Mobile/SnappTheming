@@ -38,10 +38,9 @@ struct AccountsView: View {
                     topUpAndPayButtons()
                     sendAndMoreButtons()
                 }
-                .buttonStyle(.actionButton)
             #endif
         }
-        #if !os(watchOS) && !os(tvOS)
+        #if !os(watchOS) && !os(tvOS) && !os(visionOS)
             .padding([.horizontal, .top], theme.metrics.medium)
             .padding(.bottom, theme.metrics.large)
             .background(alignment: .center) {
@@ -50,7 +49,7 @@ struct AccountsView: View {
                 .ignoresSafeArea()
             }
         #else
-            #if os(tvOS)
+            #if os(tvOS) || os(visionOS)
                 .padding([.horizontal, .top], theme.metrics.medium)
                 .frame(maxWidth: 400)
             #endif
@@ -67,17 +66,19 @@ struct AccountsView: View {
                         content
                     }
                     .padding(.horizontal)
-                    #if !os(tvOS) && !os(macOS)
+                    #if !os(tvOS) && !os(macOS) && !os(visionOS)
                         .background(theme.colors.surfacePrimary)
                     #endif
 
                     VStack(spacing: 0) {
                         content
                     }
-                    #if !os(tvOS) && !os(macOS)
+                    #if !os(tvOS) && !os(macOS) && !os(visionOS)
                         .background(theme.colors.surfacePrimary)
                     #endif
-                    .focusSection()
+                    #if os(macOS) || os(tvOS)
+                        .focusSection()
+                    #endif
                 }
             }
             .tint(theme.colors.primary)
@@ -91,7 +92,6 @@ struct AccountsView: View {
                         HStack { topUpAndPayButtons() }
                         HStack { sendAndMoreButtons() }
                     }
-                    .buttonStyle(.actionButton)
                 }
             #endif
         }
@@ -105,6 +105,7 @@ struct AccountsView: View {
 
     @ViewBuilder
     private func sendAndMoreButtons() -> some View {
+        @Bindable var manager = manager
         AccountsButton(icon: theme.images.send, title: "Send")
         AccountsButton(icon: theme.images.table, title: "More") {
             #if !os(watchOS)

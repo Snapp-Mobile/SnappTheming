@@ -16,7 +16,7 @@ import SwiftUI
 @main
 struct ExampleApp: App {
     @State var scheme: ColorScheme = .light
-    
+
     init() {
         #if !os(visionOS)
             // Do this for turning the SVG processor on

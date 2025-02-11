@@ -27,6 +27,7 @@ struct AccountsButton: View {
                     .foregroundStyle(isFocused ? theme.colors.primary : theme.colors.textColorPrimary)
             }
         }
+        .buttonStyle(.actionButton)
         .focusable()
         .focused($isFocused, equals: true)
         #if os(macOS)

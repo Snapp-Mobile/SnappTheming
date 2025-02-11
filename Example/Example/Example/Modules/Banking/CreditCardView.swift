@@ -26,14 +26,14 @@ struct CreditCardView: View {
         #else
             .padding(theme.metrics.small)
         #endif
-        #if os(tvOS) || os(macOS)
+        #if os(tvOS) || os(macOS) || os(visionOS)
             .frame(maxWidth: 345, maxHeight: 190)
         #else
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         #endif
         .background(theme.gradients.creditCardSurface)
         .clipShape(theme.shapes.creditCard)
-        #if os(tvOS) || os(macOS)
+        #if os(tvOS) || os(macOS) || os(visionOS)
             .frame(maxWidth: 385)
         #else
             .frame(maxWidth: .infinity)

@@ -16,6 +16,7 @@ struct NamedGradient: Identifiable {
 }
 
 struct GradientsViewer: View {
+    @Environment(\.dismiss) var dismiss
     @Environment(Theme.self) private var theme
     @State var selectedShape: NamedGradient?
     @FocusState var focusedKey: String?
@@ -45,12 +46,24 @@ struct GradientsViewer: View {
             .navigationBarTitleDisplayMode(.inline)
         #endif
         .sheet(item: $selectedShape) { shape in
-            ZStack {
-                Rectangle()
-                    .fill(shape.shape)
-                Text("\(shape.name)")
-                    .padding()
-                    .background(Color.black)
+            NavigationStack {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 24)
+                        .fill(shape.shape)
+                    Text("\(shape.name)")
+                        .padding()
+                        .background(Color.black)
+                }
+                .padding()
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Text("Close")
+                        }
+                    }
+                }
             }
         }
     }
