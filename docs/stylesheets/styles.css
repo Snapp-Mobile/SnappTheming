@@ -50,37 +50,134 @@ table {
 }
 
 .section {
-    background: rgb(1, 1, 1);
+    background: rgba(39,37,55,1);
     background: linear-gradient(0deg, rgba(1,1,1,1) 0%, rgba(39,37,55,1) 100%);
+    border: 0.1px solid rgba(39,37,55,1);
 }
 
-.content .player {
+.section.negative {
+    background: none;
+}
+
+.iOS .player {
     float: right;
     margin: 40px 0 40px 80px;
     right: 40px;
     position: relative;
 }
 
-.content .player > video {
+.iOS .player > video {
     width: 375px;
     padding: 12px 0 0 16px;
     clip-path: inset(12px 0 0 16px round 44px);
 }
 
-.content .player .overlay {
+.iOS .player .overlay {
+    position: absolute;
+    top: -10px;
+    left: -6px;
+    background: url("../assets/iPhone_natural.png") no-repeat center left;
+    background-size: contain;
+    width: 420px;
+    height: 855px;
+}
+
+.watchOS .player {
+    float: left;
+    margin: 40px 160px 240px 40px;
+    left: 0px;
+    position: relative;
+}
+
+.watchOS .player > video {
+    width: 205px;
+    position: relative;
+    top: 96px;
+    left: 32px;
+    padding: 12px 0 0 16px;
+    clip-path: inset(12px 0 0 16px round 44px);
+}
+
+.watchOS .player .overlay {
     position: absolute;
     top: 0px;
     left: 0px;
-    background: url("../assets/phone.png") no-repeat center right;
+    background: url("../assets/watch_normal.png") no-repeat center left;
     background-size: contain;
-    width: 405px;
-    height: 840px;
+    width: 300px;
+    height: 470;
+}
+
+.macOS .player {
+    margin: 0 auto 20px auto;
+    width: 980px;
+    position: relative;
+}
+
+.macOS .player > video {
+    width: 752px;
+    position: absolute;
+    top: 75px;
+    left: 114px;
+}
+
+.macOS .player .overlay {
+    position: relative;
+    top: 0;
+    left: 0;
+    background: url("../assets/macBookPro.png") no-repeat center center;
+    background-size: contain;
+    width: 980px;
+    height: 638px;
+}
+
+.tvOS .player {
+    margin: 0 auto 20px auto;
+    width: 980px;
+    position: relative;
+}
+
+.tvOS .player > video {
+    width: 876px;
+    position: absolute;
+    top: 27px;
+    left: 23px;
+}
+
+.tvOS .player .overlay {
+    position: relative;
+    background: url("../assets/tv.png") no-repeat center center;
+    background-size: contain;
+    width: 980px;
+    height: 634px;
+}
+
+.visionOS .player {
+    margin: 60px auto 40px auto;
+}
+
+.visionOS .player > video {
+    width: 980px;
+    height: 735px;
 }
 
 h1 {
     color: #fff;
     font: bold 3em/2em "Inter Tight", sans-serif;
     margin: 1% 0 0 0;
+}
+
+.watchOS h1 {
+    padding-top: 180px;
+}
+
+.macOS h1, .tvOS h1, .visionOS h1 {
+    text-align: center;
+    padding-top: 80px;
+}
+
+.macOS h1 {
+    padding-top: 100px;
 }
 
 p {
@@ -90,7 +187,7 @@ p {
 
 
 .links {
-    padding: 60px 0 60px 0;
+    padding: 80px 0 60px 0;
     display: flex;
     gap: 16px;
 }
@@ -103,17 +200,27 @@ a, a:hover, a:visited {
     text-decoration: none;
 }
 
-.content .logo {
-    padding: 40px 0 0 0;
+.iOS .logo {
+    padding: 80px 0 0 0;
 }
 
-.content p.description {
+p.description {
     padding: 0 0 80px 0;
     font: bold 1.4em/1.6em "Inter Tight", sans-serif;
     color: rgb(214, 212, 212);
 }
 
-.content p {
+.watchOS p.description {
+    padding-bottom: 180px;
+}
+
+
+.macOS p.description, .tvOS p.description, .visionOS p.description  {
+    padding-bottom: 0px;
+    text-align: center;
+}
+
+.section p {
     font: 1.4em/1.6em "Inter Tight", sans-serif;
     padding: 0 0 20px 0;
 }
@@ -133,12 +240,44 @@ a, a:hover, a:visited {
     color: #333;
 }
 
+.section.negative {
+    background: #fafafa;
+}
+
+.negative h1 {
+    color: #000;
+}
+
+.negative p {
+    color: #4a4a4a;
+}
+
+.negative p.description {
+    color: #8a8a8a;
+}
+
+@media (prefers-color-scheme: dark) {
+    .bottom p {color: #ccc}
+    
+    .iOS .player .overlay {
+        background: url("../assets/iPhone_black.png") no-repeat center left;
+        background-size: contain;
+    }
+
+    .watchOS .player .overlay {
+        background: url("../assets/watch_black.png") no-repeat center left;
+        background-size: contain;
+    }
+
+    
+}
+
 @media only screen and (max-width: 1023px) {
-    .content {
+    .iOS, .watchOS, .macOS, .tvOS, .visionOS {
         margin: 0 20px;
     }
 
-    .content .player, .content .player .overlay, .content .player > video {
+    .player, .player .overlay, .player > video {
         display: none;
     }
 }
@@ -151,6 +290,3 @@ a, a:hover, a:visited {
     }
 }
 
-@media (prefers-color-scheme: dark) {
-    .bottom p {color: #ccc}
-}
