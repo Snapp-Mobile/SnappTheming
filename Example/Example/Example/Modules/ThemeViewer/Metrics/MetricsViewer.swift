@@ -32,7 +32,8 @@ struct CornerRadiusMetricView: View {
 }
 
 struct MetricsViewer: View {
-    let declarations: SnappThemingMetricDeclarations
+    @Environment(Theme.self) private var theme
+    @FocusState var focusedKey: String?
 
     var body: some View {
         List {
@@ -42,27 +43,35 @@ struct MetricsViewer: View {
 
             section("Corner radius") { metric in
                 CornerRadiusMetricView(metric: metric)
+
             }
         }
         .navigationTitle("Metrics")
-        .navigationBarTitleDisplayMode(.inline)
+        #if os(iOS) || targetEnvironment(macCatalyst)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
     }
 
     func section<V>(_ title: String, content: @escaping (CGFloat) -> V) -> some View where V: View {
         Section(title) {
-            ForEach(declarations.keys, id: \.self) { key in
+            ForEach(theme.metrics.keys, id: \.self) { key in
                 HStack {
-                    let metric: CGFloat = declarations[dynamicMember: key]
+                    let metric: CGFloat = theme.metrics[dynamicMember: key]
                     VStack {
                         Text(key)
                             .font(.body)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                            .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
+
                         Text(String(describing: metric))
                             .font(.caption)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                            .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
                     }
                     content(metric)
                 }
+                .focusable(true)
+                .focused($focusedKey, equals: key)
             }
         }
     }
@@ -70,6 +79,7 @@ struct MetricsViewer: View {
 
 #Preview {
     NavigationView {
-        MetricsViewer(declarations: SnappThemingDeclaration.preview.metrics)
+        MetricsViewer()
+            .environment(Theme(.default))
     }
 }

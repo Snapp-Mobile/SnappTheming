@@ -9,26 +9,39 @@ import SnappTheming
 import SwiftUI
 
 enum ThemeDestination: String, Hashable, CaseIterable {
-    case animations, buttons, colors, fonts, images, metrics, shapes, typography, gradients
+    #if !os(watchOS)
+        case animations
+    #endif
+    case buttons, colors, fonts, gradients, images, metrics, shapes, typography
+    #if !os(tvOS) && !os(watchOS)
+        case themeJSON = "Theme JSON"
+    #endif
 }
 
 struct ThemeViewer: View {
-    var declaration: SnappThemingDeclaration
+    @Environment(Theme.self) private var theme
+    @Binding var selectedDestination: ThemeDestination?
 
     var body: some View {
-        List {
-            Section {
-                ForEach(ThemeDestination.allCases, id: \.self) { destination in
-                    NavigationLink(value: destination) {
-                        Text(destination.rawValue.capitalized)
-                    }
-                }
+        List(ThemeDestination.allCases, id: \.self, selection: $selectedDestination) { destination in
+            NavigationLink(value: destination) {
+                Text(destination.rawValue.capitalized)
+                    .foregroundStyle(theme.colors.textColorPrimary)
             }
         }
         .navigationTitle("Tokens")
+        #if os(iOS) || targetEnvironment(macCatalyst)
+            .listStyle(.sidebar)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
+    }
+
+    init(with selectedDestination: Binding<ThemeDestination?>) {
+        self._selectedDestination = selectedDestination
     }
 }
 
 #Preview {
-    ThemeViewer(declaration: .preview)
+    ThemeViewer(with: .constant(.buttons))
+        .environment(Theme(.default))
 }

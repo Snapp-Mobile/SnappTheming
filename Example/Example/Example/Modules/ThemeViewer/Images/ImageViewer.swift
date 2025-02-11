@@ -15,17 +15,19 @@ struct NamedImage: Identifiable {
 }
 
 struct ImageViewer: View {
+    @Environment(\.dismiss) var dismiss
+    @Environment(Theme.self) private var theme
+
     let namedImage: NamedImage
 
-    @Environment(\.dismiss) var dismiss
-
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 namedImage.image
+                    .renderingMode(.template)
                     .resizable()
                     .scaledToFit()
-                    .foregroundStyle(Color.accentColor)
+                    .foregroundStyle(theme.colors.primary)
             }
             .padding()
             .toolbar {
@@ -37,7 +39,9 @@ struct ImageViewer: View {
                     }
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
+            #if os(iOS) || targetEnvironment(macCatalyst)
+                .navigationBarTitleDisplayMode(.inline)
+            #endif
             .navigationTitle(namedImage.name)
         }
     }

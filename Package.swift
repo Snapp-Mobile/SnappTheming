@@ -7,7 +7,10 @@ let package = Package(
     name: "SnappTheming",
     platforms: [
         .iOS(.v16),
-        .macOS(.v12),
+        .macOS(.v13),
+        .tvOS(.v16),
+        .watchOS(.v9),
+        .visionOS(.v1),
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
@@ -24,7 +27,7 @@ let package = Package(
         .target(
             name: "SnappTheming",
             plugins: [
-                .plugin(name: "SwiftFormatPlugin")
+                .plugin(name: "SnappThemingSwiftFormatPlugin")
             ]),
         .testTarget(
             name: "SnappThemingTests",
@@ -34,6 +37,6 @@ let package = Package(
             ]
         ),
         .target(name: "SnappThemingSwiftUIHelpers"),
-        .plugin(name: "SwiftFormatPlugin", capability: .buildTool(), path: "Plugins/SwiftFormatPlugin"),
+        .plugin(name: "SnappThemingSwiftFormatPlugin", capability: .buildTool(), path: "Plugins/SnappThemingSwiftFormatPlugin"),
     ]
 )

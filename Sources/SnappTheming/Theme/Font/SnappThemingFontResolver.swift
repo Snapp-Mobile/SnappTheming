@@ -7,10 +7,12 @@
 
 import Foundation
 import SwiftUI
-import UIKit
+#if canImport(UIKit)
+    import UIKit
+#endif
 
 /// Resolves fonts for theming purposes, supporting custom and system fonts.
-public struct SnappThemingFontResolver: Sendable {
+public struct SnappThemingFontResolver: Sendable, Equatable {
     /// The font name of the font, if available.
     private let fontName: String?
 
@@ -20,12 +22,14 @@ public struct SnappThemingFontResolver: Sendable {
         self.fontName = fontName
     }
 
-    /// Resolves a `UIFont` for the specified size.
-    /// - Parameter size: The size of the font.
-    /// - Returns: A `UIFont` object. Falls back to the system font if the custom font cannot be resolved.
-    public func uiFont(size: CGFloat) -> UIFont {
-        (fontName.flatMap { UIFont(name: $0, size: size) }) ?? .systemFont(ofSize: size)
-    }
+    #if canImport(UIKit)
+        /// Resolves a `UIFont` for the specified size.
+        /// - Parameter size: The size of the font.
+        /// - Returns: A `UIFont` object. Falls back to the system font if the custom font cannot be resolved.
+        public func uiFont(size: CGFloat) -> UIFont {
+            (fontName.flatMap { UIFont(name: $0, size: size) }) ?? .systemFont(ofSize: size)
+        }
+    #endif
 
     /// Resolves a SwiftUI `Font` for the specified size.
     /// - Parameter size: The size of the font.

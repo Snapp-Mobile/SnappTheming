@@ -4,9 +4,9 @@ The main building blocks
 
 ## Overview
 
-This article describes the types of objects you can use to construct a valid theme declaration JSON. 
+This article enumerates the various object types that can be utilized to construct a valid theme declaration JSON.
 
-We have split the object types into two main groups - foundation objects and high-level objects
+The object types have been categorized into two primary groups: foundation objects and high-level objects.
 
 #### Foundation Objects
 

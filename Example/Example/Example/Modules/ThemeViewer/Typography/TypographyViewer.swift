@@ -9,27 +9,33 @@ import SnappTheming
 import SwiftUI
 
 struct TypographyViewer: View {
-    let declarations: SnappThemingTypographyDeclarations
+    @Environment(Theme.self) private var theme
+    @FocusState var focusedKey: String?
 
     var body: some View {
         List {
             Section {
-                ForEach(declarations.keys, id: \.self) { key in
-                    let font: Font = declarations[dynamicMember: key]
+                ForEach(theme.typography.keys, id: \.self) { key in
+                    let font: Font = theme.typography[dynamicMember: key]
                     Text(key)
                         .lineLimit(1)
                         .font(font)
-                        .foregroundStyle(.primary)
+                        .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
+                        .focusable(true)
+                        .focused($focusedKey, equals: key)
                 }
             }
         }
         .navigationTitle("Typography")
-        .navigationBarTitleDisplayMode(.inline)
+        #if os(iOS) || targetEnvironment(macCatalyst)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
     }
 }
 
 #Preview {
     NavigationView {
-        TypographyViewer(declarations: SnappThemingDeclaration.preview.typography)
+        TypographyViewer()
+            .environment(Theme(.default))
     }
 }

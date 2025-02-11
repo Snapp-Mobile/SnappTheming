@@ -6,9 +6,12 @@
 //
 
 import Testing
-import UIKit
-
+import UniformTypeIdentifiers
 @testable import SnappTheming
+
+#if canImport(UIKit)
+    import UIKit
+#endif
 
 @Suite
 struct FontsTests {
@@ -21,8 +24,27 @@ struct FontsTests {
         let json = try #require(String(data: jsonData, encoding: .utf8), "JSON should be readable")
 
         let declaration = try SnappThemingParser.parse(from: json)
-        #expect(declaration.fonts.cache.count == 1)
-        let representation = try #require(declaration.fonts.cache["Roboto-Regular"]?.value)
-        #expect(representation.postScriptName == "Roboto-Regular")
+        let fontInformation: SnappThemingFontInformation = try #require(declaration.fonts[dynamicMember: "Roboto-Regular"])
+        let fontResolver: SnappThemingFontResolver = declaration.fonts[dynamicMember: "Roboto-Regular"]
+
+        #expect(fontInformation.postScriptName == "Roboto-Regular")
+        #expect(fontInformation.source.type == .truetypeTTFFont)
+        #expect(fontResolver != .system)
     }
+
+    @Test
+    func useFallbackFont() throws {
+        let json = "{}"
+        let declaration = try SnappThemingParser.parse(from: json)
+        try compareEncoded(declaration, and: json)
+        let fontInformation: SnappThemingFontInformation? = declaration.fonts[dynamicMember: "Roboto-Regular"]
+        let fontResolver: SnappThemingFontResolver = declaration.fonts[dynamicMember: "Roboto-Regular"]
+
+        #expect(fontInformation == nil)
+        #expect(fontResolver == .system)
+    }
+}
+
+extension UTType {
+    fileprivate static let truetypeTTFFont: UTType = .init("public.truetype-ttf-font")!
 }

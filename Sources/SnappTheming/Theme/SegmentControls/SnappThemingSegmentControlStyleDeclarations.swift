@@ -35,9 +35,10 @@ where
                 fallbackSurfaceColor: configuration.fallbackButtonStyle.surfaceColor,
                 fallbackBorderColor: configuration.fallbackButtonStyle.borderColor,
                 fallbackBorderWidth: configuration.fallbackButtonStyle.borderWidth,
+                fallbackInnerPadding: configuration.fallbackButtonStyle.borderWidth,
                 fallbackShape: configuration.fallbackButtonStyle.shape,
-                fallbackSelectedSegment: configuration.fallbackButtonStyle,
-                fallbackNormalSegment: configuration.fallbackButtonStyle,
+                fallbackSelectedSegmentButtonStyle: configuration.fallbackButtonStyle,
+                fallbackNormalSegmentButtonStyle: configuration.fallbackButtonStyle,
                 metrics: metrics,
                 fonts: fonts,
                 colors: colors,
@@ -66,7 +67,8 @@ where
                 .resolve(representation.borderColor)?
                 .resolver(colorFormat: configuration.colorFormat, colors: configuration.colors)
                 .interactiveColor,
-            let shape = configuration.shapes.resolver.resolve(representation.shape)?.resolver().shapeType,
+            let shapeRepresentation = configuration.shapes.resolver
+                .resolve(representation.shape),
             let selectedButtonStyle = configuration.buttonStyles.resolver
                 .resolve(representation.selectedButtonStyle)?
                 .resolver(using: configuration),
@@ -75,8 +77,8 @@ where
                 .resolver(using: configuration)
         else {
             return SnappThemingSegmentControlStyleResolver(
-                selectedButtonStyle: configuration.fallbackSelectedSegment,
-                normalButtonStyle: configuration.fallbackNormalSegment,
+                selectedButtonStyle: configuration.fallbackSelectedSegmentButtonStyle,
+                normalButtonStyle: configuration.fallbackNormalSegmentButtonStyle,
                 surfaceColor: configuration.fallbackSurfaceColor,
                 borderColor: configuration.fallbackBorderColor,
                 borderWidth: configuration.fallbackBorderWidth,
@@ -85,6 +87,7 @@ where
             )
         }
 
+        let shapeType = configuration.shapes.configuration.resolve(shapeRepresentation)
         return SnappThemingSegmentControlStyleResolver(
             selectedButtonStyle: selectedButtonStyle,
             normalButtonStyle: normalButtonStyle,
@@ -92,7 +95,7 @@ where
             borderColor: borderColor,
             borderWidth: borderWidth,
             innerPadding: padding,
-            shape: shape
+            shape: shapeType
         )
     }
 }

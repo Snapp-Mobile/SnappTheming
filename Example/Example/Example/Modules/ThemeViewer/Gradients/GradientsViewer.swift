@@ -16,32 +16,58 @@ struct NamedGradient: Identifiable {
 }
 
 struct GradientsViewer: View {
-    let declarations: SnappThemingGradientDeclarations
+    @Environment(\.dismiss) var dismiss
+    @Environment(Theme.self) private var theme
     @State var selectedShape: NamedGradient?
+    @FocusState var focusedKey: String?
 
     var body: some View {
         List {
             Section {
-                ForEach(declarations.keys, id: \.self) { key in
-                    LabeledContent(key) {
+                ForEach(theme.gradients.keys, id: \.self) { key in
+                    LabeledContent {
                         Button {
-                            selectedShape = .init(name: key, shape: AnyShapeStyle(declarations[dynamicMember: key]))
+                            selectedShape = .init(name: key, shape: AnyShapeStyle(theme.gradients[dynamicMember: key]))
                         } label: {
-                            GradientView(style: declarations[dynamicMember: key])
+                            GradientView(style: theme.gradients[dynamicMember: key])
                         }
+                        .scaleEffect(focusedKey == key ? 1.2 : 1.0)
+                    } label: {
+                        Text(key)
+                            .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
                     }
+                    .focusable(true)
+                    .focused($focusedKey, equals: key)
                 }
             }
         }
         .navigationTitle("Gradients")
-        .navigationBarTitleDisplayMode(.inline)
+        #if os(iOS) || targetEnvironment(macCatalyst)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
         .sheet(item: $selectedShape) { shape in
-            ZStack {
-                Rectangle()
-                    .fill(shape.shape)
-                Text("\(shape.name)")
-                    .padding()
-                    .background(Color.black)
+            NavigationStack {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 24)
+                        .fill(shape.shape)
+                    Text("\(shape.name)")
+                        #if !os(watchOS)
+                            .padding()
+                        #endif
+                        .background(theme.colors.textColorPrimaryInverted)
+                        .foregroundColor(theme.colors.textColorPrimary)
+                }
+                .aspectRatio(1, contentMode: .fit)
+                .padding()
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Text("Close")
+                        }
+                    }
+                }
             }
         }
     }
@@ -49,6 +75,7 @@ struct GradientsViewer: View {
 
 #Preview {
     NavigationView {
-        ColorsViewer(declarations: SnappThemingDeclaration.preview.colors)
+        ColorsViewer()
+            .environment(Theme(.default))
     }
 }

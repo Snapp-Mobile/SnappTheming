@@ -1,6 +1,6 @@
 # ``SnappThemingToggleStyleDeclarations``
 
-Manages toggle style tokens, allowing control over the appearance of toggles, such as colors for enabled/disabled states.
+Manages toggle style tokens, providing control over the visual representation of toggles, including color schemes for the enabled and disabled states.
 
 ## Overview
 

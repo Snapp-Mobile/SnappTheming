@@ -1,12 +1,12 @@
 # ``SnappThemingShapeDeclarations``
 
-Handles numeric tokens, such as spacing, corner radius, border widths. Useful for creating a consistent design language with reusable measurements.
+Manages shape declaration tokens, including spacing, corner radius, and border widths. This functionality facilitates the creation of a consistent design language with reusable measurements.
 
 ## Overview
 
-Shape declarations can be used to provide the foundation for background layers or button styles. Because of that, we consider them foundation objects.
+Shape declarations serve as the foundation for background layers or button styles, making them considered fundamental objects.
 
-Supported are a number of objects, as follows:
+Supported objects include:
 
 - [Rectangle](<doc:Rectangle>)
 - [Ellipse](<doc:Ellipse>)
@@ -58,9 +58,7 @@ Supported are a number of objects, as follows:
     "shapes": {
         "capsule": {
             "type": "capsule",
-            "value": {
-                "style": "circular"
-            }
+            "style": "circular"
         }
     }
 }
@@ -75,9 +73,7 @@ Rounded rectangles with uniform corner radius can be defined as follows
     "shapes": {
         "roundedRectangle": {
             "type": "roundedRectangle",
-            "value": {
-                "cornerRadius": 12
-            }
+            "cornerRadius": 12
         }
     }
 }
@@ -90,13 +86,11 @@ Rounded rectangles with variable corner radius can be defined as follows
     "shapes": {
         "roundedRectangleAlt": {
             "type": "roundedRectangle",
-            "value": {
-                "cornerSize": {
-                    "width": 15,
-                    "height": 30
-                },
-                "style": "circular"
-            }
+            "cornerSize": {
+                "width": 15,
+                "height": 30
+            },
+            "style": "circular"
         }
 }
 ```
@@ -110,15 +104,13 @@ This allows you to define a rounded rectangle where corner radius varies for eac
     "shapes": {
         "funkyRect": {
             "type": "unevenRoundedRectangle",
-            "value": {
-                "cornerRadii": {
-                    "topLeading": 0,
-                    "bottomLeading": 20,
-                    "bottomTrailing": 0,
-                    "topTrailing": 20
-                },
-                "style": "circular"
-            }
+            "cornerRadii": {
+                "topLeading": 0,
+                "bottomLeading": 20,
+                "bottomTrailing": 0,
+                "topTrailing": 20
+            },
+            "style": "circular"
         }
     }
 }

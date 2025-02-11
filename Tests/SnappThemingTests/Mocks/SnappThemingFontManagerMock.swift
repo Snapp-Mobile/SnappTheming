@@ -27,7 +27,7 @@ final class SnappThemingFontManagerMock: SnappThemingFontManager {
 
     func registerFont(_ font: SnappThemingFontInformation) {
         queue.sync {
-            registeredFonts.insert(font)
+            let _ = registeredFonts.insert(font)
         }
     }
 }

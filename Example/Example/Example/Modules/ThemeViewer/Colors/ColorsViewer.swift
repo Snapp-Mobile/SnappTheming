@@ -19,31 +19,44 @@ struct ColorView: View {
 }
 
 struct ColorsViewer: View {
-    let declarations: SnappThemingColorDeclarations
+    @Environment(Theme.self) private var theme
+    @FocusState private var focusedKey: String?
 
     var body: some View {
         List {
             Section {
-                ForEach(declarations.keys, id: \.self) { key in
-                    let color: Color = declarations[dynamicMember: key]
-                    LabeledContent(key) {
+                ForEach(theme.colors.keys, id: \.self) { key in
+                    let color: Color = theme.colors[dynamicMember: key]
+                    LabeledContent {
                         HStack {
-                            ColorView(color: color)
-                                .environment(\.colorScheme, .light)
+                            #if !os(watchOS)
+                                ColorView(color: color)
+                                    .environment(\.colorScheme, .light)
+                                    .scaleEffect(focusedKey == key ? 1.2 : 1.0)
+                            #endif
                             ColorView(color: color)
                                 .environment(\.colorScheme, .dark)
+                                .scaleEffect(focusedKey == key ? 1.2 : 1.0)
                         }
+                    } label: {
+                        Text(key)
+                            .foregroundStyle(focusedKey == key ? Color.accentColor : .primary)
                     }
+                    .focusable(true)
+                    .focused($focusedKey, equals: key)
                 }
             }
         }
         .navigationTitle("Colors")
-        .navigationBarTitleDisplayMode(.inline)
+        #if os(iOS) || targetEnvironment(macCatalyst)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
     }
 }
 
 #Preview {
     NavigationView {
-        ColorsViewer(declarations: SnappThemingDeclaration.preview.colors)
+        ColorsViewer()
+            .environment(Theme(.default))
     }
 }

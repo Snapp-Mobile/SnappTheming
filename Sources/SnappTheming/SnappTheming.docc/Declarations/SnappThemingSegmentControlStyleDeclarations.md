@@ -1,6 +1,6 @@
 # ``SnappThemingSegmentControlStyleDeclarations``
 
-Manages segment control style tokens, enabling the customization of segment control appearance, including selected/unselected states, borders, shapes, and paddings.
+Manages segment control style tokens, allowing customization of segment control appearance, including selected/unselected states, borders, shapes, and paddings.
 
 ## Overview
 

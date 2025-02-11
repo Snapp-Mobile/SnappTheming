@@ -1,10 +1,10 @@
 # ``SnappThemingTypographyDeclarations``
 
-Manages typography tokens, combining font and size. Provides full control over how text styles are applied in the app.
+Manages typography tokens, combining font and size. Offers complete control over how text styles are applied within the application.
 
 ## Overview
 
-Typography declarations are considered high-level as they should point to primitives like metrics and fonts.
+Typography declarations are considered high-level because they should refer to fundamental elements such as metrics and fonts.
 
 Below is an example of a valid font declaration:
 

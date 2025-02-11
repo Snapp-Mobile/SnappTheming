@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Error+Extensions.swift
 //  SnappTheming
 //
 //  Created by Oleksii Kolomiiets on 01.12.2024.

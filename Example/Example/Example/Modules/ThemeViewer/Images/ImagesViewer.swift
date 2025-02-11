@@ -9,32 +9,42 @@ import SnappTheming
 import SwiftUI
 
 struct ImagesViewer: View {
-    let declarations: SnappThemingImageDeclarations
+    @Environment(Theme.self) private var theme
+    @FocusState var focusedKey: String?
     @State var selectedImage: NamedImage?
 
     var body: some View {
         List {
             Section {
-                ForEach(declarations.keys, id: \.self) { key in
-                    let image: Image = declarations[dynamicMember: key]
-                    LabeledContent(
-                        key,
-                        content: {
-                            Button {
-                                selectedImage = .init(name: key, image: image)
-                            } label: {
-                                image
-                                    .resizable()
-                                    .frame(width: 24, height: 24)
-                                    .scaledToFit()
-                            }
-
-                        })
+                ForEach(theme.images.keys, id: \.self) { key in
+                    let image: Image = theme.images[dynamicMember: key]
+                    LabeledContent {
+                        Button {
+                            selectedImage = .init(name: key, image: image)
+                        } label: {
+                            image
+                                .renderingMode(.template)
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                                .scaledToFit()
+                                .foregroundStyle(theme.colors.primary)
+                        }
+                        .scaleEffect(focusedKey == key ? 1.2 : 1.0)
+                    } label: {
+                        Text(key)
+                            .foregroundStyle(
+                                focusedKey == key ? Color.accentColor : .primary
+                            )
+                    }
+                    .focusable(true)
+                    .focused($focusedKey, equals: key)
                 }
             }
         }
         .navigationTitle("Images")
-        .navigationBarTitleDisplayMode(.inline)
+        #if os(iOS) || targetEnvironment(macCatalyst)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
         .sheet(item: $selectedImage) {
             ImageViewer(namedImage: $0)
         }
@@ -43,6 +53,7 @@ struct ImagesViewer: View {
 
 #Preview {
     NavigationView {
-        ImagesViewer(declarations: SnappThemingDeclaration.preview.images)
+        ImagesViewer()
+            .environment(Theme(.default))
     }
 }

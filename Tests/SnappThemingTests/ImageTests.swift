@@ -7,35 +7,91 @@
 
 import SwiftUI
 import Testing
-import UIKit
 
 @testable import SnappTheming
 
-@Suite
-struct ImageTests {
-    @Test
-    func parsePNGImage() throws {
-        let json =
-            """
-            {
-                "images": {
-                    "basket": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAABdUlEQVR42u2VIUhDURSGvycMy6KI4CxOsFiFgUbBMqsmwSpYBatgmcFkEgyCbjPYFItiVrAKYhlsb5Y3sQ3E7QlywuaF59279wiK36nnOwfez7kPioTEXyqkiDcaxJhVJ1BbIDWFH+QTmbWCEiVZUEKJZVlwjRJ5WfBKgAoBLVmRR4mrn4p5Vztm9wopJsTspRpgEvDibUGUHLN73WjFvCMT9rSu+UImrGpdcygTZhKu2eHRHhW7TUbnmhfFvtO65i2xD7Qe7VOx17Ue7UexCwD+Y87S+TQ7ZHUe7TkxH7Qe7Q0xy1r/5kMxN0lkMnXM92IuAPiPOUNbvBHbf/Mag1AQq25/jzVmGcKOaW7FOuJbxngjTl3zWLCdenwVKwL26aYYf87wIKGd8cS71eAuNS5Z4p9fxQRVmjSpkPPRayotYqmInGuvSZW4p8quvSbNPunZoddKarj2mlT6pGPXXpMcUU9w4z56Ta1MSMiJKJa9f+lSPwAZoy76GuY93wAAAABJRU5ErkJggg=="
+#if canImport(UIKit)
+    import UIKit
+#endif
+
+#if canImport(UIKit)
+    @Suite
+    struct ImageTests {
+        @Test
+        func parsePNGImage() throws {
+            let json =
+                """
+                {
+                    "images": {
+                        "basket": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAABdUlEQVR42u2VIUhDURSGvycMy6KI4CxOsFiFgUbBMqsmwSpYBatgmcFkEgyCbjPYFItiVrAKYhlsb5Y3sQ3E7QlywuaF59279wiK36nnOwfez7kPioTEXyqkiDcaxJhVJ1BbIDWFH+QTmbWCEiVZUEKJZVlwjRJ5WfBKgAoBLVmRR4mrn4p5Vztm9wopJsTspRpgEvDibUGUHLN73WjFvCMT9rSu+UImrGpdcygTZhKu2eHRHhW7TUbnmhfFvtO65i2xD7Qe7VOx17Ue7UexCwD+Y87S+TQ7ZHUe7TkxH7Qe7Q0xy1r/5kMxN0lkMnXM92IuAPiPOUNbvBHbf/Mag1AQq25/jzVmGcKOaW7FOuJbxngjTl3zWLCdenwVKwL26aYYf87wIKGd8cS71eAuNS5Z4p9fxQRVmjSpkPPRayotYqmInGuvSZW4p8quvSbNPunZoddKarj2mlT6pGPXXpMcUU9w4z56Ta1MSMiJKJa9f+lSPwAZoy76GuY93wAAAABJRU5ErkJggg=="
+                    }
                 }
-            }
-            """
+                """
 
-        let imageManager = SnappThemingImageManagerMock()
-        let fallbackUIImage = try #require(UIImage(systemName: "square"))
-        let fallbackImage = Image(uiImage: fallbackUIImage)
-        let configuration = SnappThemingParserConfiguration(
-            fallbackImage: fallbackImage,
-            imageManager: imageManager
-        )
+            let imageManager = SnappThemingImageManagerMock()
+            let fallbackUIImage = try #require(UIImage(systemName: "square"))
+            let fallbackImage = Image(uiImage: fallbackUIImage)
+            let configuration = SnappThemingParserConfiguration(
+                fallbackImage: fallbackImage,
+                imageManager: imageManager
+            )
 
-        let declaration = try SnappThemingParser.parse(from: json, using: configuration)
+            let declaration = try SnappThemingParser.parse(
+                from: json, using: configuration)
+            let imageData: SnappThemingDataURI = try #require(
+                declaration.images.basket)
+            let image: Image = declaration.images.basket
+            #expect(imageData.type == .png)
+            #expect(image != fallbackImage)
+            let representation = try #require(
+                imageManager.cache.object(forKey: "basket") as? Data)
+            #expect(UIImage(data: representation)?.cgImage != fallbackUIImage.cgImage)
+        }
 
-        #expect(declaration.images.basket != fallbackImage)
-        let representation = try #require(imageManager.cache.object(forKey: "basket"))
-        #expect(representation.cgImage != fallbackUIImage.cgImage)
+        @Test
+        func useFallbackImageIfMissing() throws {
+            let fallbackUIImage = try #require(UIImage(systemName: "square"))
+            let fallbackImage = Image(uiImage: fallbackUIImage)
+            let configuration = SnappThemingParserConfiguration(
+                fallbackImage: fallbackImage)
+            let declaration = try SnappThemingParser.parse(
+                from: "{}", using: configuration)
+
+            let imageData: SnappThemingDataURI? = declaration.images.basket
+            let image: Image = declaration.images.basket
+
+            #expect(imageData == nil)
+            #expect((image == fallbackImage))
+        }
+
+        @Test
+        func useFallbackImageIfBrokenData() throws {
+            let json =
+                """
+                {
+                    "images": {
+                        "basket": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAABdUlEQVR42u2VIUhDURSGvycMy6KI4CxOsFiFgUbBMqsmwSpYBatgmcFkEgyCbjPYFItiVrAKYhlsb5Y3sQ3E7QlywuaF59279wiK36nnOwfez7kPioTEXyqkiDcaxJhVJ1BbIDWFH+QTmbWCEiVZUEKJZVlwjRJ5WfBKgAoBLVmRR4mrn4p5Vztm9wopJsTspRpgEvDibUGUHLN73WjFvCMT9rSu+UImrGpdcygTZhKu2eHRHhW7TUbnmhfFvtO65i2xD7Qe7VOx17Ue7UexCwD+Y87S+TQ7ZHUe7TkxH7Qe7Q0xy1r/5kMxN0lkMnXM92IuAPiPOUNbvBHbf/Mag1AQq25/jzVmGcKOaW7FOuJbxngjTl3zWLCdenwVKwL26aYYf87wIKGd8cS71eAuNS5Z4p9fxQRVmjSpkPPRayotYqmInGuvSZW4p8quvSbNPunZoddKarj2mlT6pGPXXpMcUU9w4z56Ta1MSMiJKJa9f+lSPwAZoy76GuY93wAAAABJRU5ErkJggg=="
+                    }
+                }
+                """
+
+            let imageManager = SnappThemingImageManagerMock(image: { _, _ in nil
+            })
+            let fallbackUIImage = try #require(UIImage(systemName: "square"))
+            let fallbackImage = Image(uiImage: fallbackUIImage)
+            let configuration = SnappThemingParserConfiguration(
+                fallbackImage: fallbackImage,
+                imageManager: imageManager
+            )
+
+            let declaration = try SnappThemingParser.parse(
+                from: json, using: configuration)
+
+            let imageData: SnappThemingDataURI? = declaration.images.basket
+            let image: Image = declaration.images.basket
+
+            #expect(imageData != nil)
+            #expect(image == fallbackImage)
+        }
     }
-}
+#endif

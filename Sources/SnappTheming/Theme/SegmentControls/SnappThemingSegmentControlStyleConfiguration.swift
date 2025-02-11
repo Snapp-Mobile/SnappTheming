@@ -20,14 +20,17 @@ public struct SnappThemingSegmentControlStyleConfiguration {
     /// The fallback width of the segment control's border.
     public let fallbackBorderWidth: Double
 
+    /// The fallback inner padding of the segment control.
+    public let fallbackInnerPadding: Double
+
     /// The fallback shape style for the segment control.
     public let fallbackShape: SnappThemingShapeType
 
-    /// The fallback style for the selected segment of the control.
-    public let fallbackSelectedSegment: SnappThemingButtonStyleResolver
+    /// The fallback button style for the selected segment control.
+    public let fallbackSelectedSegmentButtonStyle: SnappThemingButtonStyleResolver
 
-    /// The fallback style for the normal (unselected) segment of the control.
-    public let fallbackNormalSegment: SnappThemingButtonStyleResolver
+    /// The fallback button style for the normal (unselected) segment control.
+    public let fallbackNormalSegmentButtonStyle: SnappThemingButtonStyleResolver
 
     /// The color format used in the theming system (e.g., Hex, RGBA).
     public let colorFormat: SnappThemingColorFormat
@@ -41,15 +44,17 @@ public struct SnappThemingSegmentControlStyleConfiguration {
     let interactiveColors: SnappThemingInteractiveColorDeclarations
     let typographies: SnappThemingTypographyDeclarations
     let buttonStyles: SnappThemingButtonStyleDeclarations
+    let shapeConfiguration: SnappThemingShapeConfiguration
     let themeConfiguration: SnappThemingParserConfiguration
 
     internal init(
         fallbackSurfaceColor: SnappThemingInteractiveColor,
         fallbackBorderColor: SnappThemingInteractiveColor,
         fallbackBorderWidth: Double,
+        fallbackInnerPadding: Double,
         fallbackShape: SnappThemingShapeType,
-        fallbackSelectedSegment: SnappThemingButtonStyleResolver,
-        fallbackNormalSegment: SnappThemingButtonStyleResolver,
+        fallbackSelectedSegmentButtonStyle: SnappThemingButtonStyleResolver,
+        fallbackNormalSegmentButtonStyle: SnappThemingButtonStyleResolver,
         metrics: SnappThemingMetricDeclarations,
         fonts: SnappThemingFontDeclarations,
         colors: SnappThemingColorDeclarations,
@@ -64,8 +69,8 @@ public struct SnappThemingSegmentControlStyleConfiguration {
         self.fallbackBorderColor = fallbackBorderColor
         self.fallbackBorderWidth = fallbackBorderWidth
         self.fallbackShape = fallbackShape
-        self.fallbackSelectedSegment = fallbackSelectedSegment
-        self.fallbackNormalSegment = fallbackNormalSegment
+        self.fallbackSelectedSegmentButtonStyle = fallbackSelectedSegmentButtonStyle
+        self.fallbackNormalSegmentButtonStyle = fallbackNormalSegmentButtonStyle
         self.metrics = metrics
         self.fonts = fonts
         self.colors = colors
@@ -75,5 +80,14 @@ public struct SnappThemingSegmentControlStyleConfiguration {
         self.buttonStyles = buttonStyles
         self.colorFormat = colorFormat
         self.themeConfiguration = themeConfiguration
+        self.fallbackInnerPadding = fallbackInnerPadding
+        self.shapeConfiguration = SnappThemingShapeConfiguration(
+            fallbackShape: fallbackShape,
+            fallbackCornerRadius: themeConfiguration.fallbackCornerRadius,
+            fallbackRoundedCornerStyle: themeConfiguration.fallbackRoundedCornerStyle,
+            fallbackCornerRadii: themeConfiguration.fallbackCornerRadii,
+            themeConfiguration: themeConfiguration,
+            metrics: metrics
+        )
     }
 }

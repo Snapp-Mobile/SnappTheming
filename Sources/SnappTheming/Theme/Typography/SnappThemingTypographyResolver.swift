@@ -7,12 +7,16 @@
 
 import Foundation
 import SwiftUI
-import UIKit
+#if canImport(UIKit)
+    import UIKit
+#endif
 
 /// Resolver for typography in the SnappTheming framework.
-public struct SnappThemingTypographyResolver: Sendable {
-    /// Resolved `UIFont` for UIKit usage.
-    public let uiFont: UIFont
+public struct SnappThemingTypographyResolver: Sendable, Equatable {
+    #if canImport(UIKit)
+        /// Resolved `UIFont` for UIKit usage.
+        public let uiFont: UIFont
+    #endif
     /// Resolved `Font` for SwiftUI usage.
     public let font: Font
 
@@ -21,7 +25,9 @@ public struct SnappThemingTypographyResolver: Sendable {
     ///   - resolver: The font resolver containing the font information.
     ///   - fontSize: The size of the font to resolve.
     public init(_ resolver: SnappThemingFontResolver, fontSize: CGFloat) {
-        self.uiFont = resolver.uiFont(size: fontSize)
+        #if canImport(UIKit)
+            self.uiFont = resolver.uiFont(size: fontSize)
+        #endif
         self.font = resolver.font(size: fontSize)
     }
 }
