@@ -267,14 +267,16 @@ p.description {
     .watchOS .player .overlay {
         background: url("../assets/watch_black.png") no-repeat center left;
         background-size: contain;
-    }
-
-    
+    }    
 }
 
 @media only screen and (max-width: 1023px) {
-    .iOS, .watchOS, .macOS, .tvOS, .visionOS {
+    .iOS, .watchOS, .macOS, .tvOS, .visionOS, .bottom .content {
         margin: 0 20px;
+    }
+
+    .macOS, .tvOS, .watchOS, .visionOS {
+        display: none;
     }
 
     .player, .player .overlay, .player > video {
