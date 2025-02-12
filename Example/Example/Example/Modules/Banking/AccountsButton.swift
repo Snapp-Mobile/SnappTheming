@@ -28,10 +28,13 @@ struct AccountsButton: View {
                     .scaleEffect(isFocused ? 1.2 : 1.0)
             }
         }
-        .animation(.default.speed(3.0), value: isFocused)
-        .buttonStyle(.actionButton)
+        #if os(macOS) || os(iOS)
+            .focusable()
+        #endif
         .focused($isFocused, equals: true)
-        #if os(macOS)
+        .buttonStyle(.actionButton)
+        .animation(.default.speed(3.0), value: isFocused)
+        #if os(macOS) || os(iOS)
             .focusEffectDisabled()
         #endif
     }

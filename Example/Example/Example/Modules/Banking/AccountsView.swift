@@ -38,7 +38,9 @@ struct AccountsView: View {
                     topUpAndPayButtons()
                     sendAndMoreButtons()
                 }
-                .focusSection()
+                #if os(tvOS)
+                    .focusSection()
+                #endif
             #endif
         }
         #if !os(watchOS) && !os(tvOS) && !os(visionOS)
