@@ -15,6 +15,7 @@ struct SettingsView: View {
     @Environment(SettingsManager.self) private var manager
     @Environment(Theme.self) private var theme
     @State private var path = NavigationPath()
+    @State private var showsActionSheet = false
     @State var destination: ThemeDestination?
     @State var settingsDestination: SettingsDestination?
     @State var columnVisibility: NavigationSplitViewVisibility = .all
@@ -98,22 +99,22 @@ struct SettingsView: View {
                 .navigationBarBackButtonHidden(false)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
-                        @Bindable var manager = manager
-                        Menu {
-                            ForEach(SettingsManager.ThemeSetting.allCases, id: \.description) { setting in
-                                Button {
-                                    manager.theme = setting
-                                } label: {
-                                    Text(setting.description)
-                                }
-                            }
+                        Button {
+                            showsActionSheet = true
                         } label: {
-                            Label {
-                                Text("Theme: \(manager.theme.description)")
-                            } icon: {
-                                Image(systemName: "slider.horizontal.3")
-                            }
-                            .foregroundStyle(theme.colors.textColorPrimary)
+                            Image(systemName: "slider.horizontal.3")
+                        }
+
+                        .foregroundStyle(theme.colors.textColorPrimary)
+                    }
+                }
+                .confirmationDialog("Pick a theme", isPresented: $showsActionSheet, titleVisibility: .visible) {
+                    @Bindable var manager = manager
+                    ForEach(SettingsManager.ThemeSetting.allCases, id: \.description) { setting in
+                        Button {
+                            manager.theme = setting
+                        } label: {
+                            Text(setting.description)
                         }
                     }
                 }

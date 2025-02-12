@@ -25,10 +25,11 @@ struct AccountsButton: View {
             } icon: {
                 icon.fitAndTemplated
                     .foregroundStyle(isFocused ? theme.colors.primary : theme.colors.textColorPrimary)
+                    .scaleEffect(isFocused ? 1.2 : 1.0)
             }
         }
+        .animation(.default.speed(3.0), value: isFocused)
         .buttonStyle(.actionButton)
-        .focusable()
         .focused($isFocused, equals: true)
         #if os(macOS)
             .focusEffectDisabled()
