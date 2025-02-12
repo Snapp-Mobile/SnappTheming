@@ -80,6 +80,14 @@
 
                 @Code(name: "ThemeDeclarationView.swift", file: 01-01-02-code-002.swift)
             }
+
+            @Step {
+                With everything configured, we can create a simple UI styled with our theme. We will add a few `VStack`s containing `Text` elements (named according to the typographies we will use) and a `Button` featuring an `SFSymbols` icon.
+
+                @Code(name: "ThemeDeclarationView.swift", file: 01-01-02-code-003.swift) {
+                    @Image(source: preview-01-01-02-code-003.png)
+                }
+            }
         }
     }
 
