@@ -74,6 +74,12 @@
 
                 @Code(name: "ThemeDeclarationView.swift", file: 01-01-02-code-001.swift)
             }
+
+            @Step {
+                Now we need to add a `theme` property to hold the [SnappThemingDeclaration](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingdeclaration). We will use `.light` theme in our `Preview`.
+
+                @Code(name: "ThemeDeclarationView.swift", file: 01-01-02-code-002.swift)
+            }
         }
     }
 

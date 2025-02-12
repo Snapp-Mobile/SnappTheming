@@ -12,7 +12,7 @@ struct ContentView: View {
     let theme: SnappThemingDeclaration = .light
 
     var body: some View {
-        ThemeDeclarationView()
+        ThemeDeclarationView(theme: theme)
     }
 }
 
