@@ -41,10 +41,10 @@ struct SettingsView: View {
                 NavigationLink("Tokens", value: SettingsDestination.tokens)
             }
         }
-        .background(theme.colors.surfacePrimary)
-        .foregroundStyle(theme.colors.textColorPrimary)
         .navigationTitle("Settings")
         #if os(iOS) || targetEnvironment(macCatalyst)
+            .background(theme.colors.surfacePrimary)
+            .foregroundStyle(theme.colors.textColorPrimary)
             .navigationBarTitleDisplayMode(.inline)
         #endif
 
