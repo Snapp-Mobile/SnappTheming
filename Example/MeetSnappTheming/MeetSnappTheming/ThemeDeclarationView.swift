@@ -16,7 +16,9 @@ struct ThemeDeclarationView: View {
             VStack {
                 Group {
                     Text("Large Title")
+                        .font(theme.typography.largeTitle)
                     Text("Title")
+                        .font(theme.typography.title)
                 }
                 .foregroundStyle(theme.colors.textPrimary)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -28,17 +30,22 @@ struct ThemeDeclarationView: View {
                 Group {
                     Text("Headline")
                         .foregroundStyle(theme.colors.textPrimary)
+                        .font(theme.typography.headline)
                     Text("Subheadline")
                         .foregroundStyle(theme.colors.textSecondary)
+                        .font(theme.typography.subheadline)
                     Text("Body")
                         .foregroundStyle(theme.colors.textPrimary)
+                        .font(theme.typography.body)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
 
                 Spacer()
 
-                Button {} label: {
+                Button {
+                } label: {
                     Label("Button", systemImage: "pencil.and.ruler.fill")
+                        .font(theme.typography.body)
                 }
             }
             .padding()

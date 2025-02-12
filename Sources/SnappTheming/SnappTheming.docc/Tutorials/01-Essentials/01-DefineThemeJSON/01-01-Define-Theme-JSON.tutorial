@@ -99,6 +99,14 @@
                     @Image(source: preview-01-01-02-code-004.png)
                 }
             }
+
+            @Step {
+                Finally, we can set the fonts for our `Text` elements using the typographies defined in the theme.
+
+                @Code(name: "ThemeDeclarationView.swift", file: 01-01-02-code-005.swift) {
+                    @Image(source: preview-01-01-02-code-005.png)
+                }
+            }
         }
     }
 

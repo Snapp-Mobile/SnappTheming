@@ -30,7 +30,8 @@ struct ThemeDeclarationView: View {
 
                 Spacer()
 
-                Button {} label: {
+                Button {
+                } label: {
                     Label("Button", systemImage: "pencil.and.ruler.fill")
                 }
             }
