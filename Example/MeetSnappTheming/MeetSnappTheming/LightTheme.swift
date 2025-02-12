@@ -3,11 +3,11 @@ import SnappTheming
 private let json = """
     {
         "colors": {
-            "primary": "#FF0000",
+            "primary": "#452BE9",
             "textPrimary": "#000",
-            "textSecondary": "#CCC",
+            "textSecondary": "#8E8E93",
             "surfacePrimary": "#FFF",
-            "surfaceSecondary": "#EEE"
+            "surfaceSecondary": "#D1D1D6"
         },
         "fonts": {
             "Doto-Regular": {

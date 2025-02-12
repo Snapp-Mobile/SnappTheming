@@ -88,6 +88,17 @@
                     @Image(source: preview-01-01-02-code-003.png)
                 }
             }
+
+            @Step {
+                It’s time to style our UI using the theme. We will utilize `@dynamicMemberLookup` subscripts provided by [SnappThemingDeclarations](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingdeclarations) to retrieve the necessary information from the theme. 
+                Let's begin with colors by setting different surface colors for `VStack`s and various text colors for `Text` elements. We used a 
+
+                > Note: You can find all available subscripts in the [documentation](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingdeclarations#Subscripts)
+
+                @Code(name: "ThemeDeclarationView.swift", file: 01-01-02-code-004.swift) {
+                    @Image(source: preview-01-01-02-code-004.png)
+                }
+            }
         }
     }
 
