@@ -49,5 +49,14 @@ private let json = """
     """
 
 extension SnappThemingDeclaration {
-    static let light = try! SnappThemingParser.parse(from: json)
+    static let light: Self = {
+        let configuration = SnappThemingParserConfiguration(themeName: "Light")
+        let declaration = try! SnappThemingParser.parse(from: json, using: configuration)
+        let fontManager = SnappThemingFontManagerDefault(
+            themeCacheRootURL: configuration.themeCacheRootURL,
+            themeName: configuration.themeName
+        )
+        fontManager.registerFonts(declaration.fontInformation)
+        return declaration
+    }()
 }

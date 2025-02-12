@@ -53,6 +53,14 @@
                @Code(name: "LightTheme.swift", file: 01-01-01-code-006.swift)
            }
 
+           @Step {
+               In order to inform the system about our custom fonts, we need to register them. Let's update the theme initialization and configure the font registration.
+
+               > Note: In addition to registration, you may also need to deregister fonts if you no longer wish to use them (e.g., when switching between different themes). Learn more about the font registration process in the [documentation](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingfontdeclarations).
+
+               @Code(name: "LightTheme.swift", file: 01-01-01-code-007.swift)
+           }
+
         }
     }
 }
