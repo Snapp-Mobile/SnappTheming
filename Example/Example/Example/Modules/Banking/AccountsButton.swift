@@ -28,7 +28,6 @@ struct AccountsButton: View {
             }
         }
         .buttonStyle(.actionButton)
-        .focusable()
         .focused($isFocused, equals: true)
         #if os(macOS)
             .focusEffectDisabled()
