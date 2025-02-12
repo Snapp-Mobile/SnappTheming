@@ -11,6 +11,11 @@ import SwiftUI
 struct AccountsView: View {
     @Environment(Theme.self) private var theme
     @Environment(SettingsManager.self) private var manager
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
+    private var isCompact: Bool {
+        horizontalSizeClass == .compact
+    }
 
     #if os(watchOS)
         @State var showDialog: Bool = false
@@ -54,9 +59,9 @@ struct AccountsView: View {
         #else
             #if os(tvOS) || os(visionOS)
                 .padding([.horizontal, .top], theme.metrics.medium)
-                .frame(maxWidth: 400)
             #endif
         #endif
+        .frame(maxWidth: isCompact ? .infinity : 400)
 
         TransactionsView()
     }
@@ -84,7 +89,11 @@ struct AccountsView: View {
                     #endif
                 }
             }
+            .scrollBounceBehavior(.basedOnSize)
             .tint(theme.colors.primary)
+            #if !os(tvOS) && !os(visionOS)
+                .background(theme.colors.surfacePrimary)
+            #endif
             .navigationTitle("My accounts")
             #if os(iOS) || targetEnvironment(macCatalyst)
                 .navigationBarTitleDisplayMode(.inline)
