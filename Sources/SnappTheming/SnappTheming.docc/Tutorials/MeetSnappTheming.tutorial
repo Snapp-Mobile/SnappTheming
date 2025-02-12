@@ -6,8 +6,8 @@
     }
 
     @Chapter(name: "Essentials") {
-        // TODO: Provide image
-        // @Image(source: "tutorial-01-01-chapter.png")
+        @Image(source: "chapter-essentials.png")
+        Create your first theme and integrate it with SwiftUI.
         @TutorialReference(tutorial: "doc:01-01-Define-Theme-JSON")
     }
 
