@@ -60,7 +60,21 @@
 
                @Code(name: "LightTheme.swift", file: 01-01-01-code-007.swift)
            }
-
         }
     }
+
+    @Section(title: "Integrating with SwiftUI") {
+        @ContentAndMedia {
+            Now that we have a simple theme built and parsed, we need to determine how to power a SwiftUI view with that theme.
+        }
+
+        @Steps {
+            @Step {
+                Let's create a SwiftUI view called `ThemeDeclarationView` and import `SwiftUI` and `SnappTheming`. We will use this view to build a simple layout and style it with our `light` theme.
+
+                @Code(name: "ThemeDeclarationView.swift", file: 01-01-02-code-001.swift)
+            }
+        }
+    }
+
 }
