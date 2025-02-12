@@ -11,6 +11,11 @@ import SwiftUI
 
 struct CreditCardView: View {
     @Environment(Theme.self) private var theme
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
+    private var isCompact: Bool {
+        horizontalSizeClass == .compact
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: theme.metrics.medium) {
@@ -26,18 +31,16 @@ struct CreditCardView: View {
         #else
             .padding(theme.metrics.small)
         #endif
-        #if os(tvOS) || os(macOS) || os(visionOS)
-            .frame(maxWidth: 345, maxHeight: 190)
-        #else
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-        #endif
+        .frame(
+            maxWidth: isCompact ? .infinity : 345,
+            maxHeight: isCompact ? .infinity : 190
+        )
         .background(theme.gradients.creditCardSurface)
         .clipShape(theme.shapes.creditCard)
-        #if os(tvOS) || os(macOS) || os(visionOS)
-            .frame(maxWidth: 385)
-        #else
-            .frame(maxWidth: .infinity)
-        #endif
+        .frame(
+            maxWidth: isCompact ? .infinity : 385,
+            maxHeight: isCompact ? .infinity : 230
+        )
         .aspectRatio(theme.metrics.creditCardAspectRatio, contentMode: .fill)
         .shadow(
             color: theme.colors.shadow,

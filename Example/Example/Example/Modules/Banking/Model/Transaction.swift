@@ -21,12 +21,10 @@ struct Transaction: Identifiable {
         static let netflix = Self(name: "Netflix", image: "netflix_logo")
         static let lidl = Self(name: "Lidl", image: "lidl_logo")
         static let apple = Self(name: "Apple", image: "apple_logo")
-        #if os(tvOS) || os(macOS) || os(visionOS)
-            static let mark = Self(name: "Mark S.", image: "mark_avatar")
-            static let helly = Self(name: "Helly R.", image: "helly_avatar")
-            static let irving = Self(name: "Irving B.", image: "irving_avatar")
-            static let dylan = Self(name: "Dylan J.", image: "dylan_avatar")
-        #endif
+        static let mark = Self(name: "Mark S.", image: "mark_avatar")
+        static let helly = Self(name: "Helly R.", image: "helly_avatar")
+        static let irving = Self(name: "Irving B.", image: "irving_avatar")
+        static let dylan = Self(name: "Dylan J.", image: "dylan_avatar")
 
         let name: String
         let image: String
@@ -41,49 +39,49 @@ struct Transaction: Identifiable {
 
 extension Transaction: CaseIterable {
     #if os(tvOS) || os(macOS) || os(visionOS)
-        static var allCases: [Transaction] = [
-            .init(
-                amount: -9.99, category: .entertainment, identity: .netflix,
-                date: .init(timeIntervalSinceNow: -24 * 60 * 60)),
-            .init(
-                amount: 999.99, category: .cardTransfer, identity: .timCook,
-                date: .init(timeIntervalSinceNow: -2 * 24 * 60 * 60)),
-            .init(
-                amount: -125.12, category: .groceries, identity: .lidl,
-                date: .init(timeIntervalSinceNow: -2 * 24 * 60 * 60 - 2 * 60 * 60)),
-            .init(
-                amount: -5.99, category: .subscriptions, identity: .apple,
-                date: .init(timeIntervalSinceNow: -7 * 24 * 60 * 60)),
-            .init(
-                amount: 0.99, category: .cardTransfer, identity: .mark,
-                date: .init(timeIntervalSinceNow: -4 * 24 * 60 * 60)),
-            .init(
-                amount: 434.00, category: .cardTransfer, identity: .dylan,
-                date: .init(timeIntervalSinceNow: -5 * 24 * 60 * 60)),
-            .init(
-                amount: 661.44, category: .cardTransfer, identity: .irving,
-                date: .init(timeIntervalSinceNow: -6 * 24 * 60 * 60)),
-            .init(
-                amount: 239.11, category: .cardTransfer, identity: .helly,
-                date: .init(timeIntervalSinceNow: -8 * 24 * 60 * 60)),
-            .init(
-                amount: -15.42, category: .groceries, identity: .lidl,
-                date: .init(timeIntervalSinceNow: -3 * 24 * 60 * 60 - 2 * 60 * 60)),
-        ]
+        static var allCases: [Transaction] = extended
     #else
-        static var allCases: [Transaction] = [
-            .init(
-                amount: -9.99, category: .entertainment, identity: .netflix,
-                date: .init(timeIntervalSinceNow: -24 * 60 * 60)),
-            .init(
-                amount: 999.99, category: .cardTransfer, identity: .timCook,
-                date: .init(timeIntervalSinceNow: -2 * 24 * 60 * 60)),
-            .init(
-                amount: -125.12, category: .groceries, identity: .lidl,
-                date: .init(timeIntervalSinceNow: -2 * 24 * 60 * 60 - 2 * 60 * 60)),
-            .init(
-                amount: -5.99, category: .subscriptions, identity: .apple,
-                date: .init(timeIntervalSinceNow: -7 * 24 * 60 * 60)),
-        ]
+        static var allCases: [Transaction] {
+            #if os(iOS)
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    return extended
+                }
+            #endif
+            return base
+        }
     #endif
+    static private var extended: [Transaction] = base + additional
+
+    static private var base: [Transaction] = [
+        Transaction(
+            amount: -9.99, category: .entertainment, identity: .netflix,
+            date: .init(timeIntervalSinceNow: -24 * 60 * 60)),
+        Transaction(
+            amount: 999.99, category: .cardTransfer, identity: .timCook,
+            date: .init(timeIntervalSinceNow: -2 * 24 * 60 * 60)),
+        Transaction(
+            amount: -125.12, category: .groceries, identity: .lidl,
+            date: .init(timeIntervalSinceNow: -2 * 24 * 60 * 60 - 2 * 60 * 60)),
+        Transaction(
+            amount: -5.99, category: .subscriptions, identity: .apple,
+            date: .init(timeIntervalSinceNow: -7 * 24 * 60 * 60)),
+    ]
+
+    static private var additional: [Transaction] = [
+        Transaction(
+            amount: 0.99, category: .cardTransfer, identity: .mark,
+            date: .init(timeIntervalSinceNow: -4 * 24 * 60 * 60)),
+        Transaction(
+            amount: 434.00, category: .cardTransfer, identity: .dylan,
+            date: .init(timeIntervalSinceNow: -5 * 24 * 60 * 60)),
+        Transaction(
+            amount: 661.44, category: .cardTransfer, identity: .irving,
+            date: .init(timeIntervalSinceNow: -6 * 24 * 60 * 60)),
+        Transaction(
+            amount: 239.11, category: .cardTransfer, identity: .helly,
+            date: .init(timeIntervalSinceNow: -8 * 24 * 60 * 60)),
+        Transaction(
+            amount: -15.42, category: .groceries, identity: .lidl,
+            date: .init(timeIntervalSinceNow: -3 * 24 * 60 * 60 - 2 * 60 * 60)),
+    ]
 }
