@@ -104,17 +104,16 @@ struct SettingsView: View {
                         } label: {
                             Image(systemName: "slider.horizontal.3")
                         }
-
                         .foregroundStyle(theme.colors.textColorPrimary)
-                    }
-                }
-                .confirmationDialog("Pick a theme", isPresented: $showsActionSheet, titleVisibility: .visible) {
-                    @Bindable var manager = manager
-                    ForEach(SettingsManager.ThemeSetting.allCases, id: \.description) { setting in
-                        Button {
-                            manager.theme = setting
-                        } label: {
-                            Text(setting.description)
+                        .confirmationDialog("Pick a theme", isPresented: $showsActionSheet, titleVisibility: .visible) {
+                            @Bindable var manager = manager
+                            ForEach(SettingsManager.ThemeSetting.allCases, id: \.description) { setting in
+                                Button {
+                                    manager.theme = setting
+                                } label: {
+                                    Text(setting.description)
+                                }
+                            }
                         }
                     }
                 }
