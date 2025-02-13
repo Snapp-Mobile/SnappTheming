@@ -22,7 +22,9 @@ private struct ThemedModifier: ViewModifier {
             .environment(settingsManager)
             .environment(theme)
             .onChange(of: settingsManager.themeSource, initial: true) { (_, newThemeSource) in
-                theme.source = newThemeSource
+                if theme.source != newThemeSource {
+                    theme.source = newThemeSource
+                }
             }
             .onChange(of: colorSchema, initial: true) { (_, newColorSchema) in
                 settingsManager.currentColorScheme = newColorSchema
