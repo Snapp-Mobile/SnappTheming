@@ -9,10 +9,8 @@ import SnappTheming
 import SwiftUI
 
 struct ContentView: View {
-    let theme: SnappThemingDeclaration = .light
-
     var body: some View {
-        ThemeDeclarationView(theme: theme)
+        ThemeDeclarationView()
     }
 }
 

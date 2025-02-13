@@ -1,10 +1,3 @@
-//
-//  ThemeDeclarationView.swift
-//  MeetSnappTheming
-//
-//  Created by Volodymyr Voiko on 12.02.2025.
-//
-
 import SnappTheming
 import SwiftUI
 
@@ -49,7 +42,6 @@ struct ThemeDeclarationView: View {
                         }
                     } label: {
                         Label("Light Theme", systemImage: "lightbulb.fill")
-                            .font(theme.typography.body)
                     }
 
                     Button {
@@ -58,9 +50,9 @@ struct ThemeDeclarationView: View {
                         }
                     } label: {
                         Label("Dark Theme", systemImage: "lightbulb")
-                            .font(theme.typography.body)
                     }
                 }
+                .font(theme.typography.body)
             }
             .padding()
             .background(theme.colors.surfacePrimary)

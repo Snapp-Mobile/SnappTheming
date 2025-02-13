@@ -1,42 +1,40 @@
 @Tutorial(time: 20) {
     @Intro(title: "Manage Multiple Themes") {
-        // TODO: Write tutorial summary.
-        
-        // TODO: Add Intro Image
-        // @Image(source: file)
+        In this tutorial, we will explore how to manage multiple themes in your SwiftUI application. Building on the foundational knowledge from our previous tutorial, we'll create a Dark version of our theme to enhance the user experience, especially in low-light environments.
+
+        You will learn to duplicate an existing theme and modify it to fit the Dark theme criteria. Additionally, we'll implement a simple theme switching functionality that allows users to toggle between the Light and Dark themes seamlessly.
+
+        By the end of this tutorial, you'll have a solid understanding of how to create and manage themes effectively, improving the overall usability and aesthetics of your application. Let's get started!
     }
     
     @Section(title: "Create a Dark Theme") {
         @ContentAndMedia {
-            In the first tutorial, we learned how to define a theme and how to integrate it with SwiftUI. Here we will make a Dark version of our theme.
+            In the previous tutorial, we learned how to define a theme and integrate it with SwiftUI. In this tutorial, we will create a Dark version of our theme to enhance the user experience in low-light environments.
             
-            Use the completed project from the previous tutorial and the resources available from this tutorial’s project files to get started.
-            
-            // TODO: Add Section image
-            // @Image(source: file)
+            To get started, use the completed project from the previous tutorial along with the resources provided in this tutorial’s project files. This will ensure you have a solid foundation for building your Dark theme.
         }
         
         @Steps {
             @Step {
-                Let's copy `LightTheme.swift` and call it `DarkTheme`. 
+                First, let's duplicate `LightTheme.swift` and rename the copy to `DarkTheme.swift`.
                 
                 @Code(name: "DarkTheme.swift", file: 01-02-01-code-001.swift)
             }
             
             @Step {
-                Xcode will complain about the redeclaration so we need to rename properies as well. Lets do that!
+                Xcode will raise a redeclaration error, so we need to rename the properties accordingly. Let's proceed with that!
                 
                 @Image(source: image-01-02-01.png)
             }
 
             @Step {
-                Rename `light` to `dark` and provide "Dark" as `themeName` in the `SnappThemingParserConfiguration` for its identity.
+                Change the property name `light` to `dark` and set `"Dark"` as the `themeName` in the `SnappThemingParserConfiguration` for its identity.
                 
                 @Code(name: "DarkTheme.swift", file: 01-02-01-code-002.swift)
             }
 
             @Step {
-                Now we need to change colors. We will invert primary colors for text and surface and adjust secondary for the Dark theme.
+                Next, we need to modify the colors. We will invert the primary colors for text and surfaces, and adjust the secondary colors to fit the Dark theme.
 
                 @Code(name: "DarkTheme.swift", file: 01-02-01-code-003.swift) {
                     @Image(source: preview-01-02-01-code-003.png)
@@ -44,4 +42,33 @@
             }
         }
     }
+
+    @Section(title: "Switch Between Themes") {
+        @ContentAndMedia {
+            Now that we have multiple themes available, we can implement theme switching functionality in our UI. In this section, we will introduce a simple theme management system that allows users to toggle between the Light and Dark themes seamlessly.
+        }
+
+        @Steps {
+            @Step {
+                First, we need to make the `theme` property modifiable. Let's change it to a `var` and annotate it with the `@State` property wrapper, assigning `light` as the initial value.
+
+                @Code(name: "ThemeDeclarationView.swift", file: 01-02-02-code-001.swift)
+            }
+
+            @Step {
+                Next, we'll update the layout by replacing the existing button with two buttons: one for the Light theme and one for the Dark theme.
+
+                @Code(name: "ThemeDeclarationView.swift", file: 01-02-02-code-002.swift)
+            }
+
+            @Step {
+                Finally, we will add actions to the buttons to update the `theme` value appropriately for `.light` and `.dark`. Additionally, we can wrap these actions in `withAnimation` for a smoother transition experience.
+
+                @Code(name: "ThemeDeclarationView.swift", file: 01-02-02-code-003.swift) {
+                    @Video(source: "preview-01-02-02-code-003.mp4", poster: "preview-frame-01-02-02-code-003.png")
+                }
+            }
+        }
+    }
+
 }
