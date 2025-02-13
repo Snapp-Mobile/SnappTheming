@@ -15,7 +15,7 @@ private struct ThemedModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .environment(\.colorScheme, settingsManager.themeSource.colorScheme)
-            #if os(tvOS) || os(macOS)
+            #if os(tvOS) || os(macOS) || os(visionOS)
                 .colorScheme(settingsManager.themeSource.colorScheme)
                 .preferredColorScheme(settingsManager.themeSource.colorScheme)
             #endif
