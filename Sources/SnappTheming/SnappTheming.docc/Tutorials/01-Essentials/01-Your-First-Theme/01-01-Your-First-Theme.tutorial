@@ -5,7 +5,7 @@
         We will begin by creating a light theme, detailing the necessary steps from defining properties in JSON to registering fonts and integrating the theme with SwiftUI. Join us as we build a visually appealing and consistent design for your application!
     }
 
-    @Section(title: "Create a light theme") {
+    @Section(title: "Create a Light Theme") {
         @ContentAndMedia {
             In SnappTheming, a theme declaration forms the basis of your application's visual identity, defined through a JSON structure that includes colors, fonts, typographic styles, etc. Creating a light theme involves several essential steps, starting with setting up a Swift file for your theme and importing the SnappTheming framework.
 

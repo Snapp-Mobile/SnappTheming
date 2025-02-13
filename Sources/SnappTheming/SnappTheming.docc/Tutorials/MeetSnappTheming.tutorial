@@ -9,6 +9,7 @@
         @Image(source: "chapter-essentials.png")
         Create your first theme and integrate it with SwiftUI.
         @TutorialReference(tutorial: "doc:01-01-Your-First-Theme")
+        @TutorialReference(tutorial: "doc:01-02-Manage-Multiple-Themes")
     }
 
     @Resources {

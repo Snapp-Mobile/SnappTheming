@@ -1,0 +1,39 @@
+@Tutorial(time: 20) {
+    @Intro(title: "Manage Multiple Themes") {
+        // TODO: Write tutorial summary.
+        
+        // TODO: Add Intro Image
+        // @Image(source: file)
+    }
+    
+    @Section(title: "Create a Dark Theme") {
+        @ContentAndMedia {
+            In the first tutorial, we learned how to define a theme and how to integrate it with SwiftUI. Here we will make a Dark version of our theme.
+            
+            Use the completed project from the previous tutorial and the resources available from this tutorial’s project files to get started.
+            
+            // TODO: Add Section image
+            // @Image(source: file)
+        }
+        
+        @Steps {
+            @Step {
+                Let's copy `LightTheme.swift` and call it `DarkTheme`. 
+                
+                @Code(name: "DarkTheme.swift", file: 01-02-01-code-001.swift)
+            }
+            
+            @Step {
+                Xcode will complain about the redeclaration so we need to rename properies as well. Lets do that!
+                
+                @Image(source: image-01-02-01.png)
+            }
+
+            @Step {
+                Rename `light` to `dark` and provide "Dark" as `themeName` in the `SnappThemingParserConfiguration` for its identity.
+                
+                @Code(name: "DarkTheme.swift", file: 01-02-01-code-002.swift)
+            }
+        }
+    }
+}
