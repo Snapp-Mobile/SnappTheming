@@ -4,10 +4,10 @@ private let json = """
     {
         "colors": {
             "primary": "#452BE9",
-            "textPrimary": "#000",
-            "textSecondary": "#8E8E93",
-            "surfacePrimary": "#FFF",
-            "surfaceSecondary": "#D1D1D6"
+            "textPrimary": "#FFF",
+            "textSecondary": "#EBEBF5",
+            "surfacePrimary": "#000",
+            "surfaceSecondary": "#3A3A3C"
         },
         "fonts": {
             "Doto-Regular": {

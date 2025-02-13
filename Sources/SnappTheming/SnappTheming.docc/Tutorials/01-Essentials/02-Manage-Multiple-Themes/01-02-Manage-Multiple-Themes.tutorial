@@ -34,6 +34,14 @@
                 
                 @Code(name: "DarkTheme.swift", file: 01-02-01-code-002.swift)
             }
+
+            @Step {
+                Now we need to change colors. We will invert primary colors for text and surface and adjust secondary for the Dark theme.
+
+                @Code(name: "DarkTheme.swift", file: 01-02-01-code-003.swift) {
+                    @Image(source: preview-01-02-01-code-003.png)
+                }
+            }
         }
     }
 }
