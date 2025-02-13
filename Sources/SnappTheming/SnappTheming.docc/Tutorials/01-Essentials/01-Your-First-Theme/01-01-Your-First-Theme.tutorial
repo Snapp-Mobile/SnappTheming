@@ -1,11 +1,21 @@
 @Tutorial(time: 20) {
     @Intro(title: "Your first theme") {
-        Learn how to build a valid theme JSON, which types are supported and how to define them
+        In this tutorial, you will learn how to create and integrate your first theme using SnappTheming with SwiftUI. We will cover the essentials of building a valid theme JSON, exploring supported types, and defining them effectively. By the end of this tutorial, you will have a light theme with custom colors, fonts, and typography, and you will know how to apply it to a SwiftUI view.
+
+        We will begin by creating a light theme, detailing the necessary steps from defining properties in JSON to registering fonts and integrating the theme with SwiftUI. Join us as we build a visually appealing and consistent design for your application!
     }
 
     @Section(title: "Create a light theme") {
         @ContentAndMedia {
-            Theme declartion is a JSON that holds properties for various foundation types. You can read more about supported types in [JSON Schema](https://ios-theming.snappmobile.io/documentation/snapptheming/jsonschema) article. 
+            In SnappTheming, a theme declaration forms the basis of your application's visual identity, defined through a JSON structure that includes colors, fonts, typographic styles, etc. Creating a light theme involves several essential steps, starting with setting up a Swift file for your theme and importing the SnappTheming framework.
+
+            You will then define an empty JSON object to serve as the foundation of your theme declaration. Next, extend the SnappThemingDeclaration class with a static property for your light theme, utilizing the SnappThemingParser to parse the JSON.
+
+            As you define the visual components, you’ll specify the colors as child properties of the colors property and add custom fonts—such as the elegant Doto font—ensuring they are properly encoded.
+
+            Finally, you will include typography declarations to establish text styles within your theme.
+
+            To learn more about the available types and how to use them, refer to the JSON Schema article.
         }
 
         @Steps {
