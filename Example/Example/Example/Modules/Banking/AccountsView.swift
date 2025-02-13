@@ -139,17 +139,17 @@ extension SettingsManager {
 }
 
 #Preview("Light") {
+    let manager: SettingsManager = .init(storage: .preview(.light), fallbackColorSchema: .light)
     NavigationStack {
         AccountsView()
     }
-    .themed()
-    .environment(\.settingsStorage, .preview(.light))
+    .themed(with: manager, theme: .constant(.init(manager.themeSource)))
 }
 
 #Preview("Dark") {
+    let manager: SettingsManager = .init(storage: .preview(.dark), fallbackColorSchema: .dark)
     NavigationStack {
         AccountsView()
     }
-    .themed()
-    .environment(\.settingsStorage, .preview(.dark))
+    .themed(with: manager, theme: .constant(.init(manager.themeSource)))
 }

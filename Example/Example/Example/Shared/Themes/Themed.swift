@@ -8,32 +8,29 @@
 import SwiftUI
 
 private struct ThemedModifier: ViewModifier {
-    @Environment(\.colorScheme) var colorSchema
-    @Environment(\.settingsStorage) var storage
+    @Environment(\.colorScheme) var appColorScheme
+    let settingsManager: SettingsManager
+    @Binding var theme: Theme
 
     func body(content: Content) -> some View {
-        let settingsManager = SettingsManager(storage: storage, fallbackColorSchema: colorSchema)
-        let theme = Theme(settingsManager.themeSource)
-
         content
             .environment(\.colorScheme, settingsManager.themeSource.colorScheme)
-            .colorScheme(settingsManager.themeSource.colorScheme)
-            .preferredColorScheme(settingsManager.themeSource.colorScheme)
-            .environment(settingsManager)
-            .environment(theme)
-            .onChange(of: settingsManager.themeSource, initial: true) { (_, newThemeSource) in
-                if theme.source != newThemeSource {
-                    theme.source = newThemeSource
-                }
+            #if os(tvOS) || os(macOS)
+                .colorScheme(settingsManager.themeSource.colorScheme)
+                .preferredColorScheme(settingsManager.themeSource.colorScheme)
+            #endif
+            .onChange(of: settingsManager.themeSource, initial: true) { _, newThemeSource in
+                theme.source = newThemeSource
+                settingsManager.currentColorScheme = newThemeSource.colorScheme
             }
-            .onChange(of: colorSchema, initial: true) { (_, newColorSchema) in
-                settingsManager.currentColorScheme = newColorSchema
+            .onChange(of: appColorScheme, initial: true) { _, newColorScheme in
+                settingsManager.currentColorScheme = newColorScheme
             }
     }
 }
 
 extension View {
-    func themed() -> some View {
-        modifier(ThemedModifier())
+    func themed(with settingsManager: SettingsManager, theme: Binding<Theme>) -> some View {
+        modifier(ThemedModifier(settingsManager: settingsManager, theme: theme))
     }
 }

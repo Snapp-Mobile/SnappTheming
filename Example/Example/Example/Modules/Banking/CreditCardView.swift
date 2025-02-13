@@ -53,22 +53,22 @@ struct CreditCardView: View {
 }
 
 #Preview("Light") {
+    let manager: SettingsManager = .init(storage: .preview(.light), fallbackColorSchema: .light)
     CreditCardView()
         .frame(width: 315, height: 174)
-        .themed()
-        .environment(\.settingsStorage, .preview(.light))
+        .themed(with: manager, theme: .constant(Theme(manager.themeSource)))
 }
 
 #Preview("Dark") {
+    let manager: SettingsManager = .init(storage: .preview(.dark), fallbackColorSchema: .dark)
     CreditCardView()
         .frame(width: 315, height: 174)
-        .themed()
-        .environment(\.settingsStorage, .preview(.dark))
+        .themed(with: manager, theme: .constant(Theme(manager.themeSource)))
 }
 
 #Preview("Colorful") {
+    let manager: SettingsManager = .init(storage: .preview(.colorful), fallbackColorSchema: .light)
     CreditCardView()
         .frame(width: 315, height: 174)
-        .themed()
-        .environment(\.settingsStorage, .preview(.colorful))
+        .themed(with: manager, theme: .constant(Theme(manager.themeSource)))
 }
