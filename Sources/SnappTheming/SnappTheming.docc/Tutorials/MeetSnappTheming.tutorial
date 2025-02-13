@@ -7,7 +7,9 @@
 
     @Chapter(name: "Essentials") {
         @Image(source: "chapter-essentials.png")
-        Create your first theme and integrate it with SwiftUI.
+
+        Explore the essentials of creating your first theme with SnappTheming in SwiftUI, defining colors and styles, and managing multiple themes for seamless user switching. Follow the tutorials for hands-on experience in theming your projects effectively.
+
         @TutorialReference(tutorial: "doc:01-01-Your-First-Theme")
         @TutorialReference(tutorial: "doc:01-02-Manage-Multiple-Themes")
     }
