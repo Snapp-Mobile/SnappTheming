@@ -63,21 +63,21 @@ struct TransactionItemView: View {
 }
 
 #Preview("Light") {
+    let manager: SettingsManager = .init(storage: .preview(.light), fallbackColorSchema: .light)
     VStack(spacing: 0) {
         ForEach(
             Transaction.allCases,
             content: TransactionItemView.init(transaction:))
     }
-    .themed()
-    .environment(\.settingsStorage, .preview(.light))
+    .themed(with: manager, theme: .constant(.init(manager.themeSource)))
 }
 
 #Preview("Dark") {
+    let manager: SettingsManager = .init(storage: .preview(.dark), fallbackColorSchema: .dark)
     VStack(spacing: 0) {
         ForEach(
             Transaction.allCases,
             content: TransactionItemView.init(transaction:))
     }
-    .themed()
-    .environment(\.settingsStorage, .preview(.light))
+    .themed(with: manager, theme: .constant(.init(manager.themeSource)))
 }

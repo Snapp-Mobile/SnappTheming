@@ -145,7 +145,7 @@ struct SettingsView: View {
 }
 
 #Preview {
+    let manager: SettingsManager = .init(storage: .preview(.light), fallbackColorSchema: .light)
     SettingsView(destination: .buttons)
-        .themed()
-        .environment(\.settingsStorage, .preview(.light))
+        .themed(with: manager, theme: .constant(.init(manager.themeSource)))
 }

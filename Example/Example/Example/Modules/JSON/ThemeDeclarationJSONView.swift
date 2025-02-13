@@ -24,10 +24,10 @@
     }
 
     #Preview {
+        let manager: SettingsManager = .init(storage: .preview(.default), fallbackColorSchema: .light)
         NavigationView {
             ThemeDeclarationJSONView()
-                .themed()
-                .environment(\.settingsStorage, .preview(.default))
+                .themed(with: manager, theme: .constant(.init(manager.themeSource)))
         }
     }
 #endif

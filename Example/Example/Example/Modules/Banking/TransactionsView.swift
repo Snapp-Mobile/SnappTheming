@@ -43,7 +43,7 @@ struct TransactionsView: View {
 }
 
 #Preview {
+    let manager: SettingsManager = .init(storage: .preview(.light), fallbackColorSchema: .light)
     TransactionsView()
-        .themed()
-        .environment(\.settingsStorage, .preview(.default))
+        .themed(with: manager, theme: .constant(.init(manager.themeSource)))
 }
