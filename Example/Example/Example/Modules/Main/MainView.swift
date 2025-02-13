@@ -56,10 +56,8 @@ struct MainView: View {
         }
         #if os(tvOS)
             .tabViewStyle(.sidebarAdaptable)
-            .preferredColorScheme(settingsManager.currentColorScheme)
         #endif
         .tint(theme.colors.primary)
-
     }
 
     @ViewBuilder

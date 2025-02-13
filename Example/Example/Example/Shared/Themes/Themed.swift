@@ -9,7 +9,7 @@ import SwiftUI
 
 private struct ThemedModifier: ViewModifier {
     @Environment(\.colorScheme) var appColorScheme
-    let settingsManager: SettingsManager
+    @Bindable var settingsManager: SettingsManager
     @Binding var theme: Theme
 
     func body(content: Content) -> some View {
