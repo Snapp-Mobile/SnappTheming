@@ -35,9 +35,10 @@ struct MainView: View {
     @State var selectedTab: Tab = .accounts
     @State var showsThemeSwitcher: Bool = false
 
-    @Environment(Theme.self) private var theme
+    @Environment(Theme.self) var theme
 
     var body: some View {
+        let _ = Self._printChanges()
         TabView(selection: $selectedTab) {
             ForEach(Tab.allCases) { tab in
                 tabContent(tab)
@@ -57,7 +58,6 @@ struct MainView: View {
             .tabViewStyle(.sidebarAdaptable)
         #endif
         .tint(theme.colors.primary)
-        .colorScheme(theme.source.colorScheme)
     }
 
     @ViewBuilder
@@ -72,19 +72,19 @@ struct MainView: View {
 }
 
 #Preview("Light") {
+    let manager: SettingsManager = .init(storage: .preview(.light), fallbackColorSchema: .light)
     MainView()
-        .themed()
-        .environment(\.settingsStorage, .preview(.light))
+        .themed(with: manager, theme: .constant(.init(manager.themeSource)))
 }
 
 #Preview("Dark") {
+    let manager: SettingsManager = .init(storage: .preview(.dark), fallbackColorSchema: .dark)
     MainView()
-        .themed()
-        .environment(\.settingsStorage, .preview(.dark))
+        .themed(with: manager, theme: .constant(.init(manager.themeSource)))
 }
 
 #Preview("Colorful") {
+    let manager: SettingsManager = .init(storage: .preview(.colorful), fallbackColorSchema: .light)
     MainView()
-        .themed()
-        .environment(\.settingsStorage, .preview(.colorful))
+        .themed(with: manager, theme: .constant(.init(manager.themeSource)))
 }

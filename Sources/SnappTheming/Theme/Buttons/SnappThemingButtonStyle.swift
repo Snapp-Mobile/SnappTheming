@@ -44,7 +44,7 @@ public struct SnappThemingButtonStyle: ButtonStyle {
     ///   - textColor: The color used for the button's text.
     ///   - borderColor: The color used for the button's border.
     ///   - borderWidth: The width of the button's border.
-    ///   - shape: The shape type to apply to the button's border (e.g., rounded corners).
+    ///   - shapeType: The shape type to apply to the button's border (e.g., rounded corners).
     ///   - font: The font to apply to the button's label.
     public init(
         surfaceColor: SnappThemingInteractiveColor,

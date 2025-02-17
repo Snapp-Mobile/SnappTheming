@@ -1,0 +1,123 @@
+@Tutorial(time: 20) {
+    @Intro(title: "Your first theme") {
+        In this tutorial, you will learn how to create and integrate your first theme using SnappTheming with SwiftUI. We will cover the essentials of building a valid theme JSON, exploring supported types, and defining them effectively. By the end of this tutorial, you will have a light theme with custom colors, fonts, and typography, and you will know how to apply it to a SwiftUI view.
+
+        We will begin by creating a light theme, detailing the necessary steps from defining properties in JSON to registering fonts and integrating the theme with SwiftUI. Join us as we build a visually appealing and consistent design for your application!
+    }
+
+    @Section(title: "Create a Light Theme") {
+        @ContentAndMedia {
+            In SnappTheming, a theme declaration forms the basis of your application's visual identity, defined through a JSON structure that includes colors, fonts, typographic styles, etc. Creating a light theme involves several essential steps, starting with setting up a Swift file for your theme and importing the SnappTheming framework.
+
+            You will then define an empty JSON object to serve as the foundation of your theme declaration. Next, extend the SnappThemingDeclaration class with a static property for your light theme, utilizing the SnappThemingParser to parse the JSON.
+
+            As you define the visual components, you’ll specify the colors as child properties of the colors property and add custom fonts—such as the elegant Doto font—ensuring they are properly encoded.
+
+            Finally, you will include typography declarations to establish text styles within your theme.
+
+            To learn more about the available types and how to use them, refer to the JSON Schema article.
+        }
+
+        @Steps {
+            @Step {
+                Create a new Swift file named LightTheme.swift and import the SnappTheming.
+
+                > Note: Before importing the library you will need to depend on it by [adding it to your 
+                        Xcode project settings or SPM package](https://github.com/Snapp-Mobile/SnappTheming).
+                @Code(name: "LightTheme.swift", file: 01-01-01-code-001.swift)
+            }
+
+            @Step {
+                Create a private [multiline string literal](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters/#Multiline-String-Literals) named `json` that represents an empty JSON object.
+                @Code(name: "LightTheme.swift", file: 01-01-01-code-002.swift)
+            }
+
+            @Step {
+                Create an extension on [SnappThemingDeclaration](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingdeclaration) that includes a static property named `light`, and parse a theme declaration using the [SnappThemingParser](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingparser).[parse(from:using:)](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingparser/parse(from:using:)).
+
+                > Tip: You can customize parsing by providing a [configuration](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingparserconfiguration).
+                @Code(name: "LightTheme.swift", file: 01-01-01-code-003.swift)
+            }
+
+            @Step {
+                Now, let's define a few colors that we want to use in our app. List them as child properties of the root-level `colors` property.
+                
+                > Tip: 
+                > The framework supports HEX-encoded RGB, RGBA, and ARGB notations. You can read more about color declarations in the [documentation](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingcolordeclarations).
+                
+                @Code(name: "LightTheme.swift", file: 01-01-01-code-004.swift)
+            }
+
+            @Step {
+                It is time to add more styling to our app. Let's define the custom fonts we want to use in our example. We will use the elegant [Doto](https://fonts.google.com/specimen/Doto) font from Google's Fonts library.
+
+                > Note: In order to use fonts in your theme JSON declaration, you need to encode them as `Base64` before using them.  
+                > Read more about how to prepare a valid font declaration in the [documentation](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingfontdeclarations).
+
+                @Code(name: "LightTheme.swift", file: 01-01-01-code-005.swift)
+            }
+           
+           @Step {
+               Since we have fonts in our theme, we will now add [typography declarations](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingtypographydeclarations) based on them. Let's add a `typography` property to our JSON root and include the typographies we want to use.
+
+               @Code(name: "LightTheme.swift", file: 01-01-01-code-006.swift)
+           }
+
+           @Step {
+               In order to inform the system about our custom fonts, we need to register them. Let's update the theme initialization and configure the font registration.
+
+               > Note: In addition to registration, you may also need to deregister fonts if you no longer wish to use them (e.g., when switching between different themes). Learn more about the font registration process in the [documentation](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingfontdeclarations).
+
+               @Code(name: "LightTheme.swift", file: 01-01-01-code-007.swift)
+           }
+        }
+    }
+
+    @Section(title: "Integrating with SwiftUI") {
+        @ContentAndMedia {
+            Now that we have a simple theme built and parsed, we need to determine how to power a SwiftUI view with that theme.
+        }
+
+        @Steps {
+            @Step {
+                Let's create a SwiftUI view called `ThemeDeclarationView` and import `SwiftUI` and `SnappTheming`. We will use this view to build a simple layout and style it with our `light` theme.
+
+                @Code(name: "ThemeDeclarationView.swift", file: 01-01-02-code-001.swift)
+            }
+
+            @Step {
+                Now we need to add a `theme` property to hold the [SnappThemingDeclaration](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingdeclaration). We will use `.light` theme in our `Preview`.
+
+                @Code(name: "ThemeDeclarationView.swift", file: 01-01-02-code-002.swift)
+            }
+
+            @Step {
+                With everything configured, we can create a simple UI styled with our theme. We will add a few `VStack`s containing `Text` elements (named according to the typographies we will use) and a `Button` featuring an `SFSymbols` icon.
+
+                @Code(name: "ThemeDeclarationView.swift", file: 01-01-02-code-003.swift) {
+                    @Image(source: preview-01-01-02-code-003.png)
+                }
+            }
+
+            @Step {
+                It’s time to style our UI using the theme. We will utilize `@dynamicMemberLookup` subscripts provided by [SnappThemingDeclarations](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingdeclarations) to retrieve the necessary information from the theme. 
+                Let's begin with colors by setting different surface colors for `VStack`s and various text colors for `Text` elements. We used a 
+
+                > Note: You can find all available subscripts in the [documentation](https://ios-theming.snappmobile.io/documentation/snapptheming/snappthemingdeclarations#Subscripts)
+
+                @Code(name: "ThemeDeclarationView.swift", file: 01-01-02-code-004.swift) {
+                    @Image(source: preview-01-01-02-code-004.png)
+                }
+            }
+
+            @Step {
+                Finally, we can set the fonts for our `Text` elements using the typographies defined in the theme.
+
+                @Code(name: "ThemeDeclarationView.swift", file: 01-01-02-code-005.swift) {
+                    @Image(source: preview-01-01-02-code-005.png)
+                }
+            }
+        }
+    }
+
+}

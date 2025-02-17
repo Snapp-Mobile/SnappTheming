@@ -15,6 +15,7 @@ struct SettingsView: View {
     @Environment(SettingsManager.self) private var manager
     @Environment(Theme.self) private var theme
     @State private var path = NavigationPath()
+    @State private var showsActionSheet = false
     @State var destination: ThemeDestination?
     @State var settingsDestination: SettingsDestination?
     @State var columnVisibility: NavigationSplitViewVisibility = .all
@@ -41,10 +42,10 @@ struct SettingsView: View {
                 NavigationLink("Tokens", value: SettingsDestination.tokens)
             }
         }
-        .background(theme.colors.surfacePrimary)
-        .foregroundStyle(theme.colors.textColorPrimary)
         .navigationTitle("Settings")
         #if os(iOS) || targetEnvironment(macCatalyst)
+            .background(theme.colors.surfacePrimary)
+            .foregroundStyle(theme.colors.textColorPrimary)
             .navigationBarTitleDisplayMode(.inline)
         #endif
 
@@ -98,8 +99,14 @@ struct SettingsView: View {
                 .navigationBarBackButtonHidden(false)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
-                        @Bindable var manager = manager
-                        Menu {
+                        Button {
+                            showsActionSheet = true
+                        } label: {
+                            Image(systemName: "slider.horizontal.3")
+                        }
+                        .foregroundStyle(theme.colors.textColorPrimary)
+                        .confirmationDialog("Pick a theme", isPresented: $showsActionSheet, titleVisibility: .visible) {
+                            @Bindable var manager = manager
                             ForEach(SettingsManager.ThemeSetting.allCases, id: \.description) { setting in
                                 Button {
                                     manager.theme = setting
@@ -107,13 +114,6 @@ struct SettingsView: View {
                                     Text(setting.description)
                                 }
                             }
-                        } label: {
-                            Label {
-                                Text("Theme: \(manager.theme.description)")
-                            } icon: {
-                                Image(systemName: "slider.horizontal.3")
-                            }
-                            .foregroundStyle(theme.colors.textColorPrimary)
                         }
                     }
                 }
@@ -145,7 +145,7 @@ struct SettingsView: View {
 }
 
 #Preview {
+    let manager: SettingsManager = .init(storage: .preview(.light), fallbackColorSchema: .light)
     SettingsView(destination: .buttons)
-        .themed()
-        .environment(\.settingsStorage, .preview(.light))
+        .themed(with: manager, theme: .constant(.init(manager.themeSource)))
 }

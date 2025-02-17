@@ -1,0 +1,32 @@
+@Tutorials(name: "SnappTheming") {
+    @Intro(title: "Meet the SnappTheming framework") {
+        SnappTheming is a Swift framework designed to streamline the process of integrating dynamic design themes into iOS applications. By leveraging JSON declarations, the framework allows developers to easily extract and apply various theming elements such as colors, fonts, gradients, and shape styles, directly into their app’s user interface.
+
+        @Image(source: "meet-snapp-themeing-intro.png")
+    }
+
+    @Chapter(name: "Essentials") {
+        @Image(source: "chapter-essentials.png")
+
+        Explore the essentials of creating your first theme with SnappTheming in SwiftUI, defining colors and styles, and managing multiple themes for seamless user switching. Follow the tutorials for hands-on experience in theming your projects effectively.
+
+        @TutorialReference(tutorial: "doc:01-01-Your-First-Theme")
+        @TutorialReference(tutorial: "doc:01-02-Manage-Multiple-Themes")
+    }
+
+    @Resources {
+        Explore additional resources to deepen your understanding of SnappTheming and learn how to effectively implement theming in your applications.
+
+        @SampleCode(destination: "https://github.com/Snapp-Mobile/SnappTheming/tree/main/Example") {
+            Download and explore Emaple project to get to know SnappTheming.
+
+            - [Example app](https://github.com/Snapp-Mobile/SnappTheming/tree/main/Example/Example)
+            - [MeetSnappThemeing app](https://github.com/Snapp-Mobile/SnappTheming/tree/main/Example/Example)
+        }
+
+        @Documentation(destination: "https://ios-theming.snappmobile.io/documentation/snapptheming/") {
+            Browse and search SnappTheming documentation.
+            - [JSON Schema](https://ios-theming.snappmobile.io/documentation/snapptheming/jsonschema)
+        }
+    }
+}

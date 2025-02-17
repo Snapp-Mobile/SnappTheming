@@ -11,6 +11,11 @@ import SwiftUI
 
 struct CreditCardView: View {
     @Environment(Theme.self) private var theme
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
+    private var isCompact: Bool {
+        horizontalSizeClass == .compact
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: theme.metrics.medium) {
@@ -26,18 +31,16 @@ struct CreditCardView: View {
         #else
             .padding(theme.metrics.small)
         #endif
-        #if os(tvOS) || os(macOS) || os(visionOS)
-            .frame(maxWidth: 345, maxHeight: 190)
-        #else
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-        #endif
+        .frame(
+            maxWidth: isCompact ? .infinity : 345,
+            maxHeight: isCompact ? .infinity : 190
+        )
         .background(theme.gradients.creditCardSurface)
         .clipShape(theme.shapes.creditCard)
-        #if os(tvOS) || os(macOS) || os(visionOS)
-            .frame(maxWidth: 385)
-        #else
-            .frame(maxWidth: .infinity)
-        #endif
+        .frame(
+            maxWidth: isCompact ? .infinity : 385,
+            maxHeight: isCompact ? .infinity : 230
+        )
         .aspectRatio(theme.metrics.creditCardAspectRatio, contentMode: .fill)
         .shadow(
             color: theme.colors.shadow,
@@ -50,22 +53,22 @@ struct CreditCardView: View {
 }
 
 #Preview("Light") {
+    let manager: SettingsManager = .init(storage: .preview(.light), fallbackColorSchema: .light)
     CreditCardView()
         .frame(width: 315, height: 174)
-        .themed()
-        .environment(\.settingsStorage, .preview(.light))
+        .themed(with: manager, theme: .constant(Theme(manager.themeSource)))
 }
 
 #Preview("Dark") {
+    let manager: SettingsManager = .init(storage: .preview(.dark), fallbackColorSchema: .dark)
     CreditCardView()
         .frame(width: 315, height: 174)
-        .themed()
-        .environment(\.settingsStorage, .preview(.dark))
+        .themed(with: manager, theme: .constant(Theme(manager.themeSource)))
 }
 
 #Preview("Colorful") {
+    let manager: SettingsManager = .init(storage: .preview(.colorful), fallbackColorSchema: .light)
     CreditCardView()
         .frame(width: 315, height: 174)
-        .themed()
-        .environment(\.settingsStorage, .preview(.colorful))
+        .themed(with: manager, theme: .constant(Theme(manager.themeSource)))
 }
