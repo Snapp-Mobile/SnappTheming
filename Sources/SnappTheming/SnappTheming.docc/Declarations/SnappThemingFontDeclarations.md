@@ -6,7 +6,7 @@ Manages font tokens, including font families and sizes. Enables consistent typog
 
 The framework provides support for custom fonts. Fonts can be added as annotated object entities under the root-level `fonts` property.
 
-The annotation should contain the PostScript font name and, optionally, the actual base64-encoded font data. If you want to use a font provided by the system, you can omit the font data and just use the PostScript name.
+The annotation should contain the PostScript font name and, optionally, the actual base64-encoded font data. If you want to use a font that is either bundled with the app or provided by the system, you can omit the font data and simply use the PostScript name.
 
 The following is an example of a valid font declaration (the base64-encoded string has been shortened for brevity):
 
