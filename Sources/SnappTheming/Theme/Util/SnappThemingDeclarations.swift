@@ -104,6 +104,7 @@ public struct SnappThemingDeclarations<DeclaredValue, Configuration> where Decla
         // Validate the input key path
         guard !keyPath.isEmpty else {
             os_log(.debug, "Invalid access to keyPath '%@': Key path is empty", keyPath)
+            runtimeWarning(#file, #line, "Invalid access to keyPath '\(rootKey.rawValue)'.'\(keyPath)': Key path is empty.")
             return nil
         }
 
@@ -111,12 +112,12 @@ public struct SnappThemingDeclarations<DeclaredValue, Configuration> where Decla
         let tokenPath = SnappThemingTokenPath(component: rootKey.rawValue, name: keyPath)
 
         // Resolve the value using the resolver
-        guard let resolvedValue = resolver.resolve(.alias(tokenPath)) else {
-            os_log(.debug, "Invalid access to keyPath '%@': Failed to resolve the value", keyPath)
+        do {
+            return try resolver.resolveThrowing(.alias(tokenPath))
+        } catch {
+            runtimeWarning(#file, #line, "Failed to resolve the value: \(error.localizedDescription)")
             return nil
         }
-
-        return resolvedValue
     }
 }
 

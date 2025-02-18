@@ -5,6 +5,8 @@
 //  Created by Volodymyr Voiko on 28.11.2024.
 //
 
+import Foundation
+
 /// A utility for resolving tokens to their associated values.
 ///
 /// The `TokenResolver` works with tokens that can either directly hold a value
@@ -17,6 +19,20 @@
 /// - Generic Parameter:
 ///   - Value: The type of value being resolved.
 public struct SnappThemingTokenResolver<Value> where Value: Codable {
+    enum ResolvationError: LocalizedError {
+        case circularReferenceAt([SnappThemingTokenPath])
+        case unknownTokenAt([SnappThemingTokenPath])
+
+        var errorDescription: String? {
+            switch self {
+            case .circularReferenceAt(let paths):
+                "Circular reference detected in token path: \(paths.absolutePath)"
+            case .unknownTokenAt(let paths):
+                "Unknown token detected in token path: \(paths.absolutePath)"
+            }
+        }
+    }
+
     /// A dictionary holding the base tokens, organized by component and name.
     let baseValues: [String: [String: SnappThemingToken<Value>]]
 
@@ -27,7 +43,16 @@ public struct SnappThemingTokenResolver<Value> where Value: Codable {
     /// - Parameter token: The `Token` to resolve.
     /// - Returns: The resolved `Value`, or `nil` if the token cannot be resolved.
     func resolve(_ token: SnappThemingToken<Value>) -> Value? {
-        resolve(token, from: [])
+        do {
+            return try resolveThrowing(token, from: [])
+        } catch {
+            runtimeWarning(#file, #line, "Failed to resolve token: \(error.localizedDescription)")
+            return nil
+        }
+    }
+
+    func resolveThrowing(_ token: SnappThemingToken<Value>) throws -> Value {
+        try resolveThrowing(token, from: [])
     }
 
     /// Recursively resolves a `Token` to its associated `Value`.
@@ -42,22 +67,35 @@ public struct SnappThemingTokenResolver<Value> where Value: Codable {
     ///   - visitedPaths: A list of paths that have already been visited during resolution.
     ///                   Used to prevent infinite recursion caused by circular references.
     /// - Returns: The resolved `Value` if it can be found, or `nil` if the token cannot be resolved.
-    private func resolve(_ token: SnappThemingToken<Value>, from visitedPaths: [SnappThemingTokenPath]) -> Value? {
+    private func resolveThrowing(
+        _ token: SnappThemingToken<Value>,
+        from visitedPaths: [SnappThemingTokenPath]
+    ) throws -> Value {
         switch token {
         case .value(let value):
             // If the token directly holds a value, return it.
             return value
-        case .alias(let path) where !visitedPaths.contains(path):
+        case .alias(let path):
+            guard !visitedPaths.contains(path) else {
+                // If the alias has already been visited (to avoid infinite recursion), return nil.
+                throw ResolvationError.circularReferenceAt(visitedPaths + [path])
+            }
+            let paths = visitedPaths + [path]
             // If the token is an alias and the path has not been visited:
             // 1. Look up the alias in the baseValues dictionary.
             // 2. If found, recursively resolve the alias, adding the current path to visitedPaths.
             guard let resolvedToken = baseValues[path.component]?[path.name] else {
-                return nil
+                throw ResolvationError.unknownTokenAt(paths)
             }
-            return resolve(resolvedToken, from: visitedPaths + [path])
-        case .alias:
-            // If the alias has already been visited (to avoid infinite recursion), return nil.
-            return nil
+            return try resolveThrowing(resolvedToken, from: paths)
         }
+    }
+}
+
+extension Array where Element == SnappThemingTokenPath {
+    fileprivate var absolutePath: String {
+        var paths: [String] = count > 1 ? [self[0].component] : []
+        paths = paths + map(\.name)
+        return paths.joined(separator: "/")
     }
 }
