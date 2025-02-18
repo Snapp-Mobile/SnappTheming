@@ -48,6 +48,7 @@ struct SettingsView: View {
             .foregroundStyle(theme.colors.textColorPrimary)
             .navigationBarTitleDisplayMode(.inline)
         #endif
+        .font(theme.typography.systemBody)
 
     }
 

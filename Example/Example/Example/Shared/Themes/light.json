@@ -61,7 +61,10 @@
         },
         "regular": "$fonts/Inter-Regular",
         "medium": "$fonts/Inter-Medium",
-        "bold": "$fonts/Inter-Bold"
+        "bold": "$fonts/Inter-Bold",
+        "system-regular": {
+            "postScriptName": "AvenirNextCondensed-Regular"
+        }
     },
     "typography": {
         "title": {
@@ -82,6 +85,10 @@
         },
         "body": {
             "font": "$fonts/regular",
+            "fontSize": 14
+        },
+        "systemBody": {
+            "font": "$fonts/system-regular",
             "fontSize": 14
         }
     },

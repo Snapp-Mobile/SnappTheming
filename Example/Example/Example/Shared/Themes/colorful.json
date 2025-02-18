@@ -62,7 +62,10 @@
         },
         "default": "$fonts/Doto-Regular",
         "medium": "$fonts/Doto-SemiBold",
-        "bold": "$fonts/Doto-Bold"
+        "bold": "$fonts/Doto-Bold",
+        "system-regular": {
+            "postScriptName": "AvenirNextCondensed-Regular"
+        }
     },
     "typography": {
         "title": {
@@ -83,6 +86,10 @@
         },
         "body": {
             "font": "$fonts/regular",
+            "fontSize": 14
+        },
+        "systemBody": {
+            "font": "$fonts/system-regular",
             "fontSize": 14
         }
     },
