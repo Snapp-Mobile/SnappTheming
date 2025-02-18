@@ -57,7 +57,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
 
     /// Initializes a new instance of `SnappThemingDeclaration` with optional caches and a parser configuration.
     public init(
-        imageCache: [String: SnappThemingToken<SnappThemingDataURI>]? = nil,
+        imageCache: [String: SnappThemingToken<String>]? = nil,
         colorCache: [String: SnappThemingToken<SnappThemingColorRepresentation>]? = nil,
         metricsCache: [String: SnappThemingToken<Double>]? = nil,
         fontsCache: [String: SnappThemingToken<SnappThemingFontInformation>]? = nil,
@@ -149,7 +149,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
                 ?? .default
             let container = try decoder.container(keyedBy: CodingKeys.self)
             let imageCache = try container.decodeIfPresent(
-                [String: SnappThemingToken<SnappThemingDataURI>].self,
+                [String: SnappThemingToken<String>].self,
                 forKey: .images
             )
             let colorCache = try container.decodeIfPresent(
