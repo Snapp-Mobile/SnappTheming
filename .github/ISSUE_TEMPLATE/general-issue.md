@@ -1,33 +1,28 @@
 ---
 name: General issue
-about: A template to use for issue creation
-title: ''
+about: Report a reproducible bug or issue
+title: '[Bug] [Feature Request] Short description of the issue'
 labels: ''
 assignees: ''
-
 ---
 
-## 🐞 Expected Behavior
-*Describe what should happen.*
+## 🐞 Expected Behavior  
+<!-- Describe what should happen under normal conditions. -->
 
-## ❌ Actual Behavior
-*Describe what actually happens.*
+## ❌ Actual Behavior  
+<!-- Describe what is currently happening instead of the expected behavior. -->
 
-## 🔄 Steps to Reproduce
-1. *Step one to reproduce the issue.*
-2. *Step two to reproduce the issue.*
-3. *Continue listing steps...*
+## 🔄 Steps to Reproduce  
+1. <!-- Step 1: Provide clear instructions to reproduce the issue. -->
+2. <!-- Step 2: Add any additional steps as needed. -->
+3. <!-- Continue listing steps until the issue is fully reproducible. -->
 
-## 📄 Logs / Error Messages
-*Paste relevant logs, errors, or stack traces.*
+## 📄 Logs / Error Messages  
+<!-- Paste any relevant logs, error messages, or stack traces. -->
 
-## 📸 Screenshots
-*Attach screenshots or GIFs that help illustrate the issue.*
+## 📸 Screenshots  
+<!-- Attach screenshots or GIFs that help visualize the issue. -->
 
-## 💻 Code Snippets
-*Include relevant code snippets for reproducing the issue.*
-
-## 🛠 Specifications
-- **Project Version**: *Specify the version (e.g., 0.1.0)*
-- **Operating System**: *Specify OS (e.g., macOS 14, iOS 18)*
-- **Device / Hardware**: *Specify details if relevant (e.g., iPhone 14 Pro, M1 MacBook)*
+## 💻 Code Snippets  
+```swift
+// Include relevant code snippets that help reproduce the issue.
