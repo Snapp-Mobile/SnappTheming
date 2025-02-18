@@ -28,18 +28,36 @@ public struct SnappThemingInteractiveColorResolver {
         colorFormat: SnappThemingColorFormat,
         colors: SnappThemingColorDeclarations
     ) {
-        guard
-            let normal = colors.resolver.resolve(normal),
-            let pressed = colors.resolver.resolve(pressed),
-            let disabled = colors.resolver.resolve(disabled)
-        else {
+        guard let normalColorRepresentation = colors.resolver.resolve(normal) else {
+            let aliasName = normal.aliasName ?? "nil"
+            runtimeWarning(#file, #line, "Failed to resolve `\(aliasName)` token path.")
             self.interactiveColor = .clear
             return
         }
+        guard let pressedColorRepresentation = colors.resolver.resolve(pressed) else {
+            let aliasName = pressed.aliasName ?? "nil"
+            runtimeWarning(#file, #line, "Failed to resolve `\(aliasName)` token path.")
+            self.interactiveColor = SnappThemingInteractiveColor(
+                normal: normalColorRepresentation.color(using: colorFormat),
+                pressed: .clear,
+                disabled: .clear
+            )
+            return
+        }
+        guard let disabledColorRepresentation = colors.resolver.resolve(disabled) else {
+            let aliasName = pressed.aliasName ?? "nil"
+            runtimeWarning(#file, #line, "Failed to resolve `\(aliasName)` token path.")
+            self.interactiveColor = SnappThemingInteractiveColor(
+                normal: normalColorRepresentation.color(using: colorFormat),
+                pressed: pressedColorRepresentation.color(using: colorFormat),
+                disabled: .clear
+            )
+            return
+        }
         self.interactiveColor = SnappThemingInteractiveColor(
-            normal: normal.color(using: colorFormat),
-            pressed: pressed.color(using: colorFormat),
-            disabled: disabled.color(using: colorFormat)
+            normal: normalColorRepresentation.color(using: colorFormat),
+            pressed: pressedColorRepresentation.color(using: colorFormat),
+            disabled: disabledColorRepresentation.color(using: colorFormat)
         )
     }
 }

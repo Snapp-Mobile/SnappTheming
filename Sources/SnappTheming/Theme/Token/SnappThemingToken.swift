@@ -48,6 +48,13 @@ extension SnappThemingToken {
         case .alias: nil
         }
     }
+
+    var aliasName: String? {
+        switch self {
+        case .value: nil
+        case .alias(let tokenPath): tokenPath.name
+        }
+    }
 }
 
 extension SnappThemingToken: Sendable where Value: Sendable {}
