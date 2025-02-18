@@ -19,7 +19,7 @@ import Foundation
 /// - Generic Parameter:
 ///   - Value: The type of value being resolved.
 public struct SnappThemingTokenResolver<Value> where Value: Codable {
-    enum ResolvationError: LocalizedError {
+    enum ResolutionError: LocalizedError {
         case circularReferenceAt([SnappThemingTokenPath])
         case unknownTokenAt([SnappThemingTokenPath])
 
@@ -78,14 +78,14 @@ public struct SnappThemingTokenResolver<Value> where Value: Codable {
         case .alias(let path):
             guard !visitedPaths.contains(path) else {
                 // If the alias has already been visited (to avoid infinite recursion), return nil.
-                throw ResolvationError.circularReferenceAt(visitedPaths + [path])
+                throw ResolutionError.circularReferenceAt(visitedPaths + [path])
             }
             let paths = visitedPaths + [path]
             // If the token is an alias and the path has not been visited:
             // 1. Look up the alias in the baseValues dictionary.
             // 2. If found, recursively resolve the alias, adding the current path to visitedPaths.
             guard let resolvedToken = baseValues[path.component]?[path.name] else {
-                throw ResolvationError.unknownTokenAt(paths)
+                throw ResolutionError.unknownTokenAt(paths)
             }
             return try resolveThrowing(resolvedToken, from: paths)
         }
