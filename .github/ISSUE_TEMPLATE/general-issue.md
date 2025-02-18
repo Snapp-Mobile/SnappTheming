@@ -26,3 +26,9 @@ assignees: ''
 ## 💻 Code Snippets  
 ```swift
 // Include relevant code snippets that help reproduce the issue.
+```
+
+## 🛠 System Information
+- **Package Version**: <!-- e.g., 0.1.0 -->
+- **Operating System**: <!-- e.g., macOS 14, iOS 18 -->
+- **Device / Hardware**: <!-- e.g., iPhone 14 Pro, M1 MacBook -->
