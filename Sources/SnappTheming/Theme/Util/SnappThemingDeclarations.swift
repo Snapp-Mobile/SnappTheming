@@ -97,25 +97,28 @@ public struct SnappThemingDeclarations<DeclaredValue, Configuration> where Decla
         }.sorted()
     }
 
-    /// Resolves a declared value dynamically based on a key path
-    /// - Parameter keyPath: The key path to resolve the value.
+    /// Resolves a declared value dynamically based on a key path.
+    ///
+    /// This subscript allows dynamic lookup of declared values using a string key path.
+    /// If the resolution fails, a runtime warning is logged.
+    ///
+    /// - Parameter keyPath: The key path used to resolve the value.
     /// - Returns: The resolved `DeclaredValue` if found, or `nil` if unavailable.
     public subscript(dynamicMember keyPath: String) -> DeclaredValue? {
         // Validate the input key path
         guard !keyPath.isEmpty else {
-            os_log(.debug, "Invalid access to keyPath '%@': Key path is empty", keyPath)
-            runtimeWarning(#file, #line, "Invalid access to keyPath '\(rootKey.rawValue)'.'\(keyPath)': Key path is empty.")
+            runtimeWarning("Attempted to access an empty key path in '\(rootKey.rawValue)'.")
             return nil
         }
 
         // Build the token path
         let tokenPath = SnappThemingTokenPath(component: rootKey.rawValue, name: keyPath)
 
-        // Resolve the value using the resolver
+        // Attempt to resolve the value using the resolver
         do {
             return try resolver.resolveThrowing(.alias(tokenPath))
         } catch {
-            runtimeWarning(#file, #line, "Failed to resolve the value: \(error.localizedDescription)")
+            runtimeWarning("Failed to resolve the value: \(error.localizedDescription)")
             return nil
         }
     }

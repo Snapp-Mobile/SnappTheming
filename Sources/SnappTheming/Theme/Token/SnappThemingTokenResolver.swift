@@ -9,18 +9,24 @@ import Foundation
 
 /// A utility for resolving tokens to their associated values.
 ///
-/// The `TokenResolver` works with tokens that can either directly hold a value
-/// (`.value`) or point to another token using an alias (`.alias`). When resolving
-/// a token, the resolver ensures no infinite loops occur by keeping track of
-/// already visited paths during the resolution process.
+/// The `SnappThemingTokenResolver` resolves tokens that can either:
+/// - Directly hold a value (`.value`).
+/// - Reference another token via an alias (`.alias`).
 ///
-/// - Note: This resolver assumes the `Value` type conforms to `Codable`.
+/// This resolver ensures safe resolution by preventing infinite loops through
+/// a tracking mechanism for already visited paths.
+///
+/// - Note: This resolver assumes that the `Value` type conforms to `Codable`.
 ///
 /// - Generic Parameter:
-///   - Value: The type of value being resolved.
+///   - Value: The type of value being resolved. It must conform to `Codable`.
 public struct SnappThemingTokenResolver<Value> where Value: Codable {
+    /// An error type representing failures during token resolution.
     enum ResolutionError: LocalizedError {
+        /// Indicates that a circular reference was detected in the token resolution path.
         case circularReferenceAt([SnappThemingTokenPath])
+
+        /// Indicates that an unknown token was encountered during resolution.
         case unknownTokenAt([SnappThemingTokenPath])
 
         var errorDescription: String? {
@@ -36,9 +42,10 @@ public struct SnappThemingTokenResolver<Value> where Value: Codable {
     /// A dictionary holding the base tokens, organized by component and name.
     let baseValues: [String: [String: SnappThemingToken<Value>]]
 
-    /// Resolves a `Token` to its associated `Value`.
+    /// Resolves a `Token` to its associated `Value`, returning `nil` if resolution fails.
     ///
     /// This function initiates the resolution process without any prior visited paths.
+    /// If resolution fails, it catches the error and logs a runtime warning instead of throwing.
     ///
     /// - Parameter token: The `Token` to resolve.
     /// - Returns: The resolved `Value`, or `nil` if the token cannot be resolved.
@@ -46,16 +53,27 @@ public struct SnappThemingTokenResolver<Value> where Value: Codable {
         do {
             return try resolveThrowing(token, from: [])
         } catch {
-            runtimeWarning(#file, #line, "Failed to resolve token: \(error.localizedDescription)")
+            runtimeWarning("Failed to resolve token: \(error.localizedDescription)")
             return nil
         }
     }
 
-    func resolveThrowing(_ token: SnappThemingToken<Value>) throws -> Value {
+    /// Resolves a `Token` to its associated `Value`, throwing an error if resolution fails.
+    ///
+    /// This function acts as an entry point for resolving a token, initializing the resolution
+    /// process without any prior visited paths. If the token cannot be resolved, it throws
+    /// a `ResolutionError`.
+    ///
+    /// - Parameter token: The `Token` to resolve.
+    /// - Throws: A `ResolutionError` if the token cannot be resolved.
+    /// - Returns: The resolved `Value`.
+    func resolveThrowing(
+        _ token: SnappThemingToken<Value>
+    ) throws -> Value {
         try resolveThrowing(token, from: [])
     }
 
-    /// Recursively resolves a `Token` to its associated `Value`.
+    /// Recursively resolves a `Token` to its associated `Value`, throwing an error if resolution fails.
     ///
     /// This function takes a `Token` and attempts to resolve it to its actual value.
     /// A `Token` can either directly hold a value (`.value`) or be an alias pointing
@@ -66,7 +84,8 @@ public struct SnappThemingTokenResolver<Value> where Value: Codable {
     ///   - token: The `Token` to resolve. It can be a direct value or an alias.
     ///   - visitedPaths: A list of paths that have already been visited during resolution.
     ///                   Used to prevent infinite recursion caused by circular references.
-    /// - Returns: The resolved `Value` if it can be found, or `nil` if the token cannot be resolved.
+    /// - Throws: `ResolutionError` if the token cannot be resolved.
+    /// - Returns: The resolved `Value`.
     private func resolveThrowing(
         _ token: SnappThemingToken<Value>,
         from visitedPaths: [SnappThemingTokenPath]
@@ -77,7 +96,6 @@ public struct SnappThemingTokenResolver<Value> where Value: Codable {
             return value
         case .alias(let path):
             guard !visitedPaths.contains(path) else {
-                // If the alias has already been visited (to avoid infinite recursion), return nil.
                 throw ResolutionError.circularReferenceAt(visitedPaths + [path])
             }
             let paths = visitedPaths + [path]

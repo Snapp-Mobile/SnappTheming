@@ -28,30 +28,11 @@ public struct SnappThemingInteractiveColorResolver {
         colorFormat: SnappThemingColorFormat,
         colors: SnappThemingColorDeclarations
     ) {
-        guard let normalColorRepresentation = colors.resolver.resolve(normal) else {
-            let aliasName = normal.aliasName ?? "nil"
-            runtimeWarning(#file, #line, "Failed to resolve `\(aliasName)` token path.")
+        guard let normalColorRepresentation = colors.resolver.resolve(normal),
+            let pressedColorRepresentation = colors.resolver.resolve(pressed),
+            let disabledColorRepresentation = colors.resolver.resolve(disabled)
+        else {
             self.interactiveColor = .clear
-            return
-        }
-        guard let pressedColorRepresentation = colors.resolver.resolve(pressed) else {
-            let aliasName = pressed.aliasName ?? "nil"
-            runtimeWarning(#file, #line, "Failed to resolve `\(aliasName)` token path.")
-            self.interactiveColor = SnappThemingInteractiveColor(
-                normal: normalColorRepresentation.color(using: colorFormat),
-                pressed: .clear,
-                disabled: .clear
-            )
-            return
-        }
-        guard let disabledColorRepresentation = colors.resolver.resolve(disabled) else {
-            let aliasName = pressed.aliasName ?? "nil"
-            runtimeWarning(#file, #line, "Failed to resolve `\(aliasName)` token path.")
-            self.interactiveColor = SnappThemingInteractiveColor(
-                normal: normalColorRepresentation.color(using: colorFormat),
-                pressed: pressedColorRepresentation.color(using: colorFormat),
-                disabled: .clear
-            )
             return
         }
         self.interactiveColor = SnappThemingInteractiveColor(

@@ -44,7 +44,6 @@ where
         if let representation: DeclaredValue = self[dynamicMember: keyPath] {
             return representation.animation
         } else {
-            runtimeWarning(#file, #line, "Missing animation for key path '\(keyPath)'.")
             return .lottie(configuration.fallbackLottieAnimationData)
         }
     }
