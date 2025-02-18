@@ -39,7 +39,6 @@ struct ThemeDeclarationView: View {
                     Button {
                     } label: {
                         Label("Light Theme", systemImage: "lightbulb.fill")
-                            
                     }
 
                     Button {
