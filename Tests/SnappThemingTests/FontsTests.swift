@@ -1,5 +1,5 @@
 //
-//  MetricsTests.swift
+//  FontsTests.swift
 //  SnappTheming
 //
 //  Created by Ilian Konchev on 13.01.25.
@@ -24,12 +24,21 @@ struct FontsTests {
         let json = try #require(String(data: jsonData, encoding: .utf8), "JSON should be readable")
 
         let declaration = try SnappThemingParser.parse(from: json)
-        let fontInformation: SnappThemingFontInformation = try #require(declaration.fonts[dynamicMember: "Roboto-Regular"])
-        let fontResolver: SnappThemingFontResolver = declaration.fonts[dynamicMember: "Roboto-Regular"]
 
-        #expect(fontInformation.postScriptName == "Roboto-Regular")
-        #expect(fontInformation.source.type == .truetypeTTFFont)
-        #expect(fontResolver != .system)
+        let robotoFontInformation: SnappThemingFontInformation = try #require(declaration.fonts[dynamicMember: "Roboto-Regular"])
+        let robotoFontSource = try #require(robotoFontInformation.source)
+        let robotoFontResolver: SnappThemingFontResolver = declaration.fonts[dynamicMember: "Roboto-Regular"]
+
+        let helveticaFontInformation: SnappThemingFontInformation = try #require(declaration.fonts[dynamicMember: "Helvetica"])
+        let helveticaFontResolver: SnappThemingFontResolver = declaration.fonts[dynamicMember: "Helvetica"]
+
+        #expect(robotoFontInformation.postScriptName == "Roboto-Regular")
+        #expect(robotoFontSource.type == .truetypeTTFFont)
+        #expect(robotoFontResolver != .system)
+
+        #expect(helveticaFontInformation.postScriptName == "Helvetica")
+        #expect(helveticaFontInformation.source == nil)
+        #expect(helveticaFontResolver != .system)
     }
 
     @Test

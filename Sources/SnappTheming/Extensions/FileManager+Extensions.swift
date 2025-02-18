@@ -6,18 +6,26 @@
 //
 
 import Foundation
+import OSLog
 import UniformTypeIdentifiers
 
 extension FileManager {
     private func defaultFontsDirectoryURL() throws -> URL {
-        try url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-            .appendingPathComponent("fonts", isDirectory: true)
+        try url(
+            for: .documentDirectory, in: .userDomainMask, appropriateFor: nil,
+            create: false
+        )
+        .appendingPathComponent("fonts", isDirectory: true)
     }
 
-    public func fontFileURL(name: String, type: UTType, at fontsDirectoryURL: URL?) throws -> URL {
-        let fontsDirectoryURL = try fontsDirectoryURL ?? defaultFontsDirectoryURL()
+    public func fontFileURL(
+        name: String, type: UTType, at fontsDirectoryURL: URL?
+    ) throws -> URL {
+        let fontsDirectoryURL =
+            try fontsDirectoryURL ?? defaultFontsDirectoryURL()
 
-        try createDirectory(at: fontsDirectoryURL, withIntermediateDirectories: true)
+        try createDirectory(
+            at: fontsDirectoryURL, withIntermediateDirectories: true)
 
         let fontFileURL =
             fontsDirectoryURL
@@ -25,9 +33,5 @@ extension FileManager {
             .appendingPathExtension(for: type)
 
         return fontFileURL
-    }
-
-    public func fontFileURL(_ fontInformation: SnappThemingFontInformation, at fontsDirectoryURL: URL?) throws -> URL {
-        try fontFileURL(name: fontInformation.postScriptName, type: fontInformation.source.type, at: fontsDirectoryURL)
     }
 }

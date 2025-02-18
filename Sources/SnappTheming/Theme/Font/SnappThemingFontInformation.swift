@@ -12,8 +12,8 @@ public struct SnappThemingFontInformation: Codable, Hashable {
     /// The PostScript name of the font, used to identify the font in the system.
     public let postScriptName: String
 
-    /// The data source for the font, typically encoded as a data URI.
-    public let source: SnappThemingDataURI
+    /// The data source for the font, typically encoded as a data URI. This property is optional and will be `nil` if the font is either bundled within the app or provided by the system.
+    public let source: SnappThemingDataURI?
 }
 
 extension SnappThemingFontInformation {

@@ -118,10 +118,15 @@ public final class SnappThemingFontManagerDefault: SnappThemingFontManager {
     // MARK: - Private Methods
 
     private func performFontRegistration(_ font: SnappThemingFontInformation, at fontsDirectoryURL: URL?) {
+        guard let source = font.source else { return }
         do {
-            let fontFileURL = try fileManager.fontFileURL(font, at: fontsDirectoryURL)
+            let fontFileURL = try fileManager.fontFileURL(
+                name: font.postScriptName,
+                type: source.type,
+                at: fontsDirectoryURL)
+
             if !fileManager.fileExists(atPath: fontFileURL.path()) {
-                let fontData = font.source.data
+                let fontData = source.data
                 try fontData.write(to: fontFileURL)
             }
 
@@ -136,8 +141,13 @@ public final class SnappThemingFontManagerDefault: SnappThemingFontManager {
     }
 
     private func performFontUnregistration(_ font: SnappThemingFontInformation, at fontsDirectoryURL: URL?) {
+        guard let source = font.source else { return }
         do {
-            let fontFileURL = try fileManager.fontFileURL(font, at: fontsDirectoryURL)
+            let fontFileURL = try fileManager.fontFileURL(
+                name: font.postScriptName,
+                type: source.type,
+                at: fontsDirectoryURL)
+
             if fileManager.fileExists(atPath: fontFileURL.path()) {
                 let success = try unregisterFontsForURL(fontFileURL, scope: scope)
                 if !success {
