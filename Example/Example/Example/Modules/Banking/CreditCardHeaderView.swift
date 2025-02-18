@@ -14,7 +14,7 @@ struct CreditCardHeaderView: View {
         #if os(watchOS)
             VStack(alignment: .leading) {
                 HStack {
-                    Image("snapp_themeing_logo")
+                    theme.declaration.images.logo
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(
@@ -29,7 +29,7 @@ struct CreditCardHeaderView: View {
             }
         #else
             HStack(alignment: .center) {
-                Image("snapp_themeing_logo")
+                theme.declaration.images.logo
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: theme.metrics.creditCardLogoSize)

@@ -38,14 +38,43 @@ import Testing
 
             let declaration = try SnappThemingParser.parse(
                 from: json, using: configuration)
-            let imageData: SnappThemingDataURI = try #require(
+            let rawData: String = try #require(
                 declaration.images.basket)
+            let imageData = try #require(try? SnappThemingDataURI(from: rawData))
             let image: Image = declaration.images.basket
             #expect(imageData.type == .png)
             #expect(image != fallbackImage)
             let representation = try #require(
                 imageManager.cache.object(forKey: "basket") as? Data)
             #expect(UIImage(data: representation)?.cgImage != fallbackUIImage.cgImage)
+        }
+
+        @Test
+        func parseSFSymbol() throws {
+            let json =
+                """
+                {
+                    "images": {
+                        "warning": "system:exclamationmark.triangle"
+                    }
+                }
+                """
+
+            let imageManager = SnappThemingImageManagerMock()
+            let expectedImage = Image(systemName: "exclamationmark.triangle")
+            let fallbackUIImage = try #require(UIImage(systemName: "square"))
+            let fallbackImage = Image(uiImage: fallbackUIImage)
+            let configuration = SnappThemingParserConfiguration(
+                fallbackImage: fallbackImage,
+                imageManager: imageManager
+            )
+
+            let declaration = try SnappThemingParser.parse(
+                from: json, using: configuration)
+
+            let image: Image = declaration.images.warning
+            #expect(image == expectedImage)
+            #expect(image != fallbackImage)
         }
 
         @Test
@@ -57,10 +86,10 @@ import Testing
             let declaration = try SnappThemingParser.parse(
                 from: "{}", using: configuration)
 
-            let imageData: SnappThemingDataURI? = declaration.images.basket
+            let rawData: String? = declaration.images.cache["basket"]?.value
             let image: Image = declaration.images.basket
 
-            #expect(imageData == nil)
+            #expect(rawData == nil)
             #expect((image == fallbackImage))
         }
 
@@ -87,7 +116,9 @@ import Testing
             let declaration = try SnappThemingParser.parse(
                 from: json, using: configuration)
 
-            let imageData: SnappThemingDataURI? = declaration.images.basket
+            let rawData: String = try #require(
+                declaration.images.basket)
+            let imageData = try #require(try? SnappThemingDataURI(from: rawData))
             let image: Image = declaration.images.basket
 
             #expect(imageData != nil)

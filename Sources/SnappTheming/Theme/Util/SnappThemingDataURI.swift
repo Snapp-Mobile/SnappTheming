@@ -47,6 +47,10 @@ extension SnappThemingDataURI: Codable {
         let container = try decoder.singleValueContainer()
         let source = try container.decode(String.self)
 
+        try self.init(from: source)
+    }
+
+    public init(from source: String) throws {
         let sourceComponents = source.split(separator: ",")
 
         guard sourceComponents.count == 2 else {

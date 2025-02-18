@@ -38,8 +38,7 @@ struct ThemeDeclarationView: View {
                 HStack {
                     Button {
                     } label: {
-                        Label("Light Theme", systemImage: "lightbulb.fill")
-                            
+                        Label("Light Theme", systemImage: "lightbulb.fill")       
                     }
 
                     Button {
