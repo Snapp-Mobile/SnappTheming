@@ -44,7 +44,6 @@ where
         if let representation: DeclaredValue = self[dynamicMember: keyPath] {
             return representation.animation
         } else {
-            os_log(.debug, "Warning: Missing animation for key path '%@'. Using fallback animation.", keyPath)
             return .lottie(configuration.fallbackLottieAnimationData)
         }
     }

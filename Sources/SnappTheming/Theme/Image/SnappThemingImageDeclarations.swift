@@ -46,13 +46,17 @@ where DeclaredValue == String, Configuration == SnappThemingImageConfiguration {
     }
 
     /// Dynamically resolves an image using a key path.
+    ///
+    /// This subscript attempts to retrieve an image representation based on the given key path.
+    /// If the resolution fails, a runtime warning is logged, and a fallback image is returned.
+    ///
     /// - Parameter keyPath: The key path used to identify the desired image.
-    /// - Returns: The resolved image, or the fallback image if the resolution fails.
+    /// - Returns: The resolved image if found; otherwise, the fallback image.
     public subscript(dynamicMember keyPath: String) -> Image {
         guard
             let rawValue: String = self[dynamicMember: keyPath]
         else {
-            os_log(.error, "Error resolving image with name: %@.", keyPath)
+            runtimeWarning("Failed resolving image with name: \(keyPath).")
             return configuration.fallbackImage
         }
 

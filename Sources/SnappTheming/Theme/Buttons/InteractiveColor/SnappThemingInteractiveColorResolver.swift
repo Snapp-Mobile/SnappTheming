@@ -28,18 +28,17 @@ public struct SnappThemingInteractiveColorResolver {
         colorFormat: SnappThemingColorFormat,
         colors: SnappThemingColorDeclarations
     ) {
-        guard
-            let normal = colors.resolver.resolve(normal),
-            let pressed = colors.resolver.resolve(pressed),
-            let disabled = colors.resolver.resolve(disabled)
+        guard let normalColorRepresentation = colors.resolver.resolve(normal),
+            let pressedColorRepresentation = colors.resolver.resolve(pressed),
+            let disabledColorRepresentation = colors.resolver.resolve(disabled)
         else {
             self.interactiveColor = .clear
             return
         }
         self.interactiveColor = SnappThemingInteractiveColor(
-            normal: normal.color(using: colorFormat),
-            pressed: pressed.color(using: colorFormat),
-            disabled: disabled.color(using: colorFormat)
+            normal: normalColorRepresentation.color(using: colorFormat),
+            pressed: pressedColorRepresentation.color(using: colorFormat),
+            disabled: disabledColorRepresentation.color(using: colorFormat)
         )
     }
 }

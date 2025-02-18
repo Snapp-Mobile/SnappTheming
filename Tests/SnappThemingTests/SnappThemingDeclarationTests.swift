@@ -15,23 +15,34 @@ final class SnappThemingDeclarationTests {
             {
                 "colors": {
                     "baseWhite": "#FFF1FF",
-                    "baseBlack": "#000000"
+                    "baseBlack": "#000001",
+                    "textColor": "$colors/baseWhite",
+                    "textColorTypo": "$colors/baseB1ack"
                 }
             }
             """
         let declaration = try SnappThemingParser.parse(from: json)
+        let fallbackConfiguration = declaration.colors.configuration
         try compareEncoded(declaration, and: json)
 
         #if canImport(UIKit)
             let baseWhite: UIColor = declaration.colors.baseWhite
             let baseBlack: UIColor = declaration.colors.baseBlack
+            let textColor: UIColor = declaration.colors.textColor
+            let textColorTypo: UIColor = declaration.colors.textColorTypo
             #expect(baseWhite == UIColor(hex: "FFF1FF", format: .rgba))
-            #expect(baseBlack == UIColor(hex: "000000", format: .rgba))
+            #expect(baseBlack == UIColor(hex: "000001", format: .rgba))
+            #expect(textColor == UIColor(hex: "FFF1FF", format: .rgba))
+            #expect(textColorTypo == fallbackConfiguration.fallbackUIColor)
         #elseif canImport(AppKit)
             let baseWhite: NSColor = declaration.colors.baseWhite
             let baseBlack: NSColor = declaration.colors.baseBlack
+            let textColor: NSColor = declaration.colors.textColor
+            let textColorTypo: NSColor = declaration.colors.textColorTypo
             #expect(baseWhite == NSColor.fromHex("FFF1FF", using: .rgba))
-            #expect(baseBlack == NSColor.fromHex("000000", using: .rgba))
+            #expect(baseBlack == NSColor.fromHex("000001", using: .rgba))
+            #expect(textColor == NSColor.fromHex("FFF1FF", using: .rgba))
+            #expect(textColorTypo == fallbackConfiguration.fallbackNSColor)
         #endif
     }
 
