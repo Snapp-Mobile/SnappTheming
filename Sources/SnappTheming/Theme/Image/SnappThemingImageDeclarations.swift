@@ -52,7 +52,7 @@ where DeclaredValue == SnappThemingDataURI, Configuration == SnappThemingImageCo
         guard
             let representation: DeclaredValue = self[dynamicMember: keyPath]
         else {
-            runtimeWarning("Failed resolving image with name: \(keyPath).")
+            runtimeWarning(#file, #line, "Failed resolving image with name: \(keyPath).")
             return configuration.fallbackImage
         }
 
