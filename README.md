@@ -52,7 +52,9 @@ let package = Package(
 )
 ```
 
-### Quick Start
+### Usage
+
+#### In a SwiftUI App
 
 ```swift
 import OSLog
