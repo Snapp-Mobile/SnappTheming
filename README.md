@@ -1,5 +1,8 @@
 # SnappTheming
 
+![Static Badge](https://img.shields.io/badge/swift--tools--version-6.0-blue) ![Static Badge](https://img.shields.io/badge/Platforms-_iOS_|_macOS_|_tvOS_|_watchOS_|_visionOS_-blue) 
+
+
 <p align="center">
     <img src="Sources/SnappTheming/SnappTheming.docc/Resources/logo%402x.png">
 <p/>
