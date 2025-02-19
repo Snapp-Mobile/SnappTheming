@@ -54,67 +54,81 @@ let package = Package(
 
 ### Usage
 
-#### Prepare JSON with declarations
-
-To initiate the process, it would suffice to have a declaration made in a JSON file or simply as a string.
-```swift
-private let json = """
-    {
-        "colors": {
-            "textPrimary": "#000",
-        },
-        "fonts": {
-            "Doto-Regular": {
-                "postScriptName": "Doto-Regular",
-                "source": "data:font/ttf;base64,AAEAAA*******EBMgEA"
-            }
-        },
-        "typography": {
-            "title": {
-                "font": "$fonts/Doto-Regular",
-                "fontSize": 16
-            },
-        }
-    }
-    """
-```
-Initiate the declaration as follows:
+#### In a SwiftUI App
 
 ```swift
-extension SnappThemingDeclaration {
-    static let light: SnappThemingDeclaration = {
-        let configuration = SnappThemingParserConfiguration(themeName: "Light")
-        let declaration = try! SnappThemingParser.parse(from: json, using: configuration)
-        let fontManager = SnappThemingFontManagerDefault(
-            themeCacheRootURL: configuration.themeCacheRootURL,
-            themeName: configuration.themeName
-        )
-        fontManager.registerFonts(declaration.fontInformation)
-        return declaration
-    }()
-}
-```
-
-With this capability, you can now seamlessly integrate it into your robust application, enabling users to access it effortlessly.
-
-```swift
+import OSLog
 import SnappTheming
 import SwiftUI
 
 @main
-struct HelloWorldApp: App {
-    let declaration: SnappThemingDeclaration = .light
+struct STTestApp: App {
+    @State var declaration: SnappThemingDeclaration?
+
+    // Discover more about the JSON Schema at 
+    // https://ios-theming.snappmobile.io/documentation/snapptheming/jsonschema
+    private let json = """
+        {
+            "colors": {
+                "textPrimary": "#1a1a1a",
+            },
+            "images": {
+                "globe": "system:globe"
+            },
+            "metrics": {
+                "label": 16.0,
+                "icon": 24
+            },
+            "fonts": {
+                "label": {
+                    "postScriptName": "Arial-BoldMT"
+                }
+            },
+            "typography": {
+                "title": {
+                    "font": "$fonts/label",
+                    "fontSize": "$metrics/label"
+                }
+            }
+        }
+        """
+
+    init() {
+        let configuration = SnappThemingParserConfiguration(themeName: "Light")
+        guard let declaration = try? SnappThemingParser.parse(from: json, using: configuration) else {
+            os_log(.error, "Error loading theme")
+            return
+        }
+
+        if !declaration.fontInformation.isEmpty {
+            let fontManager = SnappThemingFontManagerDefault(
+                themeCacheRootURL: configuration.themeCacheRootURL,
+                themeName: configuration.themeName
+            )
+            fontManager.registerFonts(declaration.fontInformation)
+        }
+        _declaration = .init(initialValue: declaration)
+    }
 
     var body: some Scene {
         WindowGroup {
-            Text("Hello World!")
+            if let declaration {
+                VStack {
+                    HStack(alignment: .center) {
+                        declaration.images.globe
+                            .resizable()
+                            .frame(maxWidth: declaration.metrics.icon, maxHeight: declaration.metrics.icon)
+
+                        Text("Praise Kier.")
+                            .font(declaration.typography.title)
+                    }
+                }
                 .foregroundStyle(declaration.colors.textPrimary)
-                .font(declaration.typography.title)
+            } else {
+                Text("Unable to load the theme")
+                    .bold()
+            }
         }
     }
 }
 ```
-
-
-
-
