@@ -65,6 +65,8 @@ import SwiftUI
 struct STTestApp: App {
     @State var declaration: SnappThemingDeclaration?
 
+    // Discover more about the JSON Schema at 
+    // https://ios-theming.snappmobile.io/documentation/snapptheming/jsonschema
     private let json = """
         {
             "colors": {
