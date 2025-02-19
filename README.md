@@ -19,3 +19,6 @@ This repository contains the `SnappTheming` framework as well as an Example Xcod
 
 The documentation for the package can be found [here](https://ios-theming.snappmobile.io/documentation/snapptheming/)
 
+## Tutorial
+
+Explore the essentials of creating your first theme with SnappTheming in SwiftUI, defining colors and styles, and managing multiple themes for seamless user switching. Follow the tutorials for hands-on experience in theming your projects effectively. It can be found [here](https://ios-theming.snappmobile.io/tutorials/meetsnapptheming/)
