@@ -1,10 +1,14 @@
 # SnappTheming
 
-![Static Badge](https://img.shields.io/badge/swift--tools--version-6.0-blue) ![Static Badge](https://img.shields.io/badge/Platforms-_iOS_|_macOS_|_tvOS_|_watchOS_|_visionOS_-blue) 
-
-
 <p align="center">
+    <br />
     <img src="Sources/SnappTheming/SnappTheming.docc/Resources/logo%402x.png">
+    <br /><br />
+    <a href="https://img.shields.io/badge/version-0.1.1-yellow" target="_blank"><img src="https://img.shields.io/badge/version-0.1.1-yellow" alt="Version 0.1.1"></a>
+    <a href="https://img.shields.io/badge/swift--tools--version-6.0-red" target="_blank"><img src="https://img.shields.io/badge/swift--tools--version-6.0-red" alt="Swift Tools Version 6.0"></a>
+    <a href="https://github.com/Snapp-Mobile/SnappTheming/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="License Badge"></a>
+    <br />
+    <a href="https://img.shields.io/badge/Platforms-_iOS_|_macOS_|_tvOS_|_watchOS_|_visionOS_-green" target="_blank"><img src="https://img.shields.io/badge/Platforms-_iOS_|_macOS_|_tvOS_|_watchOS_|_visionOS_-green" alt="Supported Platforms"></a>
 <p/>
 
 `SnappTheming` is a Swift framework designed to streamline the process of integrating dynamic design themes into iOS applications. 
@@ -132,3 +136,6 @@ struct STTestApp: App {
     }
 }
 ```
+## License
+
+[MIT License](https://github.com/Snapp-Mobile/SnappTheming/blob/main/LICENSE)
