@@ -9,13 +9,6 @@ import Foundation
 import OSLog
 import SwiftUI
 
-#if canImport(UIKit)
-    import UIKit
-#endif
-#if canImport(AppKit)
-    import AppKit
-#endif
-
 public typealias SnappThemingImageDeclarations = SnappThemingDeclarations<
     String,
     SnappThemingImageConfiguration
@@ -62,19 +55,11 @@ where DeclaredValue == String, Configuration == SnappThemingImageConfiguration {
 
         if let representation = try? SnappThemingDataURI(from: rawValue) {
             let cachedData = configuration.imagesManager.object(for: keyPath, of: representation) ?? representation.data
-            #if canImport(UIKit)
-                if let uiImage = configuration.imagesManager.image(from: cachedData, of: representation.type) {
-                    configuration.imagesManager.setObject(representation.data, for: keyPath)
-                    configuration.imagesManager.store(representation, for: keyPath)
-                    return Image(uiImage: uiImage)
-                }
-            #elseif canImport(AppKit)
-                if let nsImage = configuration.imagesManager.image(from: cachedData, of: representation.type) {
-                    configuration.imagesManager.setObject(representation.data, for: keyPath)
-                    configuration.imagesManager.store(representation, for: keyPath)
-                    return Image(nsImage: nsImage)
-                }
-            #endif
+            if let themingImage = configuration.imagesManager.image(from: cachedData, of: representation.type) {
+                configuration.imagesManager.setObject(representation.data, for: keyPath)
+                configuration.imagesManager.store(representation, for: keyPath)
+                return themingImage.image
+            }
         } else if rawValue.starts(with: "system:") {
             return Image(systemName: rawValue.removingPrefix(separator: ":"))
         } else if rawValue.starts(with: "asset:") {
