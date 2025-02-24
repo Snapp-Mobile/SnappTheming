@@ -1,15 +1,28 @@
 #### ✨ This PR Will:
-- *List new features, improvements, or fixes*
-- *List removed or deprecated functionality, if any*  
+<!--- List new features, improvements, or fixes introduced in this PR. --->
+- <!--- add support for XYZ --->
+- <!--- improved performance of ABC --->
+- <!--- fix issue #123 where XYZ was not working --->
 
 #### 🎯 Purpose  
-*Remove this and explain why this change is needed and what problem it solves.*  
+<!--- Explain why this change is needed and what problem it solves. --->
+- <!--- This update enhances user experience by... --->
+- <!--- Fixes a bug that caused... --->
 
-#### 🧪 Unit Tests  
-*Remove this and mention if unit tests were added. If not, briefly explain why.*  
+#### 🧪 Unit Tests 
+<!--- Mention if unit tests were added. If not, briefly explain why. ---> 
+- <!--- added unit tests for XYZ functionality. --->
+- <!--- no new tests were needed because... --->
 
 #### 📸 Screenshots  
-*Remove this and add screenshots or GIFs if relevant.*  
+<!--- Add screenshots or GIFs if relevant. --->
+- <!--- Before / After comparison screenshots --->
 
 #### 💻 Code Snippets  
-*Remove this and include important code snippets if needed.*  
+<!--- Include important code snippets if needed. --->
+<!--- ```swift --->
+<!--- // Example Swift code snippet --->
+<!--- func exampleFunction() { --->
+<!---     print("Hello, PR!") --->
+<!--- } --->
+<!--- ``` --->
