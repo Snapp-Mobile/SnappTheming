@@ -39,7 +39,7 @@ Explore the essentials of creating your first theme with SnappTheming in SwiftUI
 
 #### Using Swift Package Manager
 ```swift
-// swift-tools-version:5.1
+// swift-tools-version: 5.7
 import PackageDescription
 
 let package = Package(
