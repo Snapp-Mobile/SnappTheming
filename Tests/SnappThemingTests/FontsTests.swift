@@ -7,11 +7,8 @@
 
 import Testing
 import UniformTypeIdentifiers
-@testable import SnappTheming
 
-#if canImport(UIKit)
-    import UIKit
-#endif
+@testable import SnappTheming
 
 @Suite
 struct FontsTests {
