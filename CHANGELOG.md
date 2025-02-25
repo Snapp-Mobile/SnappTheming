@@ -18,6 +18,14 @@ All notable changes to this project will be documented in this file.
 
 -->
 
+## [0.1.2] - 2025-02-25
+
+Bug fixes and improvements
+
+### Added
+- License [here](https://github.com/Snapp-Mobile/SnappTheming/blob/main/LICENSE)
+
+
 ## [0.1.1] - 2025-02-18
 
 ### Added
