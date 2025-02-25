@@ -62,3 +62,4 @@ fastlane/test_output
 .DS_Store
 Example/Example/Example.xcodeproj/project.xcworkspace/xcshareddata/swiftpm
 /**/*.docc/.docc-build
+.swiftpm
