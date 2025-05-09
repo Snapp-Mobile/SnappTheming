@@ -21,6 +21,13 @@ public struct SnappThemingAngularGradientRepresentation {
     /// The ending angle of the gradient, represented as a theming token.
     public let endAngle: SnappThemingToken<Double>
 
+    /// Initializes a `SnappThemingAngularGradientRepresentation` with the specified properties.
+    ///
+    /// - Parameters:
+    ///   - colors: An array of `SnappThemingToken` objects, each representing a color in the gradient.
+    ///   - center: A `SnappThemingUnitPointWrapper` defining the center point of the gradient.
+    ///   - startAngle: A `SnappThemingToken<Double>` representing the starting angle of the gradient in degrees.
+    ///   - endAngle: A `SnappThemingToken<Double>` representing the ending angle of the gradient in degrees.
     public init(
         colors: [SnappThemingToken<SnappThemingColorRepresentation>],
         center: SnappThemingUnitPointWrapper,

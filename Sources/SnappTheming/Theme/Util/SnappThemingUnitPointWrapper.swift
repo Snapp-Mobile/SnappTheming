@@ -18,6 +18,9 @@ public struct SnappThemingUnitPointWrapper {
     /// It can represent values like `.center`, `.topLeading`, etc., based on the theme configuration.
     public let value: UnitPoint
 
+    /// Initializes a `SnappThemingUnitPointWrapper` with a specific `UnitPoint` value.
+    ///
+    /// - Parameter value: The `UnitPoint` to wrap.
     public init(value: UnitPoint) {
         self.value = value
     }

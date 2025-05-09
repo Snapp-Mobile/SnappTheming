@@ -82,6 +82,9 @@ public struct SnappThemingAnimationRepresentation: Codable {
         }
     }
 
+    /// Initializes a `SnappThemingAnimationRepresentation` with a specific animation value.
+    ///
+    /// - Parameter animation: The `SnappThemingAnimationValue` to represent.
     public init(animation: SnappThemingAnimationValue) {
         self.animation = animation
     }

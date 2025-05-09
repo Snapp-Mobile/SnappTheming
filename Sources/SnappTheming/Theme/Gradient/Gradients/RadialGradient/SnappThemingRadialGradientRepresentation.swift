@@ -25,6 +25,13 @@ public struct SnappThemingRadialGradientRepresentation: Codable {
     /// The ending radius of the gradient, represented as a theming token.
     public let endRadius: SnappThemingToken<Double>
 
+    /// Initializes a `SnappThemingRadialGradientRepresentation` with the specified properties.
+    ///
+    /// - Parameters:
+    ///   - colors: An array of `SnappThemingToken` objects, each representing a color in the gradient.
+    ///   - center: A `SnappThemingUnitPointWrapper` defining the center point of the gradient.
+    ///   - startRadius: A `SnappThemingToken<Double>` representing the starting radius of the gradient.
+    ///   - endRadius: A `SnappThemingToken<Double>` representing the ending radius of the gradient.
     public init(
         colors: [SnappThemingToken<SnappThemingColorRepresentation>],
         center: SnappThemingUnitPointWrapper,
