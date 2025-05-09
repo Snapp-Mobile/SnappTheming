@@ -68,6 +68,10 @@ public struct SnappThemingGradientRepresentation: Codable {
         }
     }
 
+    public init(configuration: any SnappThemingGradientProviding) {
+        self.configuration = configuration
+    }
+
     /// Encodes the shape style representation into the provided encoder.
     ///
     /// This method encodes the `configuration` property (which contains the shape style)

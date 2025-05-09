@@ -13,4 +13,12 @@ public struct SnappThemingTypographyRepresentation: Codable {
     public let font: SnappThemingToken<SnappThemingFontInformation>
     /// A token that represents the font size.
     public let fontSize: SnappThemingToken<Double>
+
+    public init(
+        font: SnappThemingToken<SnappThemingFontInformation>,
+        fontSize: SnappThemingToken<Double>
+    ) {
+        self.font = font
+        self.fontSize = fontSize
+    }
 }

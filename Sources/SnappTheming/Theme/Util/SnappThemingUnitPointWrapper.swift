@@ -17,6 +17,10 @@ public struct SnappThemingUnitPointWrapper {
     ///
     /// It can represent values like `.center`, `.topLeading`, etc., based on the theme configuration.
     public let value: UnitPoint
+
+    public init(value: UnitPoint) {
+        self.value = value
+    }
 }
 
 extension SnappThemingUnitPointWrapper: Codable {

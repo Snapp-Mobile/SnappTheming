@@ -82,6 +82,10 @@ public struct SnappThemingAnimationRepresentation: Codable {
         }
     }
 
+    public init(animation: SnappThemingAnimationValue) {
+        self.animation = animation
+    }
+
     /// Encodes an instance of `SnappThemingAnimationRepresentation` to an encoder.
     ///
     /// - Parameter encoder: The encoder to encode to.

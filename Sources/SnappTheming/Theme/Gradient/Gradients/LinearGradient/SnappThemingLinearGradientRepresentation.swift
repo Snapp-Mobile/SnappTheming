@@ -19,6 +19,16 @@ public struct SnappThemingLinearGradientRepresentation: Codable {
 
     /// The ending point of the gradient.
     public let endPoint: SnappThemingUnitPointWrapper
+
+    public init(
+        colors: [SnappThemingToken<SnappThemingColorRepresentation>],
+        startPoint: SnappThemingUnitPointWrapper,
+        endPoint: SnappThemingUnitPointWrapper
+    ) {
+        self.colors = colors
+        self.startPoint = startPoint
+        self.endPoint = endPoint
+    }
 }
 
 extension SnappThemingLinearGradientRepresentation: SnappThemingGradientProviding {

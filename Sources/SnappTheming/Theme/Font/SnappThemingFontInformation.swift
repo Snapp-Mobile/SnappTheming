@@ -14,6 +14,11 @@ public struct SnappThemingFontInformation: Codable, Hashable {
 
     /// The data source for the font, typically encoded as a data URI. This property is optional and will be `nil` if the font is either bundled within the app or provided by the system.
     public let source: SnappThemingDataURI?
+
+    public init(postScriptName: String, source: SnappThemingDataURI?) {
+        self.postScriptName = postScriptName
+        self.source = source
+    }
 }
 
 extension SnappThemingFontInformation {
