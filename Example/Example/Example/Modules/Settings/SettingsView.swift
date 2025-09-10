@@ -71,6 +71,8 @@ struct SettingsView: View {
             GradientsViewer()
         case .shapes:
             ShapesViewer()
+        case .shadows:
+            ShadowsViewer()
         #if !os(watchOS)
             case .animations:
                 AnimationsViewer()

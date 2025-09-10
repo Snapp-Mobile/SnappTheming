@@ -12,7 +12,7 @@ enum ThemeDestination: String, Hashable, CaseIterable {
     #if !os(watchOS)
         case animations
     #endif
-    case buttons, colors, fonts, gradients, images, metrics, shapes, typography
+    case buttons, colors, fonts, gradients, images, metrics, shapes, typography, shadows
     #if !os(tvOS) && !os(watchOS)
         case themeJSON = "Theme JSON"
     #endif
