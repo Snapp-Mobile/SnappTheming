@@ -18,13 +18,16 @@ struct GradientsTests {
         try compareEncoded(declaration, and: json)
 
         let horizontalLinearGradientRepresentation = try #require(
-            declaration.gradients.horizontalLinearGradient)
+            declaration.gradients.cache["horizontalLinearGradient"]?.value
+        )
         let _: any ShapeStyle = declaration.gradients.horizontalLinearGradient
         let horizontalLinearGradientConfiguration = try #require(
             horizontalLinearGradientRepresentation.configuration
-                as? SnappThemingLinearGradientRepresentation)
+                as? SnappThemingLinearGradientRepresentation
+        )
         let resolvedHorizontalConfiguration = horizontalLinearGradientConfiguration.resolve(
-            using: declaration.gradients.configuration)
+            using: declaration.gradients.configuration
+        )
 
         #expect(resolvedHorizontalConfiguration.startPoint == .leading)
         #expect(resolvedHorizontalConfiguration.endPoint == .trailing)
@@ -33,13 +36,16 @@ struct GradientsTests {
         #expect(resolvedHorizontalConfiguration.colors[1].toHex() == "#FF00FF")
 
         let verticalLinearGradientRepresentation = try #require(
-            declaration.gradients.verticalLinearGradient)
+            declaration.gradients.cache["verticalLinearGradient"]?.value
+        )
         let _: any ShapeStyle = declaration.gradients.verticalLinearGradient
         let verticalLinearGradientConfiguration = try #require(
             verticalLinearGradientRepresentation.configuration
-                as? SnappThemingLinearGradientRepresentation)
+                as? SnappThemingLinearGradientRepresentation
+        )
         let resolvedVerticalConfiguration = verticalLinearGradientConfiguration.resolve(
-            using: declaration.gradients.configuration)
+            using: declaration.gradients.configuration
+        )
 
         #expect(resolvedVerticalConfiguration.startPoint == .top)
         #expect(resolvedVerticalConfiguration.endPoint == .bottom)
@@ -48,13 +54,16 @@ struct GradientsTests {
         #expect(resolvedVerticalConfiguration.colors[1].toHex() == "#FF00AA")
 
         let diagonalLinearGradientRepresentation = try #require(
-            declaration.gradients.diagonalLinearGradient)
+            declaration.gradients.cache["diagonalLinearGradient"]?.value
+        )
         let _: any ShapeStyle = declaration.gradients.diagonalLinearGradient
         let diagonalLinearGradientConfiguration = try #require(
             diagonalLinearGradientRepresentation.configuration
-                as? SnappThemingLinearGradientRepresentation)
+                as? SnappThemingLinearGradientRepresentation
+        )
         let resolveDiagonalConfiguration = diagonalLinearGradientConfiguration.resolve(
-            using: declaration.gradients.configuration)
+            using: declaration.gradients.configuration
+        )
 
         #expect(resolveDiagonalConfiguration.startPoint == .topLeading)
         #expect(resolveDiagonalConfiguration.endPoint == .bottomTrailing)
@@ -68,12 +77,13 @@ struct GradientsTests {
         let declaration = try SnappThemingParser.parse(from: json)
         try compareEncoded(declaration, and: json)
         let fallbackConfiguration = declaration.gradients.configuration
-        let gradientRepresentation = try #require(declaration.gradients.horizontalLinearGradient)
+        let gradientRepresentation = try #require(declaration.gradients.cache["horizontalLinearGradient"]?.value)
         let _: any ShapeStyle = declaration.gradients.horizontalLinearGradient
 
         let configuration = try #require(
             gradientRepresentation.configuration
-                as? SnappThemingLinearGradientRepresentation)
+                as? SnappThemingLinearGradientRepresentation
+        )
         let resolvedConfiguration = configuration.resolve(using: declaration.gradients.configuration)
 
         #expect(resolvedConfiguration.startPoint == fallbackConfiguration.fallbackUnitPoint)
@@ -87,7 +97,7 @@ struct GradientsTests {
         typealias Radial = SnappThemingRadialGradientRepresentation
         let declaration = try SnappThemingParser.parse(from: json)
         try compareEncoded(declaration, and: json)
-        let gradientRepresentation = try #require(declaration.gradients.radialGradient)
+        let gradientRepresentation = try #require(declaration.gradients.cache["radialGradient"]?.value)
         let _: any ShapeStyle = declaration.gradients.radialGradient
         let configuration = try #require(gradientRepresentation.configuration as? Radial)
         let resolvedConfiguration = configuration.resolve(using: declaration.gradients.configuration)
@@ -103,13 +113,15 @@ struct GradientsTests {
     func parseAngularGradient(json: String) throws {
         let declaration = try SnappThemingParser.parse(from: json)
         try compareEncoded(declaration, and: json)
-        let gradientRepresentation = try #require(declaration.gradients.angularGradient)
+        let gradientRepresentation = try #require(declaration.gradients.cache["angularGradient"]?.value)
         let _: any ShapeStyle = declaration.gradients.angularGradient
         let configuration = try #require(
             gradientRepresentation.configuration
-                as? SnappThemingAngularGradientRepresentation)
+                as? SnappThemingAngularGradientRepresentation
+        )
         let resolvedConfiguration = configuration.resolve(
-            using: declaration.gradients.configuration)
+            using: declaration.gradients.configuration
+        )
 
         #expect(resolvedConfiguration.center.x == 2.0)
         #expect(resolvedConfiguration.center.y == -0.2)
@@ -128,9 +140,10 @@ struct GradientsTests {
         try compareEncoded(declaration, and: json)
         let _: any ShapeStyle = declaration.gradients.angularGradient
         let fallbackConfiguration = declaration.gradients.configuration
-        let gradientRepresentation = try #require(declaration.gradients.angularGradient)
+        let gradientRepresentation = try #require(declaration.gradients.cache["angularGradient"]?.value)
         let configuration = try #require(
-            gradientRepresentation.configuration as? SnappThemingAngularGradientRepresentation)
+            gradientRepresentation.configuration as? SnappThemingAngularGradientRepresentation
+        )
         let resolvedConfiguration = configuration.resolve(using: declaration.gradients.configuration)
 
         #expect(resolvedConfiguration.center == .center)
@@ -163,9 +176,10 @@ struct GradientsTests {
         let declaration = try SnappThemingParser.parse(from: json)
         let _: any ShapeStyle = declaration.gradients.angularGradient
         let fallbackConfiguration = declaration.gradients.configuration
-        let gradientRepresentation = try #require(declaration.gradients.notSupportedGradient)
+        let gradientRepresentation = try #require(declaration.gradients.cache["notSupportedGradient"]?.value)
         let configuration = try #require(
-            gradientRepresentation.configuration as? SnappThemingClearShapeStyleConfiguration)
+            gradientRepresentation.configuration as? SnappThemingClearShapeStyleConfiguration
+        )
 
         #expect(configuration.shapeStyleUsing(fallbackConfiguration) == Color.clear)
     }
