@@ -43,8 +43,8 @@ struct CreditCardView: View {
         )
         .aspectRatio(theme.metrics.creditCardAspectRatio, contentMode: .fill)
         .shadow(
-            color: theme.colors.shadow,
-            radius: theme.metrics.shadowRadius
+            color: theme.shadows.card.color,
+            radius: theme.shadows.card.radius
         )
         #if os(watchOS)
             .padding(.horizontal, theme.metrics.small)

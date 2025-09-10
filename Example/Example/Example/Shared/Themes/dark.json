@@ -47,6 +47,22 @@
         "shadowXOffset": 0,
         "shadowYOffset": 2
     },
+    "shadows": {
+        "action": {
+            "color": "$colors/shadow",
+            "x": "$metrics/shadowXOffset",
+            "y": "$metrics/shadowYOffset",
+            "radius": "$metrics/shadowRadius",
+            "spread": 0.15,
+        },
+        "card": {
+            "color": "$colors/shadow",
+            "x": 0,
+            "y": 0,
+            "radius": "$metrics/shadowRadius",
+            "spread": 0,
+        }
+    },
     "fonts": {
         "Inter-Bold": {
             "postScriptName": "Inter-Bold",

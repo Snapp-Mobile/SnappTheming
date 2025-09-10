@@ -48,6 +48,22 @@
         "shadowXOffset": 0,
         "shadowYOffset": 4
     },
+    "shadows": {
+        "action": {
+            "color": "$colors/shadow",
+            "x": "$metrics/shadowXOffset",
+            "y": "$metrics/shadowYOffset",
+            "radius": "$metrics/shadowRadius",
+            "spread": 0.45,
+        },
+        "card": {
+            "color": "$colors/shadow",
+            "x": 0,
+            "y": 0,
+            "radius": "$metrics/shadowRadius",
+            "spread": 0,
+        }
+    },
     "fonts": {
         "Doto-Regular": {
             "postScriptName": "Doto-Regular",
