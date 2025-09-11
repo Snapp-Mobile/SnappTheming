@@ -41,7 +41,7 @@ let package = Package(
         ),
         .target(
             name: "SnappThemingSwiftUIHelpers",
-            dependencies: ["SnappTheming"],
+            dependencies: ["SnappTheming"]
         ),
         .plugin(name: "SnappThemingSwiftFormatPlugin", capability: .buildTool(), path: "Plugins/SnappThemingSwiftFormatPlugin"),
     ]
