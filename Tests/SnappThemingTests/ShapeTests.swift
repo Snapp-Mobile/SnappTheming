@@ -170,9 +170,9 @@ struct ShapeTests {
 
         let declaration = try SnappThemingParser.parse(from: json)
         let fallbackConfiguration = declaration.shapes.configuration
-        let firstShapeRepresentation = try #require(declaration.shapes.roundedRectangle)
-        let secondShapeRepresentation = try #require(declaration.shapes.roundedRectangleAlt)
-        let thirdShapeRepresentation = try #require(declaration.shapes.roundedRectangleAltWithWrongAlias)
+        let firstShapeRepresentation = try #require(declaration.shapes.cache["roundedRectangle"]?.value)
+        let secondShapeRepresentation = try #require(declaration.shapes.cache["roundedRectangleAlt"]?.value)
+        let thirdShapeRepresentation = try #require(declaration.shapes.cache["roundedRectangleAltWithWrongAlias"]?.value)
 
         let resolvedShape1 = fallbackConfiguration.resolve(firstShapeRepresentation)
         let _ = resolvedShape1.shape
@@ -325,9 +325,9 @@ struct ShapeTests {
 
         let declaration = try SnappThemingParser.parse(from: json)
         let fallbackConfiguration = declaration.shapes.configuration
-        let funkyRectShapeRepresentation = try #require(declaration.shapes.funkyRect)
-        let funkyRectAltShapeRepresentation = try #require(declaration.shapes.funkyRectAlt)
-        let funkyRectWithBrokenAliasesShapeRepresentation = try #require(declaration.shapes.funkyRectWithBrokenAliases)
+        let funkyRectShapeRepresentation = try #require(declaration.shapes.cache["funkyRect"]?.value)
+        let funkyRectAltShapeRepresentation = try #require(declaration.shapes.cache["funkyRectAlt"]?.value)
+        let funkyRectWithBrokenAliasesShapeRepresentation = try #require(declaration.shapes.cache["funkyRectWithBrokenAliases"]?.value)
 
         let resolvedShape1 = fallbackConfiguration.resolve(funkyRectShapeRepresentation)
         let _ = resolvedShape1.shape
