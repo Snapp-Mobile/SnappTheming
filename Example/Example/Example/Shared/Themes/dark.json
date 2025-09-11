@@ -53,7 +53,7 @@
             "x": "$metrics/shadowXOffset",
             "y": "$metrics/shadowYOffset",
             "radius": "$metrics/shadowRadius",
-            "spread": 0.15,
+            "spread": 0,
         },
         "card": {
             "color": "$colors/shadow",

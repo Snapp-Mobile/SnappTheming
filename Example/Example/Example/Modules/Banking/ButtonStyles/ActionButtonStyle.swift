@@ -41,12 +41,7 @@ struct ActionButtonStyle: ButtonStyle {
                         isEnabled: isEnabled)
                 )
                 .clipShape(style.shape.shape)
-                .shadow(
-                    color: theme.shadows.action.color,
-                    radius: theme.shadows.action.radius,
-                    x: theme.shadows.action.x,
-                    y: theme.shadows.action.y
-                )
+                .shadow(theme.shadows.action)
 
                 configuration.title
                     .font(style.typography.font)

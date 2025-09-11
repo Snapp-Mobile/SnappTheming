@@ -54,14 +54,14 @@
             "x": "$metrics/shadowXOffset",
             "y": "$metrics/shadowYOffset",
             "radius": "$metrics/shadowRadius",
-            "spread": 0.45,
+            "spread": 0,
         },
         "card": {
             "color": "$colors/shadow",
             "x": 0,
             "y": 0,
             "radius": "$metrics/shadowRadius",
-            "spread": 0,
+            "spread": 120,
         }
     },
     "fonts": {
