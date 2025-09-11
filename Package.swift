@@ -16,10 +16,12 @@ let package = Package(
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "SnappTheming",
-            targets: ["SnappTheming"]),
+            targets: ["SnappTheming"]
+        ),
         .library(
             name: "SnappThemingSwiftUIHelpers",
-            targets: ["SnappThemingSwiftUIHelpers"]),
+            targets: ["SnappThemingSwiftUIHelpers"]
+        ),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -28,7 +30,8 @@ let package = Package(
             name: "SnappTheming",
             plugins: [
                 .plugin(name: "SnappThemingSwiftFormatPlugin")
-            ]),
+            ]
+        ),
         .testTarget(
             name: "SnappThemingTests",
             dependencies: ["SnappTheming"],
@@ -36,7 +39,10 @@ let package = Package(
                 .copy("Resources/fonts.json")
             ]
         ),
-        .target(name: "SnappThemingSwiftUIHelpers"),
+        .target(
+            name: "SnappThemingSwiftUIHelpers",
+            dependencies: ["SnappTheming"],
+        ),
         .plugin(name: "SnappThemingSwiftFormatPlugin", capability: .buildTool(), path: "Plugins/SnappThemingSwiftFormatPlugin"),
     ]
 )
