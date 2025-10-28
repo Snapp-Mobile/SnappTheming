@@ -8,4 +8,4 @@
 
  jobs:
   coverage:
-    uses: oleksiikolomiietssnapp/swift-coverage-action/workflow.yml@feature/reduce-redundancy
+    uses: oleksiikolomiietssnapp/swift-coverage-action/workflow.yml@feature/cleanup-leftovers
