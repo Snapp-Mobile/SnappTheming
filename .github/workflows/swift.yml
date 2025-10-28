@@ -11,4 +11,4 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: oleksiikolomiietssnapp/swift-coverage-action@1.0.0
+      - uses: oleksiikolomiietssnapp/swift-coverage-action@v1
