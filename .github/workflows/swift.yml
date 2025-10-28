@@ -1,11 +1,11 @@
- name: Package Test
+name: Package Test
 
- on:
-   push:
-     branches: [ "main", "next" ]
-   pull_request:
-     branches: [ "main", "next" ]
+on:
+  push:
+    branches: [ "main", "next" ]
+  pull_request:
+    branches: [ "main", "next" ]
 
- jobs:
-   coverage:
-     uses: oleksiikolomiietssnapp/swift-coverage-action@0.1.10
+jobs:
+  coverage:
+    uses: oleksiikolomiietssnapp/swift-coverage-action@0.1.10
