@@ -8,4 +8,4 @@
 
  jobs:
    coverage:
-     uses: oleksiikolomiietssnapp/swift-coverage-action@latest
+     uses: oleksiikolomiietssnapp/swift-coverage-action@0.1.10
