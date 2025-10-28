@@ -1,11 +1,14 @@
- name: Package Test
+name: Package Test
 
- on:
+on:
   push:
     branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "next" ]
 
- jobs:
+jobs:
   coverage:
-    uses: oleksiikolomiietssnapp/swift-coverage-action/.github/workflows/swift-coverage.yml@0.1.1
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oleksiikolomiietssnapp/swift-coverage-action@v1.0.0
