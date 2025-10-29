@@ -10,7 +10,7 @@ import SwiftUI
 
 struct Transaction: Identifiable {
     enum Category: String {
-        case entertainment = "Entertainemnt"
+        case entertainment = "Entertainment"
         case cardTransfer = "Card Transfer"
         case groceries = "Groceries"
         case subscriptions = "Subscriptions"
@@ -37,10 +37,12 @@ struct Transaction: Identifiable {
     let date: Date
 }
 
-extension Transaction: CaseIterable {
+extension Transaction: @MainActor CaseIterable {
     #if os(tvOS) || os(macOS) || os(visionOS)
+        @MainActor
         static var allCases: [Transaction] = extended
     #else
+        @MainActor
         static var allCases: [Transaction] {
             #if os(iOS)
                 if UIDevice.current.userInterfaceIdiom == .pad {
@@ -50,38 +52,68 @@ extension Transaction: CaseIterable {
             return base
         }
     #endif
+    @MainActor
     static private var extended: [Transaction] = base + additional
 
+    @MainActor
     static private var base: [Transaction] = [
         Transaction(
-            amount: -9.99, category: .entertainment, identity: .netflix,
-            date: .init(timeIntervalSinceNow: -24 * 60 * 60)),
+            amount: -9.99,
+            category: .entertainment,
+            identity: .netflix,
+            date: Date(timeIntervalSinceNow: -24 * 60 * 60)
+        ),
         Transaction(
-            amount: 999.99, category: .cardTransfer, identity: .timCook,
-            date: .init(timeIntervalSinceNow: -2 * 24 * 60 * 60)),
+            amount: 999.99,
+            category: .cardTransfer,
+            identity: .timCook,
+            date: Date(timeIntervalSinceNow: -2 * 24 * 60 * 60)
+        ),
         Transaction(
-            amount: -125.12, category: .groceries, identity: .lidl,
-            date: .init(timeIntervalSinceNow: -2 * 24 * 60 * 60 - 2 * 60 * 60)),
+            amount: -125.12,
+            category: .groceries,
+            identity: .lidl,
+            date: Date(timeIntervalSinceNow: -2 * 24 * 60 * 60 - 2 * 60 * 60)
+        ),
         Transaction(
-            amount: -5.99, category: .subscriptions, identity: .apple,
-            date: .init(timeIntervalSinceNow: -7 * 24 * 60 * 60)),
+            amount: -5.99,
+            category: .subscriptions,
+            identity: .apple,
+            date: Date(timeIntervalSinceNow: -7 * 24 * 60 * 60)
+        ),
     ]
 
+    @MainActor
     static private var additional: [Transaction] = [
         Transaction(
-            amount: 0.99, category: .cardTransfer, identity: .mark,
-            date: .init(timeIntervalSinceNow: -4 * 24 * 60 * 60)),
+            amount: 0.99,
+            category: .cardTransfer,
+            identity: .mark,
+            date: Date(timeIntervalSinceNow: -4 * 24 * 60 * 60)
+        ),
         Transaction(
-            amount: 434.00, category: .cardTransfer, identity: .dylan,
-            date: .init(timeIntervalSinceNow: -5 * 24 * 60 * 60)),
+            amount: 434.00,
+            category: .cardTransfer,
+            identity: .dylan,
+            date: Date(timeIntervalSinceNow: -5 * 24 * 60 * 60)
+        ),
         Transaction(
-            amount: 661.44, category: .cardTransfer, identity: .irving,
-            date: .init(timeIntervalSinceNow: -6 * 24 * 60 * 60)),
+            amount: 661.44,
+            category: .cardTransfer,
+            identity: .irving,
+            date: Date(timeIntervalSinceNow: -6 * 24 * 60 * 60)
+        ),
         Transaction(
-            amount: 239.11, category: .cardTransfer, identity: .helly,
-            date: .init(timeIntervalSinceNow: -8 * 24 * 60 * 60)),
+            amount: 239.11,
+            category: .cardTransfer,
+            identity: .helly,
+            date: Date(timeIntervalSinceNow: -8 * 24 * 60 * 60)
+        ),
         Transaction(
-            amount: -15.42, category: .groceries, identity: .lidl,
-            date: .init(timeIntervalSinceNow: -3 * 24 * 60 * 60 - 2 * 60 * 60)),
+            amount: -15.42,
+            category: .groceries,
+            identity: .lidl,
+            date: Date(timeIntervalSinceNow: -3 * 24 * 60 * 60 - 2 * 60 * 60)
+        ),
     ]
 }
