@@ -42,10 +42,7 @@ struct CreditCardView: View {
             maxHeight: isCompact ? .infinity : 230
         )
         .aspectRatio(theme.metrics.creditCardAspectRatio, contentMode: .fill)
-        .shadow(
-            color: theme.colors.shadow,
-            radius: theme.metrics.shadowRadius
-        )
+        .shadow(theme.shadows.card)
         #if os(watchOS)
             .padding(.horizontal, theme.metrics.small)
         #endif

@@ -4,7 +4,7 @@ Framework for parsing design theme declarations from JSON.
 
 ## Overview
 
-![SnappTheming logo](logo.png)
+![SnappTheming logo](Resources/logo.png)
 
 `SnappTheming` is a Swift framework designed to simplify the integration of dynamic design themes into iOS applications. Utilizing JSON declarations, the framework facilitates the extraction and application of various theming elements, including colors, fonts, gradients, and shape styles, directly into the application’s user interface.
 
