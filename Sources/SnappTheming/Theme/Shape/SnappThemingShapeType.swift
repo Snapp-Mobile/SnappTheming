@@ -35,7 +35,7 @@ public enum SnappThemingShapeType: Equatable, Sendable {
     case unevenRoundedRectangle(RectangleCornerRadii, RoundedCornerStyle)
 
     /// Generates the corresponding SwiftUI `Shape` representation based on the selected shape type.
-    @ShapeBuilder public var shape: some Shape {
+    @InsettableShapeBuilder public var shape: some InsettableShape {
         switch self {
         case .circle:
             Circle()
