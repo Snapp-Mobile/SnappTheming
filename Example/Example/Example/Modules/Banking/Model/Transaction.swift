@@ -37,18 +37,18 @@ struct Transaction: Identifiable, @MainActor CaseIterable {
     let identity: Identity
     let date: Date
 
-#if os(tvOS) || os(macOS) || os(visionOS)
-    static var allCases: [Transaction] = extended
-#else
-    static var allCases: [Transaction] {
-#if os(iOS)
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            return extended
+    #if os(tvOS) || os(macOS) || os(visionOS)
+        static var allCases: [Transaction] = extended
+    #else
+        static var allCases: [Transaction] {
+            #if os(iOS)
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    return extended
+                }
+            #endif
+            return base
         }
-#endif
-        return base
-    }
-#endif
+    #endif
     static private var extended: [Transaction] = base + additional
 
     static private var base: [Transaction] = [
