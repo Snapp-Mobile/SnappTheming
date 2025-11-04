@@ -9,10 +9,6 @@ import OSLog
 import SnappTheming
 import SwiftUI
 
-#if !os(visionOS)
-    import SnappThemingSVGSupport
-#endif
-
 @main
 struct ExampleApp: App {
     @State var theme: Theme
@@ -21,11 +17,6 @@ struct ExampleApp: App {
     private let storage: SettingsManager.Storage
 
     init() {
-        #if !os(visionOS)
-            // Do this for turning the SVG processor on
-            SnappThemingImageProcessorsRegistry.shared.register(.svg)
-        #endif
-
         storage = .userDefaults()
 
         settingsManager = SettingsManager(storage: .userDefaults(), fallbackColorSchema: .light)
