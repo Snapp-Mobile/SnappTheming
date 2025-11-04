@@ -8,7 +8,8 @@
 import Foundation
 import SwiftUI
 
-struct Transaction: Identifiable {
+@MainActor
+struct Transaction: Identifiable, @MainActor CaseIterable {
     enum Category: String {
         case entertainment = "Entertainment"
         case cardTransfer = "Card Transfer"
@@ -35,84 +36,59 @@ struct Transaction: Identifiable {
     let category: Category
     let identity: Identity
     let date: Date
-}
 
-extension Transaction: @MainActor CaseIterable {
-    #if os(tvOS) || os(macOS) || os(visionOS)
-        @MainActor
-        static var allCases: [Transaction] = extended
-    #else
-        @MainActor
-        static var allCases: [Transaction] {
-            #if os(iOS)
-                if UIDevice.current.userInterfaceIdiom == .pad {
-                    return extended
-                }
-            #endif
-            return base
+#if os(tvOS) || os(macOS) || os(visionOS)
+    static var allCases: [Transaction] = extended
+#else
+    static var allCases: [Transaction] {
+#if os(iOS)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return extended
         }
-    #endif
-    @MainActor
+#endif
+        return base
+    }
+#endif
     static private var extended: [Transaction] = base + additional
 
-    @MainActor
     static private var base: [Transaction] = [
         Transaction(
-            amount: -9.99,
-            category: .entertainment,
-            identity: .netflix,
+            amount: -9.99, category: .entertainment, identity: .netflix,
             date: Date(timeIntervalSinceNow: -24 * 60 * 60)
         ),
         Transaction(
-            amount: 999.99,
-            category: .cardTransfer,
-            identity: .timCook,
+            amount: 999.99, category: .cardTransfer, identity: .timCook,
             date: Date(timeIntervalSinceNow: -2 * 24 * 60 * 60)
         ),
         Transaction(
-            amount: -125.12,
-            category: .groceries,
-            identity: .lidl,
+            amount: -125.12, category: .groceries, identity: .lidl,
             date: Date(timeIntervalSinceNow: -2 * 24 * 60 * 60 - 2 * 60 * 60)
         ),
         Transaction(
-            amount: -5.99,
-            category: .subscriptions,
-            identity: .apple,
+            amount: -5.99, category: .subscriptions, identity: .apple,
             date: Date(timeIntervalSinceNow: -7 * 24 * 60 * 60)
         ),
     ]
 
-    @MainActor
     static private var additional: [Transaction] = [
         Transaction(
-            amount: 0.99,
-            category: .cardTransfer,
-            identity: .mark,
+            amount: 0.99, category: .cardTransfer, identity: .mark,
             date: Date(timeIntervalSinceNow: -4 * 24 * 60 * 60)
         ),
         Transaction(
-            amount: 434.00,
-            category: .cardTransfer,
-            identity: .dylan,
+            amount: 434.00, category: .cardTransfer, identity: .dylan,
             date: Date(timeIntervalSinceNow: -5 * 24 * 60 * 60)
         ),
         Transaction(
-            amount: 661.44,
-            category: .cardTransfer,
-            identity: .irving,
+            amount: 661.44, category: .cardTransfer, identity: .irving,
             date: Date(timeIntervalSinceNow: -6 * 24 * 60 * 60)
         ),
         Transaction(
-            amount: 239.11,
-            category: .cardTransfer,
-            identity: .helly,
+            amount: 239.11, category: .cardTransfer, identity: .helly,
             date: Date(timeIntervalSinceNow: -8 * 24 * 60 * 60)
         ),
         Transaction(
-            amount: -15.42,
-            category: .groceries,
-            identity: .lidl,
+            amount: -15.42, category: .groceries, identity: .lidl,
             date: Date(timeIntervalSinceNow: -3 * 24 * 60 * 60 - 2 * 60 * 60)
         ),
     ]
