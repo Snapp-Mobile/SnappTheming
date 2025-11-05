@@ -18,20 +18,20 @@ struct ShadowsViewer: View {
 
                     ZStack {
                         // Background to make shadow visible
-                        theme.colors.surfaceSecondary
+                        theme.colors.surfacePrimary
                             .ignoresSafeArea()
 
                         let shadow = theme.shadows[dynamicMember: key]
                         RoundedRectangle(cornerRadius: 24)
                             .fill(theme.colors.surfacePrimary)
-                            .frame(width: 340, height: 120)
+                            .frame(height: 120)
                             .shadow(
                                 color: shadow.color,
                                 radius: shadow.radius,
                                 x: shadow.x,
                                 y: shadow.y
                             )
-                            .padding()
+                            .padding(40)
 
                         Text("\(key)")
                     }

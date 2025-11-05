@@ -81,6 +81,7 @@
 				Modules/ThemeViewer/Images/ImagesViewer.swift,
 				Modules/ThemeViewer/Images/ImageViewer.swift,
 				Modules/ThemeViewer/Metrics/MetricsViewer.swift,
+				Modules/ThemeViewer/Shadows/ShadowsViewer.swift,
 				Modules/ThemeViewer/Shapes/ShapesViewer.swift,
 				Modules/ThemeViewer/ThemeViewer.swift,
 				Modules/ThemeViewer/Typography/TypographyViewer.swift,
@@ -242,7 +243,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1620;
-				LastUpgradeCheck = 1620;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					53F233052D31511E00264B36 = {
 						CreatedOnToolsVersion = 16.2;
@@ -410,6 +411,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -466,6 +468,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
