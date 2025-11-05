@@ -54,12 +54,14 @@ where DeclaredValue == String, Configuration == SnappThemingImageConfiguration {
         }
 
         if let representation = try? SnappThemingDataURI(from: rawValue) {
-            configuration.imagesManager.setObject(representation.data, for: keyPath)
-            configuration.imagesManager.store(representation, for: keyPath)
             let imageObject = configuration.imagesManager.object(for: keyPath, of: representation)
             let cachedData = imageObject.0 ?? representation.data
             if let themingImage = configuration.imagesManager.image(from: cachedData, url: imageObject.1, of: representation.type) {
-                return themingImage.image
+                configuration.imagesManager.setObject(representation.data, for: keyPath)
+                configuration.imagesManager.store(representation, for: keyPath)
+                if let storedImage = configuration.imagesManager.image(from: cachedData, url: imageObject.1, of: representation.type) {
+                    return storedImage.image
+                }
             }
         } else if rawValue.starts(with: "system:") {
             return Image(systemName: rawValue.removingPrefix(separator: ":"))
