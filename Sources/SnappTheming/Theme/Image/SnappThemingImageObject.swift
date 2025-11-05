@@ -42,7 +42,7 @@ public struct SnappThemingImageObject {
     /// let svgData = try Data(contentsOf: themePath)
     /// let imageObj = ImageObject(data: svgData, url: themePath)
     /// ```
-    init(data: Data, url: URL? = nil) {
+    public init(data: Data, url: URL? = nil) {
         self.data = data
         self.url = url
     }
@@ -64,7 +64,7 @@ public struct SnappThemingImageObject {
     ///     // Use imageObj
     /// }
     /// ```
-    init?(data: Data?, url: URL?) {
+    public init?(data: Data?, url: URL?) {
         guard let data else {
             return nil
         }
@@ -85,7 +85,7 @@ public struct SnappThemingImageObject {
     /// ```swift
     /// let imageObj = try ImageObject(url: bundledSVGURL)
     /// ```
-    init(url: URL) throws {
+    public init(url: URL) throws {
         let data = try Data(contentsOf: url)
 
         self.init(data: data, url: url)
