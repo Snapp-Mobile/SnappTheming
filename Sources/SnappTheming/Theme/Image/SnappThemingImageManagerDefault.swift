@@ -108,36 +108,38 @@ public final class SnappThemingImageManagerDefault: SnappThemingImageManager {
         url: URL?,
         of type: UTType
     ) -> SnappThemingImage? {
-        let dataURI = "data:\(String(describing: type.preferredMIMEType));\(data.base64EncodedString())"
+        accessQueue.sync {
+            let dataURI = "data:\(String(describing: type.preferredMIMEType));\(data.base64EncodedString())"
 
-        switch type {
-        case .pdf:
-            #if !os(watchOS)
-                guard let pdfImage = SnappThemingImage.pdf(data: data) else {
-                    os_log(.error, "Failed to process PDF data into an image. DataURI: %@.", dataURI)
+            switch type {
+            case .pdf:
+                #if !os(watchOS)
+                    guard let pdfImage = SnappThemingImage.pdf(data: data) else {
+                        os_log(.error, "Failed to process PDF data into an image. DataURI: %@.", dataURI)
+                        return nil
+                    }
+                    return pdfImage
+                #else
+                    return nil
+                #endif
+
+            case .png, .jpeg:
+                guard let image = SnappThemingImage(data: data) else {
+                    os_log(.error, "Failed to process PNG/JPEG data into image. DataURI: %@.", dataURI)
                     return nil
                 }
-                return pdfImage
-            #else
-                return nil
-            #endif
+                return image
 
-        case .png, .jpeg:
-            guard let image = SnappThemingImage(data: data) else {
-                os_log(.error, "Failed to process PNG/JPEG data into image. DataURI: %@.", dataURI)
-                return nil
-            }
-            return image
-
-        default:
-            let processors = SnappThemingImageProcessorsRegistry.shared.registeredProcessors()
-            for processor in processors {
-                if let processedImage: SnappThemingImage = processor.process(data, url: url, of: type) {
-                    return processedImage
+            default:
+                let processors = SnappThemingImageProcessorsRegistry.shared.registeredProcessors()
+                for processor in processors {
+                    if let processedImage: SnappThemingImage = processor.process(data, url: url, of: type) {
+                        return processedImage
+                    }
                 }
+                os_log(.error, "No suitable processor found for dataURI: %@.", dataURI)
+                return nil
             }
-            os_log(.error, "No suitable processor found for dataURI: %@.", dataURI)
-            return nil
         }
     }
 
