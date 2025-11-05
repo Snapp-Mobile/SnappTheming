@@ -12,16 +12,8 @@ import UniformTypeIdentifiers
 public protocol SnappThemingExternalImageProcessorProtocol: Sendable {
     /// Processing image `Data` and `UIType` to convert into a ``SnappThemingImage``.
     ///
-    /// - Parameter data: Image `Data`.
+    /// - Parameter object: Image object of `SnappThemingImageObject` type - contains raw data and url if available.
     /// - Parameter type: Image `UTType`.
     /// - Returns: A `SnappThemingImage` if the conversion is successful; otherwise, `nil`.
-    func process(_ data: Data, of type: UTType) -> SnappThemingImage?
-
-    func process(_ data: Data, url: URL?, of type: UTType) -> SnappThemingImage?
-}
-
-extension SnappThemingExternalImageProcessorProtocol {
-    func process(_ data: Data, url: URL?, of type: UTType) -> SnappThemingImage? {
-        process(data, of: type)
-    }
+    func process(_ object: SnappThemingImageObject, of type: UTType) -> SnappThemingImage?
 }

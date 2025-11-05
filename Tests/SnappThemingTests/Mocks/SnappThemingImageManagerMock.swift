@@ -26,15 +26,15 @@ final class SnappThemingImageManagerMock: SnappThemingImageManager {
         self.image = image
     }
 
-    func image(from data: Data, url: URL?, of type: UTType) -> SnappThemingImage? {
-        image(data, type)
+    func image(from object: SnappThemingImageObject, of type: UTType) -> SnappThemingImage? {
+        image(object.data, type)
     }
 
     func object(for key: String, of dataURI: SnappThemingDataURI)
-        -> (Data?, URL?)
+        -> SnappThemingImageObject?
     {
         accessQueue.sync {
-            (cache.object(forKey: key as NSString) as? Data, nil)
+            SnappThemingImageObject(data: cache.object(forKey: key as NSString) as? Data, url: nil)
         }
     }
 
