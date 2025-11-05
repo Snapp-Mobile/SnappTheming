@@ -71,21 +71,21 @@ public final class SnappThemingImageManagerDefault: SnappThemingImageManager {
     public func object(
         for key: String,
         of dataURI: SnappThemingDataURI
-    ) -> Data? {
+    ) -> (Data?, URL?) {
         accessQueue.sync {
             do {
                 if let cachedImage = cache.object(forKey: key as NSString) as? Data {
-                    return cachedImage
+                    return (cachedImage, nil)
                 } else if let imageURL = imageCacheURL(for: key, of: dataURI),
                     fileManager.fileExists(atPath: imageURL.path())
                 {
-                    return try Data(contentsOf: imageURL)
+                    return (try Data(contentsOf: imageURL), imageURL)
 
                 }
-                return nil
+                return (nil, nil)
             } catch let error {
                 os_log(.error, "Error getting object for key \"%@\": %@", key, error.localizedDescription)
-                return nil
+                return (nil, nil)
             }
         }
     }
@@ -103,7 +103,11 @@ public final class SnappThemingImageManagerDefault: SnappThemingImageManager {
     ///
     /// - Warning: Make sure to validate `data` in external processors to prevent potential issues with corrupted or malicious data.
     /// See how register external processors ``SnappThemingImageProcessorsRegistry``.
-    public func image(from data: Data, of type: UTType) -> SnappThemingImage? {
+    public func image(
+        from data: Data,
+        url: URL?,
+        of type: UTType
+    ) -> SnappThemingImage? {
         let dataURI = "data:\(String(describing: type.preferredMIMEType));\(data.base64EncodedString())"
 
         switch type {
@@ -128,7 +132,7 @@ public final class SnappThemingImageManagerDefault: SnappThemingImageManager {
         default:
             let processors = SnappThemingImageProcessorsRegistry.shared.registeredProcessors()
             for processor in processors {
-                if let processedImage: SnappThemingImage = processor.process(data, of: type) {
+                if let processedImage: SnappThemingImage = processor.process(data, url: url, of: type) {
                     return processedImage
                 }
             }

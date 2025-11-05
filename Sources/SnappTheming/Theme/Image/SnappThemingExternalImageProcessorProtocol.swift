@@ -16,4 +16,12 @@ public protocol SnappThemingExternalImageProcessorProtocol: Sendable {
     /// - Parameter type: Image `UTType`.
     /// - Returns: A `SnappThemingImage` if the conversion is successful; otherwise, `nil`.
     func process(_ data: Data, of type: UTType) -> SnappThemingImage?
+
+    func process(_ data: Data, url: URL?, of type: UTType) -> SnappThemingImage?
+}
+
+extension SnappThemingExternalImageProcessorProtocol {
+    func process(_ data: Data, url: URL?, of type: UTType) -> SnappThemingImage? {
+        process(data, of: type)
+    }
 }

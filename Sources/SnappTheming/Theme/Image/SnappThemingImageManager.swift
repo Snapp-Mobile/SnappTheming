@@ -17,7 +17,7 @@ public protocol SnappThemingImageManager: Sendable {
     ///   - key: A `String` representing the unique key associated with the image.
     ///   - dataURI: A `SnappThemingDataURI` containing the data and type information of the image.
     /// - Returns: A `Data` if an object for the given key and data URI is available; otherwise, `nil`.
-    func object(for key: String, of dataURI: SnappThemingDataURI) -> Data?
+    func object(for key: String, of dataURI: SnappThemingDataURI) -> (Data?, URL?)
 
     /// Converts raw data into a `SnappThemingImage` based on the specified type.
     ///
@@ -25,7 +25,7 @@ public protocol SnappThemingImageManager: Sendable {
     ///   - data: The raw `Data` representing the image content.
     ///   - type: The `UTType` indicating the type of the image (e.g., `.png`, `.jpeg`, `.svg`).
     /// - Returns: A `SnappThemingImage` if the conversion is successful; otherwise, `nil`.
-    func image(from data: Data, of type: UTType) -> SnappThemingImage?
+    func image(from data: Data, url: URL?, of type: UTType) -> SnappThemingImage?
 
     /// Stores a `Data` object in the image manager associated with the given key.
     ///
