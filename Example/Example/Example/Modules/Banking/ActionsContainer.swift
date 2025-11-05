@@ -20,14 +20,16 @@ struct ActionsContainer<Content: View>: View {
             ForEach(
                 sections: content,
                 content: { section in
-                    let items = section.content.enumerated().map(Item.init(index:subview:))
+                    let items = section.content.enumerated()
+                        .map { Item(index: $0, subview: $1) }
                     ForEach(items, id: \.index) { item in
                         item.subview
                         if item.index != section.content.endIndex - 1 {
                             Spacer()
                         }
                     }
-                })
+                }
+            )
         }
         .padding(.horizontal, 7)
         .frame(maxWidth: .infinity)
