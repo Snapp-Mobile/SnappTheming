@@ -67,20 +67,19 @@ public final class SnappThemingImageManagerDefault: SnappThemingImageManager {
     /// - Parameters:
     ///   - key: The unique key identifying the image.
     ///   - dataURI: A `SnappThemingDataURI` object containing the image data and MIME type.
-    /// - Returns: The retrieved image data or `nil` if not found.
+    /// - Returns: The retrieved image object or `nil` if not found.
     public func object(
         for key: String,
         of dataURI: SnappThemingDataURI
-    ) -> Data? {
+    ) -> SnappThemingImageObject? {
         accessQueue.sync {
             do {
                 if let cachedImage = cache.object(forKey: key as NSString) as? Data {
-                    return cachedImage
+                    return SnappThemingImageObject(data: cachedImage, url: nil)
                 } else if let imageURL = imageCacheURL(for: key, of: dataURI),
                     fileManager.fileExists(atPath: imageURL.path())
                 {
-                    return try Data(contentsOf: imageURL)
-
+                    return try SnappThemingImageObject(url: imageURL)
                 }
                 return nil
             } catch let error {
@@ -92,7 +91,7 @@ public final class SnappThemingImageManagerDefault: SnappThemingImageManager {
 
     /// Processes image `Data` and `UIType` to generate a corresponding `SnappThemingImage`.
     ///
-    /// - Parameter data: Image `Data`.
+    /// - Parameter object: The `SnappThemingImageObject` containing the image data and optional source URL context.
     /// - Parameter type: Image `UTType`.
     /// - Returns: A `SnappThemingImage` created from the provided representation, or `nil` if the conversion fails.
     ///
@@ -103,13 +102,16 @@ public final class SnappThemingImageManagerDefault: SnappThemingImageManager {
     ///
     /// - Warning: Make sure to validate `data` in external processors to prevent potential issues with corrupted or malicious data.
     /// See how register external processors ``SnappThemingImageProcessorsRegistry``.
-    public func image(from data: Data, of type: UTType) -> SnappThemingImage? {
-        let dataURI = "data:\(String(describing: type.preferredMIMEType));\(data.base64EncodedString())"
+    public func image(
+        from object: SnappThemingImageObject,
+        of type: UTType
+    ) -> SnappThemingImage? {
+        let dataURI = "data:\(String(describing: type.preferredMIMEType));\(object.data.base64EncodedString())"
 
         switch type {
         case .pdf:
             #if !os(watchOS)
-                guard let pdfImage = SnappThemingImage.pdf(data: data) else {
+                guard let pdfImage = SnappThemingImage.pdf(data: object.data) else {
                     os_log(.error, "Failed to process PDF data into an image. DataURI: %@.", dataURI)
                     return nil
                 }
@@ -119,7 +121,7 @@ public final class SnappThemingImageManagerDefault: SnappThemingImageManager {
             #endif
 
         case .png, .jpeg:
-            guard let image = SnappThemingImage(data: data) else {
+            guard let image = SnappThemingImage(data: object.data) else {
                 os_log(.error, "Failed to process PNG/JPEG data into image. DataURI: %@.", dataURI)
                 return nil
             }
@@ -128,7 +130,7 @@ public final class SnappThemingImageManagerDefault: SnappThemingImageManager {
         default:
             let processors = SnappThemingImageProcessorsRegistry.shared.registeredProcessors()
             for processor in processors {
-                if let processedImage: SnappThemingImage = processor.process(data, of: type) {
+                if let processedImage: SnappThemingImage = processor.process(object, of: type) {
                     return processedImage
                 }
             }
