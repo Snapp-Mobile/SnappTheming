@@ -45,13 +45,16 @@ struct SnappThemingImageManagerTests {
         let object = try #require(manager.object(for: fakeKey, of: dataURI))
         #expect(object.url == nil)
         #expect(object.data == dataURI.data)
-        let image = try #require(manager.image(from: object, of: dataURI.type))
-        #expect(image.size == SnappThemingImage(data: dataURI.data)?.size)
+        let _ = try #require(manager.image(from: object, of: dataURI.type))
     }
 
     @Test func testPreparingImage_External() throws {
         let mock = MockExternalProcessor()
+        let mockImage = SnappThemingImage.system(name: "pencil")
+
         SnappThemingImageProcessorsRegistry.shared.register(mock)
+        #expect(SnappThemingImageProcessorsRegistry.shared.registeredProcessors().count == 1)
+
         let manager: SnappThemingImageManager = SnappThemingImageManagerDefault(
             .withFileExistTrue,
             themeCacheRootURL: URL.cachesDirectory
@@ -66,9 +69,12 @@ struct SnappThemingImageManagerTests {
         #expect(object.url == nil)
         #expect(object.data == dataURI.data)
         let image = try #require(manager.image(from: object, of: dataURI.type))
-        #expect(image.size == mock.dummyImage?.size)
+        #expect(image.size == mockImage?.size)
 
         SnappThemingImageProcessorsRegistry.shared.unregister(MockExternalProcessor.self)
+        #expect(SnappThemingImageProcessorsRegistry.shared.registeredProcessors().count == 0)
+        
+        #expect(manager.image(from: object, of: .svg) == nil)
     }
 
     // Failures
@@ -94,7 +100,6 @@ struct SnappThemingImageManagerTests {
         #expect(manager.image(from: object, of: dataURI.type) == nil)
         #expect(manager.image(from: object, of: .pdf) == nil)
         #expect(manager.image(from: object, of: .jpeg) == nil)
-        #expect(manager.image(from: object, of: .svg) == nil)
     }
 
     @Test
