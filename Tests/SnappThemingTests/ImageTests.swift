@@ -113,10 +113,9 @@ struct ImageTests {
 
         let rawData: String = try #require(
             declaration.images.basket)
-        let imageData = try #require(try? SnappThemingDataURI(from: rawData))
+        let _ = try #require(try? SnappThemingDataURI(from: rawData))
         let image: Image = declaration.images.basket
 
-        #expect(imageData != nil)
         #expect(image == fallbackImage)
     }
 }
