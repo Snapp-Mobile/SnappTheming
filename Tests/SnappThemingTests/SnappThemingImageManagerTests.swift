@@ -66,7 +66,7 @@ struct SnappThemingImageManagerTests {
         #expect(object.url == nil)
         #expect(object.data == dataURI.data)
         let image = try #require(manager.image(from: object, of: dataURI.type))
-        #expect(image.size == mock.dummyImage?.size)
+        #expect(image.size == MockExternalProcessor.dummyImage?.size)
 
         SnappThemingImageProcessorsRegistry.shared.unregister(MockExternalProcessor.self)
     }
