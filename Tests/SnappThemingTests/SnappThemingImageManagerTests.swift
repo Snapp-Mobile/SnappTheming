@@ -51,6 +51,7 @@ struct SnappThemingImageManagerTests {
 
     @Test func testPreparingImage_External() throws {
         let mock = MockExternalProcessor()
+        let mockImage = SnappThemingImage(systemSymbolName: "pencil", accessibilityDescription: "test")
         SnappThemingImageProcessorsRegistry.shared.register(mock)
         let manager: SnappThemingImageManager = SnappThemingImageManagerDefault(
             .withFileExistTrue,
@@ -66,7 +67,7 @@ struct SnappThemingImageManagerTests {
         #expect(object.url == nil)
         #expect(object.data == dataURI.data)
         let image = try #require(manager.image(from: object, of: dataURI.type))
-        #expect(image.size == mock.dummyImage?.size)
+        #expect(image.size == mockImage?.size)
 
         SnappThemingImageProcessorsRegistry.shared.unregister(MockExternalProcessor.self)
     }
