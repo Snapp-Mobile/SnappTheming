@@ -10,8 +10,7 @@ import SnappTheming
 import UniformTypeIdentifiers
 
 final class MockExternalProcessor: SnappThemingExternalImageProcessorProtocol {
-    static let dummyImage: SnappThemingImage? = SnappThemingImage(systemSymbolName: "pencil", accessibilityDescription: "test")
     func process(_ object: SnappTheming.SnappThemingImageObject, of type: UTType) -> SnappThemingImage? {
-        MockExternalProcessor.dummyImage
+        SnappThemingImage(systemSymbolName: "pencil", accessibilityDescription: "test")
     }
 }
