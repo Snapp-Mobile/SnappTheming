@@ -6,13 +6,18 @@ Manages font tokens, including font families and sizes. Enables consistent typog
 
 The framework provides support for custom fonts. Fonts can be added as annotated object entities under the root-level `fonts` property.
 
-The annotation should contain the PostScript font name and the actual base64-encoded font data.
+The annotation should contain the PostScript font name and, optionally, the actual base64-encoded font data. If you want to use a font that is either bundled with the app or provided by the system, you can omit the font data and simply use the PostScript name.
+
+If you need to use a font provided by the system, please refer to [System Fonts](https://developer.apple.com/fonts/system-fonts/) to find the font you are looking for and check its platform support. If you want to use a font bundled within the app, take a look at the article on [Adding a Custom Font to Your App](https://developer.apple.com/documentation/uikit/adding-a-custom-font-to-your-app).
 
 The following is an example of a valid font declaration (the base64-encoded string has been shortened for brevity):
 
 ```json
 {
     "fonts": {
+        "Helvetica": {
+            "postScriptName": "Helvetica"
+        },
         "Roboto-Regular": {
             "postScriptName": "Roboto-Regular",
             "source": "data:font/ttf;base64,AAEAAAAS...=="

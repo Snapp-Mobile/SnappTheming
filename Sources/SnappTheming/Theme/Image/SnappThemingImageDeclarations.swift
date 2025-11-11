@@ -9,26 +9,19 @@ import Foundation
 import OSLog
 import SwiftUI
 
-#if canImport(UIKit)
-    import UIKit
-#endif
-#if canImport(AppKit)
-    import AppKit
-#endif
-
 public typealias SnappThemingImageDeclarations = SnappThemingDeclarations<
-    SnappThemingDataURI,
+    String,
     SnappThemingImageConfiguration
 >
 
 extension SnappThemingDeclarations
-where DeclaredValue == SnappThemingDataURI, Configuration == SnappThemingImageConfiguration {
+where DeclaredValue == String, Configuration == SnappThemingImageConfiguration {
     /// Initializes the declarations for themed images.
     /// - Parameters:
     ///   - cache: A cache of image tokens keyed by their identifiers.
     ///   - configuration: The parser configuration used to define fallback and manager behavior.
     public init(
-        cache: [String: SnappThemingToken<DeclaredValue>]?,
+        cache: [String: SnappThemingToken<String>]?,
         configuration: SnappThemingParserConfiguration = .default
     ) {
         self.init(
@@ -46,30 +39,33 @@ where DeclaredValue == SnappThemingDataURI, Configuration == SnappThemingImageCo
     }
 
     /// Dynamically resolves an image using a key path.
+    ///
+    /// This subscript attempts to retrieve an image representation based on the given key path.
+    /// If the resolution fails, a runtime warning is logged, and a fallback image is returned.
+    ///
     /// - Parameter keyPath: The key path used to identify the desired image.
-    /// - Returns: The resolved image, or the fallback image if the resolution fails.
+    /// - Returns: The resolved image if found; otherwise, the fallback image.
     public subscript(dynamicMember keyPath: String) -> Image {
         guard
-            let representation: DeclaredValue = self[dynamicMember: keyPath]
+            let rawValue: String = self[dynamicMember: keyPath]
         else {
-            os_log(.error, "Error resolving image with name: %@.", keyPath)
+            runtimeWarning("Failed resolving image with name: \(keyPath).")
             return configuration.fallbackImage
         }
 
-        let cachedData = configuration.imagesManager.object(for: keyPath, of: representation) ?? representation.data
-        #if canImport(UIKit)
-            if let uiImage = configuration.imagesManager.image(from: cachedData, of: representation.type) {
-                configuration.imagesManager.setObject(representation.data, for: keyPath)
-                configuration.imagesManager.store(representation, for: keyPath)
-                return Image(uiImage: uiImage)
+        if let representation = try? SnappThemingDataURI(from: rawValue) {
+            let object = configuration.imagesManager.object(for: keyPath, of: representation)
+            let imageObject = object ?? SnappThemingImageObject(data: representation.data)
+            configuration.imagesManager.setObject(representation.data, for: keyPath)
+            configuration.imagesManager.store(representation, for: keyPath)
+            if let themingImage = configuration.imagesManager.image(from: imageObject, of: representation.type) {
+                return themingImage.image
             }
-        #elseif canImport(AppKit)
-            if let nsImage = configuration.imagesManager.image(from: cachedData, of: representation.type) {
-                configuration.imagesManager.setObject(representation.data, for: keyPath)
-                configuration.imagesManager.store(representation, for: keyPath)
-                return Image(nsImage: nsImage)
-            }
-        #endif
+        } else if rawValue.starts(with: "system:") {
+            return Image(systemName: rawValue.removingPrefix(separator: ":"))
+        } else if rawValue.starts(with: "asset:") {
+            return Image(rawValue.removingPrefix(separator: ":"))
+        }
 
         return configuration.fallbackImage
     }

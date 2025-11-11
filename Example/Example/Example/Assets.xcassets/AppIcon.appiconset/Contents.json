@@ -65,12 +65,6 @@
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "512x512"
-    },
-    {
-      "filename" : "9262DB8E-2A17-4EE6-B5B7-60F85F33CB7F 1.png",
-      "idiom" : "universal",
-      "platform" : "watchos",
-      "size" : "1024x1024"
     }
   ],
   "info" : {

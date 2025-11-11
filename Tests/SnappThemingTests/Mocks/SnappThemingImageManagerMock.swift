@@ -8,55 +8,33 @@
 import SnappTheming
 import UniformTypeIdentifiers
 
-#if canImport(UIKit)
-    import UIKit
-#elseif canImport(AppKit)
-    import AppKit
-#endif
+@testable import SnappTheming
 
 final class SnappThemingImageManagerMock: SnappThemingImageManager {
     let cache: NSCache<NSString, NSData>
     private let accessQueue = DispatchQueue(label: "SharedCacheAccess")
 
-    #if canImport(UIKit)
-        let image: @Sendable (Data, UTType) -> UIImage?
+    let image: @Sendable (Data, UTType) -> SnappThemingImage?
 
-        init(
-            cache: NSCache<NSString, NSData> = .init(),
-            image: @escaping @Sendable (Data, UTType) -> UIImage? = { data, _ in
-                UIImage(data: data)
-            }
-        ) {
-            self.cache = cache
-            self.image = image
+    init(
+        cache: NSCache<NSString, NSData> = .init(),
+        image: @escaping @Sendable (Data, UTType) -> SnappThemingImage? = { data, _ in
+            SnappThemingImage(data: data)
         }
+    ) {
+        self.cache = cache
+        self.image = image
+    }
 
-        func image(from data: Data, of type: UTType) -> UIImage? {
-            image(data, type)
-        }
-    #elseif canImport(AppKit)
-        let image: @Sendable (Data, UTType) -> NSImage?
-
-        init(
-            cache: NSCache<NSString, NSData> = .init(),
-            image: @escaping @Sendable (Data, UTType) -> NSImage? = { data, _ in
-                NSImage(data: data)
-            }
-        ) {
-            self.cache = cache
-            self.image = image
-        }
-
-        func image(from data: Data, of type: UTType) -> NSImage? {
-            image(data, type)
-        }
-    #endif
+    func image(from object: SnappThemingImageObject, of type: UTType) -> SnappThemingImage? {
+        image(object.data, type)
+    }
 
     func object(for key: String, of dataURI: SnappThemingDataURI)
-        -> Data?
+        -> SnappThemingImageObject?
     {
         accessQueue.sync {
-            cache.object(forKey: key as NSString) as? Data
+            SnappThemingImageObject(data: cache.object(forKey: key as NSString) as? Data, url: nil)
         }
     }
 

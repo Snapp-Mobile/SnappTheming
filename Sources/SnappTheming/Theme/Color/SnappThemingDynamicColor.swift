@@ -20,6 +20,16 @@ public struct SnappThemingDynamicColor: Codable {
     private let light: String
     private let dark: String
 
+    /// Initializes a `SnappThemingDynamicColor` with separate color string values for light and dark appearances.
+    ///
+    /// - Parameters:
+    ///   - light: The hexadecimal string representation of the color for light mode.
+    ///   - dark: The hexadecimal string representation of the color for dark mode.
+    public init(light: String, dark: String) {
+        self.light = light
+        self.dark = dark
+    }
+
     #if canImport(UIKit)
         /// Returns a `UIColor` for the current user interface style (light or dark mode).
         /// - Parameter colorFormat: The color format to use (e.g., ARGB, RGBA).

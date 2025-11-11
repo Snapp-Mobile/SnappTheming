@@ -7,10 +7,8 @@
 
 import Foundation
 import Testing
+
 @testable import SnappTheming
-#if canImport(UIKit)
-    import UIKit
-#endif
 
 @Suite
 struct MetricsTests {

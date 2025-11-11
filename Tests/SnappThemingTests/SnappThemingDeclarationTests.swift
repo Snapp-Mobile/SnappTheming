@@ -15,23 +15,34 @@ final class SnappThemingDeclarationTests {
             {
                 "colors": {
                     "baseWhite": "#FFF1FF",
-                    "baseBlack": "#000000"
+                    "baseBlack": "#000001",
+                    "textColor": "$colors/baseWhite",
+                    "textColorTypo": "$colors/baseB1ack"
                 }
             }
             """
         let declaration = try SnappThemingParser.parse(from: json)
+        let fallbackConfiguration = declaration.colors.configuration
         try compareEncoded(declaration, and: json)
 
         #if canImport(UIKit)
             let baseWhite: UIColor = declaration.colors.baseWhite
             let baseBlack: UIColor = declaration.colors.baseBlack
+            let textColor: UIColor = declaration.colors.textColor
+            let textColorTypo: UIColor = declaration.colors.textColorTypo
             #expect(baseWhite == UIColor(hex: "FFF1FF", format: .rgba))
-            #expect(baseBlack == UIColor(hex: "000000", format: .rgba))
+            #expect(baseBlack == UIColor(hex: "000001", format: .rgba))
+            #expect(textColor == UIColor(hex: "FFF1FF", format: .rgba))
+            #expect(textColorTypo == fallbackConfiguration.fallbackUIColor)
         #elseif canImport(AppKit)
             let baseWhite: NSColor = declaration.colors.baseWhite
             let baseBlack: NSColor = declaration.colors.baseBlack
+            let textColor: NSColor = declaration.colors.textColor
+            let textColorTypo: NSColor = declaration.colors.textColorTypo
             #expect(baseWhite == NSColor.fromHex("FFF1FF", using: .rgba))
-            #expect(baseBlack == NSColor.fromHex("000000", using: .rgba))
+            #expect(baseBlack == NSColor.fromHex("000001", using: .rgba))
+            #expect(textColor == NSColor.fromHex("FFF1FF", using: .rgba))
+            #expect(textColorTypo == fallbackConfiguration.fallbackNSColor)
         #endif
     }
 
@@ -90,23 +101,4 @@ final class SnappThemingDeclarationTests {
             #expect(baseBlack == NSColor.fromHex("111111", using: .rgba))
         #endif
     }
-}
-
-func compareEncoded(_ declaration: SnappThemingDeclaration, and json: String) throws {
-    let jsonData = Data(json.utf8)
-    let declarationData = try JSONEncoder().encode(declaration)
-
-    // Normalize both JSONs
-    let normalizedJSON1 = try normalizeJSON(jsonData)
-    let normalizedJSON2 = try normalizeJSON(declarationData)
-
-    // Compare normalized strings
-    #expect(normalizedJSON1 == normalizedJSON2)
-}
-
-/// Converts JSON `Data` into a normalized, sorted string representation
-func normalizeJSON(_ data: Data) throws -> String {
-    let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
-    let normalizedData = try JSONSerialization.data(withJSONObject: jsonObject, options: [.sortedKeys])
-    return String(data: normalizedData, encoding: .utf8) ?? ""
 }

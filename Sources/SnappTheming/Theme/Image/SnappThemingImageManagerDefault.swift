@@ -9,12 +9,6 @@ import Foundation
 import OSLog
 import UniformTypeIdentifiers
 
-#if canImport(UIKit)
-    import UIKit
-#elseif canImport(AppKit)
-    import AppKit
-#endif
-
 /// An enumeration of possible errors in `SnappThemingImageManager`.
 private enum ImagesManagerError: Error {
     /// Indicates that the images directory URL is unknown or inaccessible.
@@ -73,20 +67,19 @@ public final class SnappThemingImageManagerDefault: SnappThemingImageManager {
     /// - Parameters:
     ///   - key: The unique key identifying the image.
     ///   - dataURI: A `SnappThemingDataURI` object containing the image data and MIME type.
-    /// - Returns: The retrieved `UIImage` or `nil` if not found.
+    /// - Returns: The retrieved image object or `nil` if not found.
     public func object(
         for key: String,
         of dataURI: SnappThemingDataURI
-    ) -> Data? {
+    ) -> SnappThemingImageObject? {
         accessQueue.sync {
             do {
                 if let cachedImage = cache.object(forKey: key as NSString) as? Data {
-                    return cachedImage
+                    return SnappThemingImageObject(data: cachedImage, url: nil)
                 } else if let imageURL = imageCacheURL(for: key, of: dataURI),
                     fileManager.fileExists(atPath: imageURL.path())
                 {
-                    return try Data(contentsOf: imageURL)
-
+                    return try SnappThemingImageObject(url: imageURL)
                 }
                 return nil
             } catch let error {
@@ -96,97 +89,55 @@ public final class SnappThemingImageManagerDefault: SnappThemingImageManager {
         }
     }
 
-    #if canImport(UIKit)
-        /// Processes image `Data` and `UIType` to generate a corresponding `UIImage`.
-        ///
-        /// - Parameter data: Image `Data`.
-        /// - Parameter type: Image `UTType`.
-        /// - Returns: A `UIImage` created from the provided representation, or `nil` if the conversion fails.
-        ///
-        /// This function handles different image formats based on their type:
-        /// - For `.pdf`: Converts the PDF data to a `UIImage`.
-        /// - For `.png` or `.jpeg`: Converts the data directly to a `UIImage` using `UIImage(data:)`.
-        /// - For other formats: Delegates the conversion to registered external image processors.
-        ///
-        /// - Warning: Make sure to validate `data` in external processors to prevent potential issues with corrupted or malicious data.
-        /// See how register external processors ``SnappThemingImageProcessorsRegistry``.
-        public func image(from data: Data, of type: UTType) -> UIImage? {
-            let dataURI = "data:\(String(describing: type.preferredMIMEType));\(data.base64EncodedString())"
+    /// Processes image `Data` and `UIType` to generate a corresponding `SnappThemingImage`.
+    ///
+    /// - Parameter object: The `SnappThemingImageObject` containing the image data and optional source URL context.
+    /// - Parameter type: Image `UTType`.
+    /// - Returns: A `SnappThemingImage` created from the provided representation, or `nil` if the conversion fails.
+    ///
+    /// This function handles different image formats based on their type:
+    /// - For `.pdf`: Converts the PDF data to a `SnappThemingImage`.
+    /// - For `.png` or `.jpeg`: Converts the data directly to a `SnappThemingImage` using `SnappThemingImage(data:)`.
+    /// - For other formats: Delegates the conversion to registered external image processors.
+    ///
+    /// - Warning: Make sure to validate `data` in external processors to prevent potential issues with corrupted or malicious data.
+    /// See how register external processors ``SnappThemingImageProcessorsRegistry``.
+    public func image(
+        from object: SnappThemingImageObject,
+        of type: UTType
+    ) -> SnappThemingImage? {
+        let dataURI = "data:\(String(describing: type.preferredMIMEType));\(object.data.base64EncodedString())"
 
-            switch type {
-            case .pdf:
-                #if !os(watchOS)
-                    guard let pdfImage = UIImage.pdf(data: data) else {
-                        os_log(.error, "Failed to process PDF data into an image. DataURI: %@.", dataURI)
-                        return nil
-                    }
-                    return pdfImage
-                #else
-                    return nil
-                #endif
-
-            case .png, .jpeg:
-                guard let image = UIImage(data: data) else {
-                    os_log(.error, "Failed to process PNG/JPEG data into image. DataURI: %@.", dataURI)
-                    return nil
-                }
-                return image
-
-            default:
-                let processors = SnappThemingImageProcessorsRegistry.shared.registeredProcessors()
-                for processor in processors {
-                    if let processedImage: UIImage = processor.process(data, of: type) {
-                        return processedImage
-                    }
-                }
-                os_log(.error, "No suitable processor found for dataURI: %@.", dataURI)
-                return nil
-            }
-        }
-    #elseif canImport(AppKit)
-        /// Processes image `Data` and `UIType` to generate a corresponding `NSImage`.
-        ///
-        /// - Parameter data: Image `Data`.
-        /// - Parameter type: Image `UTType`.
-        /// - Returns: A `UIImage` created from the provided representation, or `nil` if the conversion fails.
-        ///
-        /// This function handles different image formats based on their type:
-        /// - For `.pdf`: Converts the PDF data to a `UIImage`.
-        /// - For `.png` or `.jpeg`: Converts the data directly to a `UIImage` using `UIImage(data:)`.
-        /// - For other formats: Delegates the conversion to registered external image processors.
-        ///
-        /// - Warning: Make sure to validate `data` in external processors to prevent potential issues with corrupted or malicious data.
-        /// See how register external processors ``SnappThemingImageProcessorsRegistry``.
-        public func image(from data: Data, of type: UTType) -> NSImage? {
-            let dataURI = "data:\(String(describing: type.preferredMIMEType));\(data.base64EncodedString())"
-
-            switch type {
-            case .pdf:
-                guard let pdfImage = NSImage.pdf(data: data) else {
+        switch type {
+        case .pdf:
+            #if !os(watchOS)
+                guard let pdfImage = SnappThemingImage.pdf(data: object.data) else {
                     os_log(.error, "Failed to process PDF data into an image. DataURI: %@.", dataURI)
                     return nil
                 }
                 return pdfImage
+            #else
+                return nil
+            #endif
 
-            case .png, .jpeg:
-                guard let image = NSImage(data: data) else {
-                    os_log(.error, "Failed to process PNG/JPEG data into image. DataURI: %@.", dataURI)
-                    return nil
-                }
-                return image
-
-            default:
-                let processors = SnappThemingImageProcessorsRegistry.shared.registeredProcessors()
-                for processor in processors {
-                    if let processedImage: NSImage = processor.process(data, of: type) {
-                        return processedImage
-                    }
-                }
-                os_log(.error, "No suitable processor found for dataURI: %@.", dataURI)
+        case .png, .jpeg:
+            guard let image = SnappThemingImage(data: object.data) else {
+                os_log(.error, "Failed to process PNG/JPEG data into image. DataURI: %@.", dataURI)
                 return nil
             }
+            return image
+
+        default:
+            let processors = SnappThemingImageProcessorsRegistry.shared.registeredProcessors()
+            for processor in processors {
+                if let processedImage: SnappThemingImage = processor.process(object, of: type) {
+                    return processedImage
+                }
+            }
+            os_log(.error, "No suitable processor found for dataURI: %@.", dataURI)
+            return nil
         }
-    #endif
+    }
 
     /// Caches an image in memory.
     ///

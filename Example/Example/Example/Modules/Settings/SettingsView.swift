@@ -48,6 +48,7 @@ struct SettingsView: View {
             .foregroundStyle(theme.colors.textColorPrimary)
             .navigationBarTitleDisplayMode(.inline)
         #endif
+        .font(theme.typography.systemBody)
 
     }
 
@@ -70,6 +71,8 @@ struct SettingsView: View {
             GradientsViewer()
         case .shapes:
             ShapesViewer()
+        case .shadows:
+            ShadowsViewer()
         #if !os(watchOS)
             case .animations:
                 AnimationsViewer()

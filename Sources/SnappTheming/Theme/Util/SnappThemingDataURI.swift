@@ -34,6 +34,18 @@ public struct SnappThemingDataURI: Sendable, Hashable {
 
     /// The raw data represented by the data URI.
     public let data: Data
+
+    /// Initializes a `SnappThemingDataURI` with the specified type, encoding, and data.
+    ///
+    /// - Parameters:
+    ///   - type: The `UTType` representing the data's type.
+    ///   - encoding: The `Encoding` (e.g., `.base64`) used for the data.
+    ///   - data: The raw `Data`.
+    public init(type: UTType, encoding: Encoding, data: Data) {
+        self.type = type
+        self.encoding = encoding
+        self.data = data
+    }
 }
 
 extension SnappThemingDataURI: Codable {
@@ -47,6 +59,10 @@ extension SnappThemingDataURI: Codable {
         let container = try decoder.singleValueContainer()
         let source = try container.decode(String.self)
 
+        try self.init(from: source)
+    }
+
+    public init(from source: String) throws {
         let sourceComponents = source.split(separator: ",")
 
         guard sourceComponents.count == 2 else {

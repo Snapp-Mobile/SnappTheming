@@ -113,8 +113,6 @@ extension SettingsManager.Storage {
             currentThemeSource = $0
         }
     }
-
-    static let preview: Self = preview()
 }
 
 extension EnvironmentValues {

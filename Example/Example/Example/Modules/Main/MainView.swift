@@ -38,7 +38,6 @@ struct MainView: View {
     @Environment(Theme.self) var theme
 
     var body: some View {
-        let _ = Self._printChanges()
         TabView(selection: $selectedTab) {
             ForEach(Tab.allCases) { tab in
                 tabContent(tab)

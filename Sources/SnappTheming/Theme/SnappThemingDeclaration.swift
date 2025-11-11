@@ -4,6 +4,7 @@
 //
 //  Created by Ilian Konchev on 21.11.24.
 //
+
 import Foundation
 import OSLog
 
@@ -39,12 +40,15 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
     public let fontInformation: [SnappThemingFontInformation]
     /// Animation declarations.
     public let animations: SnappThemingAnimationDeclarations
+    /// Shadows declarations.
+    public let shadows: SnappThemingShadowDeclarations
 
     public enum CodingKeys: String, CodingKey {
         case images, colors, metrics, fonts, typography, gradients
         case buttonStyles, interactiveColors, shapes
         case segmentControlStyle, sliderStyle, toggleStyle
         case animations
+        case shadows
     }
 
     /// Key used to pass parser configuration through `JSONDecoder` or `JSONEncoder` user info.
@@ -56,7 +60,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
 
     /// Initializes a new instance of `SnappThemingDeclaration` with optional caches and a parser configuration.
     public init(
-        imageCache: [String: SnappThemingToken<SnappThemingDataURI>]? = nil,
+        imageCache: [String: SnappThemingToken<String>]? = nil,
         colorCache: [String: SnappThemingToken<SnappThemingColorRepresentation>]? = nil,
         metricsCache: [String: SnappThemingToken<Double>]? = nil,
         fontsCache: [String: SnappThemingToken<SnappThemingFontInformation>]? = nil,
@@ -69,6 +73,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
         sliderStyleCache: [String: SnappThemingToken<SnappThemingSliderStyleRepresentation>]? = nil,
         toggleStyleCache: [String: SnappThemingToken<SnappThemingToggleStyleRepresentation>]? = nil,
         animationCache: [String: SnappThemingToken<SnappThemingAnimationRepresentation>]? = nil,
+        shadowCache: [String: SnappThemingToken<SnappThemingShadowRepresentation>]? = nil,
         using parserConfiguration: SnappThemingParserConfiguration = .default
     ) {
         self.images = .init(cache: imageCache, configuration: parserConfiguration)
@@ -139,6 +144,12 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
             cache: animationCache,
             configuration: parserConfiguration
         )
+
+        self.shadows = .init(
+            cache: shadowCache,
+            metrics: metrics,
+            colors: colors
+        )
     }
 
     public init(from decoder: any Decoder) throws {
@@ -148,7 +159,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
                 ?? .default
             let container = try decoder.container(keyedBy: CodingKeys.self)
             let imageCache = try container.decodeIfPresent(
-                [String: SnappThemingToken<SnappThemingDataURI>].self,
+                [String: SnappThemingToken<String>].self,
                 forKey: .images
             )
             let colorCache = try container.decodeIfPresent(
@@ -197,6 +208,10 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
                 [String: SnappThemingToken<SnappThemingAnimationRepresentation>].self,
                 forKey: .animations
             )
+            let shadowCache = try container.decodeIfPresent(
+                [String: SnappThemingToken<SnappThemingShadowRepresentation>].self,
+                forKey: .shadows
+            )
 
             self.init(
                 imageCache: imageCache,
@@ -212,6 +227,7 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
                 sliderStyleCache: sliderStyleCache,
                 toggleStyleCache: toggleStyleCache,
                 animationCache: animationCache,
+                shadowCache: shadowCache,
                 using: parserConfiguration)
         } catch {
             error.log()
@@ -263,6 +279,9 @@ public struct SnappThemingDeclaration: Codable, SnappThemingOutput {
         if !animations.cache.isEmpty {
             try container.encode(animations.cache, forKey: .animations)
         }
+        if !shadows.cache.isEmpty {
+            try container.encode(shadows.cache, forKey: .shadows)
+        }
     }
 }
 
@@ -284,6 +303,8 @@ extension SnappThemingDeclaration {
             segmentControlStyleCache: segmentControlStyle.cache.override(other.segmentControlStyle.cache),
             sliderStyleCache: sliderStyle.cache.override(other.sliderStyle.cache),
             toggleStyleCache: toggleStyle.cache.override(other.toggleStyle.cache),
+            animationCache: animations.cache.override(other.animations.cache),
+            shadowCache: shadows.cache.override(other.shadows.cache),
             using: configuration)
     }
 }
