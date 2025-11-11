@@ -68,6 +68,14 @@ public struct SnappThemingGradientRepresentation: Codable {
         }
     }
 
+    /// Initializes a `SnappThemingGradientRepresentation` with a specific gradient-providing configuration.
+    ///
+    /// - Parameter configuration: An object conforming to `SnappThemingGradientProviding`
+    ///                            that defines the gradient's appearance and behavior.
+    public init(configuration: any SnappThemingGradientProviding) {
+        self.configuration = configuration
+    }
+
     /// Encodes the shape style representation into the provided encoder.
     ///
     /// This method encodes the `configuration` property (which contains the shape style)

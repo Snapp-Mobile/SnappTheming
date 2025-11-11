@@ -38,7 +38,7 @@ where
         )
     }
 
-    @ShapeBuilder
+    @InsettableShapeBuilder
     public subscript(dynamicMember keyPath: String) -> some Shape {
         let shapeRepresentation: SnappThemingShapeType = self[dynamicMember: keyPath]
         shapeRepresentation.shape

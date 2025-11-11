@@ -75,6 +75,8 @@ public struct SnappThemingParserConfiguration: Sendable {
 
     public let fallbackCornerRadii: RectangleCornerRadii
 
+    public let fallbackShadow: SnappThemingShadowResolver
+
     /// Initializes a new configuration with optional values. Defaults are provided for each property.
     public init(
         colorFormat: SnappThemingColorFormat = .rgba,
@@ -95,7 +97,8 @@ public struct SnappThemingParserConfiguration: Sendable {
         fallbackGradientRadius: Double = 0,
         fallbackCornerRadius: Double = 0,
         fallbackRoundedCornerStyle: RoundedCornerStyle = .circular,
-        fallbackCornerRadii: RectangleCornerRadii = .init()
+        fallbackCornerRadii: RectangleCornerRadii = .init(),
+        fallbackShadow: SnappThemingShadowResolver = .fallback
     ) {
         self.colorFormat = colorFormat
         self.encodeFonts = encodeFonts
@@ -116,6 +119,7 @@ public struct SnappThemingParserConfiguration: Sendable {
         self.fallbackCornerRadius = fallbackCornerRadius
         self.fallbackRoundedCornerStyle = fallbackRoundedCornerStyle
         self.fallbackCornerRadii = fallbackCornerRadii
+        self.fallbackShadow = fallbackShadow
     }
 }
 
