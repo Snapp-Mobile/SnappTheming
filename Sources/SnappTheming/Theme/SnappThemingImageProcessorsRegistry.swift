@@ -117,7 +117,7 @@ public final class SnappThemingImageProcessorsRegistry: @unchecked Sendable {
     /// print("Total processors registered: \(processors.count)")
     /// ```
     public func registeredProcessors() -> [any SnappThemingExternalImageProcessorProtocol] {
-        queue.sync { [weak self] in
+        queue.sync(flags: .barrier) { [weak self] in
             guard let self else { return [] }
             return _externalImageProcessors
         }
