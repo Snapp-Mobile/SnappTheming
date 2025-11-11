@@ -18,6 +18,40 @@ All notable changes to this project will be documented in this file.
 
 -->
 
+## [0.1.3] - 2025-11-10
+
+Swift 6 migration, improved image processing, shape support enhancements, and comprehensive test coverage.
+
+### Added
+- [#135](https://github.com/Snapp-Mobile/SnappTheming/pull/135)
+  URL context support for image processors - enables proper initialization of formats like SVG that require resource context.
+- [#130](https://github.com/Snapp-Mobile/SnappTheming/pull/130)
+  `InsettableShape` support for `SnappThemingShapeType` - improves SwiftUI API compatibility with shape modifiers like `clipShape` and `strokeBorder`.
+- [#136](https://github.com/Snapp-Mobile/SnappTheming/pull/136)
+  Unregister method for `SnappThemingImageProcessorsRegistry` - enables dynamic processor lifecycle management.
+- [#136](https://github.com/Snapp-Mobile/SnappTheming/pull/136)
+  Comprehensive test coverage for `SnappThemingImageManager` - new unit tests ensure reliability and catch regressions.
+- [#136](https://github.com/Snapp-Mobile/SnappTheming/pull/136)
+  Thread-safe access to `SnappThemingImageProcessorsRegistry` - prevents race conditions in multi-threaded environments.
+
+### Changed
+- [#129](https://github.com/Snapp-Mobile/SnappTheming/pull/129)
+  Migrated example apps to Swift 6 with related compatibility fixes.
+- [#130](https://github.com/Snapp-Mobile/SnappTheming/pull/130)
+  Removed internal `ShapeBuilder` in favor of standard `@InsettableShapeBuilder` pattern.
+- [#133](https://github.com/Snapp-Mobile/SnappTheming/pull/133)
+  Removed `SnappThemingSVGSupport` dependency from example apps to decouple testing.
+- [#123](https://github.com/Snapp-Mobile/SnappTheming/pull/123)
+  Updated CI/CD workflow with reusable workflow patterns for better maintainability.
+
+### Fixed
+- [#135](https://github.com/Snapp-Mobile/SnappTheming/pull/135)
+  Image caching to prevent rendering issues when switching themes.
+- [#136](https://github.com/Snapp-Mobile/SnappTheming/pull/136)
+  Compiler warnings and formatting issues in test code.
+- [#128](https://github.com/Snapp-Mobile/SnappTheming/pull/128)
+  Formatting warnings across codebase.
+
 ## [0.1.2] - 2025-02-25
 
 Bug fixes and improvements
