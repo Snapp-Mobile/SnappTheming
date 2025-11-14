@@ -9,6 +9,8 @@ on:
 jobs:
   coverage:
     runs-on: macos-latest
+    env:
+      ACTIONS_STEP_DEBUG: true
     steps:
       - uses: actions/checkout@v4
       - uses: Snapp-Mobile/swift-coverage-action@feature/package-swift-target-detection
